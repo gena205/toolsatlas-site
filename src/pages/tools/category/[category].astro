@@ -1,0 +1,139 @@
+---
+import ToolLayout from "../../../layouts/ToolLayout.astro";
+import tools from "../../../data/tools.json";
+
+type ToolFaqItem = {
+  q: string;
+  a: string;
+};
+
+type ToolItem = {
+  id: string;
+  name: string;
+  slug: string;
+  category: string;
+  intro: string;
+  description: string;
+  keywords?: string[];
+  faq?: ToolFaqItem[];
+  related?: string[];
+};
+
+const allTools = tools as ToolItem[];
+
+const categoryMeta: Record<string, { title: string; description: string }> = {
+  "developer-tools": {
+    title: "Developer Tools",
+    description: "JSON, Base64, hashes, encoders, decoders, and other useful developer tools."
+  },
+  "network-tools": {
+    title: "Network Tools",
+    description: "IP, DNS, ping, port, and other networking tools."
+  },
+  "text-tools": {
+    title: "Text Tools",
+    description: "Word count, line count, text cleanup, text converters, and other text tools."
+  },
+  "converters": {
+    title: "Converters",
+    description: "Simple online converters for timestamps, bytes, and more."
+  },
+  "calculators": {
+    title: "Calculators",
+    description: "Useful online calculators for percentages, age, and common tasks."
+  }
+};
+
+export async function getStaticPaths() {
+  return Object.keys(categoryMeta).map((category) => ({
+    params: { category }
+  }));
+}
+
+const { category } = Astro.params;
+const currentCategory = category ?? "";
+const meta = categoryMeta[currentCategory];
+const categoryTools = allTools.filter((tool) => tool.category === currentCategory);
+---
+
+<ToolLayout
+  title={`${meta?.title ?? "Tools"} - ToolsAtlas`}
+  description={meta?.description ?? "Browse tools by category."}
+>
+  <section class="card hero">
+    <p class="eyebrow">Tool Category</p>
+    <h1>{meta?.title ?? "Tools"}</h1>
+    <p class="hero-text">{meta?.description ?? "Browse tools by category."}</p>
+    <p class="small">{categoryTools.length} tools in this category</p>
+  </section>
+
+  <section class="card">
+    <h2>Tools in this category</h2>
+
+    {categoryTools.length > 0 ? (
+      <div class="tool-grid">
+        {categoryTools.map((tool) => (
+          <a class="tool-card" href={`/tools/${tool.slug}`}>
+            <strong>{tool.name}</strong>
+            <p>{tool.intro}</p>
+          </a>
+        ))}
+      </div>
+    ) : (
+      <p>No tools found in this category yet.</p>
+    )}
+  </section>
+</ToolLayout>
+
+<style>
+  .eyebrow {
+    color: var(--accent);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 12px;
+    margin-bottom: 10px;
+  }
+
+  .hero-text {
+    color: var(--muted);
+    font-size: 18px;
+    max-width: 760px;
+  }
+
+  .tool-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .tool-card {
+    display: block;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+    background: #0f172a;
+    color: var(--text);
+  }
+
+  .tool-card strong {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 18px;
+  }
+
+  .tool-card p {
+    margin: 0;
+    color: var(--muted);
+  }
+
+  @media (max-width: 800px) {
+    .tool-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-text {
+      font-size: 16px;
+    }
+  }
+</style>
