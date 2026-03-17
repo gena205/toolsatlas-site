@@ -1,17 +1,22 @@
 ---
-
+import ToolLayout from "../layouts/ToolLayout.astro";
+import tools from "../data/tools.json";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<ToolLayout title="ToolsAtlas - Free Online Tools" description="Free online developer, network, text, converter and calculator tools.">
+  <section class="card">
+    <h1>Free Online Tools</h1>
+    <p>ToolsAtlas is a growing collection of simple and useful online tools.</p>
+  </section>
+
+  <section class="card">
+    <h2>Featured Tools</h2>
+    <ul>
+      {tools.map((tool) => (
+        <li>
+          <a href={`/tools/${tool.slug}`}>{tool.name}</a> — {tool.description}
+        </li>
+      ))}
+    </ul>
+  </section>
+</ToolLayout>

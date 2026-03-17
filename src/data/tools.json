@@ -1,0 +1,26 @@
+[
+  {
+    "name": "JSON Formatter",
+    "slug": "json-formatter",
+    "category": "developer-tools",
+    "description": "Format and validate JSON online."
+  },
+  {
+    "name": "Base64 Encoder",
+    "slug": "base64-encode",
+    "category": "developer-tools",
+    "description": "Encode text to Base64 format online."
+  },
+  {
+    "name": "Base64 Decoder",
+    "slug": "base64-decode",
+    "category": "developer-tools",
+    "description": "Decode Base64 text online."
+  },
+  {
+    "name": "IP Lookup",
+    "slug": "ip-lookup",
+    "category": "network-tools",
+    "description": "Check IP address details online."
+  }
+]
