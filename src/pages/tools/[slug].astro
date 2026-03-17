@@ -11,47 +11,237 @@ export async function getStaticPaths() {
 
 const { tool } = Astro.props;
 const relatedTools = tools.filter((item) => tool.related?.includes(item.id));
+
+function formatCategoryLabel(category) {
+  if (!category) return "";
+  return category
+    .split("-")
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ");
+}
 ---
 
 <ToolLayout title={`${tool.name} - ToolsAtlas`} description={tool.description}>
-  <section class="card">
-    <p class="small">{tool.category}</p>
+  <section class="card tool-hero">
+    <p class="category-pill">{formatCategoryLabel(tool.category)}</p>
     <h1>{tool.name}</h1>
-    <p>{tool.intro}</p>
+    <p class="lead">{tool.intro}</p>
   </section>
 
-  <section class="card">
-    <h2>Tool</h2>
-    <p>{tool.description}</p>
-    <textarea rows="8" placeholder={`Use the ${tool.name} here...`}></textarea>
-    <button>Run Tool</button>
+  <section class="card tool-panel">
+    <div class="tool-panel-header">
+      <div>
+        <h2>Tool</h2>
+        <p class="panel-text">{tool.description}</p>
+      </div>
+    </div>
+
+    <div class="tool-grid">
+      <div class="tool-column">
+        <label for="tool-input" class="field-label">Input</label>
+        <textarea
+          id="tool-input"
+          class="tool-textarea"
+          rows="12"
+          placeholder={`Paste or type your input for ${tool.name} here...`}
+        ></textarea>
+
+        <div class="button-row">
+          <button type="button" class="primary-button">Run Tool</button>
+          <button type="button" class="secondary-button">Copy Input</button>
+          <button type="button" class="secondary-button">Clear</button>
+        </div>
+      </div>
+
+      <div class="tool-column">
+        <label for="tool-output" class="field-label">Output</label>
+        <textarea
+          id="tool-output"
+          class="tool-textarea output-textarea"
+          rows="12"
+          placeholder="The result will appear here..."
+          readonly
+        ></textarea>
+
+        <div class="button-row">
+          <button type="button" class="secondary-button">Copy Result</button>
+          <button type="button" class="secondary-button">Download</button>
+        </div>
+      </div>
+    </div>
   </section>
 
   <section class="card">
     <h2>How to use</h2>
-    <ul>
-      <li>Paste your input into the tool.</li>
-      <li>Click the button to process the input.</li>
-      <li>Copy the result.</li>
+    <ul class="steps-list">
+      <li>Paste your text, value, or raw input into the input box.</li>
+      <li>Run the tool to process the input.</li>
+      <li>Review the output and copy the result if needed.</li>
     </ul>
   </section>
 
   <section class="card">
     <h2>FAQ</h2>
     {tool.faq?.map((item) => (
-      <>
+      <div class="faq-item">
         <h3>{item.q}</h3>
         <p>{item.a}</p>
-      </>
+      </div>
     ))}
   </section>
 
   <section class="card">
     <h2>Related tools</h2>
-    <ul>
+    <ul class="related-list">
       {relatedTools.map((item) => (
-        <li><a href={`/tools/${item.slug}`}>{item.name}</a></li>
+        <li>
+          <a href={`/tools/${item.slug}`}>{item.name}</a>
+        </li>
       ))}
     </ul>
   </section>
 </ToolLayout>
+
+<style>
+  .tool-hero h1 {
+    margin-bottom: 12px;
+  }
+
+  .category-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: rgba(110, 168, 254, 0.14);
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  .lead {
+    color: var(--muted);
+    font-size: 18px;
+    max-width: 760px;
+    margin-bottom: 0;
+  }
+
+  .tool-panel {
+    padding: 24px;
+  }
+
+  .tool-panel-header {
+    margin-bottom: 18px;
+  }
+
+  .panel-text {
+    color: var(--muted);
+    margin-bottom: 0;
+  }
+
+  .tool-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  .tool-column {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .field-label {
+    display: inline-block;
+    margin-bottom: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .tool-textarea {
+    width: 100%;
+    min-height: 280px;
+    resize: vertical;
+    padding: 16px;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    background: #0f172a;
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.6;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .tool-textarea:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(110, 168, 254, 0.14);
+  }
+
+  .output-textarea {
+    background: #0d1528;
+  }
+
+  .button-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 14px;
+  }
+
+  .primary-button,
+  .secondary-button {
+    width: auto;
+    min-width: 132px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.15s ease, opacity 0.15s ease, border-color 0.15s ease;
+  }
+
+  .primary-button:hover,
+  .secondary-button:hover {
+    transform: translateY(-1px);
+  }
+
+  .primary-button {
+    background: var(--accent);
+    color: #081120;
+    border: none;
+  }
+
+  .secondary-button {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+
+  .steps-list li + li,
+  .related-list li + li {
+    margin-top: 10px;
+  }
+
+  .faq-item + .faq-item {
+    margin-top: 22px;
+    padding-top: 22px;
+    border-top: 1px solid var(--border);
+  }
+
+  @media (max-width: 900px) {
+    .tool-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .lead {
+      font-size: 16px;
+    }
+
+    .tool-textarea {
+      min-height: 220px;
+    }
+  }
+</style>
