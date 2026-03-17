@@ -479,4 +479,105 @@
     ],
     "related": ["percentage-calculator", "timestamp-converter", "bytes-to-mb"]
   }
+  ,
+  {
+    "id": "text-reverser",
+    "name": "Text Reverser",
+    "slug": "text-reverser",
+    "category": "text-tools",
+    "intro": "Reverse text instantly online.",
+    "description": "Use this free text reverser to flip the order of characters in any text.",
+    "keywords": ["text reverser", "reverse text", "reverse words"],
+    "faq": [
+      {
+        "q": "What does a text reverser do?",
+        "a": "It reverses the order of characters in the text you enter."
+      },
+      {
+        "q": "Can I reverse a sentence online?",
+        "a": "Yes. Paste your sentence and the tool will reverse it instantly."
+      }
+    ],
+    "related": ["lowercase-converter", "uppercase-converter", "text-case-converter"]
+  },
+  {
+    "id": "lowercase-converter",
+    "name": "Lowercase Converter",
+    "slug": "lowercase-converter",
+    "category": "text-tools",
+    "intro": "Convert text to lowercase.",
+    "description": "Turn uppercase or mixed text into lowercase with one click.",
+    "keywords": ["lowercase converter", "convert to lowercase", "lower case text"],
+    "faq": [
+      {
+        "q": "What does a lowercase converter do?",
+        "a": "It changes all letters in your text to lowercase."
+      },
+      {
+        "q": "Can I convert full paragraphs to lowercase?",
+        "a": "Yes. The tool works for words, sentences, and long text blocks."
+      }
+    ],
+    "related": ["uppercase-converter", "text-case-converter", "text-reverser"]
+  },
+  {
+    "id": "uppercase-converter",
+    "name": "Uppercase Converter",
+    "slug": "uppercase-converter",
+    "category": "text-tools",
+    "intro": "Convert text to uppercase.",
+    "description": "Change any text into uppercase letters instantly.",
+    "keywords": ["uppercase converter", "convert to uppercase", "upper case text"],
+    "faq": [
+      {
+        "q": "What does an uppercase converter do?",
+        "a": "It changes all letters in your text to uppercase."
+      },
+      {
+        "q": "Can I use it for headings and titles?",
+        "a": "Yes. It is useful for headings, labels, and emphasized text."
+      }
+    ],
+    "related": ["lowercase-converter", "text-case-converter", "text-reverser"]
+  },
+  {
+    "id": "line-counter",
+    "name": "Line Counter",
+    "slug": "line-counter",
+    "category": "text-tools",
+    "intro": "Count the number of lines in text.",
+    "description": "Use this free line counter to quickly measure how many lines your text contains.",
+    "keywords": ["line counter", "count lines", "text line counter"],
+    "faq": [
+      {
+        "q": "What is a line counter?",
+        "a": "A line counter measures how many text lines are present in the input."
+      },
+      {
+        "q": "Can I count lines in pasted text?",
+        "a": "Yes. Paste your text and the tool will count the lines instantly."
+      }
+    ],
+    "related": ["word-counter", "character-counter", "duplicate-line-remover"]
+  },
+  {
+    "id": "duplicate-line-remover",
+    "name": "Duplicate Line Remover",
+    "slug": "duplicate-line-remover",
+    "category": "text-tools",
+    "intro": "Remove duplicate lines from text.",
+    "description": "Clean up repeated lines in lists, logs, and copied text with one click.",
+    "keywords": ["duplicate line remover", "remove duplicate lines", "unique lines tool"],
+    "faq": [
+      {
+        "q": "What does a duplicate line remover do?",
+        "a": "It removes repeated lines and keeps only unique lines."
+      },
+      {
+        "q": "Is it useful for logs and lists?",
+        "a": "Yes. It is useful for cleaning repeated entries in logs, lists, and pasted text."
+      }
+    ],
+    "related": ["line-counter", "remove-extra-spaces", "word-counter"]
+  }
 ]

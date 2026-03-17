@@ -2,21 +2,39 @@
 import ToolLayout from "../../layouts/ToolLayout.astro";
 import tools from "../../data/tools.json";
 
+type ToolFaqItem = {
+  q: string;
+  a: string;
+};
+
+type ToolItem = {
+  id: string;
+  name: string;
+  slug: string;
+  category: string;
+  intro: string;
+  description: string;
+  keywords?: string[];
+  faq?: ToolFaqItem[];
+  related?: string[];
+};
+
+const allTools = tools as ToolItem[];
+
 export async function getStaticPaths() {
-  return tools.map((tool) => ({
+  return allTools.map((tool) => ({
     params: { slug: tool.slug },
     props: { tool }
   }));
 }
 
-const { tool } = Astro.props;
-const relatedTools = tools.filter((item) => tool.related?.includes(item.id));
+const { tool } = Astro.props as { tool: ToolItem };
+const relatedTools = allTools.filter((item) => tool.related?.includes(item.id));
 
-function formatCategoryLabel(category) {
-  if (!category) return "";
+function formatCategoryLabel(category: string): string {
   return category
     .split("-")
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .map((part: string) => part.charAt(0).toUpperCase() + part.slice(1))
     .join(" ");
 }
 ---
@@ -245,3 +263,195 @@ function formatCategoryLabel(category) {
     }
   }
 </style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const input = document.getElementById("tool-input") as HTMLTextAreaElement | null;
+    const output = document.getElementById("tool-output") as HTMLTextAreaElement | null;
+
+    const runBtn = document.querySelector(".primary-button") as HTMLButtonElement | null;
+    const secondaryButtons = document.querySelectorAll(".secondary-button");
+
+    const copyInputBtn = secondaryButtons[0] as HTMLButtonElement | undefined;
+    const clearBtn = secondaryButtons[1] as HTMLButtonElement | undefined;
+    const copyResultBtn = secondaryButtons[2] as HTMLButtonElement | undefined;
+    const downloadBtn = secondaryButtons[3] as HTMLButtonElement | undefined;
+
+    runBtn?.addEventListener("click", () => {
+      if (!input || !output) return;
+
+      const currentPath = window.location.pathname;
+
+      if (currentPath.includes("/tools/json-formatter")) {
+        try {
+          const parsed = JSON.parse(input.value);
+          output.value = JSON.stringify(parsed, null, 2);
+        } catch {
+          output.value = "Invalid JSON";
+        }
+        return;
+      }
+
+      if (currentPath.includes("/tools/json-validator")) {
+        try {
+          JSON.parse(input.value);
+          output.value = "Valid JSON";
+        } catch {
+          output.value = "Invalid JSON";
+        }
+        return;
+      }
+
+      if (currentPath.includes("/tools/json-minifier")) {
+        try {
+          const parsed = JSON.parse(input.value);
+          output.value = JSON.stringify(parsed);
+        } catch {
+          output.value = "Invalid JSON";
+        }
+        return;
+      }
+
+      if (currentPath.includes("/tools/base64-encode")) {
+        try {
+          output.value = btoa(unescape(encodeURIComponent(input.value)));
+        } catch {
+          output.value = "Unable to encode input";
+        }
+        return;
+      }
+
+      if (currentPath.includes("/tools/base64-decode")) {
+        try {
+          output.value = decodeURIComponent(escape(atob(input.value)));
+        } catch {
+          output.value = "Invalid Base64 input";
+        }
+        return;
+      }
+
+      if (currentPath.includes("/tools/url-encode")) {
+        output.value = encodeURIComponent(input.value);
+        return;
+      }
+
+      if (currentPath.includes("/tools/url-decode")) {
+        try {
+          output.value = decodeURIComponent(input.value);
+        } catch {
+          output.value = "Invalid URL-encoded input";
+        }
+        return;
+      }
+
+      if (currentPath.includes("/tools/html-encode")) {
+        const temp = document.createElement("textarea");
+        temp.textContent = input.value;
+        output.value = temp.innerHTML;
+        return;
+      }
+
+      if (currentPath.includes("/tools/html-decode")) {
+        const temp = document.createElement("textarea");
+        temp.innerHTML = input.value;
+        output.value = temp.value;
+        return;
+      }
+
+      if (currentPath.includes("/tools/text-case-converter")) {
+        output.value = input.value.toUpperCase();
+        return;
+      }
+
+      if (currentPath.includes("/tools/remove-extra-spaces")) {
+        output.value = input.value.replace(/\s+/g, " ").trim();
+        return;
+      }
+
+      if (currentPath.includes("/tools/word-counter")) {
+        const trimmed = input.value.trim();
+        const words = trimmed ? trimmed.split(/\s+/).length : 0;
+        const characters = input.value.length;
+        const charactersNoSpaces = input.value.replace(/\s/g, "").length;
+        const lines = input.value ? input.value.split(/\r?\n/).length : 0;
+
+        output.value =
+          `Words: ${words}\n` +
+          `Characters: ${characters}\n` +
+          `Characters (no spaces): ${charactersNoSpaces}\n` +
+          `Lines: ${lines}`;
+        return;
+      }
+
+      if (currentPath.includes("/tools/character-counter")) {
+        const characters = input.value.length;
+        const charactersNoSpaces = input.value.replace(/\s/g, "").length;
+
+        output.value =
+          `Characters: ${characters}\n` +
+          `Characters (no spaces): ${charactersNoSpaces}`;
+        return;
+      }
+
+            if (currentPath.includes("/tools/text-reverser")) {
+        output.value = input.value.split("").reverse().join("");
+        return;
+      }
+
+      if (currentPath.includes("/tools/lowercase-converter")) {
+        output.value = input.value.toLowerCase();
+        return;
+      }
+
+      if (currentPath.includes("/tools/uppercase-converter")) {
+        output.value = input.value.toUpperCase();
+        return;
+      }
+
+      if (currentPath.includes("/tools/line-counter")) {
+        const lines = input.value ? input.value.split(/\r?\n/).length : 0;
+        output.value = `Lines: ${lines}`;
+        return;
+      }
+
+      if (currentPath.includes("/tools/duplicate-line-remover")) {
+        const lines = input.value.split(/\r?\n/);
+        const uniqueLines = [...new Set(lines)];
+        output.value = uniqueLines.join("\n");
+        return;
+      }
+
+      output.value = "This tool logic is not connected yet.";
+    });
+
+    copyInputBtn?.addEventListener("click", async () => {
+      if (!input) return;
+      await navigator.clipboard.writeText(input.value);
+    });
+
+    clearBtn?.addEventListener("click", () => {
+      if (!input || !output) return;
+      input.value = "";
+      output.value = "";
+    });
+
+    copyResultBtn?.addEventListener("click", async () => {
+      if (!output) return;
+      await navigator.clipboard.writeText(output.value);
+    });
+
+    downloadBtn?.addEventListener("click", () => {
+      if (!output || !output.value) return;
+
+      const blob = new Blob([output.value], { type: "text/plain;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `${window.location.pathname.split("/").pop() || "tool-output"}.txt`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+    });
+  });
+</script>
