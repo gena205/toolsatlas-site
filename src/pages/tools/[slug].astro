@@ -22,7 +22,7 @@ type ToolItem = {
 const allTools = tools as ToolItem[];
 
 export async function getStaticPaths() {
-  return allTools.map((tool) => ({
+  return (tools as ToolItem[]).map((tool) => ({
     params: { slug: tool.slug },
     props: { tool }
   }));
