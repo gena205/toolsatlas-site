@@ -1,26 +1,482 @@
 [
   {
+    "id": "json-formatter",
     "name": "JSON Formatter",
     "slug": "json-formatter",
     "category": "developer-tools",
-    "description": "Format and validate JSON online."
+    "intro": "Format, beautify, and validate JSON online.",
+    "description": "Use this free JSON formatter to clean up minified JSON, improve readability, and quickly validate JSON structure.",
+    "keywords": ["json formatter", "json beautifier", "json validator"],
+    "faq": [
+      {
+        "q": "What does a JSON formatter do?",
+        "a": "A JSON formatter makes raw JSON easier to read by adding indentation and line breaks."
+      },
+      {
+        "q": "Can I validate JSON with this tool?",
+        "a": "Yes. A JSON formatter can also help detect invalid JSON structure."
+      }
+    ],
+    "related": ["json-validator", "json-minifier", "base64-encode"]
   },
   {
+    "id": "json-validator",
+    "name": "JSON Validator",
+    "slug": "json-validator",
+    "category": "developer-tools",
+    "intro": "Validate JSON structure online.",
+    "description": "Check whether your JSON is valid and catch syntax issues quickly with this free JSON validator.",
+    "keywords": ["json validator", "validate json", "json checker"],
+    "faq": [
+      {
+        "q": "What is a JSON validator?",
+        "a": "A JSON validator checks whether JSON syntax is correct and properly structured."
+      },
+      {
+        "q": "Can this tool find JSON errors?",
+        "a": "Yes. It helps identify invalid JSON formatting and syntax mistakes."
+      }
+    ],
+    "related": ["json-formatter", "json-minifier", "base64-decode"]
+  },
+  {
+    "id": "json-minifier",
+    "name": "JSON Minifier",
+    "slug": "json-minifier",
+    "category": "developer-tools",
+    "intro": "Minify JSON by removing spaces and line breaks.",
+    "description": "Compress JSON into a compact single-line format for storage, transfer, or embedding.",
+    "keywords": ["json minifier", "minify json", "compact json"],
+    "faq": [
+      {
+        "q": "What does a JSON minifier do?",
+        "a": "It removes whitespace, indentation, and line breaks from JSON to reduce size."
+      },
+      {
+        "q": "Will JSON still work after minifying?",
+        "a": "Yes. Valid JSON remains valid after minification."
+      }
+    ],
+    "related": ["json-formatter", "json-validator", "url-encode"]
+  },
+  {
+    "id": "base64-encode",
     "name": "Base64 Encoder",
     "slug": "base64-encode",
     "category": "developer-tools",
-    "description": "Encode text to Base64 format online."
+    "intro": "Encode plain text to Base64 format online.",
+    "description": "Convert plain text into Base64 instantly with this free online Base64 encoder.",
+    "keywords": ["base64 encode", "text to base64", "base64 encoder"],
+    "faq": [
+      {
+        "q": "What is Base64 encoding?",
+        "a": "Base64 encoding converts text or binary data into an ASCII string format."
+      },
+      {
+        "q": "Is Base64 encryption?",
+        "a": "No. Base64 is encoding, not encryption."
+      }
+    ],
+    "related": ["base64-decode", "url-encode", "md5-generator"]
   },
   {
+    "id": "base64-decode",
     "name": "Base64 Decoder",
     "slug": "base64-decode",
     "category": "developer-tools",
-    "description": "Decode Base64 text online."
+    "intro": "Decode Base64 text back into readable text.",
+    "description": "Use this free Base64 decoder to convert Base64 strings back into plain text.",
+    "keywords": ["base64 decode", "base64 decoder", "decode base64"],
+    "faq": [
+      {
+        "q": "What does a Base64 decoder do?",
+        "a": "It converts Base64-encoded text back into its original readable form."
+      },
+      {
+        "q": "Can I decode Base64 online for free?",
+        "a": "Yes. This tool is free to use online."
+      }
+    ],
+    "related": ["base64-encode", "json-validator", "url-decode"]
   },
   {
+    "id": "url-encode",
+    "name": "URL Encoder",
+    "slug": "url-encode",
+    "category": "developer-tools",
+    "intro": "Encode text for safe use in URLs.",
+    "description": "Convert special characters into URL-safe encoding for query strings, links, and parameters.",
+    "keywords": ["url encode", "url encoder", "encode url"],
+    "faq": [
+      {
+        "q": "Why do I need URL encoding?",
+        "a": "URL encoding makes special characters safe to use inside URLs and query parameters."
+      },
+      {
+        "q": "Does URL encoding change text meaning?",
+        "a": "No. It only changes how special characters are represented in URLs."
+      }
+    ],
+    "related": ["url-decode", "base64-encode", "html-encode"]
+  },
+  {
+    "id": "url-decode",
+    "name": "URL Decoder",
+    "slug": "url-decode",
+    "category": "developer-tools",
+    "intro": "Decode URL-encoded text into readable form.",
+    "description": "Convert percent-encoded URL strings back into plain readable text instantly.",
+    "keywords": ["url decode", "url decoder", "decode url"],
+    "faq": [
+      {
+        "q": "What does a URL decoder do?",
+        "a": "It converts encoded URL characters like %20 back into normal readable text."
+      },
+      {
+        "q": "Can I decode query parameters with this tool?",
+        "a": "Yes. It is useful for decoding links and query strings."
+      }
+    ],
+    "related": ["url-encode", "base64-decode", "html-decode"]
+  },
+  {
+    "id": "html-encode",
+    "name": "HTML Encoder",
+    "slug": "html-encode",
+    "category": "developer-tools",
+    "intro": "Encode special characters into HTML entities.",
+    "description": "Convert characters like <, >, and & into HTML-safe entities for code and content.",
+    "keywords": ["html encode", "html entities encoder", "encode html"],
+    "faq": [
+      {
+        "q": "Why use HTML encoding?",
+        "a": "HTML encoding prevents special characters from being interpreted as HTML markup."
+      },
+      {
+        "q": "What characters are usually encoded?",
+        "a": "Common examples include angle brackets, ampersands, and quotes."
+      }
+    ],
+    "related": ["html-decode", "url-encode", "text-case-converter"]
+  },
+  {
+    "id": "html-decode",
+    "name": "HTML Decoder",
+    "slug": "html-decode",
+    "category": "developer-tools",
+    "intro": "Decode HTML entities into normal text.",
+    "description": "Convert HTML entities like &amp; and &lt; back into readable characters.",
+    "keywords": ["html decode", "html entity decoder", "decode html"],
+    "faq": [
+      {
+        "q": "What does an HTML decoder do?",
+        "a": "It converts encoded HTML entities back into their original characters."
+      },
+      {
+        "q": "Is this useful for copied HTML text?",
+        "a": "Yes. It helps when text contains entity codes instead of symbols."
+      }
+    ],
+    "related": ["html-encode", "url-decode", "remove-extra-spaces"]
+  },
+  {
+    "id": "md5-generator",
+    "name": "MD5 Hash Generator",
+    "slug": "md5-hash-generator",
+    "category": "developer-tools",
+    "intro": "Generate an MD5 hash from text.",
+    "description": "Create MD5 hashes from input strings for testing, checksums, and quick comparisons.",
+    "keywords": ["md5 generator", "md5 hash", "text to md5"],
+    "faq": [
+      {
+        "q": "What is an MD5 hash?",
+        "a": "MD5 is a hashing algorithm that converts input text into a fixed-length hash value."
+      },
+      {
+        "q": "Is MD5 secure for passwords?",
+        "a": "No. MD5 is outdated and should not be used for password storage."
+      }
+    ],
+    "related": ["sha256-generator", "base64-encode", "uuid-generator"]
+  },
+  {
+    "id": "sha256-generator",
+    "name": "SHA256 Hash Generator",
+    "slug": "sha256-hash-generator",
+    "category": "developer-tools",
+    "intro": "Generate a SHA256 hash from text.",
+    "description": "Convert input text into a SHA256 hash for checksums, testing, and development tasks.",
+    "keywords": ["sha256 generator", "sha256 hash", "text to sha256"],
+    "faq": [
+      {
+        "q": "What is SHA256 used for?",
+        "a": "SHA256 is commonly used for checksums, integrity checks, and cryptographic workflows."
+      },
+      {
+        "q": "Can two different inputs have the same SHA256 hash?",
+        "a": "In practice this is extremely unlikely."
+      }
+    ],
+    "related": ["md5-generator", "uuid-generator", "base64-encode"]
+  },
+  {
+    "id": "uuid-generator",
+    "name": "UUID Generator",
+    "slug": "uuid-generator",
+    "category": "developer-tools",
+    "intro": "Generate random UUIDs online.",
+    "description": "Create unique identifiers for apps, databases, APIs, and development workflows.",
+    "keywords": ["uuid generator", "guid generator", "random uuid"],
+    "faq": [
+      {
+        "q": "What is a UUID?",
+        "a": "A UUID is a universally unique identifier used to label records and objects."
+      },
+      {
+        "q": "Why use a UUID generator?",
+        "a": "It helps create unique IDs without needing a central counter."
+      }
+    ],
+    "related": ["md5-generator", "sha256-generator", "timestamp-converter"]
+  },
+  {
+    "id": "ip-lookup",
     "name": "IP Lookup",
     "slug": "ip-lookup",
     "category": "network-tools",
-    "description": "Check IP address details online."
+    "intro": "Check basic information about an IP address.",
+    "description": "Look up useful IP address details with this simple online IP lookup tool.",
+    "keywords": ["ip lookup", "check ip", "ip address lookup"],
+    "faq": [
+      {
+        "q": "What is an IP lookup tool?",
+        "a": "An IP lookup tool helps you inspect information related to an IP address."
+      },
+      {
+        "q": "Can I use this IP lookup tool for free?",
+        "a": "Yes. It is free to use."
+      }
+    ],
+    "related": ["dns-lookup", "port-checker", "ping-test"]
+  },
+  {
+    "id": "dns-lookup",
+    "name": "DNS Lookup",
+    "slug": "dns-lookup",
+    "category": "network-tools",
+    "intro": "Check DNS records for a domain.",
+    "description": "Inspect domain DNS information such as A, AAAA, MX, TXT, and CNAME records.",
+    "keywords": ["dns lookup", "dns checker", "check dns records"],
+    "faq": [
+      {
+        "q": "What is a DNS lookup?",
+        "a": "A DNS lookup checks the DNS records associated with a domain."
+      },
+      {
+        "q": "What records can be checked?",
+        "a": "Common records include A, AAAA, MX, TXT, NS, and CNAME."
+      }
+    ],
+    "related": ["ip-lookup", "ping-test", "port-checker"]
+  },
+  {
+    "id": "ping-test",
+    "name": "Ping Test",
+    "slug": "ping-test",
+    "category": "network-tools",
+    "intro": "Test basic host reachability online.",
+    "description": "Use a ping test tool to check whether a host responds and estimate network latency.",
+    "keywords": ["ping test", "online ping", "ping checker"],
+    "faq": [
+      {
+        "q": "What does a ping test do?",
+        "a": "It checks whether a host is reachable and measures response time."
+      },
+      {
+        "q": "Can ping fail even if a site is up?",
+        "a": "Yes. Some servers block ICMP ping responses."
+      }
+    ],
+    "related": ["ip-lookup", "dns-lookup", "port-checker"]
+  },
+  {
+    "id": "port-checker",
+    "name": "Port Checker",
+    "slug": "port-checker",
+    "category": "network-tools",
+    "intro": "Check whether a port is open on a host.",
+    "description": "Test common TCP ports and verify whether a target host is listening on a specific port.",
+    "keywords": ["port checker", "open port checker", "port test"],
+    "faq": [
+      {
+        "q": "What is a port checker?",
+        "a": "A port checker tests whether a specific network port is open and reachable."
+      },
+      {
+        "q": "Why would a port appear closed?",
+        "a": "It may be blocked by a firewall, filtered, or not have a listening service."
+      }
+    ],
+    "related": ["ping-test", "dns-lookup", "ip-lookup"]
+  },
+  {
+    "id": "word-counter",
+    "name": "Word Counter",
+    "slug": "word-counter",
+    "category": "text-tools",
+    "intro": "Count words, characters, and lines in text.",
+    "description": "Analyze text length instantly with this simple online word counter.",
+    "keywords": ["word counter", "character counter", "text counter"],
+    "faq": [
+      {
+        "q": "What does a word counter measure?",
+        "a": "It usually counts words, characters, spaces, and sometimes lines or paragraphs."
+      },
+      {
+        "q": "Can I use a word counter for essays?",
+        "a": "Yes. It is useful for essays, articles, and social media drafts."
+      }
+    ],
+    "related": ["character-counter", "remove-extra-spaces", "text-case-converter"]
+  },
+  {
+    "id": "character-counter",
+    "name": "Character Counter",
+    "slug": "character-counter",
+    "category": "text-tools",
+    "intro": "Count characters in text instantly.",
+    "description": "Check total character count with and without spaces for any piece of text.",
+    "keywords": ["character counter", "count characters", "text length counter"],
+    "faq": [
+      {
+        "q": "What is a character counter?",
+        "a": "A character counter measures the number of characters in a text string."
+      },
+      {
+        "q": "Does it count spaces?",
+        "a": "Many tools provide both counts with spaces and without spaces."
+      }
+    ],
+    "related": ["word-counter", "text-case-converter", "remove-extra-spaces"]
+  },
+  {
+    "id": "remove-extra-spaces",
+    "name": "Remove Extra Spaces",
+    "slug": "remove-extra-spaces",
+    "category": "text-tools",
+    "intro": "Clean text by removing unnecessary spaces.",
+    "description": "Remove duplicate spaces and tidy messy text formatting with one click.",
+    "keywords": ["remove extra spaces", "trim spaces", "clean text spaces"],
+    "faq": [
+      {
+        "q": "What does this tool do?",
+        "a": "It removes repeated or unnecessary spaces from text."
+      },
+      {
+        "q": "Is it useful for copied text?",
+        "a": "Yes. It helps clean text copied from PDFs, websites, and documents."
+      }
+    ],
+    "related": ["word-counter", "character-counter", "text-case-converter"]
+  },
+  {
+    "id": "text-case-converter",
+    "name": "Text Case Converter",
+    "slug": "text-case-converter",
+    "category": "text-tools",
+    "intro": "Convert text to upper case, lower case, title case, and more.",
+    "description": "Quickly change text capitalization for content writing, coding, and formatting work.",
+    "keywords": ["text case converter", "uppercase lowercase converter", "change text case"],
+    "faq": [
+      {
+        "q": "What cases can be converted?",
+        "a": "Common options include UPPERCASE, lowercase, Title Case, and sentence case."
+      },
+      {
+        "q": "Who uses a text case converter?",
+        "a": "Writers, students, marketers, and developers often use it."
+      }
+    ],
+    "related": ["remove-extra-spaces", "word-counter", "character-counter"]
+  },
+  {
+    "id": "timestamp-converter",
+    "name": "Timestamp Converter",
+    "slug": "timestamp-converter",
+    "category": "converters",
+    "intro": "Convert Unix timestamps into readable dates and times.",
+    "description": "Translate Unix epoch timestamps into human-readable date and time values instantly.",
+    "keywords": ["timestamp converter", "unix timestamp converter", "epoch converter"],
+    "faq": [
+      {
+        "q": "What is a Unix timestamp?",
+        "a": "A Unix timestamp is the number of seconds since January 1, 1970 UTC."
+      },
+      {
+        "q": "Why use a timestamp converter?",
+        "a": "It helps you read and verify machine-generated time values."
+      }
+    ],
+    "related": ["uuid-generator", "bytes-to-mb", "percentage-calculator"]
+  },
+  {
+    "id": "bytes-to-mb",
+    "name": "Bytes to MB Converter",
+    "slug": "bytes-to-mb-converter",
+    "category": "converters",
+    "intro": "Convert bytes into megabytes quickly.",
+    "description": "Use this free converter to change byte values into megabytes for storage and file size calculations.",
+    "keywords": ["bytes to mb", "byte converter", "convert bytes to megabytes"],
+    "faq": [
+      {
+        "q": "How many bytes are in a megabyte?",
+        "a": "That depends on whether you use decimal or binary measurement, but tools usually make the conversion automatically."
+      },
+      {
+        "q": "Why use a bytes to MB converter?",
+        "a": "It makes storage values easier to understand and compare."
+      }
+    ],
+    "related": ["timestamp-converter", "percentage-calculator", "age-calculator"]
+  },
+  {
+    "id": "percentage-calculator",
+    "name": "Percentage Calculator",
+    "slug": "percentage-calculator",
+    "category": "calculators",
+    "intro": "Calculate percentages quickly and easily.",
+    "description": "Work out percentages, increases, decreases, and percentage differences with a simple calculator.",
+    "keywords": ["percentage calculator", "percent calculator", "calculate percentage"],
+    "faq": [
+      {
+        "q": "What can a percentage calculator do?",
+        "a": "It can calculate parts of a whole, percentage changes, increases, and decreases."
+      },
+      {
+        "q": "Who uses percentage calculators?",
+        "a": "Students, shoppers, business users, and anyone working with ratios or discounts."
+      }
+    ],
+    "related": ["age-calculator", "bytes-to-mb", "timestamp-converter"]
+  },
+  {
+    "id": "age-calculator",
+    "name": "Age Calculator",
+    "slug": "age-calculator",
+    "category": "calculators",
+    "intro": "Calculate age from a birth date.",
+    "description": "Find age in years, months, and days using a simple online age calculator.",
+    "keywords": ["age calculator", "calculate age", "birthday calculator"],
+    "faq": [
+      {
+        "q": "How does an age calculator work?",
+        "a": "It compares a birth date with the current date to calculate age."
+      },
+      {
+        "q": "Can it show months and days too?",
+        "a": "Yes. Many age calculators show a more detailed age breakdown."
+      }
+    ],
+    "related": ["percentage-calculator", "timestamp-converter", "bytes-to-mb"]
   }
 ]

@@ -10,18 +10,19 @@ export async function getStaticPaths() {
 }
 
 const { tool } = Astro.props;
+const relatedTools = tools.filter((item) => tool.related?.includes(item.id));
 ---
 
 <ToolLayout title={`${tool.name} - ToolsAtlas`} description={tool.description}>
   <section class="card">
     <p class="small">{tool.category}</p>
     <h1>{tool.name}</h1>
-    <p>{tool.description}</p>
+    <p>{tool.intro}</p>
   </section>
 
   <section class="card">
     <h2>Tool</h2>
-    <p>This is the first version of the <strong>{tool.name}</strong> page.</p>
+    <p>{tool.description}</p>
     <textarea rows="8" placeholder={`Use the ${tool.name} here...`}></textarea>
     <button>Run Tool</button>
   </section>
@@ -29,18 +30,28 @@ const { tool } = Astro.props;
   <section class="card">
     <h2>How to use</h2>
     <ul>
-      <li>Paste your input into the text area.</li>
-      <li>Click the button.</li>
+      <li>Paste your input into the tool.</li>
+      <li>Click the button to process the input.</li>
       <li>Copy the result.</li>
     </ul>
   </section>
 
   <section class="card">
     <h2>FAQ</h2>
-    <h3>What does {tool.name} do?</h3>
-    <p>{tool.description}</p>
+    {tool.faq?.map((item) => (
+      <>
+        <h3>{item.q}</h3>
+        <p>{item.a}</p>
+      </>
+    ))}
+  </section>
 
-    <h3>Is this tool free?</h3>
-    <p>Yes, this tool is free to use online.</p>
+  <section class="card">
+    <h2>Related tools</h2>
+    <ul>
+      {relatedTools.map((item) => (
+        <li><a href={`/tools/${item.slug}`}>{item.name}</a></li>
+      ))}
+    </ul>
   </section>
 </ToolLayout>
