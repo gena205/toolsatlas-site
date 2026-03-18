@@ -2,20 +2,51 @@
 import ToolLayout from "../layouts/ToolLayout.astro";
 import tools from "../data/tools.json";
 
+type ToolItem = {
+  id: string;
+  name: string;
+  slug: string;
+  category: string;
+  intro: string;
+  description: string;
+};
+
+const allTools = tools as ToolItem[];
+
 const categories = [
-  { id: "developer-tools", name: "Developer Tools", description: "JSON, Base64, hashes, encoders, and developer utilities." },
-  { id: "network-tools", name: "Network Tools", description: "IP, DNS, ping, and port-related tools." },
-  { id: "text-tools", name: "Text Tools", description: "Word count, case conversion, and text cleanup tools." },
-  { id: "converters", name: "Converters", description: "Timestamp, bytes, and other simple conversion tools." },
-  { id: "calculators", name: "Calculators", description: "Fast online calculators for common tasks." }
+  {
+    id: "developer-tools",
+    name: "Developer Tools",
+    description: "JSON, Base64, hashes, encoders, decoders, and developer utilities."
+  },
+  {
+    id: "network-tools",
+    name: "Network Tools",
+    description: "IP, DNS, ping, port, and other networking tools."
+  },
+  {
+    id: "text-tools",
+    name: "Text Tools",
+    description: "Word count, line count, text cleanup, text converters, and other text tools."
+  },
+  {
+    id: "converters",
+    name: "Converters",
+    description: "Timestamp, bytes, and other simple online converters."
+  },
+  {
+    id: "calculators",
+    name: "Calculators",
+    description: "Percentage, age, and other useful calculators."
+  }
 ];
 
 const toolsByCategory = categories.map((category) => ({
   ...category,
-  tools: tools.filter((tool) => tool.category === category.id)
+  tools: allTools.filter((tool) => tool.category === category.id)
 }));
 
-const totalTools = tools.length;
+const totalTools = allTools.length;
 ---
 
 <ToolLayout
@@ -24,15 +55,15 @@ const totalTools = tools.length;
 >
   <section class="card hero">
     <p class="eyebrow">Free Online Tools</p>
-    <h1>Simple tools for developers, network tasks, text work, conversions, and calculations</h1>
+    <h1>Simple online tools for daily work</h1>
     <p class="hero-text">
-      ToolsAtlas is a growing library of practical online tools built for speed, clarity, and useful everyday workflows.
+      ToolsAtlas is a growing collection of useful browser-based tools for developers, network tasks, text editing, conversions, and calculations.
     </p>
 
     <div class="hero-stats">
       <div class="stat">
         <strong>{totalTools}</strong>
-        <span>Tools live</span>
+        <span>Tools</span>
       </div>
       <div class="stat">
         <strong>5</strong>
@@ -40,20 +71,20 @@ const totalTools = tools.length;
       </div>
       <div class="stat">
         <strong>Free</strong>
-        <span>No signup</span>
+        <span>Online use</span>
       </div>
     </div>
   </section>
 
   <section class="card">
-    <h2>Browse by category</h2>
+    <h2>Browse tool categories</h2>
     <div class="category-grid">
       {toolsByCategory.map((category) => (
-        <div class="category-box">
-          <h3>{category.name}</h3>
+        <a class="category-card" href={`/tools/category/${category.id}`}>
+          <strong>{category.name}</strong>
           <p>{category.description}</p>
-          <p class="small">{category.tools.length} tools</p>
-        </div>
+          <span>{category.tools.length} tools</span>
+        </a>
       ))}
     </div>
   </section>
@@ -61,7 +92,7 @@ const totalTools = tools.length;
   <section class="card">
     <h2>Featured tools</h2>
     <div class="tool-grid">
-      {tools.slice(0, 8).map((tool) => (
+      {allTools.slice(0, 8).map((tool) => (
         <a class="tool-card" href={`/tools/${tool.slug}`}>
           <span class="tool-category">{tool.category}</span>
           <strong>{tool.name}</strong>
@@ -75,37 +106,22 @@ const totalTools = tools.length;
     <section class="card">
       <h2>{category.name}</h2>
       <p class="section-text">{category.description}</p>
+      <p class="section-link">
+        <a href={`/tools/category/${category.id}`}>View all {category.name.toLowerCase()}</a>
+      </p>
 
-      {category.tools.length > 0 ? (
-        <ul class="tool-list">
-          {category.tools.map((tool) => (
-            <li>
-              <a href={`/tools/${tool.slug}`}>{tool.name}</a> — {tool.description}
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>No tools in this category yet.</p>
-      )}
+      <ul class="tool-list">
+        {category.tools.slice(0, 6).map((tool) => (
+          <li>
+            <a href={`/tools/${tool.slug}`}>{tool.name}</a> — {tool.description}
+          </li>
+        ))}
+      </ul>
     </section>
   ))}
-
-  <section class="card">
-    <h2>Why use ToolsAtlas?</h2>
-    <ul>
-      <li>Fast, simple online tools</li>
-      <li>Clear pages with helpful explanations</li>
-      <li>Useful for quick daily tasks</li>
-      <li>Built to keep growing over time</li>
-    </ul>
-  </section>
 </ToolLayout>
 
 <style>
-  .hero {
-    padding: 28px;
-  }
-
   .eyebrow {
     color: var(--accent);
     font-weight: 700;
@@ -152,29 +168,14 @@ const totalTools = tools.length;
     font-size: 14px;
   }
 
-  .category-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 16px;
-  }
-
-  .category-box {
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 18px;
-    background: #0f172a;
-  }
-
-  .category-box p {
-    margin-bottom: 0;
-  }
-
+  .category-grid,
   .tool-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 16px;
   }
 
+  .category-card,
   .tool-card {
     display: block;
     border: 1px solid var(--border);
@@ -184,15 +185,23 @@ const totalTools = tools.length;
     color: var(--text);
   }
 
+  .category-card strong,
   .tool-card strong {
     display: block;
-    margin: 8px 0;
+    margin-bottom: 8px;
     font-size: 18px;
   }
 
+  .category-card p,
   .tool-card p {
-    margin: 0;
+    margin: 0 0 10px 0;
     color: var(--muted);
+  }
+
+  .category-card span {
+    color: var(--accent);
+    font-size: 14px;
+    font-weight: 700;
   }
 
   .tool-category {
@@ -201,15 +210,20 @@ const totalTools = tools.length;
     color: var(--accent);
     text-transform: uppercase;
     letter-spacing: 0.06em;
-  }
-
-  .tool-list li + li {
-    margin-top: 10px;
+    margin-bottom: 8px;
   }
 
   .section-text {
     color: var(--muted);
+    margin-bottom: 10px;
+  }
+
+  .section-link {
     margin-bottom: 16px;
+  }
+
+  .tool-list li + li {
+    margin-top: 10px;
   }
 
   @media (max-width: 800px) {
@@ -221,6 +235,10 @@ const totalTools = tools.length;
     .category-grid,
     .tool-grid {
       grid-template-columns: 1fr;
+    }
+
+    .hero-text {
+      font-size: 16px;
     }
   }
 </style>

@@ -45,7 +45,15 @@ const categoryMeta: Record<string, { title: string; description: string }> = {
 };
 
 export async function getStaticPaths() {
-  return Object.keys(categoryMeta).map((category) => ({
+  const categories = [
+    "developer-tools",
+    "network-tools",
+    "text-tools",
+    "converters",
+    "calculators"
+  ];
+
+  return categories.map((category) => ({
     params: { category }
   }));
 }
