@@ -1219,6 +1219,206 @@
       }
     ],
     "related": ["percentage-calculator", "age-calculator", "kb-to-mb"]
+  },
+  {
+    "id": "base64-url-encode",
+    "name": "Base64 URL Encoder",
+    "slug": "base64-url-encode",
+    "category": "developer-tools",
+    "intro": "Encode text into URL-safe Base64 format.",
+    "description": "Convert text into Base64 URL-safe format for tokens, links, and web data handling.",
+    "keywords": ["base64 url encode", "base64url encoder", "url safe base64"],
+    "faq": [
+      {
+        "q": "What is Base64 URL encoding?",
+        "a": "It is a URL-safe variation of Base64 that replaces unsafe characters for use in URLs and tokens."
+      },
+      {
+        "q": "When is this useful?",
+        "a": "It is useful for JWT parts, tokens, and URL-safe encoded data."
+      }
+    ],
+    "related": ["base64-url-decode", "base64-encode", "jwt-decoder"]
+  },
+  {
+    "id": "base64-url-decode",
+    "name": "Base64 URL Decoder",
+    "slug": "base64-url-decode",
+    "category": "developer-tools",
+    "intro": "Decode URL-safe Base64 text instantly.",
+    "description": "Convert Base64 URL-safe encoded strings back into readable text.",
+    "keywords": ["base64 url decode", "base64url decoder", "decode url safe base64"],
+    "faq": [
+      {
+        "q": "What does a Base64 URL decoder do?",
+        "a": "It converts Base64 URL-safe encoded strings back into readable text."
+      },
+      {
+        "q": "Is this the same as normal Base64?",
+        "a": "It is similar, but Base64 URL uses URL-safe characters."
+      }
+    ],
+    "related": ["base64-url-encode", "base64-decode", "jwt-decoder"]
+  },
+  {
+    "id": "url-parameter-extractor",
+    "name": "URL Parameter Extractor",
+    "slug": "url-parameter-extractor",
+    "category": "developer-tools",
+    "intro": "Extract query parameters from a URL.",
+    "description": "Pull query parameters from a URL and display them in a readable format.",
+    "keywords": ["url parameter extractor", "extract query params", "url query extractor"],
+    "faq": [
+      {
+        "q": "What does this tool do?",
+        "a": "It extracts query parameters from a URL and lists them clearly."
+      },
+      {
+        "q": "Is it useful for debugging links?",
+        "a": "Yes. It helps inspect tracking parameters and query strings."
+      }
+    ],
+    "related": ["query-string-parser", "url-parser", "url-decode"]
+  },
+  {
+    "id": "query-string-parser",
+    "name": "Query String Parser",
+    "slug": "query-string-parser",
+    "category": "developer-tools",
+    "intro": "Parse query strings into key-value pairs.",
+    "description": "Convert raw query strings into readable parameter lists for debugging and development.",
+    "keywords": ["query string parser", "parse query string", "url query parser"],
+    "faq": [
+      {
+        "q": "What is a query string parser?",
+        "a": "It turns a raw query string like a=1&b=2 into readable key-value pairs."
+      },
+      {
+        "q": "Do I need a full URL?",
+        "a": "No. You can use only the query string part."
+      }
+    ],
+    "related": ["url-parameter-extractor", "url-parser", "url-decode"]
+  },
+  {
+    "id": "html-entities-encoder",
+    "name": "HTML Entities Encoder",
+    "slug": "html-entities-encoder",
+    "category": "developer-tools",
+    "intro": "Convert text into HTML entities.",
+    "description": "Encode special characters into HTML entities for safe display in markup and code.",
+    "keywords": ["html entities encoder", "encode html entities", "text to html entities"],
+    "faq": [
+      {
+        "q": "What does this tool do?",
+        "a": "It converts special characters into HTML entities such as &amp; and &lt;."
+      },
+      {
+        "q": "When is it useful?",
+        "a": "It is useful when showing raw text safely inside HTML."
+      }
+    ],
+    "related": ["html-entities-decoder", "html-encode", "html-decode"]
+  },
+  {
+    "id": "html-entities-decoder",
+    "name": "HTML Entities Decoder",
+    "slug": "html-entities-decoder",
+    "category": "developer-tools",
+    "intro": "Decode HTML entities into plain text.",
+    "description": "Convert HTML entities back into normal readable characters quickly.",
+    "keywords": ["html entities decoder", "decode html entities", "html entity decoder"],
+    "faq": [
+      {
+        "q": "What does this tool do?",
+        "a": "It converts HTML entities like &amp; and &quot; back into readable text."
+      },
+      {
+        "q": "Is it useful for copied HTML content?",
+        "a": "Yes. It helps turn encoded text into normal characters."
+      }
+    ],
+    "related": ["html-entities-encoder", "html-decode", "html-stripper"]
+  },
+  {
+    "id": "rot13-encoder",
+    "name": "ROT13 Encoder",
+    "slug": "rot13-encoder",
+    "category": "developer-tools",
+    "intro": "Apply ROT13 transformation to text.",
+    "description": "Encode or decode text using the ROT13 substitution method instantly.",
+    "keywords": ["rot13 encoder", "rot13 decoder", "rot13 tool"],
+    "faq": [
+      {
+        "q": "What is ROT13?",
+        "a": "ROT13 is a simple letter substitution that rotates alphabet characters by 13 positions."
+      },
+      {
+        "q": "Does ROT13 decode too?",
+        "a": "Yes. Applying ROT13 twice returns the original text."
+      }
+    ],
+    "related": ["text-reverser", "base64-encode", "base64-decode"]
+  },
+  {
+    "id": "text-to-binary",
+    "name": "Text to Binary Converter",
+    "slug": "text-to-binary",
+    "category": "developer-tools",
+    "intro": "Convert plain text into binary values.",
+    "description": "Turn text into binary representation for learning, debugging, and encoding tasks.",
+    "keywords": ["text to binary", "string to binary", "binary converter text"],
+    "faq": [
+      {
+        "q": "What does this tool do?",
+        "a": "It converts each character in text into its binary representation."
+      },
+      {
+        "q": "Who uses text to binary tools?",
+        "a": "Students, developers, and learners often use them."
+      }
+    ],
+    "related": ["binary-to-text", "text-to-hex", "base64-encode"]
+  },
+  {
+    "id": "binary-to-text",
+    "name": "Binary to Text Converter",
+    "slug": "binary-to-text",
+    "category": "developer-tools",
+    "intro": "Convert binary values into readable text.",
+    "description": "Translate binary character codes back into plain text quickly.",
+    "keywords": ["binary to text", "binary decoder", "convert binary to text"],
+    "faq": [
+      {
+        "q": "What does binary to text do?",
+        "a": "It converts binary byte values into readable characters."
+      },
+      {
+        "q": "What format should the input use?",
+        "a": "Usually 8-bit binary groups separated by spaces."
+      }
+    ],
+    "related": ["text-to-binary", "text-to-hex", "base64-decode"]
+  },
+  {
+    "id": "text-to-hex",
+    "name": "Text to Hex Converter",
+    "slug": "text-to-hex",
+    "category": "developer-tools",
+    "intro": "Convert text into hexadecimal values.",
+    "description": "Encode plain text into hex format for debugging, learning, and development tasks.",
+    "keywords": ["text to hex", "string to hex", "hex converter text"],
+    "faq": [
+      {
+        "q": "What does this tool do?",
+        "a": "It converts characters into their hexadecimal byte values."
+      },
+      {
+        "q": "Is this useful for debugging?",
+        "a": "Yes. It helps inspect raw text data in hex form."
+      }
+    ],
+    "related": ["text-to-binary", "binary-to-text", "base64-encode"]
   }
 
 ]

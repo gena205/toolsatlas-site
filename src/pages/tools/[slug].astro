@@ -683,6 +683,125 @@ url.searchParams.forEach((value: string, key: string) => {
         return;
       }
 
+            if (slug === "base64-url-encode") {
+        try {
+          output.value = btoa(unescape(encodeURIComponent(input.value)))
+            .replace(/\+/g, "-")
+            .replace(/\//g, "_")
+            .replace(/=+$/g, "");
+        } catch {
+          output.value = "Unable to encode input";
+        }
+        return;
+      }
+
+      if (slug === "base64-url-decode") {
+        try {
+          let value = input.value.trim()
+            .replace(/-/g, "+")
+            .replace(/_/g, "/");
+
+          while (value.length % 4 !== 0) {
+            value += "=";
+          }
+
+          output.value = decodeURIComponent(escape(atob(value)));
+        } catch {
+          output.value = "Invalid Base64 URL input";
+        }
+        return;
+      }
+
+      if (slug === "url-parameter-extractor") {
+        try {
+          const url = new URL(input.value.trim());
+          const params: string[] = [];
+
+          url.searchParams.forEach((value, key) => {
+            params.push(`${key}: ${value}`);
+          });
+
+          output.value = params.length > 0 ? params.join("\n") : "No query parameters found";
+        } catch {
+          output.value = "Invalid URL";
+        }
+        return;
+      }
+
+      if (slug === "query-string-parser") {
+        try {
+          const raw = input.value.trim().replace(/^\?/, "");
+          const searchParams = new URLSearchParams(raw);
+          const params: string[] = [];
+
+          searchParams.forEach((value, key) => {
+            params.push(`${key}: ${value}`);
+          });
+
+          output.value = params.length > 0 ? params.join("\n") : "No query parameters found";
+        } catch {
+          output.value = "Invalid query string";
+        }
+        return;
+      }
+
+      if (slug === "html-entities-encoder") {
+        const temp = document.createElement("textarea");
+        temp.textContent = input.value;
+        output.value = temp.innerHTML;
+        return;
+      }
+
+      if (slug === "html-entities-decoder") {
+        const temp = document.createElement("textarea");
+        temp.innerHTML = input.value;
+        output.value = temp.value;
+        return;
+      }
+
+      if (slug === "rot13-encoder") {
+        output.value = input.value.replace(/[a-zA-Z]/g, (char) => {
+          const start = char <= "Z" ? 65 : 97;
+          return String.fromCharCode(((char.charCodeAt(0) - start + 13) % 26) + start);
+        });
+        return;
+      }
+
+      if (slug === "text-to-binary") {
+        output.value = input.value
+          .split("")
+          .map((char) => char.charCodeAt(0).toString(2).padStart(8, "0"))
+          .join(" ");
+        return;
+      }
+
+      if (slug === "binary-to-text") {
+        try {
+          const cleaned = input.value.trim();
+          const parts = cleaned.split(/\s+/).filter((part) => part.length > 0);
+
+          output.value = parts
+            .map((part) => {
+              if (!/^[01]{8}$/.test(part)) {
+                throw new Error("Invalid binary");
+              }
+              return String.fromCharCode(parseInt(part, 2));
+            })
+            .join("");
+        } catch {
+          output.value = "Invalid binary input";
+        }
+        return;
+      }
+
+      if (slug === "text-to-hex") {
+        output.value = input.value
+          .split("")
+          .map((char) => char.charCodeAt(0).toString(16).padStart(2, "0"))
+          .join(" ");
+        return;
+      }
+
       output.value = "This tool logic is not connected yet.";
     });
 
