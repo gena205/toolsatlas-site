@@ -802,6 +802,135 @@ url.searchParams.forEach((value: string, key: string) => {
         return;
       }
 
+            if (slug === "ipv4-validator") {
+        const value = input.value.trim();
+        const ipv4Regex =
+          /^(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)$/;
+        output.value = ipv4Regex.test(value) ? "Valid IPv4" : "Invalid IPv4";
+        return;
+      }
+
+      if (slug === "ipv6-validator") {
+        const value = input.value.trim();
+        const ipv6Regex =
+          /^(([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}|::1|::|([0-9a-fA-F]{1,4}:){1,7}:|:([0-9a-fA-F]{1,4}:){1,7}|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4})$/;
+        output.value = ipv6Regex.test(value) ? "Valid IPv6" : "Invalid IPv6";
+        return;
+      }
+
+      if (slug === "domain-extractor") {
+        const matches = input.value.match(/\b(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}\b/g) || [];
+        output.value = [...new Set(matches)].join("\n") || "No domains found";
+        return;
+      }
+
+      if (slug === "hostname-extractor") {
+        try {
+          const lines = input.value
+            .split(/\r?\n/)
+            .map((line) => line.trim())
+            .filter((line) => line.length > 0);
+
+          const hostnames = lines.map((line) => {
+            const url = new URL(line);
+            return url.hostname;
+          });
+
+          output.value = [...new Set(hostnames)].join("\n") || "No hostnames found";
+        } catch {
+          output.value = "Invalid URL input";
+        }
+        return;
+      }
+
+      if (slug === "email-extractor") {
+        const matches = input.value.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g) || [];
+        output.value = [...new Set(matches)].join("\n") || "No emails found";
+        return;
+      }
+
+      if (slug === "duplicate-url-remover") {
+        const urls = input.value
+          .split(/\r?\n/)
+          .map((line) => line.trim())
+          .filter((line) => line.length > 0);
+
+        output.value = [...new Set(urls)].join("\n") || "No URLs found";
+        return;
+      }
+
+      if (slug === "url-list-cleaner") {
+        output.value = input.value
+          .split(/\r?\n/)
+          .map((line) => line.trim())
+          .filter((line) => line.length > 0)
+          .join("\n");
+        return;
+      }
+
+      if (slug === "average-calculator") {
+        const numbers = input.value
+          .split(/[\s,\n]+/)
+          .map((item) => item.trim())
+          .filter((item) => item.length > 0)
+          .map(Number);
+
+        if (numbers.length === 0 || numbers.some((num) => !Number.isFinite(num))) {
+          output.value = "Invalid numbers";
+          return;
+        }
+
+        const total = numbers.reduce((sum, num) => sum + num, 0);
+        output.value = String(total / numbers.length);
+        return;
+      }
+
+      if (slug === "ratio-calculator") {
+        const values = input.value
+          .split(/[\s,\n:]+/)
+          .map((item) => item.trim())
+          .filter((item) => item.length > 0)
+          .map(Number);
+
+        if (values.length < 2 || values.slice(0, 2).some((num) => !Number.isFinite(num))) {
+          output.value = "Enter two valid numbers";
+          return;
+        }
+
+        const gcd = (a: number, b: number): number => (b === 0 ? a : gcd(b, a % b));
+        const a = values[0];
+        const b = values[1];
+        const divisor = gcd(a, b);
+
+        output.value = `${a / divisor}:${b / divisor}`;
+        return;
+      }
+
+      if (slug === "percentage-change-calculator") {
+        const values = input.value
+          .split(/[\s,\n,]+/)
+          .map((item) => item.trim())
+          .filter((item) => item.length > 0)
+          .map(Number);
+
+        if (values.length < 2 || values.slice(0, 2).some((num) => !Number.isFinite(num))) {
+          output.value = "Enter old value and new value";
+          return;
+        }
+
+        const oldValue = values[0];
+        const newValue = values[1];
+
+        if (oldValue === 0) {
+          output.value = "Old value cannot be 0";
+          return;
+        }
+
+        const change = ((newValue - oldValue) / oldValue) * 100;
+        output.value = `${change}`;
+        return;
+      }
+
       output.value = "This tool logic is not connected yet.";
     });
 

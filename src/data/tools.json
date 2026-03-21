@@ -1419,6 +1419,206 @@
       }
     ],
     "related": ["text-to-binary", "binary-to-text", "base64-encode"]
+  },
+  {
+    "id": "ipv4-validator",
+    "name": "IPv4 Validator",
+    "slug": "ipv4-validator",
+    "category": "network-tools",
+    "intro": "Check whether an IPv4 address is valid.",
+    "description": "Validate IPv4 addresses instantly and detect invalid formats.",
+    "keywords": ["ipv4 validator", "validate ipv4", "ip address validator"],
+    "faq": [
+      {
+        "q": "What does an IPv4 validator do?",
+        "a": "It checks whether an input matches a valid IPv4 address format."
+      },
+      {
+        "q": "Can it detect invalid octets?",
+        "a": "Yes. It checks whether each octet is within the allowed range."
+      }
+    ],
+    "related": ["ipv6-validator", "ip-lookup", "hostname-extractor"]
+  },
+  {
+    "id": "ipv6-validator",
+    "name": "IPv6 Validator",
+    "slug": "ipv6-validator",
+    "category": "network-tools",
+    "intro": "Check whether an IPv6 address is valid.",
+    "description": "Validate IPv6 addresses in a fast and simple way.",
+    "keywords": ["ipv6 validator", "validate ipv6", "ipv6 checker"],
+    "faq": [
+      {
+        "q": "What does an IPv6 validator do?",
+        "a": "It checks whether an input matches a valid IPv6 address structure."
+      },
+      {
+        "q": "Is IPv6 validation different from IPv4?",
+        "a": "Yes. IPv6 uses a different hexadecimal format and structure."
+      }
+    ],
+    "related": ["ipv4-validator", "ip-lookup", "hostname-extractor"]
+  },
+  {
+    "id": "domain-extractor",
+    "name": "Domain Extractor",
+    "slug": "domain-extractor",
+    "category": "network-tools",
+    "intro": "Extract domains from text or URLs.",
+    "description": "Pull domain names from text, links, and copied content quickly.",
+    "keywords": ["domain extractor", "extract domains", "get domains from text"],
+    "faq": [
+      {
+        "q": "What does a domain extractor do?",
+        "a": "It finds and extracts domain names from text or URLs."
+      },
+      {
+        "q": "Can it help with lists of links?",
+        "a": "Yes. It is useful for cleaning and analyzing lists of URLs."
+      }
+    ],
+    "related": ["hostname-extractor", "url-list-cleaner", "duplicate-url-remover"]
+  },
+  {
+    "id": "hostname-extractor",
+    "name": "Hostname Extractor",
+    "slug": "hostname-extractor",
+    "category": "network-tools",
+    "intro": "Extract hostnames from URLs.",
+    "description": "Get hostnames from full URLs quickly and in a readable list.",
+    "keywords": ["hostname extractor", "extract hostname", "get host from url"],
+    "faq": [
+      {
+        "q": "What does a hostname extractor do?",
+        "a": "It extracts the hostname part from full URLs."
+      },
+      {
+        "q": "Is hostname the same as domain?",
+        "a": "Not always. A hostname can include subdomains."
+      }
+    ],
+    "related": ["domain-extractor", "url-parser", "duplicate-url-remover"]
+  },
+  {
+    "id": "email-extractor",
+    "name": "Email Extractor",
+    "slug": "email-extractor",
+    "category": "text-tools",
+    "intro": "Extract email addresses from text.",
+    "description": "Find and list email addresses from copied text, notes, or raw content.",
+    "keywords": ["email extractor", "extract emails", "find email addresses"],
+    "faq": [
+      {
+        "q": "What does an email extractor do?",
+        "a": "It scans text and extracts strings that match email address patterns."
+      },
+      {
+        "q": "Can it help with copied documents?",
+        "a": "Yes. It is useful for pulling emails from pasted content."
+      }
+    ],
+    "related": ["domain-extractor", "unique-lines", "remove-extra-spaces"]
+  },
+  {
+    "id": "duplicate-url-remover",
+    "name": "Duplicate URL Remover",
+    "slug": "duplicate-url-remover",
+    "category": "network-tools",
+    "intro": "Remove duplicate URLs from a list.",
+    "description": "Clean lists of links by removing repeated URLs and keeping unique ones.",
+    "keywords": ["duplicate url remover", "remove duplicate urls", "unique urls"],
+    "faq": [
+      {
+        "q": "What does this tool do?",
+        "a": "It removes repeated URLs and keeps only unique URL entries."
+      },
+      {
+        "q": "Is it useful for link cleanup?",
+        "a": "Yes. It helps clean large lists of copied links."
+      }
+    ],
+    "related": ["url-list-cleaner", "domain-extractor", "hostname-extractor"]
+  },
+  {
+    "id": "url-list-cleaner",
+    "name": "URL List Cleaner",
+    "slug": "url-list-cleaner",
+    "category": "network-tools",
+    "intro": "Clean and normalize a list of URLs.",
+    "description": "Trim whitespace and remove empty lines from pasted URL lists.",
+    "keywords": ["url list cleaner", "clean url list", "normalize urls"],
+    "faq": [
+      {
+        "q": "What does a URL list cleaner do?",
+        "a": "It cleans pasted URL lists by removing blanks and trimming extra spaces."
+      },
+      {
+        "q": "Can I use it before deduplicating links?",
+        "a": "Yes. It is useful before sorting or removing duplicate URLs."
+      }
+    ],
+    "related": ["duplicate-url-remover", "domain-extractor", "hostname-extractor"]
+  },
+  {
+    "id": "average-calculator",
+    "name": "Average Calculator",
+    "slug": "average-calculator",
+    "category": "calculators",
+    "intro": "Calculate the average of numbers quickly.",
+    "description": "Find the arithmetic mean of a list of numbers in seconds.",
+    "keywords": ["average calculator", "mean calculator", "calculate average"],
+    "faq": [
+      {
+        "q": "What does an average calculator do?",
+        "a": "It adds the numbers and divides by the total count to find the average."
+      },
+      {
+        "q": "What input format can I use?",
+        "a": "You can usually enter numbers separated by commas, spaces, or new lines."
+      }
+    ],
+    "related": ["percentage-calculator", "ratio-calculator", "discount-calculator"]
+  },
+  {
+    "id": "ratio-calculator",
+    "name": "Ratio Calculator",
+    "slug": "ratio-calculator",
+    "category": "calculators",
+    "intro": "Simplify and compare ratios.",
+    "description": "Calculate simplified ratios and compare two values quickly.",
+    "keywords": ["ratio calculator", "simplify ratio", "ratio tool"],
+    "faq": [
+      {
+        "q": "What does a ratio calculator do?",
+        "a": "It helps simplify ratios and compare values in ratio form."
+      },
+      {
+        "q": "Can it reduce ratios?",
+        "a": "Yes. It can simplify ratios to their lowest terms."
+      }
+    ],
+    "related": ["average-calculator", "percentage-calculator", "discount-calculator"]
+  },
+  {
+    "id": "percentage-change-calculator",
+    "name": "Percentage Change Calculator",
+    "slug": "percentage-change-calculator",
+    "category": "calculators",
+    "intro": "Calculate percentage increase or decrease.",
+    "description": "Measure percentage change between two numeric values quickly.",
+    "keywords": ["percentage change calculator", "percentage increase calculator", "percentage decrease calculator"],
+    "faq": [
+      {
+        "q": "What does a percentage change calculator do?",
+        "a": "It calculates the percentage increase or decrease from one value to another."
+      },
+      {
+        "q": "Is it useful for prices and metrics?",
+        "a": "Yes. It is useful for growth, decline, discounts, and trend comparisons."
+      }
+    ],
+    "related": ["percentage-calculator", "average-calculator", "discount-calculator"]
   }
 
 ]
