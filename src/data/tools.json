@@ -579,5 +579,105 @@
       }
     ],
     "related": ["line-counter", "remove-extra-spaces", "word-counter"]
+  },
+  {
+    "id": "text-trimmer",
+    "name": "Text Trimmer",
+    "slug": "text-trimmer",
+    "category": "text-tools",
+    "intro": "Trim leading and trailing spaces from text.",
+    "description": "Remove spaces at the beginning and end of your text instantly.",
+    "keywords": ["text trimmer", "trim text", "remove leading trailing spaces"],
+    "faq": [
+      {
+        "q": "What does a text trimmer do?",
+        "a": "It removes extra spaces from the beginning and end of the text."
+      },
+      {
+        "q": "Does it change spaces inside the text?",
+        "a": "No. It only trims the outer spaces."
+      }
+    ],
+    "related": ["remove-extra-spaces", "text-reverser", "word-counter"]
+  },
+  {
+    "id": "slug-generator",
+    "name": "Slug Generator",
+    "slug": "slug-generator",
+    "category": "text-tools",
+    "intro": "Convert text into a URL-friendly slug.",
+    "description": "Generate clean lowercase slugs from titles, headings, and phrases.",
+    "keywords": ["slug generator", "url slug generator", "text to slug"],
+    "faq": [
+      {
+        "q": "What is a slug generator?",
+        "a": "It converts text into a lowercase URL-friendly format with hyphens."
+      },
+      {
+        "q": "When is this useful?",
+        "a": "It is useful for blog URLs, page slugs, and SEO-friendly links."
+      }
+    ],
+    "related": ["text-trimmer", "lowercase-converter", "text-case-converter"]
+  },
+  {
+    "id": "random-string-generator",
+    "name": "Random String Generator",
+    "slug": "random-string-generator",
+    "category": "developer-tools",
+    "intro": "Generate a random text string instantly.",
+    "description": "Create a simple random string for testing, placeholders, and development tasks.",
+    "keywords": ["random string generator", "generate random string", "random text string"],
+    "faq": [
+      {
+        "q": "What does a random string generator do?",
+        "a": "It creates a random combination of letters and numbers."
+      },
+      {
+        "q": "Can I use it for testing?",
+        "a": "Yes. It is useful for quick test values and placeholders."
+      }
+    ],
+    "related": ["uuid-generator", "md5-generator", "sha256-generator"]
+  },
+  {
+    "id": "title-case-converter",
+    "name": "Title Case Converter",
+    "slug": "title-case-converter",
+    "category": "text-tools",
+    "intro": "Convert text to title case.",
+    "description": "Capitalize the first letter of each word quickly and easily.",
+    "keywords": ["title case converter", "convert to title case", "capitalize words"],
+    "faq": [
+      {
+        "q": "What is title case?",
+        "a": "Title case capitalizes the first letter of each word."
+      },
+      {
+        "q": "Who uses title case converters?",
+        "a": "Writers, students, editors, and marketers often use them."
+      }
+    ],
+    "related": ["text-case-converter", "uppercase-converter", "lowercase-converter"]
+  },
+  {
+    "id": "sentence-case-converter",
+    "name": "Sentence Case Converter",
+    "slug": "sentence-case-converter",
+    "category": "text-tools",
+    "intro": "Convert text to sentence case.",
+    "description": "Make text look more natural by capitalizing the first letter of the sentence.",
+    "keywords": ["sentence case converter", "convert to sentence case", "sentence capitalization"],
+    "faq": [
+      {
+        "q": "What does a sentence case converter do?",
+        "a": "It capitalizes the first letter of the sentence and lowercases the rest where needed."
+      },
+      {
+        "q": "Is it useful for copied text?",
+        "a": "Yes. It helps normalize messy all-caps or mixed-case text."
+      }
+    ],
+    "related": ["title-case-converter", "lowercase-converter", "text-case-converter"]
   }
 ]
