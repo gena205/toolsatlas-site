@@ -30,6 +30,7 @@ export async function GET() {
   const urls: string[] = [];
 
   urls.push(buildUrl(`${base}/`, today));
+  urls.push(buildUrl(`${base}/tools/`, today));
 
   for (const category of categorySlugs) {
     urls.push(buildUrl(`${base}/tools/category/${category}`, today));

@@ -679,5 +679,105 @@
       }
     ],
     "related": ["title-case-converter", "lowercase-converter", "text-case-converter"]
+  },
+  {
+    "id": "comma-to-newline",
+    "name": "Comma to Newline Converter",
+    "slug": "comma-to-newline",
+    "category": "text-tools",
+    "intro": "Convert comma-separated text into separate lines.",
+    "description": "Turn comma-separated values into one item per line instantly.",
+    "keywords": ["comma to newline", "csv to lines", "split comma separated text"],
+    "faq": [
+      {
+        "q": "What does this tool do?",
+        "a": "It splits comma-separated text into separate lines."
+      },
+      {
+        "q": "Is it useful for lists?",
+        "a": "Yes. It helps convert one-line lists into readable multi-line text."
+      }
+    ],
+    "related": ["newline-to-comma", "text-sorter", "unique-lines"]
+  },
+  {
+    "id": "newline-to-comma",
+    "name": "Newline to Comma Converter",
+    "slug": "newline-to-comma",
+    "category": "text-tools",
+    "intro": "Convert lines of text into a comma-separated list.",
+    "description": "Join multiple text lines into a single comma-separated string.",
+    "keywords": ["newline to comma", "lines to csv", "join lines with commas"],
+    "faq": [
+      {
+        "q": "What does this tool do?",
+        "a": "It joins multiple lines of text into one comma-separated line."
+      },
+      {
+        "q": "Can I use it for copied lists?",
+        "a": "Yes. It is useful for turning vertical lists into inline values."
+      }
+    ],
+    "related": ["comma-to-newline", "text-sorter", "empty-line-remover"]
+  },
+  {
+    "id": "text-sorter",
+    "name": "Text Sorter",
+    "slug": "text-sorter",
+    "category": "text-tools",
+    "intro": "Sort text lines alphabetically.",
+    "description": "Sort lines of text in ascending alphabetical order quickly.",
+    "keywords": ["text sorter", "sort lines alphabetically", "alphabetical text sorter"],
+    "faq": [
+      {
+        "q": "What does a text sorter do?",
+        "a": "It sorts separate lines of text into alphabetical order."
+      },
+      {
+        "q": "Can I sort lists with it?",
+        "a": "Yes. It is useful for names, items, keywords, and copied lists."
+      }
+    ],
+    "related": ["unique-lines", "comma-to-newline", "newline-to-comma"]
+  },
+  {
+    "id": "unique-lines",
+    "name": "Unique Lines Tool",
+    "slug": "unique-lines",
+    "category": "text-tools",
+    "intro": "Keep only unique lines from text.",
+    "description": "Remove duplicate lines and keep each unique line once.",
+    "keywords": ["unique lines", "remove duplicate lines", "deduplicate text lines"],
+    "faq": [
+      {
+        "q": "What does a unique lines tool do?",
+        "a": "It removes repeated lines and keeps only unique entries."
+      },
+      {
+        "q": "How is it different from sorting?",
+        "a": "Sorting changes order, while unique lines removes duplicates."
+      }
+    ],
+    "related": ["text-sorter", "duplicate-line-remover", "empty-line-remover"]
+  },
+  {
+    "id": "empty-line-remover",
+    "name": "Empty Line Remover",
+    "slug": "empty-line-remover",
+    "category": "text-tools",
+    "intro": "Remove blank lines from text.",
+    "description": "Clean up text by deleting empty lines and extra blank rows.",
+    "keywords": ["empty line remover", "remove blank lines", "delete empty lines"],
+    "faq": [
+      {
+        "q": "What does an empty line remover do?",
+        "a": "It removes blank or whitespace-only lines from text."
+      },
+      {
+        "q": "Is it useful for pasted content?",
+        "a": "Yes. It helps clean copied text from documents, logs, and websites."
+      }
+    ],
+    "related": ["newline-to-comma", "unique-lines", "remove-extra-spaces"]
   }
 ]

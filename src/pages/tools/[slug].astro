@@ -89,6 +89,14 @@ function formatCategoryLabel(category: string): string {
     </div>
   </section>
 
+    <section class="card">
+    <h2>About this tool</h2>
+    <p>{tool.description}</p>
+    <p>
+      This {tool.name.toLowerCase()} helps you complete common tasks quickly in the browser without installing anything.
+    </p>
+  </section>
+
   <section class="card">
     <h2>How to use</h2>
     <ul class="steps-list">
@@ -97,6 +105,14 @@ function formatCategoryLabel(category: string): string {
       <li>Review the output and copy the result if needed.</li>
     </ul>
   </section>
+
+  <section class="card">
+  <h2>About this tool</h2>
+  <p>{tool.description}</p>
+  <p>
+    This {tool.name.toLowerCase()} helps you complete common tasks quickly in the browser without installing anything.
+  </p>
+</section>
 
   <section class="card">
     <h2>FAQ</h2>
@@ -461,6 +477,52 @@ function formatCategoryLabel(category: string): string {
       if (slug === "sentence-case-converter") {
         const text = input.value.trim().toLowerCase();
         output.value = text ? text.charAt(0).toUpperCase() + text.slice(1) : "";
+        return;
+      }
+
+            if (slug === "comma-to-newline") {
+        output.value = input.value
+          .split(",")
+          .map((item) => item.trim())
+          .filter((item) => item.length > 0)
+          .join("\n");
+        return;
+      }
+
+      if (slug === "newline-to-comma") {
+        output.value = input.value
+          .split(/\r?\n/)
+          .map((item) => item.trim())
+          .filter((item) => item.length > 0)
+          .join(", ");
+        return;
+      }
+
+      if (slug === "text-sorter") {
+        output.value = input.value
+          .split(/\r?\n/)
+          .map((item) => item.trim())
+          .filter((item) => item.length > 0)
+          .sort((a, b) => a.localeCompare(b))
+          .join("\n");
+        return;
+      }
+
+      if (slug === "unique-lines") {
+        const lines = input.value
+          .split(/\r?\n/)
+          .map((item) => item.trim())
+          .filter((item) => item.length > 0);
+
+        output.value = [...new Set(lines)].join("\n");
+        return;
+      }
+
+      if (slug === "empty-line-remover") {
+        output.value = input.value
+          .split(/\r?\n/)
+          .filter((line) => line.trim().length > 0)
+          .join("\n");
         return;
       }
 

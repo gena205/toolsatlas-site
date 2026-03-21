@@ -74,6 +74,10 @@ const totalTools = allTools.length;
         <span>Online use</span>
       </div>
     </div>
+
+        <p class="hero-link">
+      <a href="/tools/">Browse all tools</a>
+    </p>
   </section>
 
   <section class="card">
@@ -143,12 +147,22 @@ const totalTools = allTools.length;
     max-width: 760px;
   }
 
+    .hero-link {
+    margin-top: 18px;
+  }
+
+  .hero-link a {
+    color: var(--accent);
+    font-weight: 700;
+  }
+
   .hero-stats {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 14px;
     margin-top: 24px;
   }
+
 
   .stat {
     border: 1px solid var(--border);
