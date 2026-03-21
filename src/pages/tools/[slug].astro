@@ -280,9 +280,9 @@ function formatCategoryLabel(category: string): string {
     runBtn?.addEventListener("click", () => {
       if (!input || !output) return;
 
-      const currentPath = window.location.pathname;
+      const slug = window.location.pathname.split("/").pop();
 
-      if (currentPath.includes("/tools/json-formatter")) {
+      if (slug === "json-formatter") {
         try {
           const parsed = JSON.parse(input.value);
           output.value = JSON.stringify(parsed, null, 2);
@@ -292,7 +292,7 @@ function formatCategoryLabel(category: string): string {
         return;
       }
 
-      if (currentPath.includes("/tools/json-validator")) {
+      if (slug === "json-validator") {
         try {
           JSON.parse(input.value);
           output.value = "Valid JSON";
@@ -302,7 +302,7 @@ function formatCategoryLabel(category: string): string {
         return;
       }
 
-      if (currentPath.includes("/tools/json-minifier")) {
+      if (slug === "json-minifier") {
         try {
           const parsed = JSON.parse(input.value);
           output.value = JSON.stringify(parsed);
@@ -312,7 +312,7 @@ function formatCategoryLabel(category: string): string {
         return;
       }
 
-      if (currentPath.includes("/tools/base64-encode")) {
+      if (slug === "base64-encode") {
         try {
           output.value = btoa(unescape(encodeURIComponent(input.value)));
         } catch {
@@ -321,7 +321,7 @@ function formatCategoryLabel(category: string): string {
         return;
       }
 
-      if (currentPath.includes("/tools/base64-decode")) {
+      if (slug === "base64-decode") {
         try {
           output.value = decodeURIComponent(escape(atob(input.value)));
         } catch {
@@ -330,12 +330,12 @@ function formatCategoryLabel(category: string): string {
         return;
       }
 
-      if (currentPath.includes("/tools/url-encode")) {
+      if (slug === "url-encode") {
         output.value = encodeURIComponent(input.value);
         return;
       }
 
-      if (currentPath.includes("/tools/url-decode")) {
+      if (slug === "url-decode") {
         try {
           output.value = decodeURIComponent(input.value);
         } catch {
@@ -344,31 +344,31 @@ function formatCategoryLabel(category: string): string {
         return;
       }
 
-      if (currentPath.includes("/tools/html-encode")) {
+      if (slug === "html-encode") {
         const temp = document.createElement("textarea");
         temp.textContent = input.value;
         output.value = temp.innerHTML;
         return;
       }
 
-      if (currentPath.includes("/tools/html-decode")) {
+      if (slug === "html-decode") {
         const temp = document.createElement("textarea");
         temp.innerHTML = input.value;
         output.value = temp.value;
         return;
       }
 
-      if (currentPath.includes("/tools/text-case-converter")) {
+      if (slug === "text-case-converter") {
         output.value = input.value.toUpperCase();
         return;
       }
 
-      if (currentPath.includes("/tools/remove-extra-spaces")) {
+      if (slug === "remove-extra-spaces") {
         output.value = input.value.replace(/\s+/g, " ").trim();
         return;
       }
 
-      if (currentPath.includes("/tools/word-counter")) {
+      if (slug === "word-counter") {
         const trimmed = input.value.trim();
         const words = trimmed ? trimmed.split(/\s+/).length : 0;
         const characters = input.value.length;
@@ -383,7 +383,7 @@ function formatCategoryLabel(category: string): string {
         return;
       }
 
-      if (currentPath.includes("/tools/character-counter")) {
+      if (slug === "character-counter") {
         const characters = input.value.length;
         const charactersNoSpaces = input.value.replace(/\s/g, "").length;
 
@@ -393,28 +393,28 @@ function formatCategoryLabel(category: string): string {
         return;
       }
 
-            if (currentPath.includes("/tools/text-reverser")) {
+      if (slug === "text-reverser") {
         output.value = input.value.split("").reverse().join("");
         return;
       }
 
-      if (currentPath.includes("/tools/lowercase-converter")) {
+      if (slug === "lowercase-converter") {
         output.value = input.value.toLowerCase();
         return;
       }
 
-      if (currentPath.includes("/tools/uppercase-converter")) {
+      if (slug === "uppercase-converter") {
         output.value = input.value.toUpperCase();
         return;
       }
 
-      if (currentPath.includes("/tools/line-counter")) {
+      if (slug === "line-counter") {
         const lines = input.value ? input.value.split(/\r?\n/).length : 0;
         output.value = `Lines: ${lines}`;
         return;
       }
 
-      if (currentPath.includes("/tools/duplicate-line-remover")) {
+      if (slug === "duplicate-line-remover") {
         const lines = input.value.split(/\r?\n/);
         const uniqueLines = [...new Set(lines)];
         output.value = uniqueLines.join("\n");
