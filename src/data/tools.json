@@ -779,5 +779,446 @@
       }
     ],
     "related": ["newline-to-comma", "unique-lines", "remove-extra-spaces"]
+  },
+  {
+    "id": "remove-duplicate-words",
+    "name": "Remove Duplicate Words",
+    "slug": "remove-duplicate-words",
+    "category": "text-tools",
+    "intro": "Remove repeated words from text.",
+    "description": "Clean text by removing duplicate words while keeping the first occurrence.",
+    "keywords": ["remove duplicate words", "deduplicate words", "text word cleaner"],
+    "faq": [
+      {
+        "q": "What does this tool do?",
+        "a": "It removes repeated words from text and keeps only the first occurrence."
+      },
+      {
+        "q": "Is it useful for keyword cleanup?",
+        "a": "Yes. It can help clean repeated words in notes, lists, and drafts."
+      }
+    ],
+    "related": ["unique-lines", "remove-extra-spaces", "word-counter"]
+  },
+  {
+    "id": "reverse-lines",
+    "name": "Reverse Lines",
+    "slug": "reverse-lines",
+    "category": "text-tools",
+    "intro": "Reverse the order of lines in text.",
+    "description": "Flip the order of text lines instantly while keeping each line content unchanged.",
+    "keywords": ["reverse lines", "reverse line order", "flip text lines"],
+    "faq": [
+      {
+        "q": "What does reverse lines do?",
+        "a": "It reverses the order of lines in the input text."
+      },
+      {
+        "q": "Does it reverse characters too?",
+        "a": "No. It only changes the order of lines, not the text inside each line."
+      }
+    ],
+    "related": ["text-reverser", "text-sorter", "line-counter"]
+  },
+  {
+    "id": "sort-lines-descending",
+    "name": "Sort Lines Descending",
+    "slug": "sort-lines-descending",
+    "category": "text-tools",
+    "intro": "Sort lines of text in descending order.",
+    "description": "Arrange text lines in reverse alphabetical order quickly and clearly.",
+    "keywords": ["sort lines descending", "reverse alphabetical sorter", "descending text sorter"],
+    "faq": [
+      {
+        "q": "What does this tool do?",
+        "a": "It sorts lines in descending alphabetical order."
+      },
+      {
+        "q": "How is it different from text sorter?",
+        "a": "The regular text sorter sorts ascending, while this one sorts descending."
+      }
+    ],
+    "related": ["text-sorter", "unique-lines", "reverse-lines"]
+  },
+  {
+    "id": "line-number-adder",
+    "name": "Line Number Adder",
+    "slug": "line-number-adder",
+    "category": "text-tools",
+    "intro": "Add line numbers to text.",
+    "description": "Number each line automatically for lists, notes, logs, and structured text.",
+    "keywords": ["line number adder", "add line numbers", "number text lines"],
+    "faq": [
+      {
+        "q": "What does a line number adder do?",
+        "a": "It prefixes each line with its line number."
+      },
+      {
+        "q": "Can I use it for lists and notes?",
+        "a": "Yes. It is useful for numbered lists, notes, and copied logs."
+      }
+    ],
+    "related": ["line-counter", "reverse-lines", "text-sorter"]
+  },
+  {
+    "id": "tabs-to-spaces",
+    "name": "Tabs to Spaces Converter",
+    "slug": "tabs-to-spaces",
+    "category": "text-tools",
+    "intro": "Replace tab characters with spaces.",
+    "description": "Convert tabs into spaces for cleaner formatting in text, code, and copied content.",
+    "keywords": ["tabs to spaces", "replace tabs with spaces", "tab converter"],
+    "faq": [
+      {
+        "q": "What does this tool do?",
+        "a": "It replaces tab characters with regular spaces."
+      },
+      {
+        "q": "Is it useful for code formatting?",
+        "a": "Yes. It can help normalize indentation and text alignment."
+      }
+    ],
+    "related": ["remove-extra-spaces", "text-trimmer", "empty-line-remover"]
+  },
+  {
+    "id": "jwt-decoder",
+    "name": "JWT Decoder",
+    "slug": "jwt-decoder",
+    "category": "developer-tools",
+    "intro": "Decode JWT payload data instantly.",
+    "description": "Inspect the header and payload of a JSON Web Token in a readable format.",
+    "keywords": ["jwt decoder", "decode jwt", "json web token decoder"],
+    "faq": [
+      {
+        "q": "What does a JWT decoder do?",
+        "a": "It decodes the readable parts of a JSON Web Token such as header and payload."
+      },
+      {
+        "q": "Does decoding verify the token?",
+        "a": "No. Decoding only reads the token content and does not verify its signature."
+      }
+    ],
+    "related": ["base64-decode", "json-formatter", "json-validator"]
+  },
+  {
+    "id": "url-parser",
+    "name": "URL Parser",
+    "slug": "url-parser",
+    "category": "developer-tools",
+    "intro": "Break a URL into readable parts.",
+    "description": "Parse a URL into protocol, host, pathname, search parameters, and hash.",
+    "keywords": ["url parser", "parse url", "url breakdown tool"],
+    "faq": [
+      {
+        "q": "What does a URL parser do?",
+        "a": "It separates a URL into parts such as protocol, hostname, path, query string, and hash."
+      },
+      {
+        "q": "Is it useful for debugging links?",
+        "a": "Yes. It helps inspect URLs and query parameters quickly."
+      }
+    ],
+    "related": ["url-encode", "url-decode", "json-formatter"]
+  },
+  {
+    "id": "html-stripper",
+    "name": "HTML Stripper",
+    "slug": "html-stripper",
+    "category": "developer-tools",
+    "intro": "Remove HTML tags from text.",
+    "description": "Strip HTML markup and keep only the readable text content.",
+    "keywords": ["html stripper", "remove html tags", "strip html"],
+    "faq": [
+      {
+        "q": "What does an HTML stripper do?",
+        "a": "It removes HTML tags and leaves plain text."
+      },
+      {
+        "q": "Is it useful for copied webpage content?",
+        "a": "Yes. It helps clean pasted HTML and keep only visible text."
+      }
+    ],
+    "related": ["html-decode", "html-encode", "remove-extra-spaces"]
+  },
+  {
+    "id": "bytes-to-kb",
+    "name": "Bytes to KB Converter",
+    "slug": "bytes-to-kb-converter",
+    "category": "converters",
+    "intro": "Convert bytes into kilobytes quickly.",
+    "description": "Use this free online converter to change byte values into kilobytes.",
+    "keywords": ["bytes to kb", "convert bytes to kilobytes", "byte to kb converter"],
+    "faq": [
+      {
+        "q": "What does this converter do?",
+        "a": "It converts byte values into kilobytes."
+      },
+      {
+        "q": "Why is this useful?",
+        "a": "It helps make storage sizes easier to read and compare."
+      }
+    ],
+    "related": ["bytes-to-mb", "kb-to-mb", "timestamp-converter"]
+  },
+  {
+    "id": "kb-to-mb",
+    "name": "KB to MB Converter",
+    "slug": "kb-to-mb-converter",
+    "category": "converters",
+    "intro": "Convert kilobytes into megabytes instantly.",
+    "description": "Translate KB values into MB for file sizes, storage, and quick calculations.",
+    "keywords": ["kb to mb", "convert kb to mb", "kilobytes to megabytes"],
+    "faq": [
+      {
+        "q": "What does this converter do?",
+        "a": "It converts kilobytes into megabytes."
+      },
+      {
+        "q": "Is it useful for file size checks?",
+        "a": "Yes. It helps compare and understand file size values more clearly."
+      }
+    ],
+    "related": ["bytes-to-kb", "bytes-to-mb", "percentage-calculator"]
+  },
+  {
+    "id": "discount-calculator",
+    "name": "Discount Calculator",
+    "slug": "discount-calculator",
+    "category": "calculators",
+    "intro": "Calculate discounted prices quickly.",
+    "description": "Work out sale prices, discount amounts, and final totals with a simple online discount calculator.",
+    "keywords": ["discount calculator", "sale price calculator", "calculate discount"],
+    "faq": [
+      {
+        "q": "What does a discount calculator do?",
+        "a": "It calculates the discount amount and final price after applying a percentage discount."
+      },
+      {
+        "q": "Who can use it?",
+        "a": "It is useful for shopping, pricing, budgeting, and business tasks."
+      }
+    ],
+    "related": ["percentage-calculator", "age-calculator", "kb-to-mb"]
+  },
+  {
+    "id": "remove-duplicate-words",
+    "name": "Remove Duplicate Words",
+    "slug": "remove-duplicate-words",
+    "category": "text-tools",
+    "intro": "Remove repeated words from text.",
+    "description": "Clean text by removing duplicate words while keeping the first occurrence.",
+    "keywords": ["remove duplicate words", "deduplicate words", "text word cleaner"],
+    "faq": [
+      {
+        "q": "What does this tool do?",
+        "a": "It removes repeated words from text and keeps only the first occurrence."
+      },
+      {
+        "q": "Is it useful for keyword cleanup?",
+        "a": "Yes. It can help clean repeated words in notes, lists, and drafts."
+      }
+    ],
+    "related": ["unique-lines", "remove-extra-spaces", "word-counter"]
+  },
+  {
+    "id": "reverse-lines",
+    "name": "Reverse Lines",
+    "slug": "reverse-lines",
+    "category": "text-tools",
+    "intro": "Reverse the order of lines in text.",
+    "description": "Flip the order of text lines instantly while keeping each line content unchanged.",
+    "keywords": ["reverse lines", "reverse line order", "flip text lines"],
+    "faq": [
+      {
+        "q": "What does reverse lines do?",
+        "a": "It reverses the order of lines in the input text."
+      },
+      {
+        "q": "Does it reverse characters too?",
+        "a": "No. It only changes the order of lines, not the text inside each line."
+      }
+    ],
+    "related": ["text-reverser", "text-sorter", "line-counter"]
+  },
+  {
+    "id": "sort-lines-descending",
+    "name": "Sort Lines Descending",
+    "slug": "sort-lines-descending",
+    "category": "text-tools",
+    "intro": "Sort lines of text in descending order.",
+    "description": "Arrange text lines in reverse alphabetical order quickly and clearly.",
+    "keywords": ["sort lines descending", "reverse alphabetical sorter", "descending text sorter"],
+    "faq": [
+      {
+        "q": "What does this tool do?",
+        "a": "It sorts lines in descending alphabetical order."
+      },
+      {
+        "q": "How is it different from text sorter?",
+        "a": "The regular text sorter sorts ascending, while this one sorts descending."
+      }
+    ],
+    "related": ["text-sorter", "unique-lines", "reverse-lines"]
+  },
+  {
+    "id": "line-number-adder",
+    "name": "Line Number Adder",
+    "slug": "line-number-adder",
+    "category": "text-tools",
+    "intro": "Add line numbers to text.",
+    "description": "Number each line automatically for lists, notes, logs, and structured text.",
+    "keywords": ["line number adder", "add line numbers", "number text lines"],
+    "faq": [
+      {
+        "q": "What does a line number adder do?",
+        "a": "It prefixes each line with its line number."
+      },
+      {
+        "q": "Can I use it for lists and notes?",
+        "a": "Yes. It is useful for numbered lists, notes, and copied logs."
+      }
+    ],
+    "related": ["line-counter", "reverse-lines", "text-sorter"]
+  },
+  {
+    "id": "tabs-to-spaces",
+    "name": "Tabs to Spaces Converter",
+    "slug": "tabs-to-spaces",
+    "category": "text-tools",
+    "intro": "Replace tab characters with spaces.",
+    "description": "Convert tabs into spaces for cleaner formatting in text, code, and copied content.",
+    "keywords": ["tabs to spaces", "replace tabs with spaces", "tab converter"],
+    "faq": [
+      {
+        "q": "What does this tool do?",
+        "a": "It replaces tab characters with regular spaces."
+      },
+      {
+        "q": "Is it useful for code formatting?",
+        "a": "Yes. It can help normalize indentation and text alignment."
+      }
+    ],
+    "related": ["remove-extra-spaces", "text-trimmer", "empty-line-remover"]
+  },
+  {
+    "id": "jwt-decoder",
+    "name": "JWT Decoder",
+    "slug": "jwt-decoder",
+    "category": "developer-tools",
+    "intro": "Decode JWT payload data instantly.",
+    "description": "Inspect the header and payload of a JSON Web Token in a readable format.",
+    "keywords": ["jwt decoder", "decode jwt", "json web token decoder"],
+    "faq": [
+      {
+        "q": "What does a JWT decoder do?",
+        "a": "It decodes the readable parts of a JSON Web Token such as header and payload."
+      },
+      {
+        "q": "Does decoding verify the token?",
+        "a": "No. Decoding only reads the token content and does not verify its signature."
+      }
+    ],
+    "related": ["base64-decode", "json-formatter", "json-validator"]
+  },
+  {
+    "id": "url-parser",
+    "name": "URL Parser",
+    "slug": "url-parser",
+    "category": "developer-tools",
+    "intro": "Break a URL into readable parts.",
+    "description": "Parse a URL into protocol, host, pathname, search parameters, and hash.",
+    "keywords": ["url parser", "parse url", "url breakdown tool"],
+    "faq": [
+      {
+        "q": "What does a URL parser do?",
+        "a": "It separates a URL into parts such as protocol, hostname, path, query string, and hash."
+      },
+      {
+        "q": "Is it useful for debugging links?",
+        "a": "Yes. It helps inspect URLs and query parameters quickly."
+      }
+    ],
+    "related": ["url-encode", "url-decode", "json-formatter"]
+  },
+  {
+    "id": "html-stripper",
+    "name": "HTML Stripper",
+    "slug": "html-stripper",
+    "category": "developer-tools",
+    "intro": "Remove HTML tags from text.",
+    "description": "Strip HTML markup and keep only the readable text content.",
+    "keywords": ["html stripper", "remove html tags", "strip html"],
+    "faq": [
+      {
+        "q": "What does an HTML stripper do?",
+        "a": "It removes HTML tags and leaves plain text."
+      },
+      {
+        "q": "Is it useful for copied webpage content?",
+        "a": "Yes. It helps clean pasted HTML and keep only visible text."
+      }
+    ],
+    "related": ["html-decode", "html-encode", "remove-extra-spaces"]
+  },
+  {
+    "id": "bytes-to-kb",
+    "name": "Bytes to KB Converter",
+    "slug": "bytes-to-kb-converter",
+    "category": "converters",
+    "intro": "Convert bytes into kilobytes quickly.",
+    "description": "Use this free online converter to change byte values into kilobytes.",
+    "keywords": ["bytes to kb", "convert bytes to kilobytes", "byte to kb converter"],
+    "faq": [
+      {
+        "q": "What does this converter do?",
+        "a": "It converts byte values into kilobytes."
+      },
+      {
+        "q": "Why is this useful?",
+        "a": "It helps make storage sizes easier to read and compare."
+      }
+    ],
+    "related": ["bytes-to-mb", "kb-to-mb", "timestamp-converter"]
+  },
+  {
+    "id": "kb-to-mb",
+    "name": "KB to MB Converter",
+    "slug": "kb-to-mb-converter",
+    "category": "converters",
+    "intro": "Convert kilobytes into megabytes instantly.",
+    "description": "Translate KB values into MB for file sizes, storage, and quick calculations.",
+    "keywords": ["kb to mb", "convert kb to mb", "kilobytes to megabytes"],
+    "faq": [
+      {
+        "q": "What does this converter do?",
+        "a": "It converts kilobytes into megabytes."
+      },
+      {
+        "q": "Is it useful for file size checks?",
+        "a": "Yes. It helps compare and understand file size values more clearly."
+      }
+    ],
+    "related": ["bytes-to-kb", "bytes-to-mb", "percentage-calculator"]
+  },
+  {
+    "id": "discount-calculator",
+    "name": "Discount Calculator",
+    "slug": "discount-calculator",
+    "category": "calculators",
+    "intro": "Calculate discounted prices quickly.",
+    "description": "Work out sale prices, discount amounts, and final totals with a simple online discount calculator.",
+    "keywords": ["discount calculator", "sale price calculator", "calculate discount"],
+    "faq": [
+      {
+        "q": "What does a discount calculator do?",
+        "a": "It calculates the discount amount and final price after applying a percentage discount."
+      },
+      {
+        "q": "Who can use it?",
+        "a": "It is useful for shopping, pricing, budgeting, and business tasks."
+      }
+    ],
+    "related": ["percentage-calculator", "age-calculator", "kb-to-mb"]
   }
+
 ]

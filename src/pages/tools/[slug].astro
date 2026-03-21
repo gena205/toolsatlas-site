@@ -39,7 +39,7 @@ function formatCategoryLabel(category: string): string {
 }
 ---
 
-<ToolLayout title={`${tool.name} - ToolsAtlas`} description={tool.description}>
+<ToolLayout title={`${tool.name} Online Free Tool – Fast & Easy | ToolsAtlas`} description={`${tool.description} Free online tool. No installation required. Fast and easy to use.`}>
   <section class="card tool-hero">
     <p class="category-pill">{formatCategoryLabel(tool.category)}</p>
     <h1>{tool.name}</h1>
@@ -97,6 +97,16 @@ function formatCategoryLabel(category: string): string {
     </p>
   </section>
 
+
+  <section class="card">
+  <h2>Why use this tool</h2>
+  <ul>
+    <li>Fast and simple to use directly in your browser</li>
+    <li>No installation or signup required</li>
+    <li>Works instantly on any device</li>
+  </ul>
+</section>
+
   <section class="card">
     <h2>How to use</h2>
     <ul class="steps-list">
@@ -123,6 +133,15 @@ function formatCategoryLabel(category: string): string {
       </div>
     ))}
   </section>
+
+  <section class="card">
+  <h2>Use cases</h2>
+  <ul>
+    <li>Developers working with data and APIs</li>
+    <li>Students and learners</li>
+    <li>Quick everyday text or data tasks</li>
+  </ul>
+</section>
 
   <section class="card">
     <h2>Related tools</h2>
@@ -523,6 +542,144 @@ function formatCategoryLabel(category: string): string {
           .split(/\r?\n/)
           .filter((line) => line.trim().length > 0)
           .join("\n");
+        return;
+      }
+
+            if (slug === "remove-duplicate-words") {
+        const words = input.value.trim().split(/\s+/);
+        const uniqueWords = [...new Set(words.filter((word) => word.length > 0))];
+        output.value = uniqueWords.join(" ");
+        return;
+      }
+
+      if (slug === "reverse-lines") {
+        output.value = input.value.split(/\r?\n/).reverse().join("\n");
+        return;
+      }
+
+      if (slug === "sort-lines-descending") {
+        output.value = input.value
+          .split(/\r?\n/)
+          .map((item) => item.trim())
+          .filter((item) => item.length > 0)
+          .sort((a, b) => b.localeCompare(a))
+          .join("\n");
+        return;
+      }
+
+      if (slug === "line-number-adder") {
+        output.value = input.value
+          .split(/\r?\n/)
+          .map((line, index) => `${index + 1}. ${line}`)
+          .join("\n");
+        return;
+      }
+
+      if (slug === "tabs-to-spaces") {
+        output.value = input.value.replace(/\t/g, "    ");
+        return;
+      }
+
+      if (slug === "jwt-decoder") {
+        try {
+          const parts = input.value.trim().split(".");
+          if (parts.length < 2) {
+            output.value = "Invalid JWT";
+            return;
+          }
+
+          const decodeBase64Url = (value: string): string => {
+            const base64 = value.replace(/-/g, "+").replace(/_/g, "/");
+            const padded = base64 + "=".repeat((4 - (base64.length % 4)) % 4);
+            return decodeURIComponent(escape(atob(padded)));
+          };
+
+          const header = JSON.parse(decodeBase64Url(parts[0]));
+          const payload = JSON.parse(decodeBase64Url(parts[1]));
+
+          output.value =
+            `Header:\n${JSON.stringify(header, null, 2)}\n\n` +
+            `Payload:\n${JSON.stringify(payload, null, 2)}`;
+        } catch {
+          output.value = "Invalid JWT";
+        }
+        return;
+      }
+
+      if (slug === "url-parser") {
+        try {
+          const url = new URL(input.value.trim());
+          const params: Record<string, string> = {};
+url.searchParams.forEach((value: string, key: string) => {
+  params[key] = value;
+});
+
+          output.value = JSON.stringify(
+            {
+              href: url.href,
+              protocol: url.protocol,
+              hostname: url.hostname,
+              port: url.port,
+              pathname: url.pathname,
+              search: url.search,
+              hash: url.hash,
+              searchParams: params
+            },
+            null,
+            2
+          );
+        } catch {
+          output.value = "Invalid URL";
+        }
+        return;
+      }
+
+      if (slug === "html-stripper") {
+        const temp = document.createElement("div");
+        temp.innerHTML = input.value;
+        output.value = temp.textContent || temp.innerText || "";
+        return;
+      }
+
+      if (slug === "bytes-to-kb-converter") {
+        const value = Number(input.value.trim());
+        output.value = Number.isFinite(value) ? String(value / 1024) : "Invalid number";
+        return;
+      }
+
+      if (slug === "kb-to-mb-converter") {
+        const value = Number(input.value.trim());
+        output.value = Number.isFinite(value) ? String(value / 1024) : "Invalid number";
+        return;
+      }
+
+      if (slug === "discount-calculator") {
+        const parts = input.value
+          .split(/[\n,]+/)
+          .map((item) => item.trim())
+          .filter((item) => item.length > 0);
+
+        if (parts.length < 2) {
+          output.value = "Enter price and discount percent on separate lines";
+          return;
+        }
+
+        const price = Number(parts[0]);
+        const discount = Number(parts[1]);
+
+        if (!Number.isFinite(price) || !Number.isFinite(discount)) {
+          output.value = "Invalid numbers";
+          return;
+        }
+
+        const discountAmount = (price * discount) / 100;
+        const finalPrice = price - discountAmount;
+
+        output.value =
+          `Original price: ${price}\n` +
+          `Discount percent: ${discount}\n` +
+          `Discount amount: ${discountAmount}\n` +
+          `Final price: ${finalPrice}`;
         return;
       }
 
