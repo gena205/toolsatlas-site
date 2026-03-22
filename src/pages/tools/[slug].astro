@@ -336,14 +336,24 @@ if (slug === "my-ip-address") {
 
   output.value = "Loading your public IP address...";
 
-  fetch("https://api.ipify.org?format=json")
-    .then((response: Response) => response.json())
-    .then((data: { ip?: string }) => {
-      output.value = data.ip ? `Your public IP: ${data.ip}` : "Unable to detect your IP address.";
+  fetch("https://api.ipify.org?format=json", { cache: "no-store" })
+    .then((response: Response) => {
+      if (!response.ok) {
+        throw new Error("Failed to fetch IP");
+      }
+      return response.json();
     })
-    .catch(() => {
+    .then((data: { ip?: string }) => {
+      output.value = data.ip
+        ? `Your public IP: ${data.ip}`
+        : "Unable to detect your IP address.";
+    })
+    .catch((error: unknown) => {
+      console.error("my-ip-address error:", error);
       output.value = "Unable to detect your IP address.";
     });
+
+  return;
 }
 
     runBtn?.addEventListener("click", () => {
