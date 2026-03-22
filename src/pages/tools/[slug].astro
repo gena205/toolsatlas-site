@@ -60,31 +60,30 @@ function formatCategoryLabel(category: string): string {
           {tool.slug === "my-ip-address" ? "Info" : "Input"}
         </label>
 
-        <textarea
-          id="tool-input"
-          class="tool-textarea"
-          rows="12"
-          placeholder={tool.slug === "my-ip-address"
-            ? ""
-            : `Paste or type your input for ${tool.name} here...`}
-          style={tool.slug === "my-ip-address" ? "display:none;" : ""}
-        ></textarea>
-
-        {tool.slug === "my-ip-address" && (
-          <div
-            class="tool-textarea output-textarea"
-            style="display:flex;align-items:center;justify-content:center;"
-          >
+        {tool.slug === "my-ip-address" ? (
+          <div class="tool-textarea output-textarea info-box">
             No input required for this tool.
           </div>
+        ) : (
+          <textarea
+            id="tool-input"
+            class="tool-textarea"
+            rows="12"
+            placeholder={`Paste or type your input for ${tool.name} here...`}
+          ></textarea>
         )}
 
-      <div class="button-row">
-            <button type="button" class="primary-button">Run Tool</button>
-            <button type="button" class="secondary-button">Copy Input</button>
-            <button type="button" class="secondary-button">Clear</button>
-          </div>
-        )}
+        <div class="button-row">
+          <button type="button" class="primary-button">Run Tool</button>
+          <button
+            type="button"
+            class="secondary-button"
+            disabled={tool.slug === "my-ip-address"}
+          >
+            Copy Input
+          </button>
+          <button type="button" class="secondary-button">Clear</button>
+        </div>
       </div>
 
       <div class="tool-column">
@@ -253,6 +252,18 @@ function formatCategoryLabel(category: string): string {
     background: #0d1528;
   }
 
+  .info-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .secondary-button:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    transform: none;
+  }
+
   .button-row {
     display: flex;
     flex-wrap: wrap;
@@ -317,7 +328,7 @@ function formatCategoryLabel(category: string): string {
 
 <script>
   document.addEventListener("DOMContentLoaded", () => {
-    const input = document.getElementById("tool-input") as HTMLTextAreaElement;
+    const input = document.getElementById("tool-input") as HTMLTextAreaElement | null;
     const output = document.getElementById("tool-output") as HTMLTextAreaElement | null;
 
     const runBtn = document.querySelector(".primary-button") as HTMLButtonElement | null;
@@ -327,36 +338,10 @@ function formatCategoryLabel(category: string): string {
     const clearBtn = secondaryButtons[1] as HTMLButtonElement | undefined;
     const copyResultBtn = secondaryButtons[2] as HTMLButtonElement | undefined;
     const downloadBtn = secondaryButtons[3] as HTMLButtonElement | undefined;
-
-    const slug = window.location.pathname.split("/").pop();
-
-if (slug === "my-ip-address") {
-  if (!output) return;
-
-  output.value = "Loading your public IP address...";
-
-  fetch("https://api.ipify.org?format=json", { cache: "no-store" })
-    .then((response: Response) => {
-      if (!response.ok) {
-        throw new Error("Failed to fetch IP");
-      }
-      return response.json();
-    })
-    .then((data: { ip?: string }) => {
-      output.value = data.ip
-        ? `Your public IP: ${data.ip}`
-        : "Unable to detect your IP address.";
-    })
-    .catch((error: unknown) => {
-      console.error("my-ip-address error:", error);
-      output.value = "Unable to detect your IP address.";
-    });
-
-  return;
-}
+    const slug = window.location.pathname.split("/").filter(Boolean).pop();
 
     runBtn?.addEventListener("click", () => {
-      if (!input || !output) return;
+      if (!output) return;
 
       if (slug === "my-ip-address") {
         output.value = "Loading your public IP address...";
@@ -379,6 +364,8 @@ if (slug === "my-ip-address") {
 
         return;
       }
+      if (!input) return;
+
 
       if (slug === "json-formatter") {
         try {
@@ -3515,9 +3502,13 @@ if (slug === "ns-record-lookup") {
     });
 
     clearBtn?.addEventListener("click", () => {
-      if (!input || !output) return;
-      input.value = "";
-      output.value = "";
+      if (input) {
+        input.value = "";
+      }
+
+      if (output) {
+        output.value = "";
+      }
     });
 
     copyResultBtn?.addEventListener("click", async () => {
@@ -3532,7 +3523,7 @@ if (slug === "ns-record-lookup") {
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
-      link.download = `${window.location.pathname.split("/").pop() || "tool-output"}.txt`;
+      link.download = `${window.location.pathname.split("/").filter(Boolean).pop() || "tool-output"}.txt`;
       document.body.appendChild(link);
       link.click();
       link.remove();
