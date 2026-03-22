@@ -79,12 +79,11 @@ function formatCategoryLabel(category: string): string {
           </div>
         )}
 
-      <div class="button-row">
-            <button type="button" class="primary-button">Run Tool</button>
-            <button type="button" class="secondary-button">Copy Input</button>
-            <button type="button" class="secondary-button">Clear</button>
-          </div>
-        )}
+        <div class="button-row">
+          <button type="button" class="primary-button">Run Tool</button>
+          <button type="button" class="secondary-button">Copy Input</button>
+          <button type="button" class="secondary-button">Clear</button>
+        </div>
       </div>
 
       <div class="tool-column">
@@ -330,34 +329,32 @@ function formatCategoryLabel(category: string): string {
 
     const slug = window.location.pathname.split("/").pop();
 
-if (slug === "my-ip-address") {
-  if (!output) return;
-
-  output.value = "Loading your public IP address...";
-
-  fetch("https://api.ipify.org?format=json", { cache: "no-store" })
-    .then((response: Response) => {
-      if (!response.ok) {
-        throw new Error("Failed to fetch IP");
-      }
-      return response.json();
-    })
-    .then((data: { ip?: string }) => {
-      output.value = data.ip
-        ? `Your public IP: ${data.ip}`
-        : "Unable to detect your IP address.";
-    })
-    .catch((error: unknown) => {
-      console.error("my-ip-address error:", error);
-      output.value = "Unable to detect your IP address.";
-    });
-
-  return;
-}
 
     runBtn?.addEventListener("click", () => {
-  if (!output) return;
-  if (slug !== "my-ip-address" && !input) return;
+      if (!input || !output) return;
+
+      if (slug === "my-ip-address") {
+        output.value = "Loading your public IP address...";
+
+        fetch("https://api.ipify.org?format=json", { cache: "no-store" })
+          .then((response: Response) => {
+            if (!response.ok) {
+              throw new Error("Failed to fetch IP");
+            }
+            return response.json();
+          })
+          .then((data: { ip?: string }) => {
+            output.value = data.ip
+              ? `Your public IP: ${data.ip}`
+              : "Unable to detect your IP address.";
+          })
+          .catch((error: unknown) => {
+            console.error("my-ip-address error:", error);
+            output.value = "Unable to detect your IP address.";
+          });
+
+        return;
+      }
 
       if (slug === "json-formatter") {
         try {
