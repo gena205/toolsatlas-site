@@ -931,6 +931,2445 @@ url.searchParams.forEach((value: string, key: string) => {
         return;
       }
 
+      if (slug === "vat-calculator") {
+  const raw = input.value.trim();
+  const numbers = raw.match(/-?\d+(?:[.,]\d+)?/g)?.map((v: string) => Number(v.replace(",", "."))) || [];
+
+  const amount = numbers[0];
+  const rate = numbers[1] ?? 17;
+
+  if (!Number.isFinite(amount) || !Number.isFinite(rate)) {
+    output.value = "Enter amount on the first line and VAT rate on the second line.\n\nExample:\n100\n17";
+    return;
+  }
+
+  const vatAmount = amount * (rate / 100);
+  const gross = amount + vatAmount;
+
+  output.value =
+    `Net amount: ${amount.toFixed(2)}\n` +
+    `VAT rate: ${rate.toFixed(2)}%\n` +
+    `VAT amount: ${vatAmount.toFixed(2)}\n` +
+    `Gross total: ${gross.toFixed(2)}`;
+  return;
+}
+
+if (slug === "roi-calculator") {
+  const raw = input.value.trim();
+  const numbers = raw.match(/-?\d+(?:[.,]\d+)?/g)?.map((v: string) => Number(v.replace(",", "."))) || [];
+
+  const revenue = numbers[0];
+  const cost = numbers[1];
+
+  if (!Number.isFinite(revenue) || !Number.isFinite(cost) || cost === 0) {
+    output.value = "Enter total return/revenue on the first line and cost on the second line.\n\nExample:\n1500\n1000";
+    return;
+  }
+
+  const profit = revenue - cost;
+  const roi = (profit / cost) * 100;
+
+  output.value =
+    `Revenue / Return: ${revenue.toFixed(2)}\n` +
+    `Cost: ${cost.toFixed(2)}\n` +
+    `Profit: ${profit.toFixed(2)}\n` +
+    `ROI: ${roi.toFixed(2)}%`;
+  return;
+}
+
+if (slug === "bmi-calculator") {
+  const raw = input.value.trim();
+  const numbers = raw.match(/-?\d+(?:[.,]\d+)?/g)?.map((v: string) => Number(v.replace(",", "."))) || [];
+
+  const weightKg = numbers[0];
+  let height = numbers[1];
+
+  if (!Number.isFinite(weightKg) || !Number.isFinite(height) || weightKg <= 0 || height <= 0) {
+    output.value = "Enter weight in kg on the first line and height on the second line.\nUse cm like 175 or meters like 1.75.\n\nExample:\n70\n175";
+    return;
+  }
+
+  const heightM = height > 3 ? height / 100 : height;
+  const bmi = weightKg / (heightM * heightM);
+
+  let category = "Obesity";
+  if (bmi < 18.5) category = "Underweight";
+  else if (bmi < 25) category = "Normal weight";
+  else if (bmi < 30) category = "Overweight";
+
+  output.value =
+    `Weight: ${weightKg.toFixed(2)} kg\n` +
+    `Height: ${heightM.toFixed(2)} m\n` +
+    `BMI: ${bmi.toFixed(2)}\n` +
+    `Category: ${category}`;
+  return;
+}
+
+if (slug === "date-difference-calculator") {
+  const lines = input.value
+    .split(/\r?\n/)
+    .map((line: string) => line.trim())
+    .filter((line: string) => line.length > 0);
+
+  const first = lines[0];
+  const second = lines[1];
+
+  if (!first || !second) {
+    output.value = "Enter two dates in YYYY-MM-DD format, one per line.\n\nExample:\n2026-01-01\n2026-03-22";
+    return;
+  }
+
+  const d1 = new Date(`${first}T00:00:00Z`);
+  const d2 = new Date(`${second}T00:00:00Z`);
+
+  if (Number.isNaN(d1.getTime()) || Number.isNaN(d2.getTime())) {
+    output.value = "Invalid date format. Use YYYY-MM-DD.";
+    return;
+  }
+
+  const start = d1.getTime() <= d2.getTime() ? d1 : d2;
+  const end = d1.getTime() <= d2.getTime() ? d2 : d1;
+
+  const diffMs = end.getTime() - start.getTime();
+  const diffDays = Math.floor(diffMs / 86400000);
+  const diffWeeks = diffDays / 7;
+  const diffMonths = diffDays / 30.44;
+  const diffYears = diffDays / 365.25;
+
+  output.value =
+    `Start date: ${start.toISOString().slice(0, 10)}\n` +
+    `End date: ${end.toISOString().slice(0, 10)}\n` +
+    `Difference in days: ${diffDays}\n` +
+    `Difference in weeks: ${diffWeeks.toFixed(2)}\n` +
+    `Difference in months: ${diffMonths.toFixed(2)}\n` +
+    `Difference in years: ${diffYears.toFixed(2)}`;
+  return;
+}
+
+if (slug === "sentence-counter") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter text to count sentences.";
+    return;
+  }
+
+  const sentences = text
+    .replace(/\s+/g, " ")
+    .split(/(?<=[.!?])\s+/)
+    .map((part: string) => part.trim())
+    .filter((part: string) => part.length > 0);
+
+  output.value =
+    `Sentences: ${sentences.length}\n` +
+    `Characters: ${text.length}\n` +
+    `Words: ${text.split(/\s+/).filter(Boolean).length}`;
+  return;
+}
+
+if (slug === "title-case-converter") {
+  const text = input.value;
+
+  if (!text.trim()) {
+    output.value = "";
+    return;
+  }
+
+  output.value = text.replace(/\w\S*/g, (word: string): string => {
+    return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+  });
+
+  return;
+}
+
+if (slug === "remove-line-breaks") {
+  const text = input.value;
+
+  if (!text.trim()) {
+    output.value = "";
+    return;
+  }
+
+  output.value = text.replace(/\r?\n+/g, " ").replace(/\s{2,}/g, " ").trim();
+  return;
+}
+
+if (slug === "text-splitter") {
+  const parts = input.value.split(/\r?\n\r?\n/);
+  const separatorRaw = parts[0]?.trim() || ",";
+  const body = parts.slice(1).join("\n\n");
+
+  if (!body.trim()) {
+    output.value = "Enter separator on the first line, then a blank line, then the text.\n\nExample:\n,\n\napple,banana,orange";
+    return;
+  }
+
+  let separator = separatorRaw;
+  if (separatorRaw === "\\t") separator = "\t";
+  if (separatorRaw === "\\n") separator = "\n";
+
+  const result = body
+    .split(separator)
+    .map((item: string) => item.trim())
+    .filter((item: string) => item.length > 0)
+    .join("\n");
+
+  output.value = result;
+  return;
+}
+
+if (slug === "text-joiner") {
+  const parts = input.value.split(/\r?\n\r?\n/);
+  const separatorRaw = parts[0] ?? ",";
+  const body = parts.slice(1).join("\n\n");
+
+  if (!body.trim()) {
+    output.value = "Enter separator on the first line, then a blank line, then one item per line.\n\nExample:\n,\n\napple\nbanana\norange";
+    return;
+  }
+
+  let separator = separatorRaw;
+  if (separatorRaw === "\\t") separator = "\t";
+  if (separatorRaw === "\\n") separator = "\n";
+
+  const joined = body
+    .split(/\r?\n/)
+    .map((line: string) => line.trim())
+    .filter((line: string) => line.length > 0)
+    .join(separator);
+
+  output.value = joined;
+  return;
+}
+
+if (slug === "regex-tester") {
+  const parts = input.value.split(/\r?\n\r?\n/);
+  const headerLines = (parts[0] || "").split(/\r?\n/);
+  const pattern = headerLines[0]?.trim() || "";
+  const flags = headerLines[1]?.trim() || "";
+  const text = parts.slice(1).join("\n\n");
+
+  if (!pattern || !text) {
+    output.value =
+      "Enter regex pattern on the first line, flags on the second line, then a blank line, then test text.\n\nExample:\n\\b\\w{4}\\b\ng\n\nThis text has many four word test items.";
+    return;
+  }
+
+  try {
+    const regex = new RegExp(pattern, flags);
+    const matches: string[] = [];
+
+    if (flags.includes("g")) {
+      for (const match of text.matchAll(regex)) {
+        const value = match[0];
+        const index = match.index ?? -1;
+        matches.push(`Match: "${value}" at index ${index}`);
+      }
+    } else {
+      const match = regex.exec(text);
+      if (match) {
+        matches.push(`Match: "${match[0]}" at index ${match.index}`);
+      }
+    }
+
+    output.value = matches.length > 0 ? matches.join("\n") : "No matches found.";
+  } catch (error) {
+    output.value = `Invalid regex: ${error instanceof Error ? error.message : "Unknown error"}`;
+  }
+
+  return;
+}
+if (slug === "hex-to-rgb") {
+  const raw = input.value.trim().replace(/^#/, "");
+
+  if (!raw) {
+    output.value = "Enter a HEX color like #FF5733 or FFF.";
+    return;
+  }
+
+  let hex = raw;
+
+  if (/^[0-9a-fA-F]{3}$/.test(hex)) {
+    hex = hex.split("").map((ch: string) => ch + ch).join("");
+  }
+
+  if (!/^[0-9a-fA-F]{6}$/.test(hex)) {
+    output.value = "Invalid HEX color. Use 3 or 6 hex characters.";
+    return;
+  }
+
+  const r = parseInt(hex.slice(0, 2), 16);
+  const g = parseInt(hex.slice(2, 4), 16);
+  const b = parseInt(hex.slice(4, 6), 16);
+
+  output.value = `rgb(${r}, ${g}, ${b})`;
+  return;
+}
+
+if (slug === "rgb-to-hex") {
+  const numbers = input.value.match(/\d+/g)?.map((v: string) => Number(v)) || [];
+  const [r, g, b] = numbers;
+
+  const isValid =
+    Number.isInteger(r) && Number.isInteger(g) && Number.isInteger(b) &&
+    r >= 0 && r <= 255 &&
+    g >= 0 && g <= 255 &&
+    b >= 0 && b <= 255;
+
+  if (!isValid) {
+    output.value = "Enter RGB values like: 255 87 51";
+    return;
+  }
+
+  const toHex = (n: number): string => n.toString(16).padStart(2, "0").toUpperCase();
+
+  output.value = `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+  return;
+}
+
+if (slug === "rgb-to-hsl") {
+  const numbers = input.value.match(/\d+/g)?.map((v: string) => Number(v)) || [];
+  const [rRaw, gRaw, bRaw] = numbers;
+
+  const isValid =
+    Number.isInteger(rRaw) && Number.isInteger(gRaw) && Number.isInteger(bRaw) &&
+    rRaw >= 0 && rRaw <= 255 &&
+    gRaw >= 0 && gRaw <= 255 &&
+    bRaw >= 0 && bRaw <= 255;
+
+  if (!isValid) {
+    output.value = "Enter RGB values like: 255 87 51";
+    return;
+  }
+
+  const r = rRaw / 255;
+  const g = gRaw / 255;
+  const b = bRaw / 255;
+
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  const delta = max - min;
+
+  let h = 0;
+  let s = 0;
+  const l = (max + min) / 2;
+
+  if (delta !== 0) {
+    s = delta / (1 - Math.abs(2 * l - 1));
+
+    switch (max) {
+      case r:
+        h = 60 * (((g - b) / delta) % 6);
+        break;
+      case g:
+        h = 60 * (((b - r) / delta) + 2);
+        break;
+      case b:
+        h = 60 * (((r - g) / delta) + 4);
+        break;
+    }
+  }
+
+  if (h < 0) h += 360;
+
+  output.value = `hsl(${Math.round(h)}, ${Math.round(s * 100)}%, ${Math.round(l * 100)}%)`;
+  return;
+}
+
+if (slug === "hsl-to-rgb") {
+  const numbers = input.value.match(/-?\d+(?:\.\d+)?/g)?.map((v: string) => Number(v)) || [];
+  const [hRaw, sRaw, lRaw] = numbers;
+
+  const isValid =
+    Number.isFinite(hRaw) && Number.isFinite(sRaw) && Number.isFinite(lRaw) &&
+    hRaw >= 0 && hRaw <= 360 &&
+    sRaw >= 0 && sRaw <= 100 &&
+    lRaw >= 0 && lRaw <= 100;
+
+  if (!isValid) {
+    output.value = "Enter HSL values like: 12 100 60";
+    return;
+  }
+
+  const h = hRaw / 360;
+  const s = sRaw / 100;
+  const l = lRaw / 100;
+
+  const hueToRgb = (p: number, q: number, t: number): number => {
+    let temp = t;
+    if (temp < 0) temp += 1;
+    if (temp > 1) temp -= 1;
+    if (temp < 1 / 6) return p + (q - p) * 6 * temp;
+    if (temp < 1 / 2) return q;
+    if (temp < 2 / 3) return p + (q - p) * (2 / 3 - temp) * 6;
+    return p;
+  };
+
+  let r: number;
+  let g: number;
+  let b: number;
+
+  if (s === 0) {
+    r = l;
+    g = l;
+    b = l;
+  } else {
+    const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+    const p = 2 * l - q;
+    r = hueToRgb(p, q, h + 1 / 3);
+    g = hueToRgb(p, q, h);
+    b = hueToRgb(p, q, h - 1 / 3);
+  }
+
+  output.value = `rgb(${Math.round(r * 255)}, ${Math.round(g * 255)}, ${Math.round(b * 255)})`;
+  return;
+}
+
+if (slug === "binary-to-decimal") {
+  const value = input.value.trim();
+
+  if (!/^[01]+$/.test(value)) {
+    output.value = "Enter a binary value like: 101010";
+    return;
+  }
+
+  output.value = parseInt(value, 2).toString(10);
+  return;
+}
+
+if (slug === "decimal-to-binary") {
+  const value = Number(input.value.trim());
+
+  if (!Number.isInteger(value) || value < 0) {
+    output.value = "Enter a non-negative whole number like: 42";
+    return;
+  }
+
+  output.value = value.toString(2);
+  return;
+}
+
+if (slug === "decimal-to-hex") {
+  const value = Number(input.value.trim());
+
+  if (!Number.isInteger(value) || value < 0) {
+    output.value = "Enter a non-negative whole number like: 255";
+    return;
+  }
+
+  output.value = value.toString(16).toUpperCase();
+  return;
+}
+
+if (slug === "hex-to-decimal") {
+  const value = input.value.trim().replace(/^0x/i, "");
+
+  if (!/^[0-9a-fA-F]+$/.test(value)) {
+    output.value = "Enter a hexadecimal value like: FF or 0xFF";
+    return;
+  }
+
+  output.value = parseInt(value, 16).toString(10);
+  return;
+}
+
+if (slug === "px-to-rem") {
+  const numbers = input.value.match(/-?\d+(?:\.\d+)?/g)?.map((v: string) => Number(v)) || [];
+  const px = numbers[0];
+  const root = numbers[1] ?? 16;
+
+  if (!Number.isFinite(px) || !Number.isFinite(root) || root === 0) {
+    output.value = "Enter px value first and optional root font size second.\nExample:\n32 16";
+    return;
+  }
+
+  output.value = `${(px / root).toFixed(4)}rem`;
+  return;
+}
+
+if (slug === "rem-to-px") {
+  const numbers = input.value.match(/-?\d+(?:\.\d+)?/g)?.map((v: string) => Number(v)) || [];
+  const rem = numbers[0];
+  const root = numbers[1] ?? 16;
+
+  if (!Number.isFinite(rem) || !Number.isFinite(root)) {
+    output.value = "Enter rem value first and optional root font size second.\nExample:\n2 16";
+    return;
+  }
+
+  output.value = `${(rem * root).toFixed(4)}px`;
+  return;
+}
+if (slug === "compound-interest-calculator") {
+  const numbers = input.value.match(/-?\d+(?:[.,]\d+)?/g)?.map((v: string) => Number(v.replace(",", "."))) || [];
+  const principal = numbers[0];
+  const annualRate = numbers[1];
+  const years = numbers[2];
+  const compoundsPerYear = numbers[3] ?? 1;
+
+  if (
+    !Number.isFinite(principal) ||
+    !Number.isFinite(annualRate) ||
+    !Number.isFinite(years) ||
+    !Number.isFinite(compoundsPerYear) ||
+    principal < 0 ||
+    years < 0 ||
+    compoundsPerYear <= 0
+  ) {
+    output.value = "Enter principal, annual rate, years, and optional compounds per year.\nExample:\n1000\n5\n10\n12";
+    return;
+  }
+
+  const rate = annualRate / 100;
+  const amount = principal * Math.pow(1 + rate / compoundsPerYear, compoundsPerYear * years);
+  const interest = amount - principal;
+
+  output.value =
+    `Principal: ${principal.toFixed(2)}\n` +
+    `Annual rate: ${annualRate.toFixed(2)}%\n` +
+    `Years: ${years}\n` +
+    `Compounds per year: ${compoundsPerYear}\n` +
+    `Final amount: ${amount.toFixed(2)}\n` +
+    `Interest earned: ${interest.toFixed(2)}`;
+  return;
+}
+
+if (slug === "loan-calculator") {
+  const numbers = input.value.match(/-?\d+(?:[.,]\d+)?/g)?.map((v: string) => Number(v.replace(",", "."))) || [];
+  const principal = numbers[0];
+  const annualRate = numbers[1];
+  const months = numbers[2];
+
+  if (
+    !Number.isFinite(principal) ||
+    !Number.isFinite(annualRate) ||
+    !Number.isFinite(months) ||
+    principal <= 0 ||
+    months <= 0
+  ) {
+    output.value = "Enter loan amount, annual interest rate, and term in months.\nExample:\n100000\n5\n60";
+    return;
+  }
+
+  let monthlyPayment = 0;
+
+  if (annualRate === 0) {
+    monthlyPayment = principal / months;
+  } else {
+    const monthlyRate = annualRate / 100 / 12;
+    monthlyPayment =
+      (principal * monthlyRate * Math.pow(1 + monthlyRate, months)) /
+      (Math.pow(1 + monthlyRate, months) - 1);
+  }
+
+  const totalPayment = monthlyPayment * months;
+  const totalInterest = totalPayment - principal;
+
+  output.value =
+    `Loan amount: ${principal.toFixed(2)}\n` +
+    `Annual rate: ${annualRate.toFixed(2)}%\n` +
+    `Term: ${months} months\n` +
+    `Monthly payment: ${monthlyPayment.toFixed(2)}\n` +
+    `Total payment: ${totalPayment.toFixed(2)}\n` +
+    `Total interest: ${totalInterest.toFixed(2)}`;
+  return;
+}
+
+if (slug === "time-duration-calculator") {
+  const lines = input.value
+    .split(/\r?\n/)
+    .map((line: string) => line.trim())
+    .filter((line: string) => line.length > 0);
+
+  const parseTime = (value: string): number | null => {
+    const match = value.match(/^(\d{1,2}):(\d{2})$/);
+    if (!match) return null;
+
+    const hours = Number(match[1]);
+    const minutes = Number(match[2]);
+
+    if (!Number.isInteger(hours) || !Number.isInteger(minutes) || hours < 0 || hours > 23 || minutes < 0 || minutes > 59) {
+      return null;
+    }
+
+    return hours * 60 + minutes;
+  };
+
+  const start = parseTime(lines[0] || "");
+  const end = parseTime(lines[1] || "");
+
+  if (start === null || end === null) {
+    output.value = "Enter start time and end time in HH:MM format.\nExample:\n09:30\n17:45";
+    return;
+  }
+
+  let diff = end - start;
+  if (diff < 0) diff += 24 * 60;
+
+  const hours = Math.floor(diff / 60);
+  const minutes = diff % 60;
+  const totalHours = diff / 60;
+
+  output.value =
+    `Duration: ${hours}h ${minutes}m\n` +
+    `Total minutes: ${diff}\n` +
+    `Total hours: ${totalHours.toFixed(2)}`;
+  return;
+}
+
+if (slug === "reading-time-calculator") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter text to estimate reading time.";
+    return;
+  }
+
+  const words = text.split(/\s+/).filter(Boolean).length;
+  const wordsPerMinute = 200;
+  const minutes = words / wordsPerMinute;
+  const seconds = Math.ceil(minutes * 60);
+
+  output.value =
+    `Words: ${words}\n` +
+    `Estimated reading time: ${minutes.toFixed(2)} minutes\n` +
+    `Estimated reading time: ${seconds} seconds`;
+  return;
+}
+
+if (slug === "text-repeater") {
+  const parts = input.value.split(/\r?\n\r?\n/);
+  const count = Number((parts[0] || "").trim());
+  const text = parts.slice(1).join("\n\n");
+
+  if (!Number.isInteger(count) || count < 1 || !text.trim()) {
+    output.value = "Enter repeat count on the first line, then a blank line, then the text.\nExample:\n3\n\nHello";
+    return;
+  }
+
+  output.value = Array.from({ length: count }, (): string => text).join("\n");
+  return;
+}
+
+if (slug === "find-and-replace-text") {
+  const parts = input.value.split(/\r?\n\r?\n/);
+  const header = (parts[0] || "").split(/\r?\n/);
+  const findText = header[0] ?? "";
+  const replaceText = header[1] ?? "";
+  const body = parts.slice(1).join("\n\n");
+
+  if (!findText || !body) {
+    output.value = "Enter find text on the first line, replacement on the second line, then a blank line, then the content.\nExample:\ncat\ndog\n\nThe cat is sleeping.";
+    return;
+  }
+
+  output.value = body.split(findText).join(replaceText);
+  return;
+}
+
+if (slug === "mb-to-bytes") {
+  const value = Number(input.value.trim().replace(",", "."));
+
+  if (!Number.isFinite(value) || value < 0) {
+    output.value = "Enter a megabyte value like: 5 or 1.5";
+    return;
+  }
+
+  output.value = `${(value * 1024 * 1024).toFixed(0)} bytes`;
+  return;
+}
+
+if (slug === "mbps-to-mb-s") {
+  const value = Number(input.value.trim().replace(",", "."));
+
+  if (!Number.isFinite(value) || value < 0) {
+    output.value = "Enter a speed in Mbps like: 100";
+    return;
+  }
+
+  output.value = `${(value / 8).toFixed(4)} MB/s`;
+  return;
+}
+
+if (slug === "mb-s-to-mbps") {
+  const value = Number(input.value.trim().replace(",", "."));
+
+  if (!Number.isFinite(value) || value < 0) {
+    output.value = "Enter a speed in MB/s like: 12.5";
+    return;
+  }
+
+  output.value = `${(value * 8).toFixed(4)} Mbps`;
+  return;
+}
+
+if (slug === "kg-to-lbs") {
+  const value = Number(input.value.trim().replace(",", "."));
+
+  if (!Number.isFinite(value)) {
+    output.value = "Enter a kilogram value like: 70";
+    return;
+  }
+
+  output.value = `${(value * 2.2046226218).toFixed(4)} lbs`;
+  return;
+}
+
+if (slug === "lbs-to-kg") {
+  const value = Number(input.value.trim().replace(",", "."));
+
+  if (!Number.isFinite(value)) {
+    output.value = "Enter a pounds value like: 154.3";
+    return;
+  }
+
+  output.value = `${(value / 2.2046226218).toFixed(4)} kg`;
+  return;
+}
+if (slug === "json-to-csv") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = 'Enter a JSON array of objects.\nExample:\n[{"name":"John","age":30},{"name":"Jane","age":25}]';
+    return;
+  }
+
+  try {
+    const data = JSON.parse(text);
+
+    if (!Array.isArray(data) || data.length === 0 || typeof data[0] !== "object" || data[0] === null) {
+      output.value = "Please enter a JSON array of objects.";
+      return;
+    }
+
+    const keys = Array.from(
+      new Set(
+        data.flatMap((item: Record<string, unknown>) => Object.keys(item))
+      )
+    );
+
+    const escapeCsv = (value: unknown): string => {
+      const str = value == null ? "" : String(value);
+      if (/[",\n]/.test(str)) {
+        return `"${str.replace(/"/g, '""')}"`;
+      }
+      return str;
+    };
+
+    const rows = data.map((item: Record<string, unknown>) =>
+      keys.map((key: string) => escapeCsv(item[key])).join(",")
+    );
+
+    output.value = [keys.join(","), ...rows].join("\n");
+  } catch {
+    output.value = "Invalid JSON. Please paste a valid JSON array of objects.";
+  }
+  return;
+}
+
+if (slug === "csv-to-json") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter CSV with a header row.\nExample:\nname,age\nJohn,30\nJane,25";
+    return;
+  }
+
+  const parseCsvLine = (line: string): string[] => {
+    const result: string[] = [];
+    let current = "";
+    let inQuotes = false;
+
+    for (let i = 0; i < line.length; i++) {
+      const char = line[i];
+      const next = line[i + 1];
+
+      if (char === '"' && inQuotes && next === '"') {
+        current += '"';
+        i++;
+      } else if (char === '"') {
+        inQuotes = !inQuotes;
+      } else if (char === "," && !inQuotes) {
+        result.push(current);
+        current = "";
+      } else {
+        current += char;
+      }
+    }
+
+    result.push(current);
+    return result;
+  };
+
+  const lines = text.split(/\r?\n/).filter((line: string) => line.trim().length > 0);
+
+  if (lines.length < 2) {
+    output.value = "CSV must include a header row and at least one data row.";
+    return;
+  }
+
+  const headers = parseCsvLine(lines[0]).map((h: string) => h.trim());
+
+  const data = lines.slice(1).map((line: string) => {
+    const values = parseCsvLine(line);
+    const row: Record<string, string> = {};
+
+    headers.forEach((header: string, index: number) => {
+      row[header] = values[index] ?? "";
+    });
+
+    return row;
+  });
+
+  output.value = JSON.stringify(data, null, 2);
+  return;
+}
+
+if (slug === "text-to-ascii") {
+  const text = input.value;
+
+  if (!text) {
+    output.value = "Enter text to convert to ASCII codes.";
+    return;
+  }
+
+  output.value = Array.from(text)
+    .map((char: string) => char.charCodeAt(0).toString())
+    .join(" ");
+  return;
+}
+
+if (slug === "ascii-to-text") {
+  const values = input.value.match(/\d+/g)?.map((v: string) => Number(v)) || [];
+
+  if (values.length === 0) {
+    output.value = "Enter ASCII codes separated by spaces, commas, or line breaks.\nExample:\n72 101 108 108 111";
+    return;
+  }
+
+  output.value = values
+    .filter((num: number) => Number.isInteger(num) && num >= 0 && num <= 65535)
+    .map((num: number) => String.fromCharCode(num))
+    .join("");
+  return;
+}
+
+if (slug === "text-to-unicode") {
+  const text = input.value;
+
+  if (!text) {
+    output.value = "Enter text to convert to Unicode escape sequences.";
+    return;
+  }
+
+  output.value = Array.from(text)
+    .map((char: string) => `\\u${char.charCodeAt(0).toString(16).padStart(4, "0").toUpperCase()}`)
+    .join("");
+  return;
+}
+
+if (slug === "unicode-to-text") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter Unicode escape sequences like: \\u0048\\u0065\\u006C\\u006C\\u006F";
+    return;
+  }
+
+  output.value = text.replace(/\\u([0-9a-fA-F]{4})/g, (_match: string, hex: string) =>
+    String.fromCharCode(parseInt(hex, 16))
+  );
+  return;
+}
+
+if (slug === "roman-numeral-converter") {
+  const value = input.value.trim().toUpperCase();
+
+  if (!value) {
+    output.value = "Enter a number like 42 or a Roman numeral like XLII.";
+    return;
+  }
+
+  const romanMap: Array<{ value: number; symbol: string }> = [
+    { value: 1000, symbol: "M" },
+    { value: 900, symbol: "CM" },
+    { value: 500, symbol: "D" },
+    { value: 400, symbol: "CD" },
+    { value: 100, symbol: "C" },
+    { value: 90, symbol: "XC" },
+    { value: 50, symbol: "L" },
+    { value: 40, symbol: "XL" },
+    { value: 10, symbol: "X" },
+    { value: 9, symbol: "IX" },
+    { value: 5, symbol: "V" },
+    { value: 4, symbol: "IV" },
+    { value: 1, symbol: "I" }
+  ];
+
+  if (/^\d+$/.test(value)) {
+    let num = Number(value);
+
+    if (!Number.isInteger(num) || num < 1 || num > 3999) {
+      output.value = "Enter a whole number from 1 to 3999.";
+      return;
+    }
+
+    let result = "";
+
+    for (const item of romanMap) {
+      while (num >= item.value) {
+        result += item.symbol;
+        num -= item.value;
+      }
+    }
+
+    output.value = result;
+    return;
+  }
+
+  if (!/^[IVXLCDM]+$/.test(value)) {
+    output.value = "Invalid input. Enter a number or a valid Roman numeral.";
+    return;
+  }
+
+  const romanValues: Record<string, number> = {
+    I: 1,
+    V: 5,
+    X: 10,
+    L: 50,
+    C: 100,
+    D: 500,
+    M: 1000
+  };
+
+  let total = 0;
+
+  for (let i = 0; i < value.length; i++) {
+    const current = romanValues[value[i]];
+    const next = romanValues[value[i + 1]] ?? 0;
+
+    if (current < next) {
+      total -= current;
+    } else {
+      total += current;
+    }
+  }
+
+  output.value = total.toString();
+  return;
+}
+
+if (slug === "number-to-words") {
+  const raw = input.value.trim();
+
+  if (!/^\d+$/.test(raw)) {
+    output.value = "Enter a whole number like: 42";
+    return;
+  }
+
+  const num = Number(raw);
+
+  if (!Number.isSafeInteger(num) || num < 0 || num > 999999999) {
+    output.value = "Enter a whole number from 0 to 999999999.";
+    return;
+  }
+
+  const ones = ["zero","one","two","three","four","five","six","seven","eight","nine"];
+  const teens = ["ten","eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen","nineteen"];
+  const tens = ["","","twenty","thirty","forty","fifty","sixty","seventy","eighty","ninety"];
+
+  const underThousand = (n: number): string => {
+    const parts: string[] = [];
+
+    if (n >= 100) {
+      parts.push(`${ones[Math.floor(n / 100)]} hundred`);
+      n %= 100;
+    }
+
+    if (n >= 20) {
+      parts.push(tens[Math.floor(n / 10)]);
+      if (n % 10 !== 0) {
+        parts.push(ones[n % 10]);
+      }
+    } else if (n >= 10) {
+      parts.push(teens[n - 10]);
+    } else if (n > 0) {
+      parts.push(ones[n]);
+    }
+
+    return parts.join(" ");
+  };
+
+  if (num === 0) {
+    output.value = "zero";
+    return;
+  }
+
+  let n = num;
+  const parts: string[] = [];
+
+  const millions = Math.floor(n / 1000000);
+  if (millions > 0) {
+    parts.push(`${underThousand(millions)} million`);
+    n %= 1000000;
+  }
+
+  const thousands = Math.floor(n / 1000);
+  if (thousands > 0) {
+    parts.push(`${underThousand(thousands)} thousand`);
+    n %= 1000;
+  }
+
+  if (n > 0) {
+    parts.push(underThousand(n));
+  }
+
+  output.value = parts.join(" ").replace(/\s+/g, " ").trim();
+  return;
+}
+
+if (slug === "base32-converter") {
+  const parts = input.value.split(/\r?\n\r?\n/);
+  const mode = (parts[0] || "").trim().toLowerCase();
+  const body = parts.slice(1).join("\n\n");
+
+  if (!mode || !body.trim()) {
+    output.value = "Enter mode on the first line: encode or decode, then a blank line, then the text.\nExample:\nencode\n\nHello";
+    return;
+  }
+
+  const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
+
+  const encodeBase32 = (text: string): string => {
+    const bytes = new TextEncoder().encode(text);
+    let bits = "";
+    let result = "";
+
+    for (const byte of bytes) {
+      bits += byte.toString(2).padStart(8, "0");
+    }
+
+    while (bits.length % 5 !== 0) {
+      bits += "0";
+    }
+
+    for (let i = 0; i < bits.length; i += 5) {
+      const chunk = bits.slice(i, i + 5);
+      result += alphabet[parseInt(chunk, 2)];
+    }
+
+    while (result.length % 8 !== 0) {
+      result += "=";
+    }
+
+    return result;
+  };
+
+  const decodeBase32 = (text: string): string => {
+    const clean = text.toUpperCase().replace(/=+$/g, "").replace(/\s+/g, "");
+    let bits = "";
+
+    for (const char of clean) {
+      const index = alphabet.indexOf(char);
+      if (index === -1) {
+        throw new Error("Invalid Base32 input.");
+      }
+      bits += index.toString(2).padStart(5, "0");
+    }
+
+    const bytes: number[] = [];
+    for (let i = 0; i + 8 <= bits.length; i += 8) {
+      bytes.push(parseInt(bits.slice(i, i + 8), 2));
+    }
+
+    return new TextDecoder().decode(new Uint8Array(bytes));
+  };
+
+  try {
+    if (mode === "encode") {
+      output.value = encodeBase32(body);
+      return;
+    }
+
+    if (mode === "decode") {
+      output.value = decodeBase32(body);
+      return;
+    }
+
+    output.value = 'Mode must be "encode" or "decode".';
+  } catch (error) {
+    output.value = error instanceof Error ? error.message : "Invalid Base32 input.";
+  }
+  return;
+}
+
+if (slug === "markdown-to-html") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter Markdown to convert to HTML.";
+    return;
+  }
+
+  let html = text
+    .replace(/^### (.*)$/gm, "<h3>$1</h3>")
+    .replace(/^## (.*)$/gm, "<h2>$1</h2>")
+    .replace(/^# (.*)$/gm, "<h1>$1</h1>")
+    .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+    .replace(/\*(.*?)\*/g, "<em>$1</em>")
+    .replace(/`([^`]+)`/g, "<code>$1</code>")
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');
+
+  html = html
+    .split(/\n{2,}/)
+    .map((block: string) => {
+      if (/^<h[1-3]>/.test(block.trim())) return block.trim();
+      return `<p>${block.trim().replace(/\n/g, "<br>")}</p>`;
+    })
+    .join("\n\n");
+
+  output.value = html;
+  return;
+}
+
+if (slug === "base32-encode") {
+  const text = input.value;
+
+  if (!text) {
+    output.value = "Enter text to encode to Base32.";
+    return;
+  }
+
+  const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
+  const bytes = new TextEncoder().encode(text);
+
+  let bits = "";
+  let result = "";
+
+  for (const byte of bytes) {
+    bits += byte.toString(2).padStart(8, "0");
+  }
+
+  while (bits.length % 5 !== 0) {
+    bits += "0";
+  }
+
+  for (let i = 0; i < bits.length; i += 5) {
+    const chunk = bits.slice(i, i + 5);
+    result += alphabet[parseInt(chunk, 2)];
+  }
+
+  while (result.length % 8 !== 0) {
+    result += "=";
+  }
+
+  output.value = result;
+  return;
+}
+
+if (slug === "base32-decode") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter Base32 text to decode.";
+    return;
+  }
+
+  const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
+  const clean = text.toUpperCase().replace(/=+$/g, "").replace(/\s+/g, "");
+
+  try {
+    let bits = "";
+
+    for (const char of clean) {
+      const index = alphabet.indexOf(char);
+
+      if (index === -1) {
+        output.value = "Invalid Base32 input.";
+        return;
+      }
+
+      bits += index.toString(2).padStart(5, "0");
+    }
+
+    const bytes: number[] = [];
+
+    for (let i = 0; i + 8 <= bits.length; i += 8) {
+      bytes.push(parseInt(bits.slice(i, i + 8), 2));
+    }
+
+    output.value = new TextDecoder().decode(new Uint8Array(bytes));
+  } catch {
+    output.value = "Invalid Base32 input.";
+  }
+
+  return;
+}
+if (slug === "timestamp-to-date") {
+  const raw = input.value.trim();
+
+  if (!raw) {
+    output.value = "Enter a Unix timestamp like 1711065600 or 1711065600000.";
+    return;
+  }
+
+  const value = Number(raw);
+
+  if (!Number.isFinite(value)) {
+    output.value = "Enter a valid numeric timestamp.";
+    return;
+  }
+
+  const ms = raw.length >= 13 ? value : value * 1000;
+  const date = new Date(ms);
+
+  if (Number.isNaN(date.getTime())) {
+    output.value = "Invalid timestamp.";
+    return;
+  }
+
+  output.value =
+    `ISO: ${date.toISOString()}\n` +
+    `UTC: ${date.toUTCString()}\n` +
+    `Local: ${date.toString()}`;
+  return;
+}
+
+if (slug === "date-to-timestamp") {
+  const raw = input.value.trim();
+
+  if (!raw) {
+    output.value = "Enter a date like 2026-03-22 or 2026-03-22 14:30:00";
+    return;
+  }
+
+  const normalized = raw.includes("T") ? raw : raw.replace(" ", "T");
+  const date = new Date(normalized);
+
+  if (Number.isNaN(date.getTime())) {
+    output.value = "Invalid date. Try formats like 2026-03-22 or 2026-03-22 14:30:00";
+    return;
+  }
+
+  const ms = date.getTime();
+  const seconds = Math.floor(ms / 1000);
+
+  output.value =
+    `Seconds timestamp: ${seconds}\n` +
+    `Milliseconds timestamp: ${ms}`;
+  return;
+}
+
+if (slug === "px-to-em") {
+  const numbers = input.value.match(/-?\d+(?:\.\d+)?/g)?.map((v: string) => Number(v)) || [];
+  const px = numbers[0];
+  const base = numbers[1] ?? 16;
+
+  if (!Number.isFinite(px) || !Number.isFinite(base) || base === 0) {
+    output.value = "Enter px value first and optional base font size second.\nExample:\n24 16";
+    return;
+  }
+
+  output.value = `${(px / base).toFixed(4)}em`;
+  return;
+}
+
+if (slug === "em-to-px") {
+  const numbers = input.value.match(/-?\d+(?:\.\d+)?/g)?.map((v: string) => Number(v)) || [];
+  const em = numbers[0];
+  const base = numbers[1] ?? 16;
+
+  if (!Number.isFinite(em) || !Number.isFinite(base)) {
+    output.value = "Enter em value first and optional base font size second.\nExample:\n1.5 16";
+    return;
+  }
+
+  output.value = `${(em * base).toFixed(4)}px`;
+  return;
+}
+
+if (slug === "cm-to-inches") {
+  const value = Number(input.value.trim().replace(",", "."));
+
+  if (!Number.isFinite(value)) {
+    output.value = "Enter a centimeter value like: 10";
+    return;
+  }
+
+  output.value = `${(value / 2.54).toFixed(4)} inches`;
+  return;
+}
+
+if (slug === "inches-to-cm") {
+  const value = Number(input.value.trim().replace(",", "."));
+
+  if (!Number.isFinite(value)) {
+    output.value = "Enter an inches value like: 4";
+    return;
+  }
+
+  output.value = `${(value * 2.54).toFixed(4)} cm`;
+  return;
+}
+
+if (slug === "mm-to-inches") {
+  const value = Number(input.value.trim().replace(",", "."));
+
+  if (!Number.isFinite(value)) {
+    output.value = "Enter a millimeter value like: 25.4";
+    return;
+  }
+
+  output.value = `${(value / 25.4).toFixed(4)} inches`;
+  return;
+}
+
+if (slug === "inches-to-mm") {
+  const value = Number(input.value.trim().replace(",", "."));
+
+  if (!Number.isFinite(value)) {
+    output.value = "Enter an inches value like: 1";
+    return;
+  }
+
+  output.value = `${(value * 25.4).toFixed(4)} mm`;
+  return;
+}
+
+if (slug === "base58-encode") {
+  const text = input.value;
+
+  if (!text) {
+    output.value = "Enter text to encode to Base58.";
+    return;
+  }
+
+  const alphabet = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
+  const bytes = Array.from(new TextEncoder().encode(text));
+
+  let zeros = 0;
+  while (zeros < bytes.length && bytes[zeros] === 0) {
+    zeros++;
+  }
+
+  let digits: number[] = [0];
+
+  for (const byte of bytes) {
+    let carry = byte;
+
+    for (let i = 0; i < digits.length; i++) {
+      const value = digits[i] * 256 + carry;
+      digits[i] = value % 58;
+      carry = Math.floor(value / 58);
+    }
+
+    while (carry > 0) {
+      digits.push(carry % 58);
+      carry = Math.floor(carry / 58);
+    }
+  }
+
+  let result = "1".repeat(zeros);
+  for (let i = digits.length - 1; i >= 0; i--) {
+    result += alphabet[digits[i]];
+  }
+
+  output.value = result;
+  return;
+}
+
+if (slug === "base58-decode") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter Base58 text to decode.";
+    return;
+  }
+
+  const alphabet = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
+  const map = new Map<string, number>(Array.from(alphabet).map((ch: string, i: number) => [ch, i]));
+
+  try {
+    let zeros = 0;
+    while (zeros < text.length && text[zeros] === "1") {
+      zeros++;
+    }
+
+    let bytes: number[] = [0];
+
+    for (const char of text) {
+      const value = map.get(char);
+
+      if (value === undefined) {
+        output.value = "Invalid Base58 input.";
+        return;
+      }
+
+      let carry = value;
+
+      for (let i = 0; i < bytes.length; i++) {
+        const current = bytes[i] * 58 + carry;
+        bytes[i] = current & 0xff;
+        carry = current >> 8;
+      }
+
+      while (carry > 0) {
+        bytes.push(carry & 0xff);
+        carry >>= 8;
+      }
+    }
+
+    for (let i = 0; i < zeros; i++) {
+      bytes.push(0);
+    }
+
+    bytes = bytes.reverse();
+    output.value = new TextDecoder().decode(new Uint8Array(bytes));
+  } catch {
+    output.value = "Invalid Base58 input.";
+  }
+
+  return;
+}if (
+  slug === "length-converter" ||
+  slug === "weight-converter" ||
+  slug === "temperature-converter" ||
+  slug === "speed-converter" ||
+  slug === "volume-converter" ||
+  slug === "area-converter" ||
+  slug === "pressure-converter" ||
+  slug === "energy-converter" ||
+  slug === "power-converter" ||
+  slug === "time-converter"
+) {
+  const lines = input.value
+    .split(/\r?\n/)
+    .map((line: string) => line.trim())
+    .filter((line: string) => line.length > 0);
+
+  const rawValue = Number((lines[0] || "").replace(",", "."));
+  const fromUnit = (lines[1] || "").toLowerCase();
+  const toUnit = (lines[2] || "").toLowerCase();
+
+  if (!Number.isFinite(rawValue) || !fromUnit || !toUnit) {
+    output.value = "Enter value on the first line, source unit on the second line, and target unit on the third line.";
+    return;
+  }
+
+  const convertByMap = (map: Record<string, number>, label: string): void => {
+    if (!(fromUnit in map) || !(toUnit in map)) {
+      output.value = `Unsupported ${label} unit.\nSupported units: ${Object.keys(map).join(", ")}`;
+      return;
+    }
+
+    const baseValue = rawValue * map[fromUnit];
+    const result = baseValue / map[toUnit];
+    output.value = `${result.toFixed(6)} ${toUnit}`;
+  };
+
+  if (slug === "length-converter") {
+    convertByMap(
+      {
+        mm: 0.001,
+        cm: 0.01,
+        m: 1,
+        km: 1000,
+        in: 0.0254,
+        ft: 0.3048,
+        yd: 0.9144,
+        mi: 1609.344
+      },
+      "length"
+    );
+    return;
+  }
+
+  if (slug === "weight-converter") {
+    convertByMap(
+      {
+        mg: 0.000001,
+        g: 0.001,
+        kg: 1,
+        oz: 0.028349523125,
+        lb: 0.45359237,
+        ton: 1000
+      },
+      "weight"
+    );
+    return;
+  }
+
+  if (slug === "temperature-converter") {
+    const toCelsius = (value: number, unit: string): number | null => {
+      if (unit === "c") return value;
+      if (unit === "f") return (value - 32) * (5 / 9);
+      if (unit === "k") return value - 273.15;
+      return null;
+    };
+
+    const fromCelsius = (value: number, unit: string): number | null => {
+      if (unit === "c") return value;
+      if (unit === "f") return value * (9 / 5) + 32;
+      if (unit === "k") return value + 273.15;
+      return null;
+    };
+
+    const celsius = toCelsius(rawValue, fromUnit);
+    if (celsius === null) {
+      output.value = "Unsupported temperature unit.\nSupported units: c, f, k";
+      return;
+    }
+
+    const result = fromCelsius(celsius, toUnit);
+    if (result === null) {
+      output.value = "Unsupported temperature unit.\nSupported units: c, f, k";
+      return;
+    }
+
+    output.value = `${result.toFixed(6)} ${toUnit}`;
+    return;
+  }
+
+  if (slug === "speed-converter") {
+    convertByMap(
+      {
+        "m/s": 1,
+        "km/h": 0.2777777778,
+        mph: 0.44704,
+        "ft/s": 0.3048,
+        knot: 0.514444
+      },
+      "speed"
+    );
+    return;
+  }
+
+  if (slug === "volume-converter") {
+    convertByMap(
+      {
+        ml: 0.001,
+        l: 1,
+        m3: 1000,
+        tsp: 0.00492892,
+        tbsp: 0.0147868,
+        cup: 0.236588,
+        pt: 0.473176,
+        qt: 0.946353,
+        gal: 3.78541
+      },
+      "volume"
+    );
+    return;
+  }
+
+  if (slug === "area-converter") {
+    convertByMap(
+      {
+        mm2: 0.000001,
+        cm2: 0.0001,
+        m2: 1,
+        km2: 1000000,
+        in2: 0.00064516,
+        ft2: 0.09290304,
+        yd2: 0.83612736,
+        hectare: 10000,
+        acre: 4046.8564224
+      },
+      "area"
+    );
+    return;
+  }
+
+  if (slug === "pressure-converter") {
+    convertByMap(
+      {
+        pa: 1,
+        kpa: 1000,
+        mpa: 1000000,
+        bar: 100000,
+        psi: 6894.757293168,
+        atm: 101325,
+        torr: 133.3223684211
+      },
+      "pressure"
+    );
+    return;
+  }
+
+  if (slug === "energy-converter") {
+    convertByMap(
+      {
+        j: 1,
+        kj: 1000,
+        cal: 4.184,
+        kcal: 4184,
+        wh: 3600,
+        kwh: 3600000
+      },
+      "energy"
+    );
+    return;
+  }
+
+  if (slug === "power-converter") {
+    convertByMap(
+      {
+        w: 1,
+        kw: 1000,
+        mw: 1000000,
+        hp: 745.699872,
+        "btu/h": 0.29307107
+      },
+      "power"
+    );
+    return;
+  }
+
+  if (slug === "time-converter") {
+    convertByMap(
+      {
+        ms: 0.001,
+        s: 1,
+        min: 60,
+        h: 3600,
+        day: 86400,
+        week: 604800,
+        month: 2629800,
+        year: 31557600
+      },
+      "time"
+    );
+    return;
+  }
+}
+if (slug === "meters-to-feet") {
+  const value = Number(input.value.trim().replace(",", "."));
+
+  if (!Number.isFinite(value)) {
+    output.value = "Enter a value in meters like: 1";
+    return;
+  }
+
+  output.value = `${(value * 3.280839895).toFixed(4)} ft`;
+  return;
+}
+
+if (slug === "feet-to-meters") {
+  const value = Number(input.value.trim().replace(",", "."));
+
+  if (!Number.isFinite(value)) {
+    output.value = "Enter a value in feet like: 3.2808";
+    return;
+  }
+
+  output.value = `${(value / 3.280839895).toFixed(4)} m`;
+  return;
+}
+
+if (slug === "celsius-to-fahrenheit") {
+  const value = Number(input.value.trim().replace(",", "."));
+
+  if (!Number.isFinite(value)) {
+    output.value = "Enter a temperature in Celsius like: 100";
+    return;
+  }
+
+  output.value = `${((value * 9) / 5 + 32).toFixed(4)} °F`;
+  return;
+}
+
+if (slug === "fahrenheit-to-celsius") {
+  const value = Number(input.value.trim().replace(",", "."));
+
+  if (!Number.isFinite(value)) {
+    output.value = "Enter a temperature in Fahrenheit like: 212";
+    return;
+  }
+
+  output.value = `${(((value - 32) * 5) / 9).toFixed(4)} °C`;
+  return;
+}
+
+if (slug === "liters-to-gallons") {
+  const value = Number(input.value.trim().replace(",", "."));
+
+  if (!Number.isFinite(value)) {
+    output.value = "Enter a value in liters like: 1";
+    return;
+  }
+
+  output.value = `${(value / 3.785411784).toFixed(4)} gal`;
+  return;
+}
+
+if (slug === "gallons-to-liters") {
+  const value = Number(input.value.trim().replace(",", "."));
+
+  if (!Number.isFinite(value)) {
+    output.value = "Enter a value in gallons like: 1";
+    return;
+  }
+
+  output.value = `${(value * 3.785411784).toFixed(4)} l`;
+  return;
+}
+
+if (slug === "kmh-to-mph") {
+  const value = Number(input.value.trim().replace(",", "."));
+
+  if (!Number.isFinite(value)) {
+    output.value = "Enter a speed in km/h like: 100";
+    return;
+  }
+
+  output.value = `${(value / 1.609344).toFixed(4)} mph`;
+  return;
+}
+
+if (slug === "mph-to-kmh") {
+  const value = Number(input.value.trim().replace(",", "."));
+
+  if (!Number.isFinite(value)) {
+    output.value = "Enter a speed in mph like: 62.1371";
+    return;
+  }
+
+  output.value = `${(value * 1.609344).toFixed(4)} km/h`;
+  return;
+}
+
+if (slug === "watts-to-horsepower") {
+  const value = Number(input.value.trim().replace(",", "."));
+
+  if (!Number.isFinite(value)) {
+    output.value = "Enter a value in watts like: 746";
+    return;
+  }
+
+  output.value = `${(value / 745.699872).toFixed(4)} hp`;
+  return;
+}
+
+if (slug === "horsepower-to-watts") {
+  const value = Number(input.value.trim().replace(",", "."));
+
+  if (!Number.isFinite(value)) {
+    output.value = "Enter a value in horsepower like: 1";
+    return;
+  }
+
+  output.value = `${(value * 745.699872).toFixed(4)} W`;
+  return;
+}
+if (slug === "grams-to-ounces") {
+  const value = Number(input.value.trim().replace(",", "."));
+
+  if (!Number.isFinite(value)) {
+    output.value = "Enter a value in grams like: 100";
+    return;
+  }
+
+  output.value = `${(value / 28.349523125).toFixed(4)} oz`;
+  return;
+}
+
+if (slug === "ounces-to-grams") {
+  const value = Number(input.value.trim().replace(",", "."));
+
+  if (!Number.isFinite(value)) {
+    output.value = "Enter a value in ounces like: 3.5";
+    return;
+  }
+
+  output.value = `${(value * 28.349523125).toFixed(4)} g`;
+  return;
+}
+
+if (slug === "kilograms-to-grams") {
+  const value = Number(input.value.trim().replace(",", "."));
+
+  if (!Number.isFinite(value)) {
+    output.value = "Enter a value in kilograms like: 1.5";
+    return;
+  }
+
+  output.value = `${(value * 1000).toFixed(4)} g`;
+  return;
+}
+
+if (slug === "grams-to-kilograms") {
+  const value = Number(input.value.trim().replace(",", "."));
+
+  if (!Number.isFinite(value)) {
+    output.value = "Enter a value in grams like: 1500";
+    return;
+  }
+
+  output.value = `${(value / 1000).toFixed(4)} kg`;
+  return;
+}
+
+if (slug === "celsius-to-fahrenheit") {
+  const value = Number(input.value.trim().replace(",", "."));
+
+  if (!Number.isFinite(value)) {
+    output.value = "Enter a temperature in Celsius like: 100";
+    return;
+  }
+
+  output.value = `${((value * 9) / 5 + 32).toFixed(4)} °F`;
+  return;
+}
+
+if (slug === "fahrenheit-to-celsius") {
+  const value = Number(input.value.trim().replace(",", "."));
+
+  if (!Number.isFinite(value)) {
+    output.value = "Enter a temperature in Fahrenheit like: 212";
+    return;
+  }
+
+  output.value = `${(((value - 32) * 5) / 9).toFixed(4)} °C`;
+  return;
+}
+
+if (slug === "kmh-to-mph") {
+  const value = Number(input.value.trim().replace(",", "."));
+
+  if (!Number.isFinite(value)) {
+    output.value = "Enter a speed in km/h like: 100";
+    return;
+  }
+
+  output.value = `${(value / 1.609344).toFixed(4)} mph`;
+  return;
+}
+
+if (slug === "mph-to-kmh") {
+  const value = Number(input.value.trim().replace(",", "."));
+
+  if (!Number.isFinite(value)) {
+    output.value = "Enter a speed in mph like: 62.1371";
+    return;
+  }
+
+  output.value = `${(value * 1.609344).toFixed(4)} km/h`;
+  return;
+}
+
+if (slug === "liters-to-gallons") {
+  const value = Number(input.value.trim().replace(",", "."));
+
+  if (!Number.isFinite(value)) {
+    output.value = "Enter a value in liters like: 1";
+    return;
+  }
+
+  output.value = `${(value / 3.785411784).toFixed(4)} gal`;
+  return;
+}
+
+if (slug === "gallons-to-liters") {
+  const value = Number(input.value.trim().replace(",", "."));
+
+  if (!Number.isFinite(value)) {
+    output.value = "Enter a value in gallons like: 1";
+    return;
+  }
+
+  output.value = `${(value * 3.785411784).toFixed(4)} l`;
+  return;
+}
+if (slug === "json-to-yaml") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = 'Enter valid JSON.\nExample:\n{"name":"John","age":30}';
+    return;
+  }
+
+  const toYaml = (value: unknown, indent = 0): string => {
+    const space = "  ".repeat(indent);
+
+    if (Array.isArray(value)) {
+      return value
+        .map((item: unknown) => {
+          if (item !== null && typeof item === "object") {
+            const nested = toYaml(item, indent + 1);
+            return `${space}-\n${nested}`;
+          }
+          return `${space}- ${String(item)}`;
+        })
+        .join("\n");
+    }
+
+    if (value !== null && typeof value === "object") {
+      return Object.entries(value as Record<string, unknown>)
+        .map(([key, val]: [string, unknown]) => {
+          if (Array.isArray(val) || (val !== null && typeof val === "object")) {
+            return `${space}${key}:\n${toYaml(val, indent + 1)}`;
+          }
+          return `${space}${key}: ${String(val)}`;
+        })
+        .join("\n");
+    }
+
+    return `${space}${String(value)}`;
+  };
+
+  try {
+    const data = JSON.parse(text);
+    output.value = toYaml(data);
+  } catch {
+    output.value = "Invalid JSON.";
+  }
+
+  return;
+}
+
+if (slug === "yaml-to-json") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter simple YAML like:\nname: John\nage: 30";
+    return;
+  }
+
+  try {
+    const lines = text
+      .split(/\r?\n/)
+      .filter((line: string) => line.trim().length > 0);
+
+    const result: Record<string, unknown> = {};
+
+    for (const line of lines) {
+      const match = line.match(/^([^:]+):\s*(.*)$/);
+
+      if (!match) {
+        output.value = "Only simple key: value YAML is supported in this version.";
+        return;
+      }
+
+      const key = match[1].trim();
+      const rawValue = match[2].trim();
+
+      let parsedValue: unknown = rawValue;
+
+      if (/^-?\d+(?:\.\d+)?$/.test(rawValue)) {
+        parsedValue = Number(rawValue);
+      } else if (rawValue === "true") {
+        parsedValue = true;
+      } else if (rawValue === "false") {
+        parsedValue = false;
+      } else if (rawValue === "null") {
+        parsedValue = null;
+      }
+
+      result[key] = parsedValue;
+    }
+
+    output.value = JSON.stringify(result, null, 2);
+  } catch {
+    output.value = "Invalid YAML.";
+  }
+
+  return;
+}
+
+if (slug === "xml-formatter") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter XML to format.";
+    return;
+  }
+
+  try {
+    const parser = new DOMParser();
+    const xml = parser.parseFromString(text, "application/xml");
+    const parserError = xml.querySelector("parsererror");
+
+    if (parserError) {
+      output.value = "Invalid XML.";
+      return;
+    }
+
+    const raw = new XMLSerializer().serializeToString(xml);
+    const formatted = raw
+      .replace(/(>)(<)(\/*)/g, "$1\n$2$3")
+      .split("\n")
+      .reduce(
+        (acc: { lines: string[]; indent: number }, line: string) => {
+          const trimmed = line.trim();
+          if (!trimmed) return acc;
+
+          let indent = acc.indent;
+
+          if (/^<\//.test(trimmed)) {
+            indent = Math.max(indent - 1, 0);
+          }
+
+          acc.lines.push(`${"  ".repeat(indent)}${trimmed}`);
+
+          if (/^<[^!?/][^>]*[^/]>\s*$/.test(trimmed)) {
+            indent += 1;
+          }
+
+          acc.indent = indent;
+          return acc;
+        },
+        { lines: [], indent: 0 }
+      )
+      .lines.join("\n");
+
+    output.value = formatted;
+  } catch {
+    output.value = "Invalid XML.";
+  }
+
+  return;
+}
+
+if (slug === "xml-validator") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter XML to validate.";
+    return;
+  }
+
+  try {
+    const parser = new DOMParser();
+    const xml = parser.parseFromString(text, "application/xml");
+    const parserError = xml.querySelector("parsererror");
+
+    output.value = parserError ? "Invalid XML." : "Valid XML.";
+  } catch {
+    output.value = "Invalid XML.";
+  }
+
+  return;
+}
+
+if (slug === "hex-to-rgb") {
+  const raw = input.value.trim().replace(/^#/, "");
+
+  if (!raw) {
+    output.value = "Enter a HEX color like #FF5733 or FFF.";
+    return;
+  }
+
+  let hex = raw;
+
+  if (/^[0-9a-fA-F]{3}$/.test(hex)) {
+    hex = hex.split("").map((ch: string) => ch + ch).join("");
+  }
+
+  if (!/^[0-9a-fA-F]{6}$/.test(hex)) {
+    output.value = "Invalid HEX color.";
+    return;
+  }
+
+  const r = parseInt(hex.slice(0, 2), 16);
+  const g = parseInt(hex.slice(2, 4), 16);
+  const b = parseInt(hex.slice(4, 6), 16);
+
+  output.value = `rgb(${r}, ${g}, ${b})`;
+  return;
+}
+
+if (slug === "rgb-to-hex") {
+  const numbers = input.value.match(/\d+/g)?.map((v: string) => Number(v)) || [];
+  const [r, g, b] = numbers;
+
+  const valid =
+    Number.isInteger(r) && Number.isInteger(g) && Number.isInteger(b) &&
+    r >= 0 && r <= 255 &&
+    g >= 0 && g <= 255 &&
+    b >= 0 && b <= 255;
+
+  if (!valid) {
+    output.value = "Enter RGB values like: 255 87 51";
+    return;
+  }
+
+  const toHex = (n: number): string => n.toString(16).padStart(2, "0").toUpperCase();
+  output.value = `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+  return;
+}
+
+if (slug === "rgb-to-hsl") {
+  const numbers = input.value.match(/\d+/g)?.map((v: string) => Number(v)) || [];
+  const [rRaw, gRaw, bRaw] = numbers;
+
+  const valid =
+    Number.isInteger(rRaw) && Number.isInteger(gRaw) && Number.isInteger(bRaw) &&
+    rRaw >= 0 && rRaw <= 255 &&
+    gRaw >= 0 && gRaw <= 255 &&
+    bRaw >= 0 && bRaw <= 255;
+
+  if (!valid) {
+    output.value = "Enter RGB values like: 255 87 51";
+    return;
+  }
+
+  const r = rRaw / 255;
+  const g = gRaw / 255;
+  const b = bRaw / 255;
+
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  const delta = max - min;
+
+  let h = 0;
+  let s = 0;
+  const l = (max + min) / 2;
+
+  if (delta !== 0) {
+    s = delta / (1 - Math.abs(2 * l - 1));
+
+    switch (max) {
+      case r:
+        h = 60 * (((g - b) / delta) % 6);
+        break;
+      case g:
+        h = 60 * (((b - r) / delta) + 2);
+        break;
+      case b:
+        h = 60 * (((r - g) / delta) + 4);
+        break;
+    }
+  }
+
+  if (h < 0) h += 360;
+
+  output.value = `hsl(${Math.round(h)}, ${Math.round(s * 100)}%, ${Math.round(l * 100)}%)`;
+  return;
+}
+
+if (slug === "hsl-to-rgb") {
+  const numbers = input.value.match(/-?\d+(?:\.\d+)?/g)?.map((v: string) => Number(v)) || [];
+  const [hRaw, sRaw, lRaw] = numbers;
+
+  const valid =
+    Number.isFinite(hRaw) && Number.isFinite(sRaw) && Number.isFinite(lRaw) &&
+    hRaw >= 0 && hRaw <= 360 &&
+    sRaw >= 0 && sRaw <= 100 &&
+    lRaw >= 0 && lRaw <= 100;
+
+  if (!valid) {
+    output.value = "Enter HSL values like: 12 100 60";
+    return;
+  }
+
+  const h = hRaw / 360;
+  const s = sRaw / 100;
+  const l = lRaw / 100;
+
+  const hueToRgb = (p: number, q: number, t: number): number => {
+    let temp = t;
+    if (temp < 0) temp += 1;
+    if (temp > 1) temp -= 1;
+    if (temp < 1 / 6) return p + (q - p) * 6 * temp;
+    if (temp < 1 / 2) return q;
+    if (temp < 2 / 3) return p + (q - p) * (2 / 3 - temp) * 6;
+    return p;
+  };
+
+  let r: number;
+  let g: number;
+  let b: number;
+
+  if (s === 0) {
+    r = l;
+    g = l;
+    b = l;
+  } else {
+    const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+    const p = 2 * l - q;
+    r = hueToRgb(p, q, h + 1 / 3);
+    g = hueToRgb(p, q, h);
+    b = hueToRgb(p, q, h - 1 / 3);
+  }
+
+  output.value = `rgb(${Math.round(r * 255)}, ${Math.round(g * 255)}, ${Math.round(b * 255)})`;
+  return;
+}
+
+if (slug === "html-to-markdown") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter HTML to convert to Markdown.";
+    return;
+  }
+
+  const result = text
+    .replace(/<h1>(.*?)<\/h1>/gi, "# $1\n")
+    .replace(/<h2>(.*?)<\/h2>/gi, "## $1\n")
+    .replace(/<h3>(.*?)<\/h3>/gi, "### $1\n")
+    .replace(/<strong>(.*?)<\/strong>/gi, "**$1**")
+    .replace(/<b>(.*?)<\/b>/gi, "**$1**")
+    .replace(/<em>(.*?)<\/em>/gi, "*$1*")
+    .replace(/<i>(.*?)<\/i>/gi, "*$1*")
+    .replace(/<code>(.*?)<\/code>/gi, "`$1`")
+    .replace(/<a\s+href="(.*?)".*?>(.*?)<\/a>/gi, "[$2]($1)")
+    .replace(/<br\s*\/?>/gi, "\n")
+    .replace(/<\/p>\s*<p>/gi, "\n\n")
+    .replace(/<p>/gi, "")
+    .replace(/<\/p>/gi, "")
+    .replace(/<\/?[^>]+>/g, "")
+    .trim();
+
+  output.value = result;
+  return;
+}
+
+if (slug === "remove-line-breaks") {
+  const text = input.value;
+
+  if (!text.trim()) {
+    output.value = "";
+    return;
+  }
+
+  output.value = text.replace(/\r?\n+/g, " ").replace(/\s{2,}/g, " ").trim();
+  return;
+}
+if (slug === "hash-generator") {
+  const text = input.value;
+
+  if (!text) {
+    output.value = "Enter text to generate hashes.";
+    return;
+  }
+
+  const toHex = (buffer: ArrayBuffer): string =>
+    Array.from(new Uint8Array(buffer))
+      .map((b: number) => b.toString(16).padStart(2, "0"))
+      .join("");
+
+  const encoder = new TextEncoder();
+  const data = encoder.encode(text);
+
+  const generateSimpleMd5LikeHash = async (): Promise<string> => {
+    const sha256 = await crypto.subtle.digest("SHA-256", data);
+    return toHex(sha256).slice(0, 32);
+  };
+
+  Promise.all([
+    generateSimpleMd5LikeHash(),
+    crypto.subtle.digest("SHA-1", data).then(toHex),
+    crypto.subtle.digest("SHA-256", data).then(toHex),
+    crypto.subtle.digest("SHA-512", data).then(toHex)
+  ])
+    .then(([md5Like, sha1, sha256, sha512]: [string, string, string, string]) => {
+      output.value =
+        `MD5-like: ${md5Like}\n` +
+        `SHA-1: ${sha1}\n` +
+        `SHA-256: ${sha256}\n` +
+        `SHA-512: ${sha512}`;
+    })
+    .catch(() => {
+      output.value = "Unable to generate hashes in this browser.";
+    });
+
+  return;
+}
+
+if (slug === "percentage-change-calculator") {
+  const numbers = input.value.match(/-?\d+(?:[.,]\d+)?/g)?.map((v: string) => Number(v.replace(",", "."))) || [];
+  const oldValue = numbers[0];
+  const newValue = numbers[1];
+
+  if (!Number.isFinite(oldValue) || !Number.isFinite(newValue) || oldValue === 0) {
+    output.value = "Enter original value on the first line and new value on the second line.\nExample:\n100\n120";
+    return;
+  }
+
+  const change = ((newValue - oldValue) / oldValue) * 100;
+  const direction = change > 0 ? "Increase" : change < 0 ? "Decrease" : "No change";
+
+  output.value =
+    `Original value: ${oldValue}\n` +
+    `New value: ${newValue}\n` +
+    `${direction}: ${change.toFixed(2)}%`;
+  return;
+}
+
+if (slug === "average-calculator") {
+  const numbers = input.value.match(/-?\d+(?:[.,]\d+)?/g)?.map((v: string) => Number(v.replace(",", "."))) || [];
+
+  if (numbers.length === 0) {
+    output.value = "Enter numbers separated by spaces, commas, or line breaks.";
+    return;
+  }
+
+  const sum = numbers.reduce((acc: number, n: number) => acc + n, 0);
+  const average = sum / numbers.length;
+
+  output.value =
+    `Count: ${numbers.length}\n` +
+    `Sum: ${sum.toFixed(4)}\n` +
+    `Average: ${average.toFixed(4)}`;
+  return;
+}
+
+if (slug === "ratio-calculator") {
+  const numbers = input.value.match(/-?\d+(?:[.,]\d+)?/g)?.map((v: string) => Number(v.replace(",", "."))) || [];
+  const a = numbers[0];
+  const b = numbers[1];
+
+  if (!Number.isFinite(a) || !Number.isFinite(b) || b === 0) {
+    output.value = "Enter two numbers like:\n16:9\nor\n16 9";
+    return;
+  }
+
+  const gcd = (x: number, y: number): number => {
+    let ax = Math.abs(Math.round(x));
+    let by = Math.abs(Math.round(y));
+    while (by !== 0) {
+      const temp = by;
+      by = ax % by;
+      ax = temp;
+    }
+    return ax || 1;
+  };
+
+  const divisor = gcd(a, b);
+
+  output.value =
+    `Original ratio: ${a}:${b}\n` +
+    `Simplified ratio: ${Math.round(a) / divisor}:${Math.round(b) / divisor}\n` +
+    `Decimal value: ${(a / b).toFixed(6)}`;
+  return;
+}
+
+if (slug === "text-splitter") {
+  const parts = input.value.split(/\r?\n\r?\n/);
+  const separatorRaw = parts[0]?.trim() || ",";
+  const body = parts.slice(1).join("\n\n");
+
+  if (!body.trim()) {
+    output.value = "Enter separator on the first line, then a blank line, then the text.\nExample:\n,\n\napple,banana,orange";
+    return;
+  }
+
+  let separator = separatorRaw;
+  if (separatorRaw === "\\t") separator = "\t";
+  if (separatorRaw === "\\n") separator = "\n";
+
+  output.value = body
+    .split(separator)
+    .map((item: string) => item.trim())
+    .filter((item: string) => item.length > 0)
+    .join("\n");
+
+  return;
+}
+
+if (slug === "text-joiner") {
+  const parts = input.value.split(/\r?\n\r?\n/);
+  const separatorRaw = parts[0] ?? ",";
+  const body = parts.slice(1).join("\n\n");
+
+  if (!body.trim()) {
+    output.value = "Enter separator on the first line, then a blank line, then one item per line.\nExample:\n,\n\napple\nbanana\norange";
+    return;
+  }
+
+  let separator = separatorRaw;
+  if (separatorRaw === "\\t") separator = "\t";
+  if (separatorRaw === "\\n") separator = "\n";
+
+  output.value = body
+    .split(/\r?\n/)
+    .map((line: string) => line.trim())
+    .filter((line: string) => line.length > 0)
+    .join(separator);
+
+  return;
+}
+
+if (slug === "subnet-calculator") {
+  const raw = input.value.trim();
+
+  if (!raw) {
+    output.value = "Enter an IPv4 address with CIDR like 192.168.1.10/24";
+    return;
+  }
+
+  const match = raw.match(/^(\d{1,3}(?:\.\d{1,3}){3})\/(\d{1,2})$/);
+
+  if (!match) {
+    output.value = "Use format like 192.168.1.10/24";
+    return;
+  }
+
+  const ipParts = match[1].split(".").map(Number);
+  const prefix = Number(match[2]);
+
+  const validIp = ipParts.length === 4 && ipParts.every((n: number) => Number.isInteger(n) && n >= 0 && n <= 255);
+  if (!validIp || prefix < 0 || prefix > 32) {
+    output.value = "Invalid IPv4 address or CIDR prefix.";
+    return;
+  }
+
+  const ipNum =
+    ((ipParts[0] << 24) >>> 0) +
+    ((ipParts[1] << 16) >>> 0) +
+    ((ipParts[2] << 8) >>> 0) +
+    (ipParts[3] >>> 0);
+
+  const mask = prefix === 0 ? 0 : ((0xffffffff << (32 - prefix)) >>> 0);
+  const network = ipNum & mask;
+  const broadcast = network | (~mask >>> 0);
+
+  const toIp = (num: number): string =>
+    [(num >>> 24) & 255, (num >>> 16) & 255, (num >>> 8) & 255, num & 255].join(".");
+
+  const total = Math.pow(2, 32 - prefix);
+  const usable = prefix >= 31 ? total : total - 2;
+
+  output.value =
+    `IP address: ${match[1]}\n` +
+    `CIDR prefix: /${prefix}\n` +
+    `Subnet mask: ${toIp(mask)}\n` +
+    `Network address: ${toIp(network)}\n` +
+    `Broadcast address: ${toIp(broadcast)}\n` +
+    `Usable host range: ${prefix >= 31 ? "N/A" : `${toIp(network + 1)} - ${toIp(broadcast - 1)}`}\n` +
+    `Total addresses: ${total}\n` +
+    `Usable hosts: ${usable}`;
+  return;
+}
+
+if (slug === "cidr-calculator") {
+  const raw = input.value.trim().replace("/", "");
+  const prefix = Number(raw);
+
+  if (!Number.isInteger(prefix) || prefix < 0 || prefix > 32) {
+    output.value = "Enter a CIDR prefix like /24 or 24";
+    return;
+  }
+
+  const mask = prefix === 0 ? 0 : ((0xffffffff << (32 - prefix)) >>> 0);
+  const wildcard = (~mask) >>> 0;
+
+  const toIp = (num: number): string =>
+    [(num >>> 24) & 255, (num >>> 16) & 255, (num >>> 8) & 255, num & 255].join(".");
+
+  const total = Math.pow(2, 32 - prefix);
+  const usable = prefix >= 31 ? total : total - 2;
+
+  output.value =
+    `CIDR prefix: /${prefix}\n` +
+    `Subnet mask: ${toIp(mask)}\n` +
+    `Wildcard mask: ${toIp(wildcard)}\n` +
+    `Total addresses: ${total}\n` +
+    `Usable hosts: ${usable}`;
+  return;
+}
+
       output.value = "This tool logic is not connected yet.";
     });
 

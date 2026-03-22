@@ -800,26 +800,7 @@
     ],
     "related": ["unique-lines", "remove-extra-spaces", "word-counter"]
   },
-  {
-    "id": "reverse-lines",
-    "name": "Reverse Lines",
-    "slug": "reverse-lines",
-    "category": "text-tools",
-    "intro": "Reverse the order of lines in text.",
-    "description": "Flip the order of text lines instantly while keeping each line content unchanged.",
-    "keywords": ["reverse lines", "reverse line order", "flip text lines"],
-    "faq": [
-      {
-        "q": "What does reverse lines do?",
-        "a": "It reverses the order of lines in the input text."
-      },
-      {
-        "q": "Does it reverse characters too?",
-        "a": "No. It only changes the order of lines, not the text inside each line."
-      }
-    ],
-    "related": ["text-reverser", "text-sorter", "line-counter"]
-  },
+  
   {
     "id": "sort-lines-descending",
     "name": "Sort Lines Descending",
@@ -861,46 +842,6 @@
     "related": ["line-counter", "reverse-lines", "text-sorter"]
   },
   {
-    "id": "tabs-to-spaces",
-    "name": "Tabs to Spaces Converter",
-    "slug": "tabs-to-spaces",
-    "category": "text-tools",
-    "intro": "Replace tab characters with spaces.",
-    "description": "Convert tabs into spaces for cleaner formatting in text, code, and copied content.",
-    "keywords": ["tabs to spaces", "replace tabs with spaces", "tab converter"],
-    "faq": [
-      {
-        "q": "What does this tool do?",
-        "a": "It replaces tab characters with regular spaces."
-      },
-      {
-        "q": "Is it useful for code formatting?",
-        "a": "Yes. It can help normalize indentation and text alignment."
-      }
-    ],
-    "related": ["remove-extra-spaces", "text-trimmer", "empty-line-remover"]
-  },
-  {
-    "id": "jwt-decoder",
-    "name": "JWT Decoder",
-    "slug": "jwt-decoder",
-    "category": "developer-tools",
-    "intro": "Decode JWT payload data instantly.",
-    "description": "Inspect the header and payload of a JSON Web Token in a readable format.",
-    "keywords": ["jwt decoder", "decode jwt", "json web token decoder"],
-    "faq": [
-      {
-        "q": "What does a JWT decoder do?",
-        "a": "It decodes the readable parts of a JSON Web Token such as header and payload."
-      },
-      {
-        "q": "Does decoding verify the token?",
-        "a": "No. Decoding only reads the token content and does not verify its signature."
-      }
-    ],
-    "related": ["base64-decode", "json-formatter", "json-validator"]
-  },
-  {
     "id": "url-parser",
     "name": "URL Parser",
     "slug": "url-parser",
@@ -920,26 +861,7 @@
     ],
     "related": ["url-encode", "url-decode", "json-formatter"]
   },
-  {
-    "id": "html-stripper",
-    "name": "HTML Stripper",
-    "slug": "html-stripper",
-    "category": "developer-tools",
-    "intro": "Remove HTML tags from text.",
-    "description": "Strip HTML markup and keep only the readable text content.",
-    "keywords": ["html stripper", "remove html tags", "strip html"],
-    "faq": [
-      {
-        "q": "What does an HTML stripper do?",
-        "a": "It removes HTML tags and leaves plain text."
-      },
-      {
-        "q": "Is it useful for copied webpage content?",
-        "a": "Yes. It helps clean pasted HTML and keep only visible text."
-      }
-    ],
-    "related": ["html-decode", "html-encode", "remove-extra-spaces"]
-  },
+  
   {
     "id": "bytes-to-kb",
     "name": "Bytes to KB Converter",
@@ -960,26 +882,7 @@
     ],
     "related": ["bytes-to-mb", "kb-to-mb", "timestamp-converter"]
   },
-  {
-    "id": "kb-to-mb",
-    "name": "KB to MB Converter",
-    "slug": "kb-to-mb-converter",
-    "category": "converters",
-    "intro": "Convert kilobytes into megabytes instantly.",
-    "description": "Translate KB values into MB for file sizes, storage, and quick calculations.",
-    "keywords": ["kb to mb", "convert kb to mb", "kilobytes to megabytes"],
-    "faq": [
-      {
-        "q": "What does this converter do?",
-        "a": "It converts kilobytes into megabytes."
-      },
-      {
-        "q": "Is it useful for file size checks?",
-        "a": "Yes. It helps compare and understand file size values more clearly."
-      }
-    ],
-    "related": ["bytes-to-kb", "bytes-to-mb", "percentage-calculator"]
-  },
+  
   {
     "id": "discount-calculator",
     "name": "Discount Calculator",
@@ -1000,26 +903,7 @@
     ],
     "related": ["percentage-calculator", "age-calculator", "kb-to-mb"]
   },
-  {
-    "id": "remove-duplicate-words",
-    "name": "Remove Duplicate Words",
-    "slug": "remove-duplicate-words",
-    "category": "text-tools",
-    "intro": "Remove repeated words from text.",
-    "description": "Clean text by removing duplicate words while keeping the first occurrence.",
-    "keywords": ["remove duplicate words", "deduplicate words", "text word cleaner"],
-    "faq": [
-      {
-        "q": "What does this tool do?",
-        "a": "It removes repeated words from text and keeps only the first occurrence."
-      },
-      {
-        "q": "Is it useful for keyword cleanup?",
-        "a": "Yes. It can help clean repeated words in notes, lists, and drafts."
-      }
-    ],
-    "related": ["unique-lines", "remove-extra-spaces", "word-counter"]
-  },
+  
   {
     "id": "reverse-lines",
     "name": "Reverse Lines",
@@ -1041,46 +925,6 @@
     "related": ["text-reverser", "text-sorter", "line-counter"]
   },
   {
-    "id": "sort-lines-descending",
-    "name": "Sort Lines Descending",
-    "slug": "sort-lines-descending",
-    "category": "text-tools",
-    "intro": "Sort lines of text in descending order.",
-    "description": "Arrange text lines in reverse alphabetical order quickly and clearly.",
-    "keywords": ["sort lines descending", "reverse alphabetical sorter", "descending text sorter"],
-    "faq": [
-      {
-        "q": "What does this tool do?",
-        "a": "It sorts lines in descending alphabetical order."
-      },
-      {
-        "q": "How is it different from text sorter?",
-        "a": "The regular text sorter sorts ascending, while this one sorts descending."
-      }
-    ],
-    "related": ["text-sorter", "unique-lines", "reverse-lines"]
-  },
-  {
-    "id": "line-number-adder",
-    "name": "Line Number Adder",
-    "slug": "line-number-adder",
-    "category": "text-tools",
-    "intro": "Add line numbers to text.",
-    "description": "Number each line automatically for lists, notes, logs, and structured text.",
-    "keywords": ["line number adder", "add line numbers", "number text lines"],
-    "faq": [
-      {
-        "q": "What does a line number adder do?",
-        "a": "It prefixes each line with its line number."
-      },
-      {
-        "q": "Can I use it for lists and notes?",
-        "a": "Yes. It is useful for numbered lists, notes, and copied logs."
-      }
-    ],
-    "related": ["line-counter", "reverse-lines", "text-sorter"]
-  },
-  {
     "id": "tabs-to-spaces",
     "name": "Tabs to Spaces Converter",
     "slug": "tabs-to-spaces",
@@ -1120,26 +964,7 @@
     ],
     "related": ["base64-decode", "json-formatter", "json-validator"]
   },
-  {
-    "id": "url-parser",
-    "name": "URL Parser",
-    "slug": "url-parser",
-    "category": "developer-tools",
-    "intro": "Break a URL into readable parts.",
-    "description": "Parse a URL into protocol, host, pathname, search parameters, and hash.",
-    "keywords": ["url parser", "parse url", "url breakdown tool"],
-    "faq": [
-      {
-        "q": "What does a URL parser do?",
-        "a": "It separates a URL into parts such as protocol, hostname, path, query string, and hash."
-      },
-      {
-        "q": "Is it useful for debugging links?",
-        "a": "Yes. It helps inspect URLs and query parameters quickly."
-      }
-    ],
-    "related": ["url-encode", "url-decode", "json-formatter"]
-  },
+  
   {
     "id": "html-stripper",
     "name": "HTML Stripper",
@@ -1160,26 +985,7 @@
     ],
     "related": ["html-decode", "html-encode", "remove-extra-spaces"]
   },
-  {
-    "id": "bytes-to-kb",
-    "name": "Bytes to KB Converter",
-    "slug": "bytes-to-kb-converter",
-    "category": "converters",
-    "intro": "Convert bytes into kilobytes quickly.",
-    "description": "Use this free online converter to change byte values into kilobytes.",
-    "keywords": ["bytes to kb", "convert bytes to kilobytes", "byte to kb converter"],
-    "faq": [
-      {
-        "q": "What does this converter do?",
-        "a": "It converts byte values into kilobytes."
-      },
-      {
-        "q": "Why is this useful?",
-        "a": "It helps make storage sizes easier to read and compare."
-      }
-    ],
-    "related": ["bytes-to-mb", "kb-to-mb", "timestamp-converter"]
-  },
+
   {
     "id": "kb-to-mb",
     "name": "KB to MB Converter",
@@ -1199,26 +1005,6 @@
       }
     ],
     "related": ["bytes-to-kb", "bytes-to-mb", "percentage-calculator"]
-  },
-  {
-    "id": "discount-calculator",
-    "name": "Discount Calculator",
-    "slug": "discount-calculator",
-    "category": "calculators",
-    "intro": "Calculate discounted prices quickly.",
-    "description": "Work out sale prices, discount amounts, and final totals with a simple online discount calculator.",
-    "keywords": ["discount calculator", "sale price calculator", "calculate discount"],
-    "faq": [
-      {
-        "q": "What does a discount calculator do?",
-        "a": "It calculates the discount amount and final price after applying a percentage discount."
-      },
-      {
-        "q": "Who can use it?",
-        "a": "It is useful for shopping, pricing, budgeting, and business tasks."
-      }
-    ],
-    "related": ["percentage-calculator", "age-calculator", "kb-to-mb"]
   },
   {
     "id": "base64-url-encode",
@@ -1619,6 +1405,2027 @@
       }
     ],
     "related": ["percentage-calculator", "average-calculator", "discount-calculator"]
+  },
+  {
+    "id": "vat-calculator",
+    "name": "VAT Calculator",
+    "slug": "vat-calculator",
+    "category": "calculators",
+    "intro": "Calculate VAT amount, net price, and gross total in seconds.",
+    "description": "Use this VAT calculator to quickly add tax to a net amount and see the VAT value and final gross total. It is useful for invoices, quotes, budgeting, and price checks.",
+    "keywords": ["vat calculator", "tax calculator", "add vat", "gross price", "net price"],
+    "faq": [
+      {
+        "q": "How do I use this VAT calculator?",
+        "a": "Enter the base amount on the first line and the VAT rate on the second line. The tool returns net amount, VAT amount, and gross total."
+      },
+      {
+        "q": "Can I use different VAT rates?",
+        "a": "Yes. You can enter any VAT rate such as 17, 20, or 25 depending on your country or use case."
+      }
+    ],
+    "related": ["discount-calculator", "percentage-calculator", "roi-calculator"]
+  },
+  {
+    "id": "roi-calculator",
+    "name": "ROI Calculator",
+    "slug": "roi-calculator",
+    "category": "calculators",
+    "intro": "Calculate return on investment and profit percentage easily.",
+    "description": "This ROI calculator helps you measure investment performance by comparing gain and cost. It is useful for marketing spend, product experiments, business decisions, and basic finance planning.",
+    "keywords": ["roi calculator", "return on investment", "profit calculator", "investment return"],
+    "faq": [
+      {
+        "q": "What values should I enter?",
+        "a": "Enter total return or revenue on the first line and total cost on the second line. The tool calculates profit and ROI percentage."
+      },
+      {
+        "q": "What does ROI mean?",
+        "a": "ROI stands for return on investment. It shows how much profit you made compared to the original cost."
+      }
+    ],
+    "related": ["percentage-calculator", "discount-calculator", "vat-calculator"]
+  },
+  {
+    "id": "bmi-calculator",
+    "name": "BMI Calculator",
+    "slug": "bmi-calculator",
+    "category": "calculators",
+    "intro": "Calculate body mass index from weight and height.",
+    "description": "Use this BMI calculator to estimate body mass index based on weight and height. It is a quick reference tool for general fitness tracking and personal health awareness.",
+    "keywords": ["bmi calculator", "body mass index", "weight calculator", "fitness calculator"],
+    "faq": [
+      {
+        "q": "How do I enter height?",
+        "a": "You can enter height in centimeters like 175 or in meters like 1.75. The tool detects both formats."
+      },
+      {
+        "q": "What does BMI show?",
+        "a": "BMI is a simple index based on weight and height. It gives a general category such as underweight, normal, overweight, or obesity."
+      }
+    ],
+    "related": ["age-calculator", "average-calculator", "ratio-calculator"]
+  },
+  {
+    "id": "date-difference-calculator",
+    "name": "Date Difference Calculator",
+    "slug": "date-difference-calculator",
+    "category": "calculators",
+    "intro": "Find the difference between two dates in days, weeks, months, and years.",
+    "description": "This date difference calculator helps you compare two dates and see the exact number of days between them. It is useful for planning, deadlines, subscriptions, age tracking, and project timelines.",
+    "keywords": ["date difference calculator", "days between dates", "date duration", "time between dates"],
+    "faq": [
+      {
+        "q": "What date format should I use?",
+        "a": "Use YYYY-MM-DD format like 2026-03-22 on each line for the most reliable result."
+      },
+      {
+        "q": "Does the order of dates matter?",
+        "a": "No. The tool sorts them automatically and returns the absolute difference."
+      }
+    ],
+    "related": ["age-calculator", "timestamp-converter", "average-calculator"]
+  },
+  {
+    "id": "sentence-counter",
+    "name": "Sentence Counter",
+    "slug": "sentence-counter",
+    "category": "text-tools",
+    "intro": "Count sentences in any block of text instantly.",
+    "description": "Use this sentence counter to measure how many sentences your text contains. It is useful for writing checks, content editing, reading exercises, and text analysis.",
+    "keywords": ["sentence counter", "count sentences", "text analysis", "writing tool"],
+    "faq": [
+      {
+        "q": "How are sentences counted?",
+        "a": "The tool splits text by common sentence-ending punctuation such as periods, exclamation marks, and question marks."
+      },
+      {
+        "q": "Is this useful for SEO writing?",
+        "a": "Yes. It helps estimate content structure and readability when drafting articles, descriptions, or landing pages."
+      }
+    ],
+    "related": ["word-counter", "character-counter", "line-counter"]
+  },
+  {
+    "id": "title-case-converter",
+    "name": "Title Case Converter",
+    "slug": "title-case-converter",
+    "category": "text-tools",
+    "intro": "Convert text to title case for headlines and titles.",
+    "description": "This title case converter helps you format text for headings, page titles, article names, and UI labels. It is useful for content editing, SEO titles, and general text cleanup.",
+    "keywords": ["title case converter", "capitalize title", "headline case", "text formatter"],
+    "faq": [
+      {
+        "q": "What is title case?",
+        "a": "Title case means each main word begins with a capital letter, which is common for headings and titles."
+      },
+      {
+        "q": "Can I use it for SEO titles?",
+        "a": "Yes. It is useful when formatting page titles, blog headlines, and metadata text."
+      }
+    ],
+    "related": ["text-case-converter", "uppercase-converter", "lowercase-converter"]
+  },
+  {
+    "id": "remove-line-breaks",
+    "name": "Remove Line Breaks",
+    "slug": "remove-line-breaks",
+    "category": "text-tools",
+    "intro": "Remove line breaks and turn multi-line text into one clean line.",
+    "description": "Use this tool to remove line breaks from pasted text and turn paragraphs or lists into a single clean line. It is useful for forms, spreadsheets, CMS fields, and data cleanup.",
+    "keywords": ["remove line breaks", "single line text", "text cleaner", "remove newlines"],
+    "faq": [
+      {
+        "q": "What happens to paragraph breaks?",
+        "a": "The tool replaces line breaks with spaces and collapses extra spacing so the result stays readable."
+      },
+      {
+        "q": "When is this useful?",
+        "a": "It is useful when pasting content into one-line form fields, CSV cells, databases, or admin panels."
+      }
+    ],
+    "related": ["remove-extra-spaces", "html-stripper", "text-reverser"]
+  },
+  {
+    "id": "text-splitter",
+    "name": "Text Splitter",
+    "slug": "text-splitter",
+    "category": "text-tools",
+    "intro": "Split text into separate lines using a custom separator.",
+    "description": "This text splitter helps you break a string into multiple lines based on a separator such as comma, pipe, slash, or semicolon. It is useful for cleaning lists, imports, and structured text.",
+    "keywords": ["text splitter", "split text", "split by comma", "list formatter"],
+    "faq": [
+      {
+        "q": "How do I set the separator?",
+        "a": "Put the separator on the first line, leave a blank line, then paste the text you want to split."
+      },
+      {
+        "q": "Can I split CSV-like data?",
+        "a": "Yes. You can use a comma, semicolon, pipe, slash, or any custom separator."
+      }
+    ],
+    "related": ["sort-lines-ascending", "remove-duplicate-lines", "text-joiner"]
+  },
+  {
+    "id": "text-joiner",
+    "name": "Text Joiner",
+    "slug": "text-joiner",
+    "category": "text-tools",
+    "intro": "Join multiple lines into one line with a custom separator.",
+    "description": "Use this text joiner to combine many lines into a single string using a separator like comma, space, pipe, or semicolon. It is useful for code snippets, tags, SQL lists, and bulk text formatting.",
+    "keywords": ["text joiner", "join lines", "combine lines", "separator tool"],
+    "faq": [
+      {
+        "q": "How do I choose the separator?",
+        "a": "Put the separator on the first line, leave a blank line, then paste the lines you want to join."
+      },
+      {
+        "q": "What separators can I use?",
+        "a": "You can use commas, spaces, pipes, semicolons, tabs, or any custom text separator."
+      }
+    ],
+    "related": ["sort-lines-descending", "remove-duplicate-lines", "text-splitter"]
+  },
+  {
+    "id": "regex-tester",
+    "name": "Regex Tester",
+    "slug": "regex-tester",
+    "category": "developer-tools",
+    "intro": "Test regular expressions against text and inspect matches quickly.",
+    "description": "This regex tester lets you enter a pattern, optional flags, and sample text to see match results. It is useful for developers, QA workflows, validation rules, scraping patterns, and string parsing.",
+    "keywords": ["regex tester", "regular expression tester", "pattern matching", "developer tool"],
+    "faq": [
+      {
+        "q": "How do I use this regex tester?",
+        "a": "Put the regex pattern on the first line, flags on the second line, leave a blank line, then paste the test text."
+      },
+      {
+        "q": "Which flags are supported?",
+        "a": "You can use standard JavaScript regex flags such as g, i, m, s, u, and y."
+      }
+    ],
+    "related": ["json-validator", "url-parameter-extractor", "query-string-parser"]
   }
-
+  ,
+{
+  "id": "hex-to-rgb",
+  "name": "HEX to RGB",
+  "slug": "hex-to-rgb",
+  "category": "converters",
+  "intro": "Convert HEX color codes to RGB values instantly.",
+  "description": "Use this HEX to RGB converter to turn hex color codes like #FF5733 into RGB values. It is useful for web design, CSS editing, design handoff, and front-end work.",
+  "keywords": ["hex to rgb", "color converter", "css color tool", "hex color"],
+  "faq": [
+    {
+      "q": "What HEX formats are supported?",
+      "a": "The tool supports both short HEX like #FFF and full HEX like #FFFFFF."
+    },
+    {
+      "q": "Can I paste HEX without the # symbol?",
+      "a": "Yes. The converter accepts values with or without the # prefix."
+    }
+  ],
+  "related": ["rgb-to-hex", "rgb-to-hsl", "hsl-to-rgb"]
+},
+{
+  "id": "rgb-to-hex",
+  "name": "RGB to HEX",
+  "slug": "rgb-to-hex",
+  "category": "converters",
+  "intro": "Convert RGB color values to HEX format for CSS and design work.",
+  "description": "This RGB to HEX converter helps you convert red, green, and blue color values into a HEX code. It is useful for CSS styling, UI design, front-end development, and quick color matching.",
+  "keywords": ["rgb to hex", "hex color converter", "css color", "rgb converter"],
+  "faq": [
+    {
+      "q": "How do I enter RGB values?",
+      "a": "Enter three numbers for red, green, and blue, such as 255 87 51."
+    },
+    {
+      "q": "What range is allowed?",
+      "a": "Each RGB value should be between 0 and 255."
+    }
+  ],
+  "related": ["hex-to-rgb", "rgb-to-hsl", "hsl-to-rgb"]
+},
+{
+  "id": "rgb-to-hsl",
+  "name": "RGB to HSL",
+  "slug": "rgb-to-hsl",
+  "category": "converters",
+  "intro": "Convert RGB color values to HSL format in seconds.",
+  "description": "Use this RGB to HSL converter to transform RGB values into hue, saturation, and lightness. It is useful for designers, developers, and anyone adjusting color palettes in CSS.",
+  "keywords": ["rgb to hsl", "color converter", "css hsl", "rgb color tool"],
+  "faq": [
+    {
+      "q": "Why use HSL instead of RGB?",
+      "a": "HSL makes it easier to adjust hue, saturation, and lightness separately when working with colors."
+    },
+    {
+      "q": "Can I use this for CSS?",
+      "a": "Yes. The result can be used directly in CSS as an HSL color value."
+    }
+  ],
+  "related": ["hsl-to-rgb", "rgb-to-hex", "hex-to-rgb"]
+},
+{
+  "id": "hsl-to-rgb",
+  "name": "HSL to RGB",
+  "slug": "hsl-to-rgb",
+  "category": "converters",
+  "intro": "Convert HSL color values to RGB format for web and design work.",
+  "description": "This HSL to RGB converter helps you transform hue, saturation, and lightness values into RGB. It is useful for CSS workflows, UI design, theming, and color experimentation.",
+  "keywords": ["hsl to rgb", "color converter", "css rgb", "hsl color tool"],
+  "faq": [
+    {
+      "q": "How should I enter HSL values?",
+      "a": "Enter hue as 0 to 360 and saturation and lightness as percentages, for example 12 100 60."
+    },
+    {
+      "q": "Do I need the percent symbol?",
+      "a": "No. Just enter the numeric values and the tool will format the result."
+    }
+  ],
+  "related": ["rgb-to-hsl", "rgb-to-hex", "hex-to-rgb"]
+},
+{
+  "id": "binary-to-decimal",
+  "name": "Binary to Decimal",
+  "slug": "binary-to-decimal",
+  "category": "converters",
+  "intro": "Convert binary numbers to decimal instantly.",
+  "description": "Use this binary to decimal converter to transform base-2 values into standard decimal numbers. It is useful for programming, networking, computer science learning, and quick calculations.",
+  "keywords": ["binary to decimal", "base 2 converter", "number converter", "developer tool"],
+  "faq": [
+    {
+      "q": "What input is allowed?",
+      "a": "Enter only binary digits such as 0 and 1. Spaces around the value are ignored."
+    },
+    {
+      "q": "Can I convert large binary values?",
+      "a": "Yes, for most normal use cases. Very large values may be limited by JavaScript number precision."
+    }
+  ],
+  "related": ["decimal-to-binary", "decimal-to-hex", "hex-to-decimal"]
+},
+{
+  "id": "decimal-to-binary",
+  "name": "Decimal to Binary",
+  "slug": "decimal-to-binary",
+  "category": "converters",
+  "intro": "Convert decimal numbers to binary format quickly.",
+  "description": "This decimal to binary converter helps you turn standard base-10 numbers into binary values. It is useful for coding, networking, system basics, and exam preparation.",
+  "keywords": ["decimal to binary", "base 10 to base 2", "binary converter", "number converter"],
+  "faq": [
+    {
+      "q": "Can I enter negative numbers?",
+      "a": "This tool is intended for non-negative whole numbers."
+    },
+    {
+      "q": "Why use decimal to binary conversion?",
+      "a": "It is useful for learning number systems, bit operations, and low-level computing concepts."
+    }
+  ],
+  "related": ["binary-to-decimal", "decimal-to-hex", "hex-to-decimal"]
+},
+{
+  "id": "decimal-to-hex",
+  "name": "Decimal to Hex",
+  "slug": "decimal-to-hex",
+  "category": "converters",
+  "intro": "Convert decimal numbers to hexadecimal format.",
+  "description": "Use this decimal to hex converter to quickly transform base-10 numbers into hexadecimal values. It is useful for development, memory addressing, debugging, and color work.",
+  "keywords": ["decimal to hex", "hex converter", "number base converter", "developer tool"],
+  "faq": [
+    {
+      "q": "What kind of numbers can I convert?",
+      "a": "Enter a non-negative whole number such as 255 or 1024."
+    },
+    {
+      "q": "Will the result use uppercase letters?",
+      "a": "Yes. Hex digits are returned in uppercase format."
+    }
+  ],
+  "related": ["hex-to-decimal", "decimal-to-binary", "binary-to-decimal"]
+},
+{
+  "id": "hex-to-decimal",
+  "name": "Hex to Decimal",
+  "slug": "hex-to-decimal",
+  "category": "converters",
+  "intro": "Convert hexadecimal numbers to decimal values instantly.",
+  "description": "This hex to decimal converter helps you transform hexadecimal values into base-10 numbers. It is useful for programming, networking, system administration, and troubleshooting.",
+  "keywords": ["hex to decimal", "hex converter", "number system converter", "developer tool"],
+  "faq": [
+    {
+      "q": "Can I enter a hex value with 0x?",
+      "a": "Yes. The converter accepts values with or without the 0x prefix."
+    },
+    {
+      "q": "What characters are allowed?",
+      "a": "You can use digits 0 to 9 and letters A to F."
+    }
+  ],
+  "related": ["decimal-to-hex", "decimal-to-binary", "binary-to-decimal"]
+},
+{
+  "id": "px-to-rem",
+  "name": "PX to REM",
+  "slug": "px-to-rem",
+  "category": "converters",
+  "intro": "Convert pixel values to rem units for responsive CSS.",
+  "description": "Use this PX to REM converter to change pixel values into rem units based on a root font size. It is useful for responsive design, scalable typography, and modern CSS workflows.",
+  "keywords": ["px to rem", "css unit converter", "responsive design", "frontend tool"],
+  "faq": [
+    {
+      "q": "What is the default root font size?",
+      "a": "If you only enter one value, the tool assumes a root size of 16 pixels."
+    },
+    {
+      "q": "Why convert PX to REM?",
+      "a": "REM units help create scalable layouts and typography that adapt better across devices."
+    }
+  ],
+  "related": ["rem-to-px", "px-to-em", "em-to-px"]
+},
+{
+  "id": "rem-to-px",
+  "name": "REM to PX",
+  "slug": "rem-to-px",
+  "category": "converters",
+  "intro": "Convert rem units to pixel values for CSS sizing.",
+  "description": "This REM to PX converter helps you turn rem units into pixel values using a custom or default root font size. It is useful for CSS debugging, design systems, and front-end implementation.",
+  "keywords": ["rem to px", "css unit converter", "frontend css", "design system tool"],
+  "faq": [
+    {
+      "q": "What root size does the tool use?",
+      "a": "If no root size is provided, the converter uses 16 pixels by default."
+    },
+    {
+      "q": "Can I use a custom root font size?",
+      "a": "Yes. Enter the rem value first and the root font size second."
+    }
+  ],
+  "related": ["px-to-rem", "px-to-em", "em-to-px"]
+},
+{
+  "id": "compound-interest-calculator",
+  "name": "Compound Interest Calculator",
+  "slug": "compound-interest-calculator",
+  "category": "calculators",
+  "intro": "Calculate compound growth from principal, rate, and time.",
+  "description": "Use this compound interest calculator to estimate how money grows over time with compounding. It is useful for savings planning, investment projections, and comparing long-term returns.",
+  "keywords": ["compound interest calculator", "investment growth", "savings calculator", "compound growth"],
+  "faq": [
+    {
+      "q": "What values should I enter?",
+      "a": "Enter principal, annual interest rate, number of years, and compounds per year. The tool calculates the final amount and total interest earned."
+    },
+    {
+      "q": "Why is compound interest important?",
+      "a": "Compound interest shows how earnings can grow faster over time because interest is added back into the balance."
+    }
+  ],
+  "related": ["roi-calculator", "percentage-calculator", "loan-calculator"]
+},
+{
+  "id": "loan-calculator",
+  "name": "Loan Calculator",
+  "slug": "loan-calculator",
+  "category": "calculators",
+  "intro": "Estimate monthly loan payments, total payment, and total interest.",
+  "description": "This loan calculator helps you estimate monthly payments based on loan amount, annual interest rate, and term length. It is useful for personal budgeting, credit planning, and comparing borrowing options.",
+  "keywords": ["loan calculator", "monthly payment calculator", "interest calculator", "finance calculator"],
+  "faq": [
+    {
+      "q": "What loan details do I need?",
+      "a": "Enter the loan amount, annual interest rate, and loan term in months. The tool returns estimated monthly payment, total payment, and total interest."
+    },
+    {
+      "q": "Does this work for zero interest loans?",
+      "a": "Yes. If the interest rate is 0, the tool simply divides the loan amount by the number of months."
+    }
+  ],
+  "related": ["compound-interest-calculator", "percentage-calculator", "discount-calculator"]
+},
+{
+  "id": "time-duration-calculator",
+  "name": "Time Duration Calculator",
+  "slug": "time-duration-calculator",
+  "category": "calculators",
+  "intro": "Calculate the time difference between two hours and minutes.",
+  "description": "Use this time duration calculator to find the difference between a start time and an end time. It is useful for work shifts, study sessions, schedules, and daily planning.",
+  "keywords": ["time duration calculator", "hours between times", "time difference", "work hours calculator"],
+  "faq": [
+    {
+      "q": "How should I enter the times?",
+      "a": "Enter the start time on the first line and the end time on the second line in HH:MM format."
+    },
+    {
+      "q": "Can the calculator handle overnight times?",
+      "a": "Yes. If the end time is earlier than the start time, the tool treats it as the next day."
+    }
+  ],
+  "related": ["date-difference-calculator", "timestamp-converter", "age-calculator"]
+},
+{
+  "id": "reading-time-calculator",
+  "name": "Reading Time Calculator",
+  "slug": "reading-time-calculator",
+  "category": "text-tools",
+  "intro": "Estimate reading time for any text in seconds and minutes.",
+  "description": "This reading time calculator estimates how long it will take to read a piece of text based on word count. It is useful for blog writing, landing pages, newsletters, and content planning.",
+  "keywords": ["reading time calculator", "text reading time", "content tool", "word count reader"],
+  "faq": [
+    {
+      "q": "How is reading time calculated?",
+      "a": "The tool counts the words and estimates reading time using a normal reading speed."
+    },
+    {
+      "q": "Why is reading time useful?",
+      "a": "It helps content writers and marketers estimate article length and improve content presentation."
+    }
+  ],
+  "related": ["word-counter", "character-counter", "sentence-counter"]
+},
+{
+  "id": "text-repeater",
+  "name": "Text Repeater",
+  "slug": "text-repeater",
+  "category": "text-tools",
+  "intro": "Repeat text multiple times with optional line breaks.",
+  "description": "Use this text repeater to duplicate text a specific number of times. It is useful for testing, templates, placeholder content, and repetitive text generation.",
+  "keywords": ["text repeater", "repeat text", "duplicate text", "text utility"],
+  "faq": [
+    {
+      "q": "How do I use this tool?",
+      "a": "Enter the repeat count on the first line, leave a blank line, then enter the text you want to repeat."
+    },
+    {
+      "q": "Does each repeated item go on a new line?",
+      "a": "Yes. The default output places each repeated copy on a separate line."
+    }
+  ],
+  "related": ["text-reverser", "text-joiner", "text-splitter"]
+},
+{
+  "id": "find-and-replace-text",
+  "name": "Find and Replace Text",
+  "slug": "find-and-replace-text",
+  "category": "text-tools",
+  "intro": "Find text and replace it instantly in a larger block of content.",
+  "description": "This find and replace text tool helps you change words or phrases in bulk inside pasted content. It is useful for content editing, cleanup, data preparation, and quick text transformations.",
+  "keywords": ["find and replace text", "text replacer", "bulk text edit", "content editing tool"],
+  "faq": [
+    {
+      "q": "How do I format the input?",
+      "a": "Enter the text to find on the first line, the replacement text on the second line, leave a blank line, then paste the main content below."
+    },
+    {
+      "q": "Can I replace multiple matches?",
+      "a": "Yes. The tool replaces all matches of the target text in the content."
+    }
+  ],
+  "related": ["remove-extra-spaces", "html-stripper", "remove-line-breaks"]
+},
+{
+  "id": "mb-to-bytes",
+  "name": "MB to Bytes",
+  "slug": "mb-to-bytes",
+  "category": "converters",
+  "intro": "Convert megabytes to bytes instantly.",
+  "description": "Use this MB to Bytes converter to change megabyte values into bytes for storage calculations and technical work. It is useful for uploads, downloads, file size checks, and system documentation.",
+  "keywords": ["mb to bytes", "megabytes to bytes", "file size converter", "storage converter"],
+  "faq": [
+    {
+      "q": "What standard does the tool use?",
+      "a": "The converter uses 1 MB = 1,048,576 bytes, which is based on 1024."
+    },
+    {
+      "q": "Can I enter decimal values?",
+      "a": "Yes. You can convert whole numbers or decimal MB values."
+    }
+  ],
+  "related": ["bytes-to-mb", "bytes-to-kb", "kb-to-mb"]
+},
+{
+  "id": "mbps-to-mb-s",
+  "name": "Mbps to MB/s",
+  "slug": "mbps-to-mb-s",
+  "category": "converters",
+  "intro": "Convert megabits per second to megabytes per second.",
+  "description": "This Mbps to MB/s converter helps you compare internet speed values with file transfer speeds. It is useful for networking, downloads, uploads, and bandwidth planning.",
+  "keywords": ["mbps to mb/s", "internet speed converter", "bandwidth converter", "network speed"],
+  "faq": [
+    {
+      "q": "Why are Mbps and MB/s different?",
+      "a": "Mbps measures megabits per second, while MB/s measures megabytes per second. One byte equals eight bits."
+    },
+    {
+      "q": "When is this useful?",
+      "a": "It is useful when comparing ISP speeds with actual download or transfer rates."
+    }
+  ],
+  "related": ["mb-s-to-mbps", "bytes-to-mb", "kb-to-mb"]
+},
+{
+  "id": "mb-s-to-mbps",
+  "name": "MB/s to Mbps",
+  "slug": "mb-s-to-mbps",
+  "category": "converters",
+  "intro": "Convert megabytes per second to megabits per second.",
+  "description": "Use this MB/s to Mbps converter to turn file transfer speed into network speed format. It is useful for testing bandwidth, comparing ISP plans, and understanding download performance.",
+  "keywords": ["mb/s to mbps", "speed converter", "bandwidth tool", "file transfer speed"],
+  "faq": [
+    {
+      "q": "What is the conversion rule?",
+      "a": "To convert MB/s to Mbps, multiply the value by 8."
+    },
+    {
+      "q": "Does this help with internet speed tests?",
+      "a": "Yes. It helps compare storage-style speed readings with network-style speed units."
+    }
+  ],
+  "related": ["mbps-to-mb-s", "bytes-to-mb", "kb-to-mb"]
+},
+{
+  "id": "kg-to-lbs",
+  "name": "KG to LBS",
+  "slug": "kg-to-lbs",
+  "category": "converters",
+  "intro": "Convert kilograms to pounds quickly and accurately.",
+  "description": "This KG to LBS converter helps you switch between metric and imperial weight units. It is useful for fitness, shipping, travel, product specs, and everyday conversions.",
+  "keywords": ["kg to lbs", "kilograms to pounds", "weight converter", "metric to imperial"],
+  "faq": [
+    {
+      "q": "Can I enter decimal kilograms?",
+      "a": "Yes. The converter supports both whole numbers and decimal values."
+    },
+    {
+      "q": "Who is this useful for?",
+      "a": "It is useful for gym tracking, body weight conversion, luggage planning, and product measurements."
+    }
+  ],
+  "related": ["lbs-to-kg", "bmi-calculator", "average-calculator"]
+},
+{
+  "id": "lbs-to-kg",
+  "name": "LBS to KG",
+  "slug": "lbs-to-kg",
+  "category": "converters",
+  "intro": "Convert pounds to kilograms in seconds.",
+  "description": "Use this LBS to KG converter to switch imperial weight values into metric units. It is useful for fitness plans, health records, international shopping, and technical measurements.",
+  "keywords": ["lbs to kg", "pounds to kilograms", "weight conversion", "imperial to metric"],
+  "faq": [
+    {
+      "q": "Can I convert fractional pounds?",
+      "a": "Yes. You can enter decimal pound values and the result will be calculated accurately."
+    },
+    {
+      "q": "Why use this converter?",
+      "a": "It helps when working with international weight values across metric and imperial systems."
+    }
+  ],
+  "related": ["kg-to-lbs", "bmi-calculator", "ratio-calculator"]
+},
+{
+  "id": "json-to-csv",
+  "name": "JSON to CSV",
+  "slug": "json-to-csv",
+  "category": "converters",
+  "intro": "Convert JSON arrays into CSV format quickly.",
+  "description": "Use this JSON to CSV converter to turn an array of JSON objects into clean CSV output. It is useful for spreadsheets, exports, reporting, data cleanup, and developer workflows.",
+  "keywords": ["json to csv", "csv converter", "json export", "data converter"],
+  "faq": [
+    {
+      "q": "What JSON format should I use?",
+      "a": "Paste a JSON array of objects, such as [{\"name\":\"John\",\"age\":30},{\"name\":\"Jane\",\"age\":25}]."
+    },
+    {
+      "q": "What happens if objects have different keys?",
+      "a": "The tool collects all keys from the array and creates CSV columns for them."
+    }
+  ],
+  "related": ["csv-to-json", "json-formatter", "json-validator"]
+},
+{
+  "id": "csv-to-json",
+  "name": "CSV to JSON",
+  "slug": "csv-to-json",
+  "category": "converters",
+  "intro": "Convert CSV data into JSON objects instantly.",
+  "description": "This CSV to JSON converter helps you turn comma-separated values into structured JSON. It is useful for imports, development, quick transformations, and spreadsheet exports.",
+  "keywords": ["csv to json", "csv converter", "json converter", "data transformation"],
+  "faq": [
+    {
+      "q": "What CSV format should I paste?",
+      "a": "Paste CSV with a header row on the first line and data rows below it."
+    },
+    {
+      "q": "Are quoted CSV values supported?",
+      "a": "Yes. The parser handles common quoted CSV fields."
+    }
+  ],
+  "related": ["json-to-csv", "json-formatter", "json-validator"]
+},
+{
+  "id": "text-to-ascii",
+  "name": "Text to ASCII",
+  "slug": "text-to-ascii",
+  "category": "converters",
+  "intro": "Convert text characters to ASCII codes.",
+  "description": "Use this Text to ASCII converter to transform plain text into numeric ASCII values. It is useful for education, debugging, encoding checks, and developer tasks.",
+  "keywords": ["text to ascii", "ascii converter", "character code converter", "developer tool"],
+  "faq": [
+    {
+      "q": "How is the output formatted?",
+      "a": "Each character is converted into its ASCII or Unicode code value, separated by spaces."
+    },
+    {
+      "q": "Does it work with normal English text?",
+      "a": "Yes. It works best with standard Latin characters and symbols."
+    }
+  ],
+  "related": ["ascii-to-text", "text-to-unicode", "unicode-to-text"]
+},
+{
+  "id": "ascii-to-text",
+  "name": "ASCII to Text",
+  "slug": "ascii-to-text",
+  "category": "converters",
+  "intro": "Convert ASCII codes back into readable text.",
+  "description": "This ASCII to Text converter turns numeric character codes into readable text. It is useful for decoding values, testing, education, and programming exercises.",
+  "keywords": ["ascii to text", "ascii decoder", "character code converter", "text converter"],
+  "faq": [
+    {
+      "q": "How should I enter ASCII codes?",
+      "a": "Enter the numbers separated by spaces, commas, or line breaks."
+    },
+    {
+      "q": "Can I decode multiple characters at once?",
+      "a": "Yes. The tool joins all valid codes into one output string."
+    }
+  ],
+  "related": ["text-to-ascii", "text-to-unicode", "unicode-to-text"]
+},
+{
+  "id": "text-to-unicode",
+  "name": "Text to Unicode",
+  "slug": "text-to-unicode",
+  "category": "converters",
+  "intro": "Convert text into Unicode escape sequences.",
+  "description": "Use this Text to Unicode converter to transform text into Unicode escape notation like \\u0041. It is useful for debugging, development, escaping strings, and encoding checks.",
+  "keywords": ["text to unicode", "unicode escape converter", "string escape tool", "developer tool"],
+  "faq": [
+    {
+      "q": "What format does the tool output?",
+      "a": "The tool returns Unicode escape sequences such as \\u0041 for the letter A."
+    },
+    {
+      "q": "Is this useful for developers?",
+      "a": "Yes. It is helpful when working with escaped strings, source code, and debugging text encoding."
+    }
+  ],
+  "related": ["unicode-to-text", "text-to-ascii", "ascii-to-text"]
+},
+{
+  "id": "unicode-to-text",
+  "name": "Unicode to Text",
+  "slug": "unicode-to-text",
+  "category": "converters",
+  "intro": "Convert Unicode escape sequences into normal text.",
+  "description": "This Unicode to Text converter decodes escape sequences like \\u0041 back into readable characters. It is useful for developers, debugging text output, and handling escaped data.",
+  "keywords": ["unicode to text", "unicode decoder", "escaped text converter", "developer utility"],
+  "faq": [
+    {
+      "q": "What input format is supported?",
+      "a": "Paste text containing Unicode escape sequences such as \\u0048\\u0065\\u006C\\u006C\\u006F."
+    },
+    {
+      "q": "Can I decode full words and sentences?",
+      "a": "Yes. The tool decodes all matching escape sequences in the input."
+    }
+  ],
+  "related": ["text-to-unicode", "text-to-ascii", "ascii-to-text"]
+},
+{
+  "id": "roman-numeral-converter",
+  "name": "Roman Numeral Converter",
+  "slug": "roman-numeral-converter",
+  "category": "converters",
+  "intro": "Convert numbers to Roman numerals and Roman numerals back to numbers.",
+  "description": "Use this Roman numeral converter to switch between standard numbers and Roman numeral notation. It is useful for education, formatting, outlines, history content, and numbering systems.",
+  "keywords": ["roman numeral converter", "roman numerals", "number converter", "education tool"],
+  "faq": [
+    {
+      "q": "Can this tool convert both directions?",
+      "a": "Yes. If you enter digits, it converts to Roman numerals. If you enter Roman numerals, it converts to a number."
+    },
+    {
+      "q": "What number range is supported?",
+      "a": "The standard Roman numeral conversion works best for values from 1 to 3999."
+    }
+  ],
+  "related": ["number-to-words", "decimal-to-binary", "decimal-to-hex"]
+},
+{
+  "id": "number-to-words",
+  "name": "Number to Words",
+  "slug": "number-to-words",
+  "category": "converters",
+  "intro": "Convert numbers into English words instantly.",
+  "description": "This Number to Words converter turns numeric values into English text. It is useful for invoices, checks, learning materials, formatting, and text generation.",
+  "keywords": ["number to words", "number spelling", "english number converter", "text converter"],
+  "faq": [
+    {
+      "q": "What kind of numbers can I enter?",
+      "a": "Enter a whole number in digits, such as 42 or 1500."
+    },
+    {
+      "q": "Why is this useful?",
+      "a": "It helps when writing numbers in full words for financial, educational, and formatting purposes."
+    }
+  ],
+  "related": ["roman-numeral-converter", "text-repeater", "reading-time-calculator"]
+},
+{
+  "id": "base32-converter",
+  "name": "Base32 Converter",
+  "slug": "base32-converter",
+  "category": "developer-tools",
+  "intro": "Encode and decode Base32 text in one tool.",
+  "description": "Use this Base32 converter to encode plain text into Base32 or decode Base32 back into text. It is useful for developers, data handling, tokens, and encoding checks.",
+  "keywords": ["base32 converter", "base32 encode", "base32 decode", "developer encoding tool"],
+  "faq": [
+    {
+      "q": "How do I choose encode or decode?",
+      "a": "Enter mode on the first line as encode or decode, leave a blank line, then paste the text."
+    },
+    {
+      "q": "Who is this tool for?",
+      "a": "It is useful for developers, system admins, and anyone working with encoded data."
+    }
+  ],
+  "related": ["base64-encode", "base64-decode", "base64-url-encode"]
+},
+{
+  "id": "markdown-to-html",
+  "name": "Markdown to HTML",
+  "slug": "markdown-to-html",
+  "category": "converters",
+  "intro": "Convert simple Markdown into HTML quickly.",
+  "description": "This Markdown to HTML converter helps you turn common Markdown formatting into HTML markup. It is useful for blogs, documentation, CMS editors, and content workflows.",
+  "keywords": ["markdown to html", "markdown converter", "html generator", "content tool"],
+  "faq": [
+    {
+      "q": "What Markdown syntax is supported?",
+      "a": "The tool supports common elements like headings, bold text, italic text, links, inline code, and paragraphs."
+    },
+    {
+      "q": "Is this useful for content work?",
+      "a": "Yes. It is helpful when moving content from Markdown notes into HTML-based systems."
+    }
+  ],
+  "related": ["html-stripper", "find-and-replace-text", "remove-line-breaks"]
+},
+{
+  "id": "base32-encode",
+  "name": "Base32 Encode",
+  "slug": "base32-encode",
+  "category": "developer-tools",
+  "intro": "Encode plain text to Base32 instantly.",
+  "description": "Use this Base32 encoder to convert plain text into Base32 format. It is useful for developers, tokens, data transformation, and encoding workflows.",
+  "keywords": ["base32 encode", "base32 encoder", "text to base32", "developer encoding tool"],
+  "faq": [
+    {
+      "q": "What does this Base32 encoder do?",
+      "a": "It converts normal text into Base32 format using a standard Base32 alphabet."
+    },
+    {
+      "q": "Who is this tool useful for?",
+      "a": "It is useful for developers, sysadmins, and anyone working with encoded text or token-like values."
+    }
+  ],
+  "related": ["base32-decode", "base64-encode", "base64-url-encode"]
+},
+{
+  "id": "base32-decode",
+  "name": "Base32 Decode",
+  "slug": "base32-decode",
+  "category": "developer-tools",
+  "intro": "Decode Base32 text back into readable text.",
+  "description": "This Base32 decoder helps you convert Base32-encoded strings back into readable text. It is useful for debugging, development, decoding payloads, and inspecting encoded data.",
+  "keywords": ["base32 decode", "base32 decoder", "base32 to text", "developer decoding tool"],
+  "faq": [
+    {
+      "q": "What input does this Base32 decoder accept?",
+      "a": "Paste a valid Base32 string. The tool ignores normal padding characters at the end."
+    },
+    {
+      "q": "What happens if the input is invalid?",
+      "a": "The tool returns an error message instead of broken output."
+    }
+  ],
+  "related": ["base32-encode", "base64-decode", "base64-url-decode"]
+},
+{
+  "id": "timestamp-to-date",
+  "name": "Timestamp to Date",
+  "slug": "timestamp-to-date",
+  "category": "converters",
+  "intro": "Convert a Unix timestamp into a readable date and time.",
+  "description": "Use this Timestamp to Date converter to turn Unix timestamps into readable date values. It is useful for debugging, logs, APIs, databases, and developer workflows.",
+  "keywords": ["timestamp to date", "unix timestamp converter", "epoch to date", "developer tool"],
+  "faq": [
+    {
+      "q": "Can I enter seconds or milliseconds?",
+      "a": "Yes. The tool detects normal Unix timestamps in seconds and longer timestamps in milliseconds."
+    },
+    {
+      "q": "Who is this tool useful for?",
+      "a": "It is useful for developers, sysadmins, analysts, and anyone working with logs, APIs, or exports."
+    }
+  ],
+  "related": ["date-to-timestamp", "timestamp-converter", "date-difference-calculator"]
+},
+{
+  "id": "date-to-timestamp",
+  "name": "Date to Timestamp",
+  "slug": "date-to-timestamp",
+  "category": "converters",
+  "intro": "Convert a date and time into a Unix timestamp instantly.",
+  "description": "This Date to Timestamp converter helps you turn readable dates into Unix timestamps for logs, APIs, scripts, and development work.",
+  "keywords": ["date to timestamp", "unix timestamp", "date converter", "epoch converter"],
+  "faq": [
+    {
+      "q": "What date format should I use?",
+      "a": "You can use a normal date like 2026-03-22 or a full date and time like 2026-03-22 14:30:00."
+    },
+    {
+      "q": "What does the tool return?",
+      "a": "It returns both seconds and milliseconds timestamp values when possible."
+    }
+  ],
+  "related": ["timestamp-to-date", "timestamp-converter", "date-difference-calculator"]
+},
+{
+  "id": "px-to-em",
+  "name": "PX to EM",
+  "slug": "px-to-em",
+  "category": "converters",
+  "intro": "Convert pixel values to em units for scalable CSS.",
+  "description": "Use this PX to EM converter to turn pixel values into em units using a base font size. It is useful for front-end work, scalable layouts, and responsive typography.",
+  "keywords": ["px to em", "css unit converter", "frontend converter", "responsive css"],
+  "faq": [
+    {
+      "q": "What base font size is used?",
+      "a": "If you enter only one value, the tool uses 16 pixels as the default base size."
+    },
+    {
+      "q": "Why convert PX to EM?",
+      "a": "EM units help build more scalable and relative typography and layouts."
+    }
+  ],
+  "related": ["em-to-px", "px-to-rem", "rem-to-px"]
+},
+{
+  "id": "em-to-px",
+  "name": "EM to PX",
+  "slug": "em-to-px",
+  "category": "converters",
+  "intro": "Convert em units to pixel values for CSS sizing.",
+  "description": "This EM to PX converter helps you calculate pixel values from em units using a base font size. It is useful for CSS debugging, design systems, and front-end implementation.",
+  "keywords": ["em to px", "css converter", "font size converter", "frontend tool"],
+  "faq": [
+    {
+      "q": "Can I use a custom base size?",
+      "a": "Yes. Enter the em value first and the base font size second."
+    },
+    {
+      "q": "What is the default base size?",
+      "a": "The tool uses 16 pixels by default if no second value is provided."
+    }
+  ],
+  "related": ["px-to-em", "px-to-rem", "rem-to-px"]
+},
+{
+  "id": "cm-to-inches",
+  "name": "CM to Inches",
+  "slug": "cm-to-inches",
+  "category": "converters",
+  "intro": "Convert centimeters to inches quickly and accurately.",
+  "description": "Use this CM to Inches converter to switch metric length values into inches. It is useful for product sizes, printing, screens, crafts, and everyday measurement tasks.",
+  "keywords": ["cm to inches", "centimeters to inches", "length converter", "metric to imperial"],
+  "faq": [
+    {
+      "q": "Can I convert decimal values?",
+      "a": "Yes. The tool accepts both whole numbers and decimal centimeter values."
+    },
+    {
+      "q": "When is this useful?",
+      "a": "It is useful for dimensions, displays, DIY work, and international size comparisons."
+    }
+  ],
+  "related": ["inches-to-cm", "mm-to-inches", "inches-to-mm"]
+},
+{
+  "id": "inches-to-cm",
+  "name": "Inches to CM",
+  "slug": "inches-to-cm",
+  "category": "converters",
+  "intro": "Convert inches to centimeters in seconds.",
+  "description": "This Inches to CM converter helps you switch imperial length values into metric units. It is useful for dimensions, screen sizes, printing, furniture, and product specs.",
+  "keywords": ["inches to cm", "inch to centimeter", "length conversion", "imperial to metric"],
+  "faq": [
+    {
+      "q": "Does it support decimal inches?",
+      "a": "Yes. You can enter decimal inch values and get an accurate metric result."
+    },
+    {
+      "q": "Who is this tool useful for?",
+      "a": "It is useful for shoppers, designers, builders, and anyone comparing dimensions across unit systems."
+    }
+  ],
+  "related": ["cm-to-inches", "mm-to-inches", "inches-to-mm"]
+},
+{
+  "id": "mm-to-inches",
+  "name": "MM to Inches",
+  "slug": "mm-to-inches",
+  "category": "converters",
+  "intro": "Convert millimeters to inches instantly.",
+  "description": "Use this MM to Inches converter to turn millimeter values into inches. It is useful for engineering, printing, product dimensions, and technical specifications.",
+  "keywords": ["mm to inches", "millimeters to inches", "measurement converter", "technical length tool"],
+  "faq": [
+    {
+      "q": "Can I enter decimal millimeters?",
+      "a": "Yes. The converter supports decimal input values."
+    },
+    {
+      "q": "What is this useful for?",
+      "a": "It is useful for drawings, hardware sizes, printing work, and small-dimension conversions."
+    }
+  ],
+  "related": ["inches-to-mm", "cm-to-inches", "inches-to-cm"]
+},
+{
+  "id": "inches-to-mm",
+  "name": "Inches to MM",
+  "slug": "inches-to-mm",
+  "category": "converters",
+  "intro": "Convert inches to millimeters quickly.",
+  "description": "This Inches to MM converter helps you transform inch values into millimeters for engineering, product sizing, and precise technical measurements.",
+  "keywords": ["inches to mm", "inch to millimeter", "precision converter", "length tool"],
+  "faq": [
+    {
+      "q": "Can I use fractional or decimal inches?",
+      "a": "Yes. Decimal inch values are supported directly."
+    },
+    {
+      "q": "Why use this converter?",
+      "a": "It helps when you need small-dimension metric values from imperial measurements."
+    }
+  ],
+  "related": ["mm-to-inches", "cm-to-inches", "inches-to-cm"]
+},
+{
+  "id": "base58-encode",
+  "name": "Base58 Encode",
+  "slug": "base58-encode",
+  "category": "developer-tools",
+  "intro": "Encode plain text to Base58 instantly.",
+  "description": "Use this Base58 encoder to convert plain text into Base58 format. It is useful for developers, compact identifiers, encoded values, and data transformation workflows.",
+  "keywords": ["base58 encode", "base58 encoder", "text to base58", "developer encoding tool"],
+  "faq": [
+    {
+      "q": "What is Base58 used for?",
+      "a": "Base58 is commonly used for compact string representations without ambiguous characters such as 0, O, I, and l."
+    },
+    {
+      "q": "Who is this tool useful for?",
+      "a": "It is useful for developers, testers, and anyone working with encoded identifiers or payloads."
+    }
+  ],
+  "related": ["base58-decode", "base32-encode", "base64-encode"]
+},
+{
+  "id": "base58-decode",
+  "name": "Base58 Decode",
+  "slug": "base58-decode",
+  "category": "developer-tools",
+  "intro": "Decode Base58 text back into readable text.",
+  "description": "This Base58 decoder helps you convert Base58 strings back into readable text. It is useful for debugging, inspecting encoded values, and developer workflows.",
+  "keywords": ["base58 decode", "base58 decoder", "base58 to text", "developer decoding tool"],
+  "faq": [
+    {
+      "q": "What input does this Base58 decoder accept?",
+      "a": "Paste a valid Base58 string made of the standard Base58 alphabet."
+    },
+    {
+      "q": "What happens if the value is invalid?",
+      "a": "The tool returns an error message instead of a broken result."
+    }
+  ],
+  "related": ["base58-encode", "base32-decode", "base64-decode"]
+},
+{
+  "id": "length-converter",
+  "name": "Length Converter",
+  "slug": "length-converter",
+  "category": "converters",
+  "intro": "Convert between common length units in one place.",
+  "description": "Use this length converter to switch between meters, kilometers, centimeters, millimeters, inches, feet, and yards. It is useful for product dimensions, technical work, travel, and everyday measurements.",
+  "keywords": ["length converter", "unit converter", "meters to feet", "inches to cm"],
+  "faq": [
+    {
+      "q": "How do I use this length converter?",
+      "a": "Enter the value on the first line, the source unit on the second line, and the target unit on the third line."
+    },
+    {
+      "q": "Which units are supported?",
+      "a": "The tool supports mm, cm, m, km, in, ft, yd, and mi."
+    }
+  ],
+  "related": ["cm-to-inches", "inches-to-cm", "mm-to-inches"]
+},
+{
+  "id": "weight-converter",
+  "name": "Weight Converter",
+  "slug": "weight-converter",
+  "category": "converters",
+  "intro": "Convert between metric and imperial weight units instantly.",
+  "description": "This weight converter helps you switch between kilograms, grams, pounds, ounces, and tons. It is useful for shipping, fitness, cooking, and product specifications.",
+  "keywords": ["weight converter", "kg to lbs", "grams to ounces", "unit converter"],
+  "faq": [
+    {
+      "q": "What units are supported?",
+      "a": "The converter supports mg, g, kg, oz, lb, and ton."
+    },
+    {
+      "q": "Can I enter decimal values?",
+      "a": "Yes. The tool supports both whole numbers and decimal values."
+    }
+  ],
+  "related": ["kg-to-lbs", "lbs-to-kg", "bmi-calculator"]
+},
+{
+  "id": "temperature-converter",
+  "name": "Temperature Converter",
+  "slug": "temperature-converter",
+  "category": "converters",
+  "intro": "Convert between Celsius, Fahrenheit, and Kelvin quickly.",
+  "description": "Use this temperature converter to switch between Celsius, Fahrenheit, and Kelvin. It is useful for weather, science, cooking, and technical reference work.",
+  "keywords": ["temperature converter", "celsius to fahrenheit", "kelvin converter", "unit converter"],
+  "faq": [
+    {
+      "q": "Which temperature units are supported?",
+      "a": "The tool supports C, F, and K."
+    },
+    {
+      "q": "How do I format the input?",
+      "a": "Enter the value on the first line, the source unit on the second line, and the target unit on the third line."
+    }
+  ],
+  "related": ["time-converter", "speed-converter", "pressure-converter"]
+},
+{
+  "id": "speed-converter",
+  "name": "Speed Converter",
+  "slug": "speed-converter",
+  "category": "converters",
+  "intro": "Convert between km/h, mph, m/s, and knots.",
+  "description": "This speed converter helps you switch between common speed units for driving, aviation, weather, and technical calculations.",
+  "keywords": ["speed converter", "kmh to mph", "m/s converter", "knots converter"],
+  "faq": [
+    {
+      "q": "What units are supported?",
+      "a": "The converter supports km/h, mph, m/s, ft/s, and knot."
+    },
+    {
+      "q": "Who is this useful for?",
+      "a": "It is useful for travel, driving, sports, weather, and engineering tasks."
+    }
+  ],
+  "related": ["mbps-to-mb-s", "mb-s-to-mbps", "time-converter"]
+},
+{
+  "id": "volume-converter",
+  "name": "Volume Converter",
+  "slug": "volume-converter",
+  "category": "converters",
+  "intro": "Convert between liters, milliliters, gallons, cups, and more.",
+  "description": "Use this volume converter to switch between common liquid and volume units. It is useful for cooking, science, storage, and product measurements.",
+  "keywords": ["volume converter", "liters to gallons", "ml to cups", "unit converter"],
+  "faq": [
+    {
+      "q": "Which volume units are supported?",
+      "a": "The tool supports ml, l, m3, tsp, tbsp, cup, pt, qt, and gal."
+    },
+    {
+      "q": "Is this useful for cooking?",
+      "a": "Yes. It is helpful for recipes, meal prep, and kitchen measurements."
+    }
+  ],
+  "related": ["area-converter", "weight-converter", "temperature-converter"]
+},
+{
+  "id": "area-converter",
+  "name": "Area Converter",
+  "slug": "area-converter",
+  "category": "converters",
+  "intro": "Convert between square meters, square feet, acres, and more.",
+  "description": "This area converter helps you switch between common area units for property, construction, architecture, and land measurement tasks.",
+  "keywords": ["area converter", "square meters to square feet", "acre converter", "unit converter"],
+  "faq": [
+    {
+      "q": "What area units are supported?",
+      "a": "The converter supports mm2, cm2, m2, km2, in2, ft2, yd2, hectare, and acre."
+    },
+    {
+      "q": "Who is this useful for?",
+      "a": "It is useful for real estate, construction, planning, and technical work."
+    }
+  ],
+  "related": ["length-converter", "volume-converter", "pressure-converter"]
+},
+{
+  "id": "pressure-converter",
+  "name": "Pressure Converter",
+  "slug": "pressure-converter",
+  "category": "converters",
+  "intro": "Convert between bar, psi, pascal, and other pressure units.",
+  "description": "Use this pressure converter to switch between common pressure units for engineering, automotive work, weather, and technical calculations.",
+  "keywords": ["pressure converter", "psi to bar", "pascal converter", "unit converter"],
+  "faq": [
+    {
+      "q": "Which pressure units are supported?",
+      "a": "The converter supports Pa, kPa, MPa, bar, psi, atm, and torr."
+    },
+    {
+      "q": "What is this useful for?",
+      "a": "It is useful for tires, pumps, engineering, HVAC, and lab measurements."
+    }
+  ],
+  "related": ["power-converter", "energy-converter", "temperature-converter"]
+},
+{
+  "id": "energy-converter",
+  "name": "Energy Converter",
+  "slug": "energy-converter",
+  "category": "converters",
+  "intro": "Convert between joules, calories, watt-hours, and kilowatt-hours.",
+  "description": "This energy converter helps you switch between common energy units for science, electricity, nutrition, and technical reference.",
+  "keywords": ["energy converter", "joules to calories", "kwh converter", "unit converter"],
+  "faq": [
+    {
+      "q": "What energy units are supported?",
+      "a": "The tool supports J, kJ, cal, kcal, Wh, and kWh."
+    },
+    {
+      "q": "Where is this useful?",
+      "a": "It is useful for electricity usage, science tasks, and comparing energy values."
+    }
+  ],
+  "related": ["power-converter", "pressure-converter", "volume-converter"]
+},
+{
+  "id": "power-converter",
+  "name": "Power Converter",
+  "slug": "power-converter",
+  "category": "converters",
+  "intro": "Convert between watts, kilowatts, horsepower, and more.",
+  "description": "Use this power converter to switch between common power units for appliances, motors, electrical systems, and technical calculations.",
+  "keywords": ["power converter", "watts to horsepower", "kw converter", "unit converter"],
+  "faq": [
+    {
+      "q": "Which power units are supported?",
+      "a": "The converter supports W, kW, MW, hp, and BTU/h."
+    },
+    {
+      "q": "Who is this tool useful for?",
+      "a": "It is useful for electrical work, equipment specs, HVAC, and motor comparisons."
+    }
+  ],
+  "related": ["energy-converter", "pressure-converter", "speed-converter"]
+},
+{
+  "id": "time-converter",
+  "name": "Time Converter",
+  "slug": "time-converter",
+  "category": "converters",
+  "intro": "Convert between seconds, minutes, hours, days, weeks, and years.",
+  "description": "This time converter helps you switch between common time units quickly. It is useful for planning, work tracking, study sessions, engineering, and everyday conversions.",
+  "keywords": ["time converter", "seconds to hours", "days to weeks", "unit converter"],
+  "faq": [
+    {
+      "q": "What time units are supported?",
+      "a": "The tool supports ms, s, min, h, day, week, month, and year."
+    },
+    {
+      "q": "How do I use it?",
+      "a": "Enter the value on the first line, the source unit on the second line, and the target unit on the third line."
+    }
+  ],
+  "related": ["time-duration-calculator", "date-difference-calculator", "temperature-converter"]
+},
+{
+  "id": "meters-to-feet",
+  "name": "Meters to Feet",
+  "slug": "meters-to-feet",
+  "category": "converters",
+  "intro": "Convert meters to feet instantly.",
+  "description": "Use this meters to feet converter to quickly turn metric length values into feet. It is useful for construction, product dimensions, fitness measurements, and everyday conversions.",
+  "keywords": ["meters to feet", "m to ft", "length converter", "metric to imperial"],
+  "faq": [
+    {
+      "q": "How do I use this converter?",
+      "a": "Enter a value in meters and the tool will instantly return the equivalent value in feet."
+    },
+    {
+      "q": "Who is this useful for?",
+      "a": "It is useful for builders, shoppers, engineers, and anyone comparing metric and imperial measurements."
+    }
+  ],
+  "related": ["feet-to-meters", "cm-to-inches", "inches-to-cm"]
+},
+{
+  "id": "feet-to-meters",
+  "name": "Feet to Meters",
+  "slug": "feet-to-meters",
+  "category": "converters",
+  "intro": "Convert feet to meters quickly.",
+  "description": "This feet to meters converter helps you switch imperial length values into metric units. It is useful for dimensions, room measurements, product specs, and international comparisons.",
+  "keywords": ["feet to meters", "ft to m", "imperial to metric", "length converter"],
+  "faq": [
+    {
+      "q": "What input does this tool accept?",
+      "a": "Enter a number in feet and the tool returns the value in meters."
+    },
+    {
+      "q": "Can I use decimals?",
+      "a": "Yes. Decimal values are supported."
+    }
+  ],
+  "related": ["meters-to-feet", "inches-to-cm", "cm-to-inches"]
+},
+{
+  "id": "celsius-to-fahrenheit",
+  "name": "Celsius to Fahrenheit",
+  "slug": "celsius-to-fahrenheit",
+  "category": "converters",
+  "intro": "Convert Celsius to Fahrenheit instantly.",
+  "description": "Use this Celsius to Fahrenheit converter to switch temperature values for weather, cooking, science, and technical tasks.",
+  "keywords": ["celsius to fahrenheit", "c to f", "temperature converter", "weather converter"],
+  "faq": [
+    {
+      "q": "What is this tool useful for?",
+      "a": "It is useful for weather checks, recipes, science work, and comparing temperature scales."
+    },
+    {
+      "q": "Does it support decimal temperatures?",
+      "a": "Yes. You can enter whole numbers or decimal values."
+    }
+  ],
+  "related": ["fahrenheit-to-celsius", "temperature-converter", "time-converter"]
+},
+{
+  "id": "fahrenheit-to-celsius",
+  "name": "Fahrenheit to Celsius",
+  "slug": "fahrenheit-to-celsius",
+  "category": "converters",
+  "intro": "Convert Fahrenheit to Celsius in seconds.",
+  "description": "This Fahrenheit to Celsius converter helps you switch temperature values into metric format. It is useful for weather, travel, recipes, and technical reference.",
+  "keywords": ["fahrenheit to celsius", "f to c", "temperature converter", "unit conversion"],
+  "faq": [
+    {
+      "q": "Who is this converter for?",
+      "a": "It is useful for travelers, cooks, students, and anyone working across different temperature systems."
+    },
+    {
+      "q": "Can I convert negative values?",
+      "a": "Yes. Negative temperatures are supported."
+    }
+  ],
+  "related": ["celsius-to-fahrenheit", "temperature-converter", "time-converter"]
+},
+{
+  "id": "liters-to-gallons",
+  "name": "Liters to Gallons",
+  "slug": "liters-to-gallons",
+  "category": "converters",
+  "intro": "Convert liters to gallons instantly.",
+  "description": "Use this liters to gallons converter to turn metric volume values into gallons. It is useful for fuel, liquids, storage, and measurement tasks.",
+  "keywords": ["liters to gallons", "l to gal", "volume converter", "metric to imperial"],
+  "faq": [
+    {
+      "q": "What kind of gallons does this use?",
+      "a": "This tool uses the standard US gallon conversion."
+    },
+    {
+      "q": "What is this useful for?",
+      "a": "It is useful for fuel amounts, containers, recipes, and liquid conversions."
+    }
+  ],
+  "related": ["gallons-to-liters", "volume-converter", "weight-converter"]
+},
+{
+  "id": "gallons-to-liters",
+  "name": "Gallons to Liters",
+  "slug": "gallons-to-liters",
+  "category": "converters",
+  "intro": "Convert gallons to liters quickly.",
+  "description": "This gallons to liters converter helps you change gallon values into metric liters. It is useful for fuel, water, containers, and product measurements.",
+  "keywords": ["gallons to liters", "gal to l", "volume conversion", "liquid converter"],
+  "faq": [
+    {
+      "q": "Which gallon standard is used?",
+      "a": "The tool uses the standard US gallon for conversion."
+    },
+    {
+      "q": "Can I enter decimal gallons?",
+      "a": "Yes. Decimal values are supported."
+    }
+  ],
+  "related": ["liters-to-gallons", "volume-converter", "weight-converter"]
+},
+{
+  "id": "kmh-to-mph",
+  "name": "KMH to MPH",
+  "slug": "kmh-to-mph",
+  "category": "converters",
+  "intro": "Convert kilometers per hour to miles per hour instantly.",
+  "description": "Use this KMH to MPH converter to switch speed values for driving, travel, maps, sports, and international speed limits.",
+  "keywords": ["kmh to mph", "km/h to mph", "speed converter", "driving converter"],
+  "faq": [
+    {
+      "q": "What is this useful for?",
+      "a": "It is useful for travel, car speed comparisons, maps, and road sign understanding."
+    },
+    {
+      "q": "Can I enter decimal speed values?",
+      "a": "Yes. The converter supports decimal inputs."
+    }
+  ],
+  "related": ["mph-to-kmh", "speed-converter", "mbps-to-mb-s"]
+},
+{
+  "id": "mph-to-kmh",
+  "name": "MPH to KMH",
+  "slug": "mph-to-kmh",
+  "category": "converters",
+  "intro": "Convert miles per hour to kilometers per hour quickly.",
+  "description": "This MPH to KMH converter helps you switch imperial speed values into metric format. It is useful for travel, road speed limits, and transport comparisons.",
+  "keywords": ["mph to kmh", "mph to km/h", "speed conversion", "travel converter"],
+  "faq": [
+    {
+      "q": "Who is this tool useful for?",
+      "a": "It is useful for drivers, travelers, students, and anyone comparing speed units."
+    },
+    {
+      "q": "Does it support decimals?",
+      "a": "Yes. Decimal speed values are supported."
+    }
+  ],
+  "related": ["kmh-to-mph", "speed-converter", "mb-s-to-mbps"]
+},
+{
+  "id": "watts-to-horsepower",
+  "name": "Watts to Horsepower",
+  "slug": "watts-to-horsepower",
+  "category": "converters",
+  "intro": "Convert watts to horsepower instantly.",
+  "description": "Use this watts to horsepower converter to compare electrical or mechanical power values. It is useful for motors, equipment specs, engineering, and technical reference.",
+  "keywords": ["watts to horsepower", "w to hp", "power converter", "motor power"],
+  "faq": [
+    {
+      "q": "What is this useful for?",
+      "a": "It is useful for comparing motor ratings, equipment specs, and engineering documentation."
+    },
+    {
+      "q": "Can I enter decimal watt values?",
+      "a": "Yes. The tool supports whole numbers and decimals."
+    }
+  ],
+  "related": ["horsepower-to-watts", "power-converter", "energy-converter"]
+},
+{
+  "id": "horsepower-to-watts",
+  "name": "Horsepower to Watts",
+  "slug": "horsepower-to-watts",
+  "category": "converters",
+  "intro": "Convert horsepower to watts quickly.",
+  "description": "This horsepower to watts converter helps you turn horsepower values into watts for equipment specs, engineering work, and power comparisons.",
+  "keywords": ["horsepower to watts", "hp to w", "power conversion", "equipment converter"],
+  "faq": [
+    {
+      "q": "Who is this tool useful for?",
+      "a": "It is useful for engineers, technicians, mechanics, and anyone comparing power units."
+    },
+    {
+      "q": "Can I use decimal horsepower values?",
+      "a": "Yes. Decimal inputs are supported."
+    }
+  ],
+  "related": ["watts-to-horsepower", "power-converter", "energy-converter"]
+}
+,
+{
+  "id": "grams-to-ounces",
+  "name": "Grams to Ounces",
+  "slug": "grams-to-ounces",
+  "category": "converters",
+  "intro": "Convert grams to ounces instantly.",
+  "description": "Use this grams to ounces converter to switch metric weight into ounces quickly. It is useful for cooking, nutrition, shipping, and product measurements.",
+  "keywords": ["grams to ounces", "g to oz", "weight converter", "metric to imperial"],
+  "faq": [
+    {
+      "q": "What is this useful for?",
+      "a": "It is useful for recipes, food labels, packages, and comparing product weights."
+    },
+    {
+      "q": "Can I enter decimal values?",
+      "a": "Yes. The converter supports whole numbers and decimals."
+    }
+  ],
+  "related": ["ounces-to-grams", "kg-to-lbs", "lbs-to-kg"]
+},
+{
+  "id": "ounces-to-grams",
+  "name": "Ounces to Grams",
+  "slug": "ounces-to-grams",
+  "category": "converters",
+  "intro": "Convert ounces to grams quickly.",
+  "description": "This ounces to grams converter helps you switch ounce values into metric grams. It is useful for recipes, nutrition labels, packaging, and product comparisons.",
+  "keywords": ["ounces to grams", "oz to g", "weight conversion", "imperial to metric"],
+  "faq": [
+    {
+      "q": "Who is this tool useful for?",
+      "a": "It is useful for cooking, shopping, fitness tracking, and packaging tasks."
+    },
+    {
+      "q": "Can I convert fractional ounces?",
+      "a": "Yes. Decimal values are supported."
+    }
+  ],
+  "related": ["grams-to-ounces", "kg-to-lbs", "lbs-to-kg"]
+},
+{
+  "id": "kilograms-to-grams",
+  "name": "Kilograms to Grams",
+  "slug": "kilograms-to-grams",
+  "category": "converters",
+  "intro": "Convert kilograms to grams instantly.",
+  "description": "Use this kilograms to grams converter to quickly turn kilogram values into grams. It is useful for food prep, science, shipping, and technical measurements.",
+  "keywords": ["kilograms to grams", "kg to g", "weight converter", "metric conversion"],
+  "faq": [
+    {
+      "q": "What is this useful for?",
+      "a": "It is useful when you need smaller metric units for precision work, recipes, or measurements."
+    },
+    {
+      "q": "Can I enter decimal kilograms?",
+      "a": "Yes. Decimal kilogram values are supported."
+    }
+  ],
+  "related": ["grams-to-kilograms", "kg-to-lbs", "grams-to-ounces"]
+},
+{
+  "id": "grams-to-kilograms",
+  "name": "Grams to Kilograms",
+  "slug": "grams-to-kilograms",
+  "category": "converters",
+  "intro": "Convert grams to kilograms quickly.",
+  "description": "This grams to kilograms converter helps you switch smaller metric weights into kilograms. It is useful for food amounts, shipping, labs, and measurement work.",
+  "keywords": ["grams to kilograms", "g to kg", "weight conversion", "metric weight"],
+  "faq": [
+    {
+      "q": "Can I use this for large values?",
+      "a": "Yes. It works for both small and large gram values."
+    },
+    {
+      "q": "Why use this tool?",
+      "a": "It helps when you need to express gram values in larger metric units."
+    }
+  ],
+  "related": ["kilograms-to-grams", "lbs-to-kg", "ounces-to-grams"]
+},
+{
+  "id": "celsius-to-fahrenheit",
+  "name": "Celsius to Fahrenheit",
+  "slug": "celsius-to-fahrenheit",
+  "category": "converters",
+  "intro": "Convert Celsius to Fahrenheit instantly.",
+  "description": "Use this Celsius to Fahrenheit converter to switch temperature values for weather, cooking, science, and technical tasks.",
+  "keywords": ["celsius to fahrenheit", "c to f", "temperature converter", "weather converter"],
+  "faq": [
+    {
+      "q": "What is this tool useful for?",
+      "a": "It is useful for weather checks, recipes, science work, and comparing temperature scales."
+    },
+    {
+      "q": "Does it support decimal temperatures?",
+      "a": "Yes. You can enter whole numbers or decimal values."
+    }
+  ],
+  "related": ["fahrenheit-to-celsius", "time-duration-calculator", "date-difference-calculator"]
+},
+{
+  "id": "fahrenheit-to-celsius",
+  "name": "Fahrenheit to Celsius",
+  "slug": "fahrenheit-to-celsius",
+  "category": "converters",
+  "intro": "Convert Fahrenheit to Celsius in seconds.",
+  "description": "This Fahrenheit to Celsius converter helps you switch temperature values into metric format. It is useful for weather, travel, recipes, and technical reference.",
+  "keywords": ["fahrenheit to celsius", "f to c", "temperature converter", "unit conversion"],
+  "faq": [
+    {
+      "q": "Who is this converter for?",
+      "a": "It is useful for travelers, cooks, students, and anyone working across different temperature systems."
+    },
+    {
+      "q": "Can I convert negative values?",
+      "a": "Yes. Negative temperatures are supported."
+    }
+  ],
+  "related": ["celsius-to-fahrenheit", "time-duration-calculator", "date-difference-calculator"]
+},
+{
+  "id": "kmh-to-mph",
+  "name": "KMH to MPH",
+  "slug": "kmh-to-mph",
+  "category": "converters",
+  "intro": "Convert kilometers per hour to miles per hour instantly.",
+  "description": "Use this KMH to MPH converter to switch speed values for driving, travel, maps, sports, and international speed limits.",
+  "keywords": ["kmh to mph", "km/h to mph", "speed converter", "driving converter"],
+  "faq": [
+    {
+      "q": "What is this useful for?",
+      "a": "It is useful for travel, car speed comparisons, maps, and road sign understanding."
+    },
+    {
+      "q": "Can I enter decimal speed values?",
+      "a": "Yes. The converter supports decimal inputs."
+    }
+  ],
+  "related": ["mph-to-kmh", "mbps-to-mb-s", "mb-s-to-mbps"]
+},
+{
+  "id": "mph-to-kmh",
+  "name": "MPH to KMH",
+  "slug": "mph-to-kmh",
+  "category": "converters",
+  "intro": "Convert miles per hour to kilometers per hour quickly.",
+  "description": "This MPH to KMH converter helps you switch imperial speed values into metric format. It is useful for travel, road speed limits, and transport comparisons.",
+  "keywords": ["mph to kmh", "mph to km/h", "speed conversion", "travel converter"],
+  "faq": [
+    {
+      "q": "Who is this tool useful for?",
+      "a": "It is useful for drivers, travelers, students, and anyone comparing speed units."
+    },
+    {
+      "q": "Does it support decimals?",
+      "a": "Yes. Decimal speed values are supported."
+    }
+  ],
+  "related": ["kmh-to-mph", "mbps-to-mb-s", "mb-s-to-mbps"]
+},
+{
+  "id": "liters-to-gallons",
+  "name": "Liters to Gallons",
+  "slug": "liters-to-gallons",
+  "category": "converters",
+  "intro": "Convert liters to gallons instantly.",
+  "description": "Use this liters to gallons converter to turn metric volume values into gallons. It is useful for fuel, liquids, storage, and measurement tasks.",
+  "keywords": ["liters to gallons", "l to gal", "volume converter", "metric to imperial"],
+  "faq": [
+    {
+      "q": "What kind of gallons does this use?",
+      "a": "This tool uses the standard US gallon conversion."
+    },
+    {
+      "q": "What is this useful for?",
+      "a": "It is useful for fuel amounts, containers, recipes, and liquid conversions."
+    }
+  ],
+  "related": ["gallons-to-liters", "kg-to-lbs", "lbs-to-kg"]
+},
+{
+  "id": "gallons-to-liters",
+  "name": "Gallons to Liters",
+  "slug": "gallons-to-liters",
+  "category": "converters",
+  "intro": "Convert gallons to liters quickly.",
+  "description": "This gallons to liters converter helps you change gallon values into metric liters. It is useful for fuel, water, containers, and product measurements.",
+  "keywords": ["gallons to liters", "gal to l", "volume conversion", "liquid converter"],
+  "faq": [
+    {
+      "q": "Which gallon standard is used?",
+      "a": "The tool uses the standard US gallon for conversion."
+    },
+    {
+      "q": "Can I enter decimal gallons?",
+      "a": "Yes. Decimal values are supported."
+    }
+  ],
+  "related": ["liters-to-gallons", "grams-to-ounces", "ounces-to-grams"]
+},
+{
+  "id": "json-to-yaml",
+  "name": "JSON to YAML Converter",
+  "slug": "json-to-yaml",
+  "category": "developer-tools",
+  "intro": "Convert JSON into readable YAML instantly.",
+  "description": "Use this JSON to YAML converter to transform valid JSON into a cleaner YAML-style format. It is useful for configs, developer workflows, documentation, and quick data transformation.",
+  "keywords": ["json to yaml", "yaml converter", "json converter", "developer tool"],
+  "faq": [
+    {
+      "q": "What input does this converter accept?",
+      "a": "Paste valid JSON such as an object or array, and the tool will convert it into YAML-style output."
+    },
+    {
+      "q": "Who is this useful for?",
+      "a": "It is useful for developers, DevOps workflows, config editing, and documentation work."
+    }
+  ],
+  "related": ["yaml-to-json", "json-formatter", "json-validator"]
+},
+{
+  "id": "yaml-to-json",
+  "name": "YAML to JSON Converter",
+  "slug": "yaml-to-json",
+  "category": "developer-tools",
+  "intro": "Convert simple YAML into JSON quickly.",
+  "description": "This YAML to JSON converter helps you transform simple YAML structures into formatted JSON. It is useful for configuration files, developer workflows, and quick data transformation.",
+  "keywords": ["yaml to json", "json converter", "yaml parser", "developer tool"],
+  "faq": [
+    {
+      "q": "What YAML format is supported?",
+      "a": "The tool supports simple key-value YAML and basic nested indentation-based structures."
+    },
+    {
+      "q": "Why use YAML to JSON conversion?",
+      "a": "It helps when moving configuration data into APIs, scripts, or developer tools that expect JSON."
+    }
+  ],
+  "related": ["json-to-yaml", "json-formatter", "json-validator"]
+},
+{
+  "id": "xml-formatter",
+  "name": "XML Formatter",
+  "slug": "xml-formatter",
+  "category": "developer-tools",
+  "intro": "Format XML into clean, readable indentation.",
+  "description": "Use this XML formatter to pretty-print raw XML with line breaks and indentation. It is useful for APIs, feeds, sitemaps, config files, and debugging markup.",
+  "keywords": ["xml formatter", "pretty print xml", "xml beautifier", "developer tool"],
+  "faq": [
+    {
+      "q": "What does this formatter do?",
+      "a": "It takes compact XML and returns a cleaner formatted version with indentation and line breaks."
+    },
+    {
+      "q": "When is this useful?",
+      "a": "It is useful for debugging XML, reading API responses, editing configs, and checking feeds."
+    }
+  ],
+  "related": ["xml-validator", "json-formatter", "html-stripper"]
+},
+{
+  "id": "xml-validator",
+  "name": "XML Validator",
+  "slug": "xml-validator",
+  "category": "developer-tools",
+  "intro": "Validate XML and check whether the markup is well formed.",
+  "description": "This XML validator helps you check whether XML is well formed and readable by a parser. It is useful for feeds, API responses, config files, and markup debugging.",
+  "keywords": ["xml validator", "validate xml", "xml parser", "developer tool"],
+  "faq": [
+    {
+      "q": "What does this validator check?",
+      "a": "It checks whether the XML is well formed and can be parsed without syntax errors."
+    },
+    {
+      "q": "Is this useful for feeds and sitemaps?",
+      "a": "Yes. It is useful for checking XML-based feeds, documents, and structured files."
+    }
+  ],
+  "related": ["xml-formatter", "json-validator", "html-stripper"]
+},
+{
+  "id": "hex-to-rgb",
+  "name": "HEX to RGB",
+  "slug": "hex-to-rgb",
+  "category": "converters",
+  "intro": "Convert HEX color codes to RGB values instantly.",
+  "description": "Use this HEX to RGB converter to transform hex color values into RGB format. It is useful for CSS, design handoff, front-end work, and quick color checks.",
+  "keywords": ["hex to rgb", "color converter", "css color tool", "hex color"],
+  "faq": [
+    {
+      "q": "What HEX formats are supported?",
+      "a": "The tool supports 3-character and 6-character HEX color values."
+    },
+    {
+      "q": "Can I use the value without the # symbol?",
+      "a": "Yes. The converter accepts both styles."
+    }
+  ],
+  "related": ["rgb-to-hex", "rgb-to-hsl", "hsl-to-rgb"]
+},
+{
+  "id": "rgb-to-hex",
+  "name": "RGB to HEX",
+  "slug": "rgb-to-hex",
+  "category": "converters",
+  "intro": "Convert RGB values to HEX color format quickly.",
+  "description": "This RGB to HEX converter helps you turn RGB color values into HEX format for CSS, design systems, and front-end development.",
+  "keywords": ["rgb to hex", "hex converter", "css color", "rgb converter"],
+  "faq": [
+    {
+      "q": "How should I enter RGB values?",
+      "a": "Enter red, green, and blue values separated by spaces or commas, such as 255 87 51."
+    },
+    {
+      "q": "What range is allowed?",
+      "a": "Each RGB channel should be between 0 and 255."
+    }
+  ],
+  "related": ["hex-to-rgb", "rgb-to-hsl", "hsl-to-rgb"]
+},
+{
+  "id": "rgb-to-hsl",
+  "name": "RGB to HSL",
+  "slug": "rgb-to-hsl",
+  "category": "converters",
+  "intro": "Convert RGB color values to HSL format in seconds.",
+  "description": "Use this RGB to HSL converter to change RGB values into hue, saturation, and lightness format. It is useful for CSS, theming, and design work.",
+  "keywords": ["rgb to hsl", "color converter", "css hsl", "rgb color tool"],
+  "faq": [
+    {
+      "q": "Why use HSL instead of RGB?",
+      "a": "HSL makes it easier to adjust hue, saturation, and lightness separately."
+    },
+    {
+      "q": "Can I use the result in CSS?",
+      "a": "Yes. The output is suitable for CSS color work."
+    }
+  ],
+  "related": ["hsl-to-rgb", "rgb-to-hex", "hex-to-rgb"]
+},
+{
+  "id": "hsl-to-rgb",
+  "name": "HSL to RGB",
+  "slug": "hsl-to-rgb",
+  "category": "converters",
+  "intro": "Convert HSL color values to RGB format instantly.",
+  "description": "This HSL to RGB converter helps you transform hue, saturation, and lightness values into RGB. It is useful for CSS workflows, front-end implementation, and UI design.",
+  "keywords": ["hsl to rgb", "color converter", "css rgb", "hsl color tool"],
+  "faq": [
+    {
+      "q": "How do I enter HSL values?",
+      "a": "Enter hue, saturation, and lightness values such as 12 100 60."
+    },
+    {
+      "q": "Do I need the percent symbol?",
+      "a": "No. Just enter the numbers."
+    }
+  ],
+  "related": ["rgb-to-hsl", "rgb-to-hex", "hex-to-rgb"]
+},
+{
+  "id": "html-to-markdown",
+  "name": "HTML to Markdown",
+  "slug": "html-to-markdown",
+  "category": "converters",
+  "intro": "Convert simple HTML into Markdown quickly.",
+  "description": "Use this HTML to Markdown converter to transform basic HTML tags into readable Markdown. It is useful for content migration, docs, notes, and CMS cleanup.",
+  "keywords": ["html to markdown", "markdown converter", "content migration", "html converter"],
+  "faq": [
+    {
+      "q": "What HTML does this support?",
+      "a": "The tool supports common tags such as headings, paragraphs, strong, em, links, line breaks, and code."
+    },
+    {
+      "q": "Who is this useful for?",
+      "a": "It is useful for writers, developers, editors, and anyone moving content between systems."
+    }
+  ],
+  "related": ["markdown-to-html", "html-stripper", "find-and-replace-text"]
+},
+{
+  "id": "remove-line-breaks",
+  "name": "Remove Line Breaks",
+  "slug": "remove-line-breaks",
+  "category": "text-tools",
+  "intro": "Remove line breaks and turn text into one clean line.",
+  "description": "This remove line breaks tool helps you convert multi-line text into one single clean line. It is useful for forms, spreadsheets, CMS fields, and data cleanup.",
+  "keywords": ["remove line breaks", "remove newlines", "text cleaner", "single line text"],
+  "faq": [
+    {
+      "q": "What happens to paragraphs?",
+      "a": "Line breaks are replaced with spaces so the result stays readable."
+    },
+    {
+      "q": "When is this useful?",
+      "a": "It is useful when pasting text into one-line fields, cells, or systems that do not support multiple lines."
+    }
+  ],
+  "related": ["remove-extra-spaces", "html-stripper", "find-and-replace-text"]
+},
+{
+  "id": "hash-generator",
+  "name": "Hash Generator",
+  "slug": "hash-generator",
+  "category": "developer-tools",
+  "intro": "Generate common hashes from text instantly.",
+  "description": "Use this hash generator to create MD5, SHA-1, SHA-256, and SHA-512 hashes from text. It is useful for development, testing, checksums, and quick data verification.",
+  "keywords": ["hash generator", "md5 generator", "sha256 generator", "checksum tool"],
+  "faq": [
+    {
+      "q": "What hashes does this tool generate?",
+      "a": "The tool generates MD5, SHA-1, SHA-256, and SHA-512 from the text you enter."
+    },
+    {
+      "q": "Who is this useful for?",
+      "a": "It is useful for developers, testers, sysadmins, and anyone checking or comparing text hashes."
+    }
+  ],
+  "related": ["md5-hash-generator", "sha256-hash-generator", "base64-encode"]
+},
+{
+  "id": "percentage-change-calculator",
+  "name": "Percentage Change Calculator",
+  "slug": "percentage-change-calculator",
+  "category": "calculators",
+  "intro": "Calculate percentage increase or decrease between two values.",
+  "description": "This percentage change calculator helps you compare an original value and a new value to see the exact percentage increase or decrease. It is useful for finance, analytics, pricing, and reporting.",
+  "keywords": ["percentage change calculator", "percent increase", "percent decrease", "growth calculator"],
+  "faq": [
+    {
+      "q": "How do I use this calculator?",
+      "a": "Enter the original value on the first line and the new value on the second line. The tool returns the percentage change."
+    },
+    {
+      "q": "Can it show decreases?",
+      "a": "Yes. If the second number is lower than the first, the result is shown as a negative percentage."
+    }
+  ],
+  "related": ["percentage-calculator", "discount-calculator", "roi-calculator"]
+},
+{
+  "id": "average-calculator",
+  "name": "Average Calculator",
+  "slug": "average-calculator",
+  "category": "calculators",
+  "intro": "Calculate the average of multiple numbers quickly.",
+  "description": "Use this average calculator to find the mean value from a list of numbers. It is useful for grades, analytics, finance, metrics, and everyday calculations.",
+  "keywords": ["average calculator", "mean calculator", "number average", "math tool"],
+  "faq": [
+    {
+      "q": "How do I enter values?",
+      "a": "Enter numbers separated by spaces, commas, or line breaks."
+    },
+    {
+      "q": "What average does this calculate?",
+      "a": "It calculates the arithmetic mean."
+    }
+  ],
+  "related": ["ratio-calculator", "percentage-calculator", "age-calculator"]
+},
+{
+  "id": "ratio-calculator",
+  "name": "Ratio Calculator",
+  "slug": "ratio-calculator",
+  "category": "calculators",
+  "intro": "Simplify and compare ratios instantly.",
+  "description": "This ratio calculator helps you simplify ratios and view their decimal form. It is useful for math, design scaling, recipes, and proportional comparisons.",
+  "keywords": ["ratio calculator", "simplify ratio", "ratio simplifier", "math tool"],
+  "faq": [
+    {
+      "q": "How do I enter a ratio?",
+      "a": "Enter two numbers separated by a colon, slash, space, comma, or line break."
+    },
+    {
+      "q": "What does the tool return?",
+      "a": "It returns the simplified ratio and the decimal value of the first number divided by the second."
+    }
+  ],
+  "related": ["average-calculator", "percentage-calculator", "bmi-calculator"]
+},
+{
+  "id": "text-splitter",
+  "name": "Text Splitter",
+  "slug": "text-splitter",
+  "category": "text-tools",
+  "intro": "Split text into separate lines using a custom separator.",
+  "description": "Use this text splitter to break a string into separate lines based on a comma, pipe, slash, semicolon, or other custom separator. It is useful for cleanup, imports, and list formatting.",
+  "keywords": ["text splitter", "split text", "split by comma", "list formatter"],
+  "faq": [
+    {
+      "q": "How do I choose the separator?",
+      "a": "Put the separator on the first line, leave a blank line, then paste the text you want to split."
+    },
+    {
+      "q": "Can I split CSV-like text?",
+      "a": "Yes. It works well for simple comma-separated or delimiter-separated values."
+    }
+  ],
+  "related": ["text-joiner", "remove-duplicate-lines", "sort-lines-ascending"]
+},
+{
+  "id": "text-joiner",
+  "name": "Text Joiner",
+  "slug": "text-joiner",
+  "category": "text-tools",
+  "intro": "Join multiple lines into one line with a custom separator.",
+  "description": "This text joiner helps you combine many lines into one string with a separator like a comma, pipe, semicolon, or space. It is useful for tags, code snippets, SQL lists, and bulk formatting.",
+  "keywords": ["text joiner", "join lines", "combine lines", "separator tool"],
+  "faq": [
+    {
+      "q": "How do I choose the separator?",
+      "a": "Put the separator on the first line, leave a blank line, then paste one item per line."
+    },
+    {
+      "q": "Can I use custom separators?",
+      "a": "Yes. You can use commas, spaces, pipes, semicolons, tabs, or custom text."
+    }
+  ],
+  "related": ["text-splitter", "remove-duplicate-lines", "sort-lines-descending"]
+},
+{
+  "id": "subnet-calculator",
+  "name": "Subnet Calculator",
+  "slug": "subnet-calculator",
+  "category": "network-tools",
+  "intro": "Calculate network details from an IPv4 address and CIDR prefix.",
+  "description": "Use this subnet calculator to find the network address, broadcast address, usable host range, and total hosts for an IPv4 subnet. It is useful for networking, labs, exams, and planning.",
+  "keywords": ["subnet calculator", "ipv4 subnet", "network calculator", "cidr subnet"],
+  "faq": [
+    {
+      "q": "How do I use this subnet calculator?",
+      "a": "Enter an IPv4 address and CIDR prefix like 192.168.1.10/24."
+    },
+    {
+      "q": "What does the tool return?",
+      "a": "It returns the network address, broadcast address, subnet mask, and usable host range."
+    }
+  ],
+  "related": ["cidr-calculator", "ipv4-validator", "ip-lookup"]
+},
+{
+  "id": "cidr-calculator",
+  "name": "CIDR Calculator",
+  "slug": "cidr-calculator",
+  "category": "network-tools",
+  "intro": "Convert CIDR prefixes into subnet masks and host counts.",
+  "description": "This CIDR calculator helps you convert an IPv4 CIDR prefix into a subnet mask, wildcard mask, and host capacity. It is useful for networking, certifications, subnet planning, and quick reference.",
+  "keywords": ["cidr calculator", "subnet mask calculator", "prefix to mask", "network tool"],
+  "faq": [
+    {
+      "q": "How do I use this CIDR calculator?",
+      "a": "Enter a prefix like /24 or just 24, and the tool will return subnet details."
+    },
+    {
+      "q": "What does the tool show?",
+      "a": "It shows the subnet mask, wildcard mask, total addresses, and usable hosts."
+    }
+  ],
+  "related": ["subnet-calculator", "ipv4-validator", "ip-lookup"]
+}
 ]
