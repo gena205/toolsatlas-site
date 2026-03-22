@@ -56,19 +56,36 @@ function formatCategoryLabel(category: string): string {
 
     <div class="tool-grid">
       <div class="tool-column">
-        <label for="tool-input" class="field-label">Input</label>
+        <label for="tool-input" class="field-label">
+          {tool.slug === "my-ip-address" ? "Info" : "Input"}
+        </label>
+
         <textarea
           id="tool-input"
           class="tool-textarea"
           rows="12"
-          placeholder={`Paste or type your input for ${tool.name} here...`}
+          placeholder={tool.slug === "my-ip-address"
+            ? ""
+            : `Paste or type your input for ${tool.name} here...`}
+          style={tool.slug === "my-ip-address" ? "display:none;" : ""}
         ></textarea>
 
-        <div class="button-row">
-          <button type="button" class="primary-button">Run Tool</button>
-          <button type="button" class="secondary-button">Copy Input</button>
-          <button type="button" class="secondary-button">Clear</button>
-        </div>
+        {tool.slug === "my-ip-address" && (
+          <div
+            class="tool-textarea output-textarea"
+            style="display:flex;align-items:center;justify-content:center;"
+          >
+            No input required for this tool.
+          </div>
+        )}
+
+        {tool.slug !== "my-ip-address" && (
+          <div class="button-row">
+            <button type="button" class="primary-button">Run Tool</button>
+            <button type="button" class="secondary-button">Copy Input</button>
+            <button type="button" class="secondary-button">Clear</button>
+          </div>
+        )}
       </div>
 
       <div class="tool-column">
@@ -301,7 +318,7 @@ function formatCategoryLabel(category: string): string {
 
 <script>
   document.addEventListener("DOMContentLoaded", () => {
-    const input = document.getElementById("tool-input") as HTMLTextAreaElement | null;
+    const input = document.getElementById("tool-input") as HTMLTextAreaElement;
     const output = document.getElementById("tool-output") as HTMLTextAreaElement | null;
 
     const runBtn = document.querySelector(".primary-button") as HTMLButtonElement | null;
@@ -312,10 +329,26 @@ function formatCategoryLabel(category: string): string {
     const copyResultBtn = secondaryButtons[2] as HTMLButtonElement | undefined;
     const downloadBtn = secondaryButtons[3] as HTMLButtonElement | undefined;
 
-    runBtn?.addEventListener("click", () => {
-      if (!input || !output) return;
+    const slug = window.location.pathname.split("/").pop();
 
-      const slug = window.location.pathname.split("/").pop();
+if (slug === "my-ip-address") {
+  if (!output) return;
+
+  output.value = "Loading your public IP address...";
+
+  fetch("https://api.ipify.org?format=json")
+    .then((response: Response) => response.json())
+    .then((data: { ip?: string }) => {
+      output.value = data.ip ? `Your public IP: ${data.ip}` : "Unable to detect your IP address.";
+    })
+    .catch(() => {
+      output.value = "Unable to detect your IP address.";
+    });
+}
+
+    runBtn?.addEventListener("click", () => {
+  if (!output) return;
+  if (slug !== "my-ip-address" && !input) return;
 
       if (slug === "json-formatter") {
         try {
@@ -3367,6 +3400,79 @@ if (slug === "cidr-calculator") {
     `Wildcard mask: ${toIp(wildcard)}\n` +
     `Total addresses: ${total}\n` +
     `Usable hosts: ${usable}`;
+  return;
+}
+
+
+if (slug === "mx-record-lookup") {
+  const domain = input.value.trim().toLowerCase();
+
+  if (!domain) {
+    output.value = "Enter a domain like: gmail.com";
+    return;
+  }
+
+  output.value = "Looking up MX records...";
+
+  fetch(`https://dns.google/resolve?name=${encodeURIComponent(domain)}&type=MX`)
+    .then((response: Response) => response.json())
+    .then((data: {
+      Status?: number;
+      Answer?: Array<{ data?: string }>;
+      Comment?: string;
+    }) => {
+      if (!Array.isArray(data.Answer) || data.Answer.length === 0) {
+        output.value = "No MX records found.";
+        return;
+      }
+
+      const result = data.Answer
+        .map((item: { data?: string }) => item.data || "")
+        .filter((value: string) => value.length > 0)
+        .join("\n");
+
+      output.value = result || "No MX records found.";
+    })
+    .catch(() => {
+      output.value = "Unable to look up MX records.";
+    });
+
+  return;
+}
+
+if (slug === "ns-record-lookup") {
+  const domain = input.value.trim().toLowerCase();
+
+  if (!domain) {
+    output.value = "Enter a domain like: google.com";
+    return;
+  }
+
+  output.value = "Looking up NS records...";
+
+  fetch(`https://dns.google/resolve?name=${encodeURIComponent(domain)}&type=NS`)
+    .then((response: Response) => response.json())
+    .then((data: {
+      Status?: number;
+      Answer?: Array<{ data?: string }>;
+      Comment?: string;
+    }) => {
+      if (!Array.isArray(data.Answer) || data.Answer.length === 0) {
+        output.value = "No NS records found.";
+        return;
+      }
+
+      const result = data.Answer
+        .map((item: { data?: string }) => item.data || "")
+        .filter((value: string) => value.length > 0)
+        .join("\n");
+
+      output.value = result || "No NS records found.";
+    })
+    .catch(() => {
+      output.value = "Unable to look up NS records.";
+    });
+
   return;
 }
 
