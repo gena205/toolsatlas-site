@@ -74,15 +74,16 @@ function formatCategoryLabel(category: string): string {
         )}
 
         <div class="button-row">
-          <button type="button" class="primary-button">Run Tool</button>
+          <button type="button" class="primary-button" id="run-tool-btn">Run Tool</button>
           <button
             type="button"
             class="secondary-button"
+            id="copy-input-btn"
             disabled={tool.slug === "my-ip-address"}
           >
             Copy Input
           </button>
-          <button type="button" class="secondary-button">Clear</button>
+          <button type="button" class="secondary-button" id="clear-tool-btn">Clear</button>
         </div>
       </div>
 
@@ -97,8 +98,8 @@ function formatCategoryLabel(category: string): string {
         ></textarea>
 
         <div class="button-row">
-          <button type="button" class="secondary-button">Copy Result</button>
-          <button type="button" class="secondary-button">Download</button>
+          <button type="button" class="secondary-button" id="copy-result-btn">Copy Result</button>
+          <button type="button" class="secondary-button" id="download-result-btn">Download</button>
         </div>
       </div>
     </div>
@@ -125,9 +126,19 @@ function formatCategoryLabel(category: string): string {
   <section class="card">
     <h2>How to use</h2>
     <ul class="steps-list">
-      <li>Paste your text, value, or raw input into the input box.</li>
-      <li>Run the tool to process the input.</li>
-      <li>Review the output and copy the result if needed.</li>
+      {tool.slug === "my-ip-address" ? (
+        <>
+          <li>Open the page and leave the input area as is.</li>
+          <li>Click Run Tool to detect your public IP address.</li>
+          <li>Review the detected IP in the output box and copy it if needed.</li>
+        </>
+      ) : (
+        <>
+          <li>Paste your text, value, or raw input into the input box.</li>
+          <li>Run the tool to process the input.</li>
+          <li>Review the output and copy the result if needed.</li>
+        </>
+      )}
     </ul>
   </section>
 
@@ -331,13 +342,11 @@ function formatCategoryLabel(category: string): string {
     const input = document.getElementById("tool-input") as HTMLTextAreaElement | null;
     const output = document.getElementById("tool-output") as HTMLTextAreaElement | null;
 
-    const runBtn = document.querySelector(".primary-button") as HTMLButtonElement | null;
-    const secondaryButtons = document.querySelectorAll(".secondary-button");
-
-    const copyInputBtn = secondaryButtons[0] as HTMLButtonElement | undefined;
-    const clearBtn = secondaryButtons[1] as HTMLButtonElement | undefined;
-    const copyResultBtn = secondaryButtons[2] as HTMLButtonElement | undefined;
-    const downloadBtn = secondaryButtons[3] as HTMLButtonElement | undefined;
+    const runBtn = document.getElementById("run-tool-btn") as HTMLButtonElement | null;
+    const copyInputBtn = document.getElementById("copy-input-btn") as HTMLButtonElement | null;
+    const clearBtn = document.getElementById("clear-tool-btn") as HTMLButtonElement | null;
+    const copyResultBtn = document.getElementById("copy-result-btn") as HTMLButtonElement | null;
+    const downloadBtn = document.getElementById("download-result-btn") as HTMLButtonElement | null;
     const slug = window.location.pathname.split("/").filter(Boolean).pop();
 
     runBtn?.addEventListener("click", () => {
@@ -359,7 +368,21 @@ function formatCategoryLabel(category: string): string {
               : "Unable to detect your IP address.";
           })
           .catch(() => {
-            output.value = "Unable to detect your IP address.";
+            fetch("https://api64.ipify.org?format=json", { cache: "no-store" })
+              .then((response: Response) => {
+                if (!response.ok) {
+                  throw new Error("Failed to fetch IP");
+                }
+                return response.json();
+              })
+              .then((data: { ip?: string }) => {
+                output.value = data.ip
+                  ? `Your public IP: ${data.ip}`
+                  : "Unable to detect your IP address.";
+              })
+              .catch(() => {
+                output.value = "Unable to detect your IP address.";
+              });
           });
 
         return;
