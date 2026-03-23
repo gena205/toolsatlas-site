@@ -60,30 +60,29 @@ function formatCategoryLabel(category: string): string {
           {tool.slug === "my-ip-address" ? "Info" : "Input"}
         </label>
 
-        {tool.slug === "my-ip-address" ? (
-          <div class="tool-textarea output-textarea info-box">
+        <textarea
+          id="tool-input"
+          class="tool-textarea"
+          rows="12"
+          placeholder={tool.slug === "my-ip-address"
+            ? ""
+            : `Paste or type your input for ${tool.name} here...`}
+          style={tool.slug === "my-ip-address" ? "display:none;" : ""}
+        ></textarea>
+
+        {tool.slug === "my-ip-address" && (
+          <div
+            class="tool-textarea output-textarea"
+            style="display:flex;align-items:center;justify-content:center;"
+          >
             No input required for this tool.
           </div>
-        ) : (
-          <textarea
-            id="tool-input"
-            class="tool-textarea"
-            rows="12"
-            placeholder={`Paste or type your input for ${tool.name} here...`}
-          ></textarea>
         )}
 
         <div class="button-row">
-          <button type="button" class="primary-button" id="run-tool-btn">Run Tool</button>
-          <button
-            type="button"
-            class="secondary-button"
-            id="copy-input-btn"
-            disabled={tool.slug === "my-ip-address"}
-          >
-            Copy Input
-          </button>
-          <button type="button" class="secondary-button" id="clear-tool-btn">Clear</button>
+          <button type="button" class="primary-button">Run Tool</button>
+          <button type="button" class="secondary-button">Copy Input</button>
+          <button type="button" class="secondary-button">Clear</button>
         </div>
       </div>
 
@@ -98,8 +97,8 @@ function formatCategoryLabel(category: string): string {
         ></textarea>
 
         <div class="button-row">
-          <button type="button" class="secondary-button" id="copy-result-btn">Copy Result</button>
-          <button type="button" class="secondary-button" id="download-result-btn">Download</button>
+          <button type="button" class="secondary-button">Copy Result</button>
+          <button type="button" class="secondary-button">Download</button>
         </div>
       </div>
     </div>
@@ -126,19 +125,9 @@ function formatCategoryLabel(category: string): string {
   <section class="card">
     <h2>How to use</h2>
     <ul class="steps-list">
-      {tool.slug === "my-ip-address" ? (
-        <>
-          <li>Open the page and leave the input area as is.</li>
-          <li>Click Run Tool to detect your public IP address.</li>
-          <li>Review the detected IP in the output box and copy it if needed.</li>
-        </>
-      ) : (
-        <>
-          <li>Paste your text, value, or raw input into the input box.</li>
-          <li>Run the tool to process the input.</li>
-          <li>Review the output and copy the result if needed.</li>
-        </>
-      )}
+      <li>Paste your text, value, or raw input into the input box.</li>
+      <li>Run the tool to process the input.</li>
+      <li>Review the output and copy the result if needed.</li>
     </ul>
   </section>
 
@@ -263,18 +252,6 @@ function formatCategoryLabel(category: string): string {
     background: #0d1528;
   }
 
-  .info-box {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .secondary-button:disabled {
-    opacity: 0.45;
-    cursor: not-allowed;
-    transform: none;
-  }
-
   .button-row {
     display: flex;
     flex-wrap: wrap;
@@ -339,15 +316,19 @@ function formatCategoryLabel(category: string): string {
 
 <script>
   document.addEventListener("DOMContentLoaded", () => {
-    const input = document.getElementById("tool-input") as HTMLTextAreaElement | null;
+    const input = document.getElementById("tool-input")! as HTMLTextAreaElement;
     const output = document.getElementById("tool-output") as HTMLTextAreaElement | null;
 
-    const runBtn = document.getElementById("run-tool-btn") as HTMLButtonElement | null;
-    const copyInputBtn = document.getElementById("copy-input-btn") as HTMLButtonElement | null;
-    const clearBtn = document.getElementById("clear-tool-btn") as HTMLButtonElement | null;
-    const copyResultBtn = document.getElementById("copy-result-btn") as HTMLButtonElement | null;
-    const downloadBtn = document.getElementById("download-result-btn") as HTMLButtonElement | null;
-    const slug = window.location.pathname.split("/").filter(Boolean).pop();
+    const runBtn = document.querySelector(".primary-button") as HTMLButtonElement | null;
+    const secondaryButtons = document.querySelectorAll(".secondary-button");
+
+    const copyInputBtn = secondaryButtons[0] as HTMLButtonElement | undefined;
+    const clearBtn = secondaryButtons[1] as HTMLButtonElement | undefined;
+    const copyResultBtn = secondaryButtons[2] as HTMLButtonElement | undefined;
+    const downloadBtn = secondaryButtons[3] as HTMLButtonElement | undefined;
+
+    const slug = window.location.pathname.split("/").pop();
+
 
     runBtn?.addEventListener("click", () => {
       if (!output) return;
@@ -368,27 +349,11 @@ function formatCategoryLabel(category: string): string {
               : "Unable to detect your IP address.";
           })
           .catch(() => {
-            fetch("https://api64.ipify.org?format=json", { cache: "no-store" })
-              .then((response: Response) => {
-                if (!response.ok) {
-                  throw new Error("Failed to fetch IP");
-                }
-                return response.json();
-              })
-              .then((data: { ip?: string }) => {
-                output.value = data.ip
-                  ? `Your public IP: ${data.ip}`
-                  : "Unable to detect your IP address.";
-              })
-              .catch(() => {
-                output.value = "Unable to detect your IP address.";
-              });
+            output.value = "Unable to detect your IP address.";
           });
 
         return;
       }
-      if (!input) return;
-
 
       if (slug === "json-formatter") {
         try {
@@ -3515,6 +3480,4831 @@ if (slug === "ns-record-lookup") {
 
   return;
 }
+if (slug === "json-escape") {
+  const text = input.value;
+
+  if (!text) {
+    output.value = "";
+    return;
+  }
+
+  output.value = JSON.stringify(text).slice(1, -1);
+  return;
+}
+
+if (slug === "json-unescape") {
+  const text = input.value;
+
+  if (!text.trim()) {
+    output.value = "";
+    return;
+  }
+
+  const escapeBareQuotes = (value: string): string => {
+    let result = "";
+    let isEscaped = false;
+
+    for (const char of value) {
+      if (char === '"' && !isEscaped) {
+        result += '\\"';
+      } else {
+        result += char;
+      }
+
+      if (char === "\\" && !isEscaped) {
+        isEscaped = true;
+      } else {
+        isEscaped = false;
+      }
+    }
+
+    return result;
+  };
+
+  try {
+    const trimmed = text.trim();
+
+    if (trimmed.startsWith('"') && trimmed.endsWith('"')) {
+      output.value = JSON.parse(trimmed);
+      return;
+    }
+
+    output.value = JSON.parse(`"${escapeBareQuotes(text)}"`);
+  } catch {
+    output.value = "Invalid escaped JSON string.";
+  }
+
+  return;
+}
+
+if (slug === "xml-to-json") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter XML to convert.";
+    return;
+  }
+
+  const elementToObject = (element: Element): unknown => {
+    const childElements = Array.from(element.children);
+    const attributes = Array.from(element.attributes);
+    const textNodes = Array.from(element.childNodes)
+      .filter((node: ChildNode) => node.nodeType === Node.TEXT_NODE)
+      .map((node: ChildNode) => node.textContent?.trim() || "")
+      .filter((value: string) => value.length > 0);
+
+    if (childElements.length === 0 && attributes.length === 0) {
+      return textNodes.join(" ");
+    }
+
+    const result: Record<string, unknown> = {};
+
+    if (attributes.length > 0) {
+      result["@attributes"] = Object.fromEntries(
+        attributes.map((attr: Attr) => [attr.name, attr.value])
+      );
+    }
+
+    if (textNodes.length > 0) {
+      result["#text"] = textNodes.join(" ");
+    }
+
+    for (const child of childElements) {
+      const key = child.tagName;
+      const value = elementToObject(child);
+
+      if (Object.prototype.hasOwnProperty.call(result, key)) {
+        const current = result[key];
+        result[key] = Array.isArray(current) ? [...current, value] : [current, value];
+      } else {
+        result[key] = value;
+      }
+    }
+
+    return result;
+  };
+
+  try {
+    const parser = new DOMParser();
+    const xml = parser.parseFromString(text, "application/xml");
+    const parserError = xml.querySelector("parsererror");
+
+    if (parserError) {
+      output.value = "Invalid XML.";
+      return;
+    }
+
+    const root = xml.documentElement;
+    const result = {
+      [root.tagName]: elementToObject(root)
+    };
+
+    output.value = JSON.stringify(result, null, 2);
+  } catch {
+    output.value = "Unable to convert XML to JSON.";
+  }
+
+  return;
+}
+
+if (slug === "json-to-xml") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter JSON to convert.";
+    return;
+  }
+
+  const escapeXml = (value: string): string =>
+    value
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&apos;");
+
+  const buildXml = (key: string, value: unknown, indent = 0): string => {
+    const space = "  ".repeat(indent);
+
+    if (Array.isArray(value)) {
+      return value.map((item: unknown) => buildXml(key, item, indent)).join("\n");
+    }
+
+    if (value === null || value === undefined) {
+      return `${space}<${key}></${key}>`;
+    }
+
+    if (typeof value !== "object") {
+      return `${space}<${key}>${escapeXml(String(value))}</${key}>`;
+    }
+
+    const obj = value as Record<string, unknown>;
+
+    const attributes =
+      obj["@attributes"] &&
+      typeof obj["@attributes"] === "object" &&
+      !Array.isArray(obj["@attributes"])
+        ? (obj["@attributes"] as Record<string, unknown>)
+        : {};
+
+    const textValue =
+      typeof obj["#text"] === "string" ||
+      typeof obj["#text"] === "number" ||
+      typeof obj["#text"] === "boolean"
+        ? String(obj["#text"])
+        : "";
+
+    const children = Object.entries(obj).filter(
+      ([childKey]) => childKey !== "@attributes" && childKey !== "#text"
+    );
+
+    const attrs = Object.entries(attributes)
+      .map(([attrKey, attrValue]) => ` ${attrKey}="${escapeXml(String(attrValue))}"`)
+      .join("");
+
+    if (children.length === 0 && !textValue) {
+      return `${space}<${key}${attrs}></${key}>`;
+    }
+
+    if (children.length === 0) {
+      return `${space}<${key}${attrs}>${escapeXml(textValue)}</${key}>`;
+    }
+
+    const innerParts: string[] = [];
+
+    if (textValue) {
+      innerParts.push(`${"  ".repeat(indent + 1)}${escapeXml(textValue)}`);
+    }
+
+    innerParts.push(
+      ...children.map(([childKey, childValue]) => buildXml(childKey, childValue, indent + 1))
+    );
+
+    return `${space}<${key}${attrs}>\n${innerParts.join("\n")}\n${space}</${key}>`;
+  };
+
+  try {
+    const data = JSON.parse(text);
+
+    let xmlBody = "";
+
+    if (data === null || typeof data !== "object" || Array.isArray(data)) {
+      xmlBody = buildXml("root", data, 0);
+    } else {
+      const entries = Object.entries(data as Record<string, unknown>);
+      xmlBody =
+        entries.length === 1
+          ? buildXml(entries[0][0], entries[0][1], 0)
+          : buildXml("root", data, 0);
+    }
+
+    output.value = `<?xml version="1.0" encoding="UTF-8"?>\n${xmlBody}`;
+  } catch {
+    output.value = "Invalid JSON.";
+  }
+
+  return;
+}
+
+if (slug === "yaml-formatter") {
+  const text = input.value.replace(/\r\n/g, "\n");
+
+  if (!text.trim()) {
+    output.value = "Enter YAML to format.";
+    return;
+  }
+
+  const normalizedLines = text.split("\n").map((line: string) => {
+    const rightTrimmed = line.replace(/\s+$/g, "");
+
+    if (!rightTrimmed.trim()) {
+      return "";
+    }
+
+    const expandedTabs = rightTrimmed.replace(/\t/g, "  ");
+    const leadingSpaces = expandedTabs.match(/^\s*/)?.[0].length || 0;
+    const normalizedIndent = "  ".repeat(Math.floor(leadingSpaces / 2));
+    let content = expandedTabs.trim();
+
+    if (/^-/.test(content)) {
+      content = content.replace(/^-\s*/, "- ");
+    } else {
+      const keyValueMatch = content.match(/^([^:#][^:]*):\s*(.*)$/);
+
+      if (keyValueMatch) {
+        const key = keyValueMatch[1].trim();
+        const value = keyValueMatch[2].trim();
+        content = value ? `${key}: ${value}` : `${key}:`;
+      }
+    }
+
+    return `${normalizedIndent}${content}`;
+  });
+
+  const compactLines: string[] = [];
+
+  for (const line of normalizedLines) {
+    if (line === "" && (compactLines.length === 0 || compactLines[compactLines.length - 1] === "")) {
+      continue;
+    }
+
+    compactLines.push(line);
+  }
+
+  output.value = compactLines.join("\n").trim();
+  return;
+}
+if (slug === "yaml-validator") {
+  const text = input.value.replace(/\r\n/g, "\n");
+
+  if (!text.trim()) {
+    output.value = "Enter YAML to validate.";
+    return;
+  }
+
+  const errors: string[] = [];
+
+  const hasBalancedQuotes = (line: string, quoteChar: '"' | "'"): boolean => {
+    let count = 0;
+    let escaped = false;
+
+    for (const char of line) {
+      if (quoteChar === '"' && char === "\\" && !escaped) {
+        escaped = true;
+        continue;
+      }
+
+      if (char === quoteChar && !escaped) {
+        count++;
+      }
+
+      escaped = false;
+    }
+
+    return count % 2 === 0;
+  };
+
+  const lines = text.split("\n");
+  let previousIndent = 0;
+  let previousMeaningfulLine = "";
+
+  lines.forEach((rawLine: string, index: number) => {
+    const lineNumber = index + 1;
+
+    if (!rawLine.trim() || rawLine.trim().startsWith("#")) {
+      return;
+    }
+
+    if (/\t/.test(rawLine)) {
+      errors.push(`Line ${lineNumber}: Tabs are not allowed in YAML indentation.`);
+    }
+
+    const line = rawLine.replace(/\s+$/g, "");
+    const indent = line.match(/^\s*/)?.[0].length || 0;
+    const content = line.trim();
+
+    if (indent % 2 !== 0) {
+      errors.push(`Line ${lineNumber}: Indentation should use multiples of 2 spaces.`);
+    }
+
+    if (
+      indent > previousIndent + 2 &&
+      !previousMeaningfulLine.endsWith(":") &&
+      !previousMeaningfulLine.startsWith("- ")
+    ) {
+      errors.push(`Line ${lineNumber}: Indentation jumps too deeply.`);
+    }
+
+    if (/^-\S/.test(content)) {
+      errors.push(`Line ${lineNumber}: List items should use "- " with a space.`);
+    }
+
+    if (!hasBalancedQuotes(content, '"')) {
+      errors.push(`Line ${lineNumber}: Unbalanced double quotes detected.`);
+    }
+
+    if (!hasBalancedQuotes(content, "'")) {
+      errors.push(`Line ${lineNumber}: Unbalanced single quotes detected.`);
+    }
+
+    if (
+      content.includes(":") &&
+      !content.startsWith("- ") &&
+      !/^["'].*["']$/.test(content)
+    ) {
+      const match = content.match(/^([^:]+):(.*)$/);
+
+      if (match) {
+        const key = match[1].trim();
+        const value = match[2];
+
+        if (!key) {
+          errors.push(`Line ${lineNumber}: Missing key before colon.`);
+        }
+
+        if (value && !/^\s/.test(value) && value.length > 0) {
+          errors.push(`Line ${lineNumber}: Add a space after the colon.`);
+        }
+      }
+    }
+
+    previousIndent = indent;
+    previousMeaningfulLine = content;
+  });
+
+  output.value =
+    errors.length > 0
+      ? `Invalid YAML.\n\n${errors.join("\n")}`
+      : "Valid YAML (basic syntax check passed).";
+
+  return;
+}
+
+if (slug === "sql-formatter" || slug === "sql-beautifier") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter SQL to format.";
+    return;
+  }
+
+  const placeholders: string[] = [];
+
+  const protectStrings = (value: string): string =>
+    value.replace(/'([^'\\]|\\.|'')*'|"([^"\\]|\\.)*"/g, (match: string) => {
+      const key = `__SQL_STRING_${placeholders.length}__`;
+      placeholders.push(match);
+      return key;
+    });
+
+  const restoreStrings = (value: string): string =>
+    value.replace(/__SQL_STRING_(\d+)__/g, (_match: string, index: string) => {
+      return placeholders[Number(index)] ?? "";
+    });
+
+  const keywordGroups = [
+    "SELECT",
+    "FROM",
+    "WHERE",
+    "GROUP BY",
+    "ORDER BY",
+    "HAVING",
+    "LIMIT",
+    "OFFSET",
+    "INSERT INTO",
+    "VALUES",
+    "UPDATE",
+    "SET",
+    "DELETE FROM",
+    "INNER JOIN",
+    "LEFT JOIN",
+    "RIGHT JOIN",
+    "FULL JOIN",
+    "JOIN",
+    "ON",
+    "UNION ALL",
+    "UNION",
+    "CREATE TABLE",
+    "ALTER TABLE",
+    "DROP TABLE",
+    "CASE",
+    "WHEN",
+    "THEN",
+    "ELSE",
+    "END",
+    "AND",
+    "OR"
+  ];
+
+  try {
+    let sql = protectStrings(text);
+
+    sql = sql.replace(/\s+/g, " ").trim();
+
+    for (const keyword of keywordGroups.sort((a, b) => b.length - a.length)) {
+      const pattern = new RegExp(`\\b${keyword.replace(/\s+/g, "\\s+")}\\b`, "gi");
+      sql = sql.replace(pattern, keyword);
+    }
+
+    const clauseKeywords = [
+      "SELECT",
+      "FROM",
+      "WHERE",
+      "GROUP BY",
+      "ORDER BY",
+      "HAVING",
+      "LIMIT",
+      "OFFSET",
+      "INSERT INTO",
+      "VALUES",
+      "UPDATE",
+      "SET",
+      "DELETE FROM",
+      "INNER JOIN",
+      "LEFT JOIN",
+      "RIGHT JOIN",
+      "FULL JOIN",
+      "JOIN",
+      "ON",
+      "UNION ALL",
+      "UNION",
+      "CREATE TABLE",
+      "ALTER TABLE",
+      "DROP TABLE",
+      "CASE",
+      "WHEN",
+      "THEN",
+      "ELSE",
+      "END"
+    ];
+
+    for (const keyword of clauseKeywords.sort((a, b) => b.length - a.length)) {
+      const pattern = new RegExp(`\\s*\\b${keyword.replace(/\s+/g, "\\s+")}\\b`, "g");
+      sql = sql.replace(pattern, `\n${keyword}`);
+    }
+
+    sql = sql
+      .replace(/\s*,\s*/g, ", ")
+      .replace(/\s*\(\s*/g, "(")
+      .replace(/\s*\)\s*/g, ") ")
+      .replace(/\n(AND|OR)\b/g, "\n  $1")
+      .replace(/\n(WHEN|THEN|ELSE|END)\b/g, "\n  $1")
+      .replace(/\n+/g, "\n")
+      .trim();
+
+    const lines = sql.split("\n").map((line: string) => line.trim());
+    output.value = restoreStrings(lines.join("\n"));
+  } catch {
+    output.value = "Unable to format SQL.";
+  }
+
+  return;
+}
+
+if (slug === "sql-minifier") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter SQL to minify.";
+    return;
+  }
+
+  const placeholders: string[] = [];
+
+  const protectStrings = (value: string): string =>
+    value.replace(/'([^'\\]|\\.|'')*'|"([^"\\]|\\.)*"/g, (match: string) => {
+      const key = `__SQL_STRING_${placeholders.length}__`;
+      placeholders.push(match);
+      return key;
+    });
+
+  const restoreStrings = (value: string): string =>
+    value.replace(/__SQL_STRING_(\d+)__/g, (_match: string, index: string) => {
+      return placeholders[Number(index)] ?? "";
+    });
+
+  try {
+    let sql = protectStrings(text);
+
+    sql = sql
+      .replace(/--.*$/gm, "")
+      .replace(/\/\*[\s\S]*?\*\//g, "")
+      .replace(/\s+/g, " ")
+      .replace(/\s*,\s*/g, ", ")
+      .replace(/\s*;\s*/g, "; ")
+      .trim();
+
+    output.value = restoreStrings(sql);
+  } catch {
+    output.value = "Unable to minify SQL.";
+  }
+
+  return;
+}
+
+if (slug === "sql-to-json") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter SQL INSERT statements to convert.";
+    return;
+  }
+
+  const splitTopLevel = (value: string, delimiter = ","): string[] => {
+    const parts: string[] = [];
+    let current = "";
+    let depth = 0;
+    let quote: string | null = null;
+    let escaped = false;
+
+    for (let i = 0; i < value.length; i++) {
+      const char = value[i];
+
+      if (quote) {
+        current += char;
+
+        if (quote === "'" && char === "\\" && !escaped) {
+          escaped = true;
+          continue;
+        }
+
+        if (char === quote && !escaped) {
+          if (quote === "'" && value[i + 1] === "'") {
+            current += value[i + 1];
+            i++;
+          } else {
+            quote = null;
+          }
+        }
+
+        escaped = false;
+        continue;
+      }
+
+      if (char === "'" || char === '"' || char === "`") {
+        quote = char;
+        current += char;
+        continue;
+      }
+
+      if (char === "(") {
+        depth++;
+        current += char;
+        continue;
+      }
+
+      if (char === ")") {
+        depth--;
+        current += char;
+        continue;
+      }
+
+      if (char === delimiter && depth === 0) {
+        parts.push(current.trim());
+        current = "";
+        continue;
+      }
+
+      current += char;
+    }
+
+    if (current.trim()) {
+      parts.push(current.trim());
+    }
+
+    return parts;
+  };
+
+  const stripQuotes = (value: string): string => {
+    const trimmed = value.trim();
+
+    if (
+      (trimmed.startsWith("`") && trimmed.endsWith("`")) ||
+      (trimmed.startsWith('"') && trimmed.endsWith('"')) ||
+      (trimmed.startsWith("'") && trimmed.endsWith("'"))
+    ) {
+      return trimmed.slice(1, -1);
+    }
+
+    return trimmed;
+  };
+
+  const parseScalar = (value: string): unknown => {
+    const trimmed = value.trim();
+
+    if (/^null$/i.test(trimmed)) {
+      return null;
+    }
+
+    if (/^(true|false)$/i.test(trimmed)) {
+      return trimmed.toLowerCase() === "true";
+    }
+
+    if (/^-?\d+(\.\d+)?$/.test(trimmed)) {
+      return Number(trimmed);
+    }
+
+    if (
+      (trimmed.startsWith("'") && trimmed.endsWith("'")) ||
+      (trimmed.startsWith('"') && trimmed.endsWith('"'))
+    ) {
+      return trimmed
+        .slice(1, -1)
+        .replace(/''/g, "'")
+        .replace(/\\"/g, '"')
+        .replace(/\\\\/g, "\\");
+    }
+
+    return stripQuotes(trimmed);
+  };
+
+  const extractTuples = (value: string): string[] => {
+    const tuples: string[] = [];
+    let current = "";
+    let depth = 0;
+    let quote: string | null = null;
+    let escaped = false;
+
+    for (let i = 0; i < value.length; i++) {
+      const char = value[i];
+
+      if (quote) {
+        current += char;
+
+        if (quote === "'" && char === "\\" && !escaped) {
+          escaped = true;
+          continue;
+        }
+
+        if (char === quote && !escaped) {
+          if (quote === "'" && value[i + 1] === "'") {
+            current += value[i + 1];
+            i++;
+          } else {
+            quote = null;
+          }
+        }
+
+        escaped = false;
+        continue;
+      }
+
+      if (char === "'" || char === '"' || char === "`") {
+        quote = char;
+        current += char;
+        continue;
+      }
+
+      if (char === "(") {
+        if (depth === 0) {
+          current = "";
+        } else {
+          current += char;
+        }
+
+        depth++;
+        continue;
+      }
+
+      if (char === ")") {
+        depth--;
+
+        if (depth === 0) {
+          tuples.push(current.trim());
+          current = "";
+        } else {
+          current += char;
+        }
+
+        continue;
+      }
+
+      if (depth > 0) {
+        current += char;
+      }
+    }
+
+    return tuples;
+  };
+
+  try {
+    const statements = text
+      .split(/;\s*(?=INSERT\s+INTO|\s*$)/i)
+      .map((statement: string) => statement.trim())
+      .filter(Boolean);
+
+    const rows: Record<string, unknown>[] = [];
+
+    for (const statement of statements) {
+      const match = statement.match(
+        /^INSERT\s+INTO\s+[`"]?[\w.]+[`"]?\s*\(([\s\S]*?)\)\s*VALUES\s*([\s\S]*)$/i
+      );
+
+      if (!match) {
+        continue;
+      }
+
+      const columns = splitTopLevel(match[1]).map((column: string) => stripQuotes(column));
+      const tuples = extractTuples(match[2]);
+
+      for (const tuple of tuples) {
+        const values = splitTopLevel(tuple).map((part: string) => parseScalar(part));
+        const row: Record<string, unknown> = {};
+
+        columns.forEach((column: string, index: number) => {
+          row[column] = values[index] ?? null;
+        });
+
+        rows.push(row);
+      }
+    }
+
+    if (rows.length === 0) {
+      output.value = "No supported INSERT INTO ... VALUES statements found.";
+      return;
+    }
+
+    output.value = JSON.stringify(rows, null, 2);
+  } catch {
+    output.value = "Unable to convert SQL to JSON.";
+  }
+
+  return;
+}
+if (slug === "csv-formatter") {
+  const text = input.value.replace(/\r\n/g, "\n").trim();
+
+  if (!text) {
+    output.value = "Enter CSV to format.";
+    return;
+  }
+
+  const parseCsv = (value: string): { rows: string[][]; error?: string } => {
+    const rows: string[][] = [];
+    let row: string[] = [];
+    let field = "";
+    let inQuotes = false;
+
+    for (let i = 0; i < value.length; i++) {
+      const char = value[i];
+      const next = value[i + 1];
+
+      if (inQuotes) {
+        if (char === '"') {
+          if (next === '"') {
+            field += '"';
+            i++;
+          } else {
+            inQuotes = false;
+          }
+        } else {
+          field += char;
+        }
+
+        continue;
+      }
+
+      if (char === '"') {
+        inQuotes = true;
+        continue;
+      }
+
+      if (char === ",") {
+        row.push(field);
+        field = "";
+        continue;
+      }
+
+      if (char === "\n") {
+        row.push(field);
+        rows.push(row);
+        row = [];
+        field = "";
+        continue;
+      }
+
+      field += char;
+    }
+
+    if (inQuotes) {
+      return { rows: [], error: "Invalid CSV: unclosed quoted field." };
+    }
+
+    row.push(field);
+    rows.push(row);
+
+    const normalizedRows = rows.filter((currentRow: string[]) => {
+      return !(currentRow.length === 1 && currentRow[0].trim() === "");
+    });
+
+    return { rows: normalizedRows };
+  };
+
+  const escapeCsvCell = (value: string): string => {
+    if (/[",\n]/.test(value) || /^\s|\s$/.test(value)) {
+      return `"${value.replace(/"/g, '""')}"`;
+    }
+
+    return value;
+  };
+
+  const result = parseCsv(text);
+
+  if (result.error) {
+    output.value = result.error;
+    return;
+  }
+
+  output.value = result.rows
+    .map((currentRow: string[]) => currentRow.map(escapeCsvCell).join(","))
+    .join("\n");
+
+  return;
+}
+
+if (slug === "csv-validator") {
+  const text = input.value.replace(/\r\n/g, "\n").trim();
+
+  if (!text) {
+    output.value = "Enter CSV to validate.";
+    return;
+  }
+
+  const parseCsv = (value: string): { rows: string[][]; error?: string } => {
+    const rows: string[][] = [];
+    let row: string[] = [];
+    let field = "";
+    let inQuotes = false;
+
+    for (let i = 0; i < value.length; i++) {
+      const char = value[i];
+      const next = value[i + 1];
+
+      if (inQuotes) {
+        if (char === '"') {
+          if (next === '"') {
+            field += '"';
+            i++;
+          } else {
+            inQuotes = false;
+          }
+        } else {
+          field += char;
+        }
+
+        continue;
+      }
+
+      if (char === '"') {
+        inQuotes = true;
+        continue;
+      }
+
+      if (char === ",") {
+        row.push(field);
+        field = "";
+        continue;
+      }
+
+      if (char === "\n") {
+        row.push(field);
+        rows.push(row);
+        row = [];
+        field = "";
+        continue;
+      }
+
+      field += char;
+    }
+
+    if (inQuotes) {
+      return { rows: [], error: "Invalid CSV: unclosed quoted field." };
+    }
+
+    row.push(field);
+    rows.push(row);
+
+    const normalizedRows = rows.filter((currentRow: string[]) => {
+      return !(currentRow.length === 1 && currentRow[0].trim() === "");
+    });
+
+    return { rows: normalizedRows };
+  };
+
+  const result = parseCsv(text);
+
+  if (result.error) {
+    output.value = result.error;
+    return;
+  }
+
+  if (result.rows.length === 0) {
+    output.value = "Invalid CSV: no rows found.";
+    return;
+  }
+
+  const expectedColumns = result.rows[0].length;
+  const errors: string[] = [];
+
+  result.rows.forEach((currentRow: string[], index: number) => {
+    if (currentRow.length !== expectedColumns) {
+      errors.push(
+        `Row ${index + 1}: expected ${expectedColumns} columns, found ${currentRow.length}.`
+      );
+    }
+  });
+
+  output.value =
+    errors.length > 0
+      ? `Invalid CSV.\n\n${errors.join("\n")}`
+      : `Valid CSV (${result.rows.length} rows, ${expectedColumns} columns).`;
+
+  return;
+}
+
+if (slug === "csv-to-yaml") {
+  const text = input.value.replace(/\r\n/g, "\n").trim();
+
+  if (!text) {
+    output.value = "Enter CSV to convert.";
+    return;
+  }
+
+  const parseCsv = (value: string): { rows: string[][]; error?: string } => {
+    const rows: string[][] = [];
+    let row: string[] = [];
+    let field = "";
+    let inQuotes = false;
+
+    for (let i = 0; i < value.length; i++) {
+      const char = value[i];
+      const next = value[i + 1];
+
+      if (inQuotes) {
+        if (char === '"') {
+          if (next === '"') {
+            field += '"';
+            i++;
+          } else {
+            inQuotes = false;
+          }
+        } else {
+          field += char;
+        }
+
+        continue;
+      }
+
+      if (char === '"') {
+        inQuotes = true;
+        continue;
+      }
+
+      if (char === ",") {
+        row.push(field);
+        field = "";
+        continue;
+      }
+
+      if (char === "\n") {
+        row.push(field);
+        rows.push(row);
+        row = [];
+        field = "";
+        continue;
+      }
+
+      field += char;
+    }
+
+    if (inQuotes) {
+      return { rows: [], error: "Invalid CSV: unclosed quoted field." };
+    }
+
+    row.push(field);
+    rows.push(row);
+
+    const normalizedRows = rows.filter((currentRow: string[]) => {
+      return !(currentRow.length === 1 && currentRow[0].trim() === "");
+    });
+
+    return { rows: normalizedRows };
+  };
+
+  const yamlScalar = (value: string): string => {
+    if (value === "") {
+      return '""';
+    }
+
+    if (/^(true|false|null)$/i.test(value) || /^-?\d+(\.\d+)?$/.test(value)) {
+      return value;
+    }
+
+    if (/[:#,\-\{\}\[\]&\*!|>'"%@`]/.test(value) || /^\s|\s$/.test(value) || value.includes("\n")) {
+      return `"${value.replace(/\\/g, "\\\\").replace(/"/g, '\\"')}"`;
+    }
+
+    return value;
+  };
+
+  const result = parseCsv(text);
+
+  if (result.error) {
+    output.value = result.error;
+    return;
+  }
+
+  if (result.rows.length < 2) {
+    output.value = "CSV must include a header row and at least one data row.";
+    return;
+  }
+
+  const headers = result.rows[0];
+  const dataRows = result.rows.slice(1);
+  const expectedColumns = headers.length;
+
+  for (let i = 0; i < dataRows.length; i++) {
+    if (dataRows[i].length !== expectedColumns) {
+      output.value = `Row ${i + 2}: expected ${expectedColumns} columns, found ${dataRows[i].length}.`;
+      return;
+    }
+  }
+
+  const yaml = dataRows
+    .map((currentRow: string[]) => {
+      const lines = headers.map((header: string, index: number) => {
+        return `  ${header}: ${yamlScalar(currentRow[index] ?? "")}`;
+      });
+
+      return `-\n${lines.join("\n")}`;
+    })
+    .join("\n");
+
+  output.value = yaml;
+  return;
+}
+
+if (slug === "yaml-to-csv") {
+  const text = input.value.replace(/\r\n/g, "\n").trim();
+
+  if (!text) {
+    output.value = "Enter YAML to convert.";
+    return;
+  }
+
+  const stripQuotes = (value: string): string => {
+    const trimmed = value.trim();
+
+    if (
+      (trimmed.startsWith('"') && trimmed.endsWith('"')) ||
+      (trimmed.startsWith("'") && trimmed.endsWith("'"))
+    ) {
+      return trimmed.slice(1, -1);
+    }
+
+    return trimmed;
+  };
+
+  const splitKeyValue = (line: string): { key: string; value: string } | null => {
+    const colonIndex = line.indexOf(":");
+
+    if (colonIndex === -1) {
+      return null;
+    }
+
+    const key = line.slice(0, colonIndex).trim();
+    const value = line.slice(colonIndex + 1).trim();
+
+    if (!key) {
+      return null;
+    }
+
+    return { key, value: stripQuotes(value) };
+  };
+
+  const lines = text
+    .split("\n")
+    .map((line: string) => line.replace(/\s+$/g, ""))
+    .filter((line: string) => line.trim() !== "" && !line.trim().startsWith("#"));
+
+  const items: Record<string, string>[] = [];
+  let currentItem: Record<string, string> | null = null;
+
+  for (const rawLine of lines) {
+    const trimmed = rawLine.trim();
+
+    if (trimmed.endsWith(":") && !trimmed.startsWith("- ")) {
+      continue;
+    }
+
+    if (trimmed.startsWith("- ")) {
+      if (currentItem) {
+        items.push(currentItem);
+      }
+
+      currentItem = {};
+      const remainder = trimmed.slice(2).trim();
+
+      if (remainder) {
+        const pair = splitKeyValue(remainder);
+
+        if (!pair) {
+          output.value = "Unsupported YAML format. Use a simple list of objects.";
+          return;
+        }
+
+        currentItem[pair.key] = pair.value;
+      }
+
+      continue;
+    }
+
+    if (!currentItem) {
+      output.value = "Unsupported YAML format. Use a simple list of objects.";
+      return;
+    }
+
+    const pair = splitKeyValue(trimmed);
+
+    if (!pair) {
+      output.value = "Unsupported YAML format. Use a simple list of objects.";
+      return;
+    }
+
+    currentItem[pair.key] = pair.value;
+  }
+
+  if (currentItem) {
+    items.push(currentItem);
+  }
+
+  if (items.length === 0) {
+    output.value = "No YAML list items found.";
+    return;
+  }
+
+  const headers: string[] = [];
+
+  items.forEach((item: Record<string, string>) => {
+    Object.keys(item).forEach((key: string) => {
+      if (!headers.includes(key)) {
+        headers.push(key);
+      }
+    });
+  });
+
+  const escapeCsvCell = (value: string): string => {
+    if (/[",\n]/.test(value) || /^\s|\s$/.test(value)) {
+      return `"${value.replace(/"/g, '""')}"`;
+    }
+
+    return value;
+  };
+
+  const csvRows = [
+    headers.map(escapeCsvCell).join(","),
+    ...items.map((item: Record<string, string>) =>
+      headers.map((header: string) => escapeCsvCell(item[header] ?? "")).join(",")
+    )
+  ];
+
+  output.value = csvRows.join("\n");
+  return;
+}
+
+if (slug === "toml-to-json") {
+  const text = input.value.replace(/\r\n/g, "\n").trim();
+
+  if (!text) {
+    output.value = "Enter TOML to convert.";
+    return;
+  }
+
+  const root: Record<string, unknown> = {};
+  let currentContext: Record<string, unknown> = root;
+
+  const stripComments = (line: string): string => {
+    let result = "";
+    let quote: string | null = null;
+    let escaped = false;
+
+    for (const char of line) {
+      if (quote) {
+        result += char;
+
+        if (char === "\\" && !escaped) {
+          escaped = true;
+          continue;
+        }
+
+        if (char === quote && !escaped) {
+          quote = null;
+        }
+
+        escaped = false;
+        continue;
+      }
+
+      if (char === '"' || char === "'") {
+        quote = char;
+        result += char;
+        continue;
+      }
+
+      if (char === "#") {
+        break;
+      }
+
+      result += char;
+    }
+
+    return result.trim();
+  };
+
+  const splitTopLevel = (value: string): string[] => {
+    const parts: string[] = [];
+    let current = "";
+    let quote: string | null = null;
+    let depth = 0;
+    let escaped = false;
+
+    for (const char of value) {
+      if (quote) {
+        current += char;
+
+        if (char === "\\" && !escaped) {
+          escaped = true;
+          continue;
+        }
+
+        if (char === quote && !escaped) {
+          quote = null;
+        }
+
+        escaped = false;
+        continue;
+      }
+
+      if (char === '"' || char === "'") {
+        quote = char;
+        current += char;
+        continue;
+      }
+
+      if (char === "[") {
+        depth++;
+        current += char;
+        continue;
+      }
+
+      if (char === "]") {
+        depth--;
+        current += char;
+        continue;
+      }
+
+      if (char === "," && depth === 1) {
+        parts.push(current.trim());
+        current = "";
+        continue;
+      }
+
+      current += char;
+    }
+
+    if (current.trim()) {
+      parts.push(current.trim());
+    }
+
+    return parts;
+  };
+
+  const parseTomlValue = (value: string): unknown => {
+    const trimmed = value.trim();
+
+    if (
+      (trimmed.startsWith('"') && trimmed.endsWith('"')) ||
+      (trimmed.startsWith("'") && trimmed.endsWith("'"))
+    ) {
+      return trimmed
+        .slice(1, -1)
+        .replace(/\\n/g, "\n")
+        .replace(/\\t/g, "\t")
+        .replace(/\\"/g, '"')
+        .replace(/\\\\/g, "\\");
+    }
+
+    if (/^(true|false)$/i.test(trimmed)) {
+      return trimmed.toLowerCase() === "true";
+    }
+
+    if (/^-?\d+(\.\d+)?$/.test(trimmed)) {
+      return Number(trimmed);
+    }
+
+    if (/^\[.*\]$/.test(trimmed)) {
+      const inner = trimmed.slice(1, -1).trim();
+
+      if (!inner) {
+        return [];
+      }
+
+      return splitTopLevel(trimmed).map((part: string) => parseTomlValue(part));
+    }
+
+    return trimmed;
+  };
+
+  try {
+    const lines = text.split("\n");
+
+    for (const rawLine of lines) {
+      const line = stripComments(rawLine);
+
+      if (!line) {
+        continue;
+      }
+
+      if (/^\[.+\]$/.test(line)) {
+        const sectionPath = line.slice(1, -1).trim().split(".");
+        currentContext = root;
+
+        for (const part of sectionPath) {
+          if (
+            !Object.prototype.hasOwnProperty.call(currentContext, part) ||
+            typeof currentContext[part] !== "object" ||
+            currentContext[part] === null ||
+            Array.isArray(currentContext[part])
+          ) {
+            currentContext[part] = {};
+          }
+
+          currentContext = currentContext[part] as Record<string, unknown>;
+        }
+
+        continue;
+      }
+
+      const equalsIndex = line.indexOf("=");
+
+      if (equalsIndex === -1) {
+        output.value = `Invalid TOML line: ${rawLine}`;
+        return;
+      }
+
+      const key = line.slice(0, equalsIndex).trim();
+      const value = line.slice(equalsIndex + 1).trim();
+
+      if (!key) {
+        output.value = `Invalid TOML line: ${rawLine}`;
+        return;
+      }
+
+      currentContext[key] = parseTomlValue(value);
+    }
+
+    output.value = JSON.stringify(root, null, 2);
+  } catch {
+    output.value = "Unable to convert TOML to JSON.";
+  }
+
+  return;
+}
+      if (slug === "json-to-toml") {
+        const text = input.value.trim();
+
+        if (!text) {
+          output.value = "Enter JSON to convert.";
+          return;
+        }
+
+        const isPlainObject = (value: unknown): value is Record<string, unknown> =>
+          typeof value === "object" && value !== null && !Array.isArray(value);
+
+        const formatKey = (key: string): string =>
+          /^[A-Za-z0-9_-]+$/.test(key)
+            ? key
+            : `"${key.replace(/\\/g, "\\\\").replace(/"/g, '\\"')}"`;
+
+        const formatString = (value: string): string =>
+          `"${value
+            .replace(/\\/g, "\\\\")
+            .replace(/"/g, '\\"')
+            .replace(/\n/g, "\\n")
+            .replace(/\t/g, "\\t")}"`;
+
+        const formatScalar = (value: unknown): string => {
+          if (typeof value === "string") {
+            return formatString(value);
+          }
+
+          if (typeof value === "number") {
+            return Number.isFinite(value) ? String(value) : formatString(String(value));
+          }
+
+          if (typeof value === "boolean") {
+            return value ? "true" : "false";
+          }
+
+          if (value === null || value === undefined) {
+            return formatString("");
+          }
+
+          if (Array.isArray(value)) {
+            return `[${value.map((item: unknown) => formatScalar(item)).join(", ")}]`;
+          }
+
+          if (isPlainObject(value)) {
+            const pairs = Object.entries(value).map(
+              ([childKey, childValue]) => `${formatKey(childKey)} = ${formatScalar(childValue)}`
+            );
+            return `{ ${pairs.join(", ")} }`;
+          }
+
+          return formatString(String(value));
+        };
+
+        const serializeTable = (
+          obj: Record<string, unknown>,
+          path: string[] = [],
+          asArrayTable = false
+        ): string[] => {
+          const lines: string[] = [];
+          const nestedObjects: Array<{ key: string; value: Record<string, unknown> }> = [];
+          const arrayTables: Array<{ key: string; values: Record<string, unknown>[] }> = [];
+
+          if (path.length > 0) {
+            lines.push(`${asArrayTable ? "[[" : "["}${path.join(".")}${asArrayTable ? "]]" : "]"}`);
+          }
+
+          for (const [key, value] of Object.entries(obj)) {
+            if (Array.isArray(value) && value.every((item: unknown) => isPlainObject(item))) {
+              arrayTables.push({
+                key,
+                values: value as Record<string, unknown>[]
+              });
+              continue;
+            }
+
+            if (isPlainObject(value)) {
+              nestedObjects.push({
+                key,
+                value
+              });
+              continue;
+            }
+
+            lines.push(`${formatKey(key)} = ${formatScalar(value)}`);
+          }
+
+          for (const { key, value } of nestedObjects) {
+            if (lines.length > 0) {
+              lines.push("");
+            }
+
+            lines.push(...serializeTable(value, [...path, formatKey(key)], false));
+          }
+
+          for (const { key, values } of arrayTables) {
+            for (const item of values) {
+              if (lines.length > 0) {
+                lines.push("");
+              }
+
+              lines.push(...serializeTable(item, [...path, formatKey(key)], true));
+            }
+          }
+
+          return lines;
+        };
+
+        try {
+          const data = JSON.parse(text);
+
+          if (!isPlainObject(data)) {
+            output.value = "Top-level JSON must be an object for TOML output.";
+            return;
+          }
+
+          output.value = serializeTable(data).join("\n");
+        } catch {
+          output.value = "Invalid JSON.";
+        }
+
+        return;
+      }
+
+      if (slug === "jwt-parser") {
+        const text = input.value.trim();
+
+        if (!text) {
+          output.value = "Enter a JWT token.";
+          return;
+        }
+
+        const decodeBase64Url = (value: string): string => {
+          const base64 = value.replace(/-/g, "+").replace(/_/g, "/");
+          const padded = base64 + "=".repeat((4 - (base64.length % 4)) % 4);
+          return decodeURIComponent(escape(atob(padded)));
+        };
+
+        try {
+          const parts = text.split(".");
+
+          if (parts.length < 2) {
+            output.value = "Invalid JWT.";
+            return;
+          }
+
+          const header = JSON.parse(decodeBase64Url(parts[0]));
+          const payload = JSON.parse(decodeBase64Url(parts[1]));
+          const signature = parts[2] || "";
+
+          output.value = JSON.stringify(
+            {
+              header,
+              payload,
+              signature,
+              claims: {
+                algorithm: header.alg ?? null,
+                type: header.typ ?? null,
+                issuer: payload.iss ?? null,
+                subject: payload.sub ?? null,
+                audience: payload.aud ?? null,
+                issuedAt: payload.iat ?? null,
+                notBefore: payload.nbf ?? null,
+                expiresAt: payload.exp ?? null,
+                jwtId: payload.jti ?? null
+              }
+            },
+            null,
+            2
+          );
+        } catch {
+          output.value = "Invalid JWT.";
+        }
+
+        return;
+      }
+
+      if (slug === "jwt-expiry-checker") {
+        const text = input.value.trim();
+
+        if (!text) {
+          output.value = "Enter a JWT token.";
+          return;
+        }
+
+        const decodeBase64Url = (value: string): string => {
+          const base64 = value.replace(/-/g, "+").replace(/_/g, "/");
+          const padded = base64 + "=".repeat((4 - (base64.length % 4)) % 4);
+          return decodeURIComponent(escape(atob(padded)));
+        };
+
+        const formatUnixTime = (value: unknown): string => {
+          if (typeof value !== "number" || !Number.isFinite(value)) {
+            return "Not present";
+          }
+
+          return `${new Date(value * 1000).toISOString()} (${value})`;
+        };
+
+        const formatRemaining = (seconds: number): string => {
+          const absSeconds = Math.abs(seconds);
+          const days = Math.floor(absSeconds / 86400);
+          const hours = Math.floor((absSeconds % 86400) / 3600);
+          const minutes = Math.floor((absSeconds % 3600) / 60);
+          const secs = absSeconds % 60;
+
+          return `${days}d ${hours}h ${minutes}m ${secs}s`;
+        };
+
+        try {
+          const parts = text.split(".");
+
+          if (parts.length < 2) {
+            output.value = "Invalid JWT.";
+            return;
+          }
+
+          const payload = JSON.parse(decodeBase64Url(parts[1]));
+          const now = Math.floor(Date.now() / 1000);
+
+          const exp = typeof payload.exp === "number" ? payload.exp : null;
+          const nbf = typeof payload.nbf === "number" ? payload.nbf : null;
+          const iat = typeof payload.iat === "number" ? payload.iat : null;
+
+          let status = "No exp claim found.";
+
+          if (nbf !== null && now < nbf) {
+            status = `Not yet valid. Starts in ${formatRemaining(nbf - now)}.`;
+          } else if (exp !== null && now >= exp) {
+            status = `Expired ${formatRemaining(now - exp)} ago.`;
+          } else if (exp !== null) {
+            status = `Valid. Expires in ${formatRemaining(exp - now)}.`;
+          }
+
+          output.value =
+            `Current time: ${new Date(now * 1000).toISOString()} (${now})\n` +
+            `Issued at (iat): ${formatUnixTime(iat)}\n` +
+            `Not before (nbf): ${formatUnixTime(nbf)}\n` +
+            `Expires at (exp): ${formatUnixTime(exp)}\n\n` +
+            `Status: ${status}`;
+        } catch {
+          output.value = "Invalid JWT.";
+        }
+
+        return;
+      }
+
+      if (slug === "url-slug-decoder") {
+        const text = input.value.trim();
+
+        if (!text) {
+          output.value = "Enter a slug or URL.";
+          return;
+        }
+
+        let source = text;
+
+        try {
+          const url = new URL(text);
+          const segments = url.pathname.split("/").filter((segment: string) => segment.length > 0);
+          source = segments.length > 0 ? segments[segments.length - 1] : url.pathname;
+        } catch {
+          source = text;
+        }
+
+        try {
+          source = decodeURIComponent(source.replace(/\+/g, "%20"));
+        } catch {
+          source = source.replace(/\+/g, " ");
+        }
+
+        output.value = source
+          .replace(/^\/+|\/+$/g, "")
+          .replace(/[-_]+/g, " ")
+          .replace(/\s+/g, " ")
+          .trim();
+
+        return;
+      }
+
+      if (slug === "url-path-extractor") {
+        const text = input.value.trim();
+
+        if (!text) {
+          output.value = "Enter a URL.";
+          return;
+        }
+
+        const cleanPath = (value: string): string => {
+          const noHash = value.split("#")[0];
+          const noQuery = noHash.split("?")[0];
+          return noQuery || "/";
+        };
+
+        try {
+          const url = new URL(text);
+          output.value = url.pathname || "/";
+          return;
+        } catch {
+          try {
+            const url = new URL(`https://${text}`);
+            output.value = url.pathname || "/";
+            return;
+          } catch {
+            if (text.startsWith("/")) {
+              output.value = cleanPath(text);
+              return;
+            }
+
+            output.value = "Invalid URL.";
+            return;
+          }
+        }
+      }
+            if (slug === "url-normalizer") {
+        const text = input.value.trim();
+
+        if (!text) {
+          output.value = "Enter a URL to normalize.";
+          return;
+        }
+
+        const ensureProtocol = (value: string): string =>
+          /^[a-z][a-z0-9+.-]*:\/\//i.test(value) ? value : `https://${value}`;
+
+        try {
+          const url = new URL(ensureProtocol(text));
+
+          url.protocol = url.protocol.toLowerCase();
+          url.hostname = url.hostname.toLowerCase();
+
+          if (
+            (url.protocol === "http:" && url.port === "80") ||
+            (url.protocol === "https:" && url.port === "443")
+          ) {
+            url.port = "";
+          }
+
+          url.pathname = url.pathname.replace(/\/{2,}/g, "/");
+
+          if (url.pathname !== "/") {
+            url.pathname = url.pathname.replace(/\/+$/g, "");
+            if (!url.pathname) {
+              url.pathname = "/";
+            }
+          }
+
+          const params = Array.from(url.searchParams.entries()).sort(
+            ([aKey, aValue], [bKey, bValue]) =>
+              aKey.localeCompare(bKey) || aValue.localeCompare(bValue)
+          );
+
+          url.search = params.length > 0 ? `?${new URLSearchParams(params).toString()}` : "";
+
+          output.value = url.toString();
+        } catch {
+          output.value = "Invalid URL.";
+        }
+
+        return;
+      }
+
+      if (slug === "url-decoder-for-query-params") {
+        const text = input.value.trim();
+
+        if (!text) {
+          output.value = "Enter a URL or query string.";
+          return;
+        }
+
+        let query = "";
+
+        try {
+          const url = new URL(text);
+          query = url.search;
+        } catch {
+          if (text.includes("?")) {
+            query = text.slice(text.indexOf("?"));
+          } else {
+            query = text;
+          }
+        }
+
+        query = query.replace(/^[?#&]/, "").trim();
+
+        if (!query) {
+          output.value = "No query parameters found.";
+          return;
+        }
+
+        const params = new URLSearchParams(query);
+        const result: Record<string, unknown> = {};
+
+        for (const [key, value] of params.entries()) {
+          if (Object.prototype.hasOwnProperty.call(result, key)) {
+            const currentValue = result[key];
+            result[key] = Array.isArray(currentValue)
+              ? [...currentValue, value]
+              : [currentValue, value];
+          } else {
+            result[key] = value;
+          }
+        }
+
+        output.value = JSON.stringify(result, null, 2);
+        return;
+      }
+
+      if (slug === "query-string-builder") {
+        const text = input.value.trim();
+
+        if (!text) {
+          output.value = "Enter JSON or key=value lines.";
+          return;
+        }
+
+        const params = new URLSearchParams();
+
+        const appendValue = (key: string, value: unknown): void => {
+          if (Array.isArray(value)) {
+            value.forEach((item: unknown) => appendValue(key, item));
+            return;
+          }
+
+          if (value === null || value === undefined) {
+            params.append(key, "");
+            return;
+          }
+
+          if (typeof value === "object") {
+            params.append(key, JSON.stringify(value));
+            return;
+          }
+
+          params.append(key, String(value));
+        };
+
+        try {
+          const parsed = JSON.parse(text);
+
+          if (
+            typeof parsed === "object" &&
+            parsed !== null &&
+            !Array.isArray(parsed)
+          ) {
+            Object.entries(parsed as Record<string, unknown>).forEach(([key, value]) => {
+              appendValue(key, value);
+            });
+
+            output.value = `?${params.toString()}`;
+            return;
+          }
+        } catch {
+        }
+
+        const lines = text
+          .split(/\r?\n/)
+          .map((line: string) => line.trim())
+          .filter((line: string) => line.length > 0);
+
+        if (lines.length === 0) {
+          output.value = "Enter JSON or key=value lines.";
+          return;
+        }
+
+        for (const line of lines) {
+          const separatorIndex = line.indexOf("=");
+
+          if (separatorIndex === -1) {
+            output.value = `Invalid line: ${line}`;
+            return;
+          }
+
+          const key = line.slice(0, separatorIndex).trim();
+          const value = line.slice(separatorIndex + 1).trim();
+
+          if (!key) {
+            output.value = `Invalid line: ${line}`;
+            return;
+          }
+
+          params.append(key, value);
+        }
+
+        output.value = `?${params.toString()}`;
+        return;
+      }
+
+      if (slug === "http-header-parser") {
+        const text = input.value.replace(/\r\n/g, "\n").trim();
+
+        if (!text) {
+          output.value = "Enter raw HTTP headers.";
+          return;
+        }
+
+        const lines = text.split("\n");
+        const headers: Record<string, unknown> = {};
+        let startLine = "";
+        let lastHeaderKey = "";
+
+        for (let index = 0; index < lines.length; index++) {
+          const line = lines[index];
+
+          if (!line.trim()) {
+            continue;
+          }
+
+          if (index === 0 && !line.includes(":")) {
+            startLine = line.trim();
+            continue;
+          }
+
+          if (/^\s/.test(line) && lastHeaderKey) {
+            const currentValue = headers[lastHeaderKey];
+
+            if (Array.isArray(currentValue)) {
+              const updated = [...currentValue];
+              updated[updated.length - 1] = `${updated[updated.length - 1]} ${line.trim()}`;
+              headers[lastHeaderKey] = updated;
+            } else if (typeof currentValue === "string") {
+              headers[lastHeaderKey] = `${currentValue} ${line.trim()}`;
+            }
+
+            continue;
+          }
+
+          const separatorIndex = line.indexOf(":");
+
+          if (separatorIndex === -1) {
+            continue;
+          }
+
+          const key = line.slice(0, separatorIndex).trim();
+          const value = line.slice(separatorIndex + 1).trim();
+
+          if (!key) {
+            continue;
+          }
+
+          lastHeaderKey = key;
+
+          if (Object.prototype.hasOwnProperty.call(headers, key)) {
+            const existingValue = headers[key];
+            headers[key] = Array.isArray(existingValue)
+              ? [...existingValue, value]
+              : [existingValue, value];
+          } else {
+            headers[key] = value;
+          }
+        }
+
+        output.value = JSON.stringify(
+          {
+            startLine: startLine || null,
+            headers
+          },
+          null,
+          2
+        );
+
+        return;
+      }
+
+      if (slug === "user-agent-parser") {
+        const text = input.value.trim();
+
+        if (!text) {
+          output.value = "Enter a user agent string.";
+          return;
+        }
+
+        const detectBrowser = (ua: string): { name: string; version: string } => {
+          const patterns: Array<{ name: string; regex: RegExp }> = [
+            { name: "Edge", regex: /Edg\/([\d.]+)/i },
+            { name: "Opera", regex: /OPR\/([\d.]+)/i },
+            { name: "Samsung Internet", regex: /SamsungBrowser\/([\d.]+)/i },
+            { name: "Chrome", regex: /Chrome\/([\d.]+)/i },
+            { name: "Firefox", regex: /Firefox\/([\d.]+)/i },
+            { name: "Safari", regex: /Version\/([\d.]+).*Safari/i },
+            { name: "Internet Explorer", regex: /(?:MSIE\s|rv:)([\d.]+).*Trident/i }
+          ];
+
+          for (const pattern of patterns) {
+            const match = ua.match(pattern.regex);
+
+            if (match) {
+              return {
+                name: pattern.name,
+                version: match[1]
+              };
+            }
+          }
+
+          return {
+            name: "Unknown",
+            version: "Unknown"
+          };
+        };
+
+        const detectEngine = (ua: string): string => {
+          if (/Trident/i.test(ua)) {
+            return "Trident";
+          }
+
+          if (/Gecko\//i.test(ua) && !/like Gecko/i.test(ua)) {
+            return "Gecko";
+          }
+
+          if (/AppleWebKit/i.test(ua) && /(Chrome|Chromium|Edg|OPR|SamsungBrowser)/i.test(ua)) {
+            return "Blink";
+          }
+
+          if (/AppleWebKit/i.test(ua)) {
+            return "WebKit";
+          }
+
+          return "Unknown";
+        };
+
+        const detectOs = (ua: string): string => {
+          const windowsMap: Record<string, string> = {
+            "10.0": "Windows 10/11",
+            "6.3": "Windows 8.1",
+            "6.2": "Windows 8",
+            "6.1": "Windows 7"
+          };
+
+          const windowsMatch = ua.match(/Windows NT ([\d.]+)/i);
+
+          if (windowsMatch) {
+            return windowsMap[windowsMatch[1]] ?? `Windows NT ${windowsMatch[1]}`;
+          }
+
+          const iosMatch = ua.match(/OS ([\d_]+) like Mac OS X/i);
+
+          if (/iPhone|iPad|iPod/i.test(ua) && iosMatch) {
+            return `iOS ${iosMatch[1].replace(/_/g, ".")}`;
+          }
+
+          const androidMatch = ua.match(/Android ([\d.]+)/i);
+
+          if (androidMatch) {
+            return `Android ${androidMatch[1]}`;
+          }
+
+          const macMatch = ua.match(/Mac OS X ([\d_]+)/i);
+
+          if (macMatch) {
+            return `macOS ${macMatch[1].replace(/_/g, ".")}`;
+          }
+
+          if (/CrOS/i.test(ua)) {
+            return "Chrome OS";
+          }
+
+          if (/Linux/i.test(ua)) {
+            return "Linux";
+          }
+
+          return "Unknown";
+        };
+
+        const isBot = /bot|crawler|spider|slurp|curl|wget|python-requests|httpclient/i.test(text);
+        const isTablet = /iPad|Tablet|PlayBook|Silk/i.test(text) || (/Android/i.test(text) && !/Mobile/i.test(text));
+        const isMobile = /Mobile|iPhone|iPod|Android/i.test(text) && !isTablet;
+
+        const deviceType = isBot
+          ? "Bot"
+          : isTablet
+            ? "Tablet"
+            : isMobile
+              ? "Mobile"
+              : "Desktop";
+
+        const browser = detectBrowser(text);
+
+        output.value = JSON.stringify(
+          {
+            browser: browser.name,
+            browserVersion: browser.version,
+            engine: detectEngine(text),
+            os: detectOs(text),
+            deviceType,
+            isMobile,
+            isBot,
+            raw: text
+          },
+          null,
+          2
+        );
+
+        return;
+      }
+            if (slug === "cron-expression-parser") {
+        const text = input.value.trim();
+
+        if (!text) {
+          output.value = "Enter a cron expression.";
+          return;
+        }
+
+        const parts = text.split(/\s+/).filter((part: string) => part.length > 0);
+
+        if (parts.length !== 5 && parts.length !== 6) {
+          output.value = "Cron expression must have 5 fields, or 6 fields with year.";
+          return;
+        }
+
+        const monthNames: Record<string, string> = {
+          "1": "January",
+          "2": "February",
+          "3": "March",
+          "4": "April",
+          "5": "May",
+          "6": "June",
+          "7": "July",
+          "8": "August",
+          "9": "September",
+          "10": "October",
+          "11": "November",
+          "12": "December"
+        };
+
+        const dayNames: Record<string, string> = {
+          "0": "Sunday",
+          "1": "Monday",
+          "2": "Tuesday",
+          "3": "Wednesday",
+          "4": "Thursday",
+          "5": "Friday",
+          "6": "Saturday",
+          "7": "Sunday"
+        };
+
+        const describeField = (field: string, type: string): string => {
+          const nameMap = type === "month" ? monthNames : type === "dayOfWeek" ? dayNames : null;
+
+          const mapValue = (value: string): string => {
+            const upper = value.toUpperCase();
+
+            if (type === "month") {
+              const monthAliases: Record<string, string> = {
+                JAN: "January",
+                FEB: "February",
+                MAR: "March",
+                APR: "April",
+                MAY: "May",
+                JUN: "June",
+                JUL: "July",
+                AUG: "August",
+                SEP: "September",
+                OCT: "October",
+                NOV: "November",
+                DEC: "December"
+              };
+
+              return monthAliases[upper] ?? monthNames[value] ?? value;
+            }
+
+            if (type === "dayOfWeek") {
+              const dayAliases: Record<string, string> = {
+                SUN: "Sunday",
+                MON: "Monday",
+                TUE: "Tuesday",
+                WED: "Wednesday",
+                THU: "Thursday",
+                FRI: "Friday",
+                SAT: "Saturday"
+              };
+
+              return dayAliases[upper] ?? dayNames[value] ?? value;
+            }
+
+            return value;
+          };
+
+          const unitMap: Record<string, string> = {
+            minute: "minute",
+            hour: "hour",
+            dayOfMonth: "day",
+            month: "month",
+            dayOfWeek: "day of week",
+            year: "year"
+          };
+
+          const unit = unitMap[type] ?? type;
+
+          if (field === "*") {
+            return `Every ${unit}`;
+          }
+
+          if (/^\*\/\d+$/.test(field)) {
+            return `Every ${field.split("/")[1]} ${unit}s`;
+          }
+
+          if (/^\d+$/.test(field) || /^[A-Z]{3}$/i.test(field)) {
+            return `At ${mapValue(field)}`;
+          }
+
+          if (/^[\dA-Z]+-[\dA-Z]+$/i.test(field)) {
+            const [start, end] = field.split("-");
+            return `From ${mapValue(start)} to ${mapValue(end)}`;
+          }
+
+          if (/^[\dA-Z]+,[\dA-Z,]+$/i.test(field)) {
+            return `Values: ${field
+              .split(",")
+              .map((value: string) => mapValue(value))
+              .join(", ")}`;
+          }
+
+          if (/^[\dA-Z]+\/\d+$/i.test(field)) {
+            const [start, step] = field.split("/");
+            return `Every ${step} ${unit}s starting at ${mapValue(start)}`;
+          }
+
+          return `Custom value: ${field}`;
+        };
+
+        const fieldNames = ["minute", "hour", "dayOfMonth", "month", "dayOfWeek", "year"];
+        const usedFieldNames = fieldNames.slice(0, parts.length);
+
+        const detailLines = usedFieldNames.map((fieldName: string, index: number) => {
+          return `${fieldName}: ${parts[index]} -> ${describeField(parts[index], fieldName)}`;
+        });
+
+        output.value =
+          `Cron: ${text}\n\n` +
+          detailLines.join("\n") +
+          `\n\nSummary:\n` +
+          `Runs when minute is "${parts[0]}", hour is "${parts[1]}", day of month is "${parts[2]}", month is "${parts[3]}", and day of week is "${parts[4]}".` +
+          (parts[5] ? ` Year is "${parts[5]}".` : "");
+
+        return;
+      }
+
+      if (slug === "cron-expression-generator") {
+        const text = input.value.trim();
+
+        if (!text) {
+          output.value = "Enter JSON or key=value cron fields.";
+          return;
+        }
+
+        const aliases: Record<string, string> = {
+          min: "minute",
+          minute: "minute",
+          minutes: "minute",
+          hour: "hour",
+          hours: "hour",
+          dom: "dayOfMonth",
+          dayofmonth: "dayOfMonth",
+          day_of_month: "dayOfMonth",
+          month: "month",
+          months: "month",
+          dow: "dayOfWeek",
+          dayofweek: "dayOfWeek",
+          day_of_week: "dayOfWeek",
+          year: "year"
+        };
+
+        const defaults: Record<string, string> = {
+          minute: "*",
+          hour: "*",
+          dayOfMonth: "*",
+          month: "*",
+          dayOfWeek: "*"
+        };
+
+        const normalizeValue = (value: unknown): string => {
+          if (value === null || value === undefined || value === "") {
+            return "*";
+          }
+
+          if (Array.isArray(value)) {
+            return value.map((item: unknown) => String(item).trim()).join(",");
+          }
+
+          return String(value).trim() || "*";
+        };
+
+        const values: Record<string, string> = { ...defaults };
+
+        try {
+          const parsed = JSON.parse(text);
+
+          if (typeof parsed === "object" && parsed !== null && !Array.isArray(parsed)) {
+            Object.entries(parsed as Record<string, unknown>).forEach(([key, value]) => {
+              const normalizedKey = aliases[key.replace(/[\s-]/g, "").toLowerCase()];
+
+              if (normalizedKey) {
+                values[normalizedKey] = normalizeValue(value);
+              }
+            });
+          } else {
+            output.value = "JSON input must be an object.";
+            return;
+          }
+        } catch {
+          const lines = text
+            .split(/\r?\n/)
+            .map((line: string) => line.trim())
+            .filter((line: string) => line.length > 0);
+
+          for (const line of lines) {
+            const separatorIndex = line.indexOf("=");
+
+            if (separatorIndex === -1) {
+              output.value = `Invalid line: ${line}`;
+              return;
+            }
+
+            const rawKey = line.slice(0, separatorIndex).trim();
+            const rawValue = line.slice(separatorIndex + 1).trim();
+            const normalizedKey = aliases[rawKey.replace(/[\s-]/g, "").toLowerCase()];
+
+            if (!normalizedKey) {
+              output.value = `Unsupported field: ${rawKey}`;
+              return;
+            }
+
+            values[normalizedKey] = rawValue || "*";
+          }
+        }
+
+        const cron = [
+          values.minute,
+          values.hour,
+          values.dayOfMonth,
+          values.month,
+          values.dayOfWeek
+        ];
+
+        if (values.year) {
+          cron.push(values.year);
+        }
+
+        output.value = cron.join(" ");
+        return;
+      }
+
+      if (slug === "unix-permission-calculator") {
+        const text = input.value.trim();
+
+        if (!text) {
+          output.value = "Enter octal permissions like 755 or symbolic permissions like rwxr-xr-x.";
+          return;
+        }
+
+        const permissionNames = ["owner", "group", "public"];
+
+        const digitToSymbolic = (digit: number, specialType: string): string => {
+          const read = digit & 4 ? "r" : "-";
+          const write = digit & 2 ? "w" : "-";
+          let execute = digit & 1 ? "x" : "-";
+
+          if (specialType === "setuid") {
+            execute = digit & 1 ? "s" : "S";
+          }
+
+          if (specialType === "setgid") {
+            execute = digit & 1 ? "s" : "S";
+          }
+
+          if (specialType === "sticky") {
+            execute = digit & 1 ? "t" : "T";
+          }
+
+          return `${read}${write}${execute}`;
+        };
+
+        const symbolicToDigit = (value: string): { digit: number; special: boolean } => {
+          let digit = 0;
+          let special = false;
+
+          if (value[0] === "r") digit += 4;
+          if (value[1] === "w") digit += 2;
+          if (["x", "s", "t"].includes(value[2].toLowerCase())) digit += 1;
+          if (["s", "S", "t", "T"].includes(value[2])) special = true;
+
+          return { digit, special };
+        };
+
+        if (/^\d{3,4}$/.test(text)) {
+          const octal = text.length === 4 ? text : `0${text}`;
+          const specialDigit = Number(octal[0]);
+          const ownerDigit = Number(octal[1]);
+          const groupDigit = Number(octal[2]);
+          const publicDigit = Number(octal[3]);
+
+          if ([specialDigit, ownerDigit, groupDigit, publicDigit].some((digit: number) => Number.isNaN(digit) || digit < 0 || digit > 7)) {
+            output.value = "Invalid octal permission.";
+            return;
+          }
+
+          const symbolic =
+            digitToSymbolic(ownerDigit, specialDigit & 4 ? "setuid" : "") +
+            digitToSymbolic(groupDigit, specialDigit & 2 ? "setgid" : "") +
+            digitToSymbolic(publicDigit, specialDigit & 1 ? "sticky" : "");
+
+          const describeDigit = (digit: number): string => {
+            const parts: string[] = [];
+
+            if (digit & 4) parts.push("read");
+            if (digit & 2) parts.push("write");
+            if (digit & 1) parts.push("execute");
+
+            return parts.length > 0 ? parts.join(", ") : "none";
+          };
+
+          const specialParts: string[] = [];
+          if (specialDigit & 4) specialParts.push("setuid");
+          if (specialDigit & 2) specialParts.push("setgid");
+          if (specialDigit & 1) specialParts.push("sticky");
+
+          output.value =
+            `Octal: ${text.length === 4 ? text : text}\n` +
+            `Symbolic: ${symbolic}\n` +
+            `Owner: ${describeDigit(ownerDigit)} (${ownerDigit})\n` +
+            `Group: ${describeDigit(groupDigit)} (${groupDigit})\n` +
+            `Public: ${describeDigit(publicDigit)} (${publicDigit})\n` +
+            `Special: ${specialParts.length > 0 ? specialParts.join(", ") : "none"}`;
+
+          return;
+        }
+
+        const cleaned = text.replace(/^[d-]/, "");
+
+        if (!/^[rwxsStT-]{9}$/.test(cleaned)) {
+          output.value = "Invalid permission format.";
+          return;
+        }
+
+        const parts = [cleaned.slice(0, 3), cleaned.slice(3, 6), cleaned.slice(6, 9)];
+        const digits = parts.map((part: string) => symbolicToDigit(part));
+        let specialDigit = 0;
+
+        if (/[sS]/.test(parts[0][2])) specialDigit += 4;
+        if (/[sS]/.test(parts[1][2])) specialDigit += 2;
+        if (/[tT]/.test(parts[2][2])) specialDigit += 1;
+
+        const octal = `${specialDigit}${digits.map((item: { digit: number }) => item.digit).join("")}`;
+        const normalizedOctal = octal.startsWith("0") ? octal.slice(1) : octal;
+
+        output.value =
+          `Symbolic: ${cleaned}\n` +
+          `Octal: ${normalizedOctal}\n` +
+          parts
+            .map((part: string, index: number) => `${permissionNames[index]}: ${part}`)
+            .join("\n") +
+          `\nSpecial: ${
+            [
+              specialDigit & 4 ? "setuid" : "",
+              specialDigit & 2 ? "setgid" : "",
+              specialDigit & 1 ? "sticky" : ""
+            ]
+              .filter(Boolean)
+              .join(", ") || "none"
+          }`;
+
+        return;
+      }
+
+      if (slug === "htaccess-generator") {
+        const text = input.value.trim();
+
+        if (!text) {
+          output.value = "Enter JSON or key=value settings.";
+          return;
+        }
+
+        const config: Record<string, string> = {};
+
+        try {
+          const parsed = JSON.parse(text);
+
+          if (typeof parsed === "object" && parsed !== null && !Array.isArray(parsed)) {
+            Object.entries(parsed as Record<string, unknown>).forEach(([key, value]) => {
+              config[key] = Array.isArray(value)
+                ? value.map((item: unknown) => String(item)).join(",")
+                : String(value);
+            });
+          } else {
+            output.value = "JSON input must be an object.";
+            return;
+          }
+        } catch {
+          const lines = text
+            .split(/\r?\n/)
+            .map((line: string) => line.trim())
+            .filter((line: string) => line.length > 0);
+
+          for (const line of lines) {
+            const separatorIndex = line.indexOf("=");
+
+            if (separatorIndex === -1) {
+              output.value = `Invalid line: ${line}`;
+              return;
+            }
+
+            const key = line.slice(0, separatorIndex).trim();
+            const value = line.slice(separatorIndex + 1).trim();
+
+            if (!key) {
+              output.value = `Invalid line: ${line}`;
+              return;
+            }
+
+            config[key] = value;
+          }
+        }
+
+        const isTrue = (value: string | undefined): boolean =>
+          /^(true|1|yes|on)$/i.test(value ?? "");
+
+        const lines: string[] = [];
+
+        if (isTrue(config.forceHttps) || isTrue(config.forceWww) || isTrue(config.removeWww)) {
+          lines.push("RewriteEngine On");
+        }
+
+        if (isTrue(config.forceHttps)) {
+          lines.push('RewriteCond %{HTTPS} !=on');
+          lines.push('RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]');
+          lines.push("");
+        }
+
+        if (isTrue(config.forceWww) && isTrue(config.removeWww)) {
+          output.value = 'Use either forceWww=true or removeWww=true, not both.';
+          return;
+        }
+
+        if (isTrue(config.forceWww)) {
+          lines.push('RewriteCond %{HTTP_HOST} !^www\\. [NC]');
+          lines.push('RewriteRule ^ https://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]');
+          lines.push("");
+        }
+
+        if (isTrue(config.removeWww)) {
+          lines.push('RewriteCond %{HTTP_HOST} ^www\\.(.+)$ [NC]');
+          lines.push('RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]');
+          lines.push("");
+        }
+
+        if (config.redirectFrom && config.redirectTo) {
+          lines.push(`Redirect 301 ${config.redirectFrom} ${config.redirectTo}`);
+          lines.push("");
+        }
+
+        if (config.directoryIndex) {
+          lines.push(`DirectoryIndex ${config.directoryIndex}`);
+          lines.push("");
+        }
+
+        if (config.custom404) {
+          lines.push(`ErrorDocument 404 ${config.custom404}`);
+          lines.push("");
+        }
+
+        if (config.blockIps) {
+          const ips = config.blockIps
+            .split(",")
+            .map((ip: string) => ip.trim())
+            .filter((ip: string) => ip.length > 0);
+
+          if (ips.length > 0) {
+            lines.push("<RequireAll>");
+            lines.push("  Require all granted");
+            ips.forEach((ip: string) => {
+              lines.push(`  Require not ip ${ip}`);
+            });
+            lines.push("</RequireAll>");
+            lines.push("");
+          }
+        }
+
+        if (config.basicAuthUserFile || config.basicAuthRealm) {
+          lines.push("AuthType Basic");
+          lines.push(`AuthName "${config.basicAuthRealm || "Restricted Area"}"`);
+
+          if (config.basicAuthUserFile) {
+            lines.push(`AuthUserFile ${config.basicAuthUserFile}`);
+          }
+
+          lines.push("Require valid-user");
+          lines.push("");
+        }
+
+        output.value = lines.join("\n").trim() || "# No rules generated.";
+        return;
+      }
+
+      if (slug === "csp-generator") {
+        const text = input.value.trim();
+
+        if (!text) {
+          output.value = "Enter JSON or directive=value lines.";
+          return;
+        }
+
+        const directives: Record<string, string[]> = {};
+
+        const addDirective = (key: string, value: unknown): void => {
+          const normalizedKey = key.trim();
+
+          if (!normalizedKey) {
+            return;
+          }
+
+          const values = Array.isArray(value)
+            ? value.flatMap((item: unknown) =>
+                String(item)
+                  .split(/\s+/)
+                  .map((part: string) => part.trim())
+                  .filter((part: string) => part.length > 0)
+              )
+            : String(value)
+                .split(/\s+/)
+                .map((part: string) => part.trim())
+                .filter((part: string) => part.length > 0);
+
+          directives[normalizedKey] = values;
+        };
+
+        try {
+          const parsed = JSON.parse(text);
+
+          if (typeof parsed === "object" && parsed !== null && !Array.isArray(parsed)) {
+            Object.entries(parsed as Record<string, unknown>).forEach(([key, value]) => {
+              addDirective(key, value);
+            });
+          } else {
+            output.value = "JSON input must be an object.";
+            return;
+          }
+        } catch {
+          const lines = text
+            .split(/\r?\n/)
+            .map((line: string) => line.trim())
+            .filter((line: string) => line.length > 0);
+
+          for (const line of lines) {
+            const separatorIndex = line.indexOf("=");
+
+            if (separatorIndex === -1) {
+              output.value = `Invalid line: ${line}`;
+              return;
+            }
+
+            const key = line.slice(0, separatorIndex).trim();
+            const value = line.slice(separatorIndex + 1).trim();
+
+            addDirective(key, value);
+          }
+        }
+
+        const normalized = Object.entries(directives)
+          .filter(([, values]) => values.length > 0)
+          .map(([key, values]) => `${key} ${values.join(" ")}`);
+
+        if (normalized.length === 0) {
+          output.value = "No CSP directives generated.";
+          return;
+        }
+
+        output.value = `Content-Security-Policy: ${normalized.join("; ")};`;
+        return;
+      }
+            if (slug === "cors-header-generator") {
+        const text = input.value.trim();
+
+        if (!text) {
+          output.value = "Enter JSON or key=value settings.";
+          return;
+        }
+
+        const config: Record<string, unknown> = {};
+
+        const aliases: Record<string, string> = {
+          origin: "origin",
+          alloworigin: "origin",
+          methods: "methods",
+          allowmethods: "methods",
+          headers: "headers",
+          allowheaders: "headers",
+          exposeheaders: "exposeHeaders",
+          credentials: "credentials",
+          allowcredentials: "credentials",
+          maxage: "maxAge",
+          privatenetwork: "privateNetwork",
+          allowprivatenetwork: "privateNetwork",
+          varyorigin: "varyOrigin"
+        };
+
+        const normalizeKey = (key: string): string =>
+          aliases[key.replace(/[\s_-]/g, "").toLowerCase()] ?? key;
+
+        try {
+          const parsed = JSON.parse(text);
+
+          if (typeof parsed === "object" && parsed !== null && !Array.isArray(parsed)) {
+            Object.entries(parsed as Record<string, unknown>).forEach(([key, value]) => {
+              config[normalizeKey(key)] = value;
+            });
+          } else {
+            output.value = "JSON input must be an object.";
+            return;
+          }
+        } catch {
+          const lines = text
+            .split(/\r?\n/)
+            .map((line: string) => line.trim())
+            .filter((line: string) => line.length > 0);
+
+          for (const line of lines) {
+            const separatorIndex = line.indexOf("=");
+
+            if (separatorIndex === -1) {
+              output.value = `Invalid line: ${line}`;
+              return;
+            }
+
+            const key = normalizeKey(line.slice(0, separatorIndex).trim());
+            const value = line.slice(separatorIndex + 1).trim();
+
+            config[key] = value;
+          }
+        }
+
+        const toList = (value: unknown): string =>
+          Array.isArray(value)
+            ? value.map((item: unknown) => String(item).trim()).filter(Boolean).join(", ")
+            : String(value ?? "")
+                .split(",")
+                .map((part: string) => part.trim())
+                .filter((part: string) => part.length > 0)
+                .join(", ");
+
+        const isTrue = (value: unknown): boolean => /^(true|1|yes|on)$/i.test(String(value ?? ""));
+
+        const origin = String(config.origin ?? "*").trim() || "*";
+        const methods = toList(config.methods) || "GET, POST, PUT, PATCH, DELETE, OPTIONS";
+        const headers = toList(config.headers);
+        const exposeHeaders = toList(config.exposeHeaders);
+        const maxAge = String(config.maxAge ?? "").trim();
+        const credentials = isTrue(config.credentials);
+        const privateNetwork = isTrue(config.privateNetwork);
+        const varyOrigin = config.varyOrigin === undefined ? origin !== "*" : isTrue(config.varyOrigin);
+
+        const lines: string[] = [];
+
+        lines.push(`Access-Control-Allow-Origin: ${origin}`);
+        lines.push(`Access-Control-Allow-Methods: ${methods}`);
+
+        if (headers) {
+          lines.push(`Access-Control-Allow-Headers: ${headers}`);
+        }
+
+        if (exposeHeaders) {
+          lines.push(`Access-Control-Expose-Headers: ${exposeHeaders}`);
+        }
+
+        if (credentials) {
+          lines.push("Access-Control-Allow-Credentials: true");
+        }
+
+        if (maxAge) {
+          lines.push(`Access-Control-Max-Age: ${maxAge}`);
+        }
+
+        if (privateNetwork) {
+          lines.push("Access-Control-Allow-Private-Network: true");
+        }
+
+        if (varyOrigin) {
+          lines.push("Vary: Origin");
+        }
+
+        output.value = lines.join("\n");
+        return;
+      }
+
+      if (slug === "mime-type-lookup") {
+        const text = input.value.trim().toLowerCase();
+
+        if (!text) {
+          output.value = "Enter a file extension or MIME type.";
+          return;
+        }
+
+        const mimeMap = [
+          { mime: "text/html", extensions: ["html", "htm"], category: "document", description: "HTML document" },
+          { mime: "text/css", extensions: ["css"], category: "stylesheet", description: "CSS stylesheet" },
+          { mime: "application/javascript", extensions: ["js", "mjs"], category: "script", description: "JavaScript file" },
+          { mime: "application/json", extensions: ["json"], category: "data", description: "JSON data" },
+          { mime: "application/ld+json", extensions: ["jsonld"], category: "data", description: "JSON-LD data" },
+          { mime: "application/xml", extensions: ["xml"], category: "data", description: "XML document" },
+          { mime: "text/plain", extensions: ["txt"], category: "text", description: "Plain text" },
+          { mime: "text/csv", extensions: ["csv"], category: "data", description: "CSV file" },
+          { mime: "application/pdf", extensions: ["pdf"], category: "document", description: "PDF document" },
+          { mime: "application/zip", extensions: ["zip"], category: "archive", description: "ZIP archive" },
+          { mime: "application/gzip", extensions: ["gz"], category: "archive", description: "Gzip archive" },
+          { mime: "application/x-tar", extensions: ["tar"], category: "archive", description: "Tar archive" },
+          { mime: "application/x-7z-compressed", extensions: ["7z"], category: "archive", description: "7z archive" },
+          { mime: "image/png", extensions: ["png"], category: "image", description: "PNG image" },
+          { mime: "image/jpeg", extensions: ["jpg", "jpeg"], category: "image", description: "JPEG image" },
+          { mime: "image/gif", extensions: ["gif"], category: "image", description: "GIF image" },
+          { mime: "image/webp", extensions: ["webp"], category: "image", description: "WebP image" },
+          { mime: "image/svg+xml", extensions: ["svg"], category: "image", description: "SVG image" },
+          { mime: "image/x-icon", extensions: ["ico"], category: "image", description: "Icon file" },
+          { mime: "audio/mpeg", extensions: ["mp3"], category: "audio", description: "MP3 audio" },
+          { mime: "audio/wav", extensions: ["wav"], category: "audio", description: "WAV audio" },
+          { mime: "audio/ogg", extensions: ["ogg"], category: "audio", description: "Ogg audio" },
+          { mime: "video/mp4", extensions: ["mp4"], category: "video", description: "MP4 video" },
+          { mime: "video/webm", extensions: ["webm"], category: "video", description: "WebM video" },
+          { mime: "application/wasm", extensions: ["wasm"], category: "binary", description: "WebAssembly module" },
+          { mime: "application/x-yaml", extensions: ["yaml", "yml"], category: "data", description: "YAML file" },
+          { mime: "application/toml", extensions: ["toml"], category: "data", description: "TOML file" },
+          { mime: "application/msword", extensions: ["doc"], category: "document", description: "Word document" },
+          { mime: "application/vnd.openxmlformats-officedocument.wordprocessingml.document", extensions: ["docx"], category: "document", description: "Word document" },
+          { mime: "application/vnd.ms-excel", extensions: ["xls"], category: "spreadsheet", description: "Excel spreadsheet" },
+          { mime: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", extensions: ["xlsx"], category: "spreadsheet", description: "Excel spreadsheet" },
+          { mime: "application/vnd.ms-powerpoint", extensions: ["ppt"], category: "presentation", description: "PowerPoint presentation" },
+          { mime: "application/vnd.openxmlformats-officedocument.presentationml.presentation", extensions: ["pptx"], category: "presentation", description: "PowerPoint presentation" },
+          { mime: "application/epub+zip", extensions: ["epub"], category: "document", description: "EPUB ebook" }
+        ];
+
+        const query = text.startsWith(".") ? text.slice(1) : text;
+        const results = mimeMap.filter((item) =>
+          item.mime === query ||
+          item.extensions.includes(query) ||
+          item.mime.includes(query)
+        );
+
+        if (results.length === 0) {
+          output.value = "No MIME type match found.";
+          return;
+        }
+
+        output.value = JSON.stringify(
+          results.map((item) => ({
+            mimeType: item.mime,
+            extensions: item.extensions,
+            category: item.category,
+            description: item.description
+          })),
+          null,
+          2
+        );
+
+        return;
+      }
+
+      if (slug === "http-status-code-lookup") {
+        const text = input.value.trim().toLowerCase();
+
+        if (!text) {
+          output.value = "Enter an HTTP status code or phrase.";
+          return;
+        }
+
+        const statusMap = [
+          { code: 100, phrase: "Continue", category: "Informational", description: "The initial part of the request has been received and the client should continue." },
+          { code: 101, phrase: "Switching Protocols", category: "Informational", description: "The server is switching protocols as requested." },
+          { code: 200, phrase: "OK", category: "Success", description: "The request succeeded." },
+          { code: 201, phrase: "Created", category: "Success", description: "A new resource was created successfully." },
+          { code: 202, phrase: "Accepted", category: "Success", description: "The request was accepted for processing." },
+          { code: 204, phrase: "No Content", category: "Success", description: "The request succeeded but there is no response body." },
+          { code: 301, phrase: "Moved Permanently", category: "Redirection", description: "The resource has permanently moved to a new URL." },
+          { code: 302, phrase: "Found", category: "Redirection", description: "The resource is temporarily available at a different URL." },
+          { code: 304, phrase: "Not Modified", category: "Redirection", description: "The cached version can be used because the resource was not modified." },
+          { code: 307, phrase: "Temporary Redirect", category: "Redirection", description: "The resource is temporarily redirected and the method should not change." },
+          { code: 308, phrase: "Permanent Redirect", category: "Redirection", description: "The resource is permanently redirected and the method should not change." },
+          { code: 400, phrase: "Bad Request", category: "Client Error", description: "The server could not understand the request due to invalid syntax." },
+          { code: 401, phrase: "Unauthorized", category: "Client Error", description: "Authentication is required or has failed." },
+          { code: 403, phrase: "Forbidden", category: "Client Error", description: "The server understood the request but refuses to authorize it." },
+          { code: 404, phrase: "Not Found", category: "Client Error", description: "The requested resource could not be found." },
+          { code: 405, phrase: "Method Not Allowed", category: "Client Error", description: "The request method is not allowed for the resource." },
+          { code: 408, phrase: "Request Timeout", category: "Client Error", description: "The server timed out waiting for the request." },
+          { code: 409, phrase: "Conflict", category: "Client Error", description: "The request conflicts with the current state of the resource." },
+          { code: 410, phrase: "Gone", category: "Client Error", description: "The resource is no longer available and will not return." },
+          { code: 413, phrase: "Payload Too Large", category: "Client Error", description: "The request body is larger than the server is willing to process." },
+          { code: 415, phrase: "Unsupported Media Type", category: "Client Error", description: "The server does not support the request media type." },
+          { code: 418, phrase: "I'm a teapot", category: "Client Error", description: "An Easter egg status code indicating the server refuses to brew coffee because it is a teapot." },
+          { code: 429, phrase: "Too Many Requests", category: "Client Error", description: "The client sent too many requests in a given amount of time." },
+          { code: 500, phrase: "Internal Server Error", category: "Server Error", description: "The server encountered an unexpected condition." },
+          { code: 501, phrase: "Not Implemented", category: "Server Error", description: "The server does not support the requested functionality." },
+          { code: 502, phrase: "Bad Gateway", category: "Server Error", description: "The server received an invalid response from an upstream server." },
+          { code: 503, phrase: "Service Unavailable", category: "Server Error", description: "The server is temporarily unavailable." },
+          { code: 504, phrase: "Gateway Timeout", category: "Server Error", description: "The server did not receive a timely response from an upstream server." }
+        ];
+
+        const result = /^\d+$/.test(text)
+          ? statusMap.filter((item) => item.code === Number(text))
+          : statusMap.filter((item) => item.phrase.toLowerCase().includes(text));
+
+        if (result.length === 0) {
+          output.value = "No HTTP status code match found.";
+          return;
+        }
+
+        output.value = JSON.stringify(
+          result.map((item) => ({
+            code: item.code,
+            phrase: item.phrase,
+            category: item.category,
+            description: item.description
+          })),
+          null,
+          2
+        );
+
+        return;
+      }
+
+      if (slug === "dns-record-checker") {
+        const text = input.value.trim();
+
+        if (!text) {
+          output.value = "Enter a domain or JSON or key=value lines.";
+          return;
+        }
+
+        const config: Record<string, string> = {
+          type: "A"
+        };
+
+        try {
+          const parsed = JSON.parse(text);
+
+          if (typeof parsed === "object" && parsed !== null && !Array.isArray(parsed)) {
+            Object.entries(parsed as Record<string, unknown>).forEach(([key, value]) => {
+              config[key] = String(value);
+            });
+          } else {
+            output.value = "JSON input must be an object.";
+            return;
+          }
+        } catch {
+          if (text.includes("=")) {
+            const lines = text
+              .split(/\r?\n/)
+              .map((line: string) => line.trim())
+              .filter((line: string) => line.length > 0);
+
+            for (const line of lines) {
+              const separatorIndex = line.indexOf("=");
+
+              if (separatorIndex === -1) {
+                output.value = `Invalid line: ${line}`;
+                return;
+              }
+
+              const key = line.slice(0, separatorIndex).trim();
+              const value = line.slice(separatorIndex + 1).trim();
+
+              config[key] = value;
+            }
+          } else {
+            config.domain = text;
+          }
+        }
+
+        const rawDomain = (config.domain || config.host || "").trim();
+
+        if (!rawDomain) {
+          output.value = "Enter a domain.";
+          return;
+        }
+
+        let domain = rawDomain;
+
+        try {
+          const url = new URL(rawDomain);
+          domain = url.hostname;
+        } catch {
+          domain = rawDomain
+            .replace(/^[a-z]+:\/\//i, "")
+            .split("/")[0]
+            .trim();
+        }
+
+        const type = (config.type || "A").trim().toUpperCase();
+        const allowedTypes = ["A", "AAAA", "CNAME", "MX", "TXT", "NS", "SOA", "PTR", "SRV", "CAA", "ANY"];
+
+        if (!allowedTypes.includes(type)) {
+          output.value = `Unsupported DNS type: ${type}`;
+          return;
+        }
+
+        const typeNames: Record<number, string> = {
+          1: "A",
+          2: "NS",
+          5: "CNAME",
+          6: "SOA",
+          12: "PTR",
+          15: "MX",
+          16: "TXT",
+          28: "AAAA",
+          33: "SRV",
+          257: "CAA"
+        };
+
+        output.value = "Checking DNS records...";
+
+        fetch(`https://dns.google/resolve?name=${encodeURIComponent(domain)}&type=${encodeURIComponent(type)}`)
+          .then((response: Response) => response.json())
+          .then((data: any) => {
+            const answers = Array.isArray(data.Answer)
+              ? data.Answer.map((item: any) => ({
+                  name: item.name,
+                  type: typeNames[item.type] ?? item.type,
+                  ttl: item.TTL,
+                  data: item.data
+                }))
+              : [];
+
+            output.value = JSON.stringify(
+              {
+                domain,
+                type,
+                status: data.Status,
+                authoritative: Boolean(data.AD),
+                answers,
+                comment: answers.length === 0 ? "No answers found." : undefined
+              },
+              null,
+              2
+            );
+          })
+          .catch(() => {
+            output.value = "DNS lookup failed.";
+          });
+
+        return;
+      }
+
+      if (slug === "ip-range-generator") {
+        const text = input.value.trim();
+
+        if (!text) {
+          output.value = "Enter CIDR, a dash range, or JSON or key=value start/end input.";
+          return;
+        }
+
+        const isValidIp = (value: string): boolean => {
+          const parts = value.split(".");
+
+          return (
+            parts.length === 4 &&
+            parts.every((part: string) => /^\d+$/.test(part) && Number(part) >= 0 && Number(part) <= 255)
+          );
+        };
+
+        const ipToInt = (value: string): number =>
+          value.split(".").reduce((acc: number, part: string) => (acc << 8) + Number(part), 0) >>> 0;
+
+        const intToIp = (value: number): string =>
+          [
+            (value >>> 24) & 255,
+            (value >>> 16) & 255,
+            (value >>> 8) & 255,
+            value & 255
+          ].join(".");
+
+        let startIp = "";
+        let endIp = "";
+        let source = "";
+
+        if (/^\d{1,3}(?:\.\d{1,3}){3}\/\d{1,2}$/.test(text)) {
+          const [baseIp, prefixText] = text.split("/");
+          const prefix = Number(prefixText);
+
+          if (!isValidIp(baseIp) || prefix < 0 || prefix > 32) {
+            output.value = "Invalid CIDR block.";
+            return;
+          }
+
+          const base = ipToInt(baseIp);
+          const mask = prefix === 0 ? 0 : (0xffffffff << (32 - prefix)) >>> 0;
+          const network = base & mask;
+          const broadcast = network | (~mask >>> 0);
+
+          startIp = intToIp(network);
+          endIp = intToIp(broadcast);
+          source = `CIDR ${text}`;
+        } else if (/^\d{1,3}(?:\.\d{1,3}){3}\s*-\s*\d{1,3}(?:\.\d{1,3}){3}$/.test(text)) {
+          const [start, end] = text.split("-").map((part: string) => part.trim());
+
+          startIp = start;
+          endIp = end;
+          source = "start-end range";
+        } else {
+          const config: Record<string, string> = {};
+
+          try {
+            const parsed = JSON.parse(text);
+
+            if (typeof parsed === "object" && parsed !== null && !Array.isArray(parsed)) {
+              Object.entries(parsed as Record<string, unknown>).forEach(([key, value]) => {
+                config[key] = String(value);
+              });
+            } else {
+              output.value = "JSON input must be an object.";
+              return;
+            }
+          } catch {
+            const lines = text
+              .split(/\r?\n/)
+              .map((line: string) => line.trim())
+              .filter((line: string) => line.length > 0);
+
+            for (const line of lines) {
+              const separatorIndex = line.indexOf("=");
+
+              if (separatorIndex === -1) {
+                output.value = `Invalid line: ${line}`;
+                return;
+              }
+
+              const key = line.slice(0, separatorIndex).trim();
+              const value = line.slice(separatorIndex + 1).trim();
+
+              config[key] = value;
+            }
+          }
+
+          startIp = (config.start || config.startIp || "").trim();
+          endIp = (config.end || config.endIp || "").trim();
+          source = "structured input";
+        }
+
+        if (!isValidIp(startIp) || !isValidIp(endIp)) {
+          output.value = "Invalid IP range.";
+          return;
+        }
+
+        const startInt = ipToInt(startIp);
+        const endInt = ipToInt(endIp);
+
+        if (endInt < startInt) {
+          output.value = "End IP must be greater than or equal to start IP.";
+          return;
+        }
+
+        const total = endInt - startInt + 1;
+
+        if (total > 4096) {
+          output.value =
+            `Range too large to print fully.\n\n` +
+            `Source: ${source}\n` +
+            `Start IP: ${startIp}\n` +
+            `End IP: ${endIp}\n` +
+            `Total IPs: ${total}`;
+          return;
+        }
+
+        const ips: string[] = [];
+
+        for (let current = startInt; current <= endInt; current++) {
+          ips.push(intToIp(current));
+        }
+
+        output.value =
+          `Source: ${source}\n` +
+          `Start IP: ${startIp}\n` +
+          `End IP: ${endIp}\n` +
+          `Total IPs: ${total}\n\n` +
+          ips.join("\n");
+
+        return;
+      }
+            if (slug === "cidr-to-ip-range") {
+        const text = input.value.trim();
+
+        if (!text) {
+          output.value = "Enter an IPv4 CIDR block like 192.168.1.0/24.";
+          return;
+        }
+
+        const isValidIp = (value: string): boolean => {
+          const parts = value.split(".");
+
+          return (
+            parts.length === 4 &&
+            parts.every((part: string) => /^\d+$/.test(part) && Number(part) >= 0 && Number(part) <= 255)
+          );
+        };
+
+        const ipToInt = (value: string): number =>
+          value.split(".").reduce((acc: number, part: string) => (acc << 8) + Number(part), 0) >>> 0;
+
+        const intToIp = (value: number): string =>
+          [
+            (value >>> 24) & 255,
+            (value >>> 16) & 255,
+            (value >>> 8) & 255,
+            value & 255
+          ].join(".");
+
+        const match = text.match(/^(\d{1,3}(?:\.\d{1,3}){3})\/(\d{1,2})$/);
+
+        if (!match) {
+          output.value = "Invalid CIDR block.";
+          return;
+        }
+
+        const baseIp = match[1];
+        const prefix = Number(match[2]);
+
+        if (!isValidIp(baseIp) || prefix < 0 || prefix > 32) {
+          output.value = "Invalid CIDR block.";
+          return;
+        }
+
+        const base = ipToInt(baseIp);
+        const mask = prefix === 0 ? 0 : (0xffffffff << (32 - prefix)) >>> 0;
+        const network = base & mask;
+        const broadcast = network | (~mask >>> 0);
+        const totalIps = prefix === 32 ? 1 : 2 ** (32 - prefix);
+        const firstUsable = prefix >= 31 ? network : network + 1;
+        const lastUsable = prefix >= 31 ? broadcast : broadcast - 1;
+
+        const lines = [
+          `CIDR: ${text}`,
+          `Network address: ${intToIp(network)}`,
+          `Broadcast address: ${intToIp(broadcast)}`,
+          `Subnet mask: ${intToIp(mask >>> 0)}`,
+          `Total IPs: ${totalIps}`,
+          `Usable host range: ${intToIp(firstUsable)} - ${intToIp(lastUsable)}`
+        ];
+
+        if (totalIps <= 256) {
+          const ips: string[] = [];
+
+          for (let current = network; current <= broadcast; current++) {
+            ips.push(intToIp(current));
+          }
+
+          lines.push("", "IP list:", ...ips);
+        }
+
+        output.value = lines.join("\n");
+        return;
+      }
+
+      if (slug === "ip-to-integer") {
+        const text = input.value.trim();
+
+        if (!text) {
+          output.value = "Enter an IPv4 address.";
+          return;
+        }
+
+        const isValidIp = (value: string): boolean => {
+          const parts = value.split(".");
+
+          return (
+            parts.length === 4 &&
+            parts.every((part: string) => /^\d+$/.test(part) && Number(part) >= 0 && Number(part) <= 255)
+          );
+        };
+
+        if (!isValidIp(text)) {
+          output.value = "Invalid IPv4 address.";
+          return;
+        }
+
+        const value = text.split(".").reduce((acc: number, part: string) => (acc << 8) + Number(part), 0) >>> 0;
+
+        output.value =
+          `IPv4: ${text}\n` +
+          `Integer: ${value}\n` +
+          `Hex: 0x${value.toString(16).toUpperCase().padStart(8, "0")}\n` +
+          `Binary: ${value.toString(2).padStart(32, "0")}`;
+
+        return;
+      }
+
+      if (slug === "integer-to-ip") {
+        const text = input.value.trim();
+
+        if (!text) {
+          output.value = "Enter an unsigned integer or hex value.";
+          return;
+        }
+
+        let value: number | null = null;
+
+        if (/^0x[0-9a-f]+$/i.test(text)) {
+          value = Number.parseInt(text, 16);
+        } else if (/^\d+$/.test(text)) {
+          value = Number(text);
+        }
+
+        if (
+          value === null ||
+          !Number.isFinite(value) ||
+          !Number.isInteger(value) ||
+          value < 0 ||
+          value > 4294967295
+        ) {
+          output.value = "Invalid integer value.";
+          return;
+        }
+
+        const ip = [
+          (value >>> 24) & 255,
+          (value >>> 16) & 255,
+          (value >>> 8) & 255,
+          value & 255
+        ].join(".");
+
+        output.value =
+          `Integer: ${value}\n` +
+          `IPv4: ${ip}\n` +
+          `Hex: 0x${value.toString(16).toUpperCase().padStart(8, "0")}\n` +
+          `Binary: ${value.toString(2).padStart(32, "0")}`;
+
+        return;
+      }
+
+      if (slug === "mac-address-lookup") {
+        const text = input.value.trim();
+
+        if (!text) {
+          output.value = "Enter a MAC address.";
+          return;
+        }
+
+        const cleaned = text.replace(/[^0-9a-f]/gi, "").toUpperCase();
+
+        if (!/^[0-9A-F]{12}$/.test(cleaned)) {
+          output.value = "Invalid MAC address.";
+          return;
+        }
+
+        const normalized = cleaned.match(/.{1,2}/g)?.join(":") ?? cleaned;
+        const oui = cleaned.slice(0, 6);
+        const firstByte = Number.parseInt(cleaned.slice(0, 2), 16);
+
+        const isBroadcast = cleaned === "FFFFFFFFFFFF";
+        const isZero = cleaned === "000000000000";
+        const isMulticast = !isBroadcast && Boolean(firstByte & 1);
+        const isLocallyAdministered = Boolean(firstByte & 2);
+
+        const vendorMap: Record<string, string> = {
+  "000C29": "VMware",
+  "005056": "VMware",
+  "001C14": "VMware",
+  "000569": "VMware",
+  "00163E": "Xen",
+  "0001C0": "Cisco",
+  "000142": "Cisco",
+  "0002FD": "Cisco",
+  "00155D": "Microsoft Hyper-V",
+  "F4CE46": "Apple",
+  "A4B197": "Apple",
+  "3C22FB": "Apple",
+  "BC926B": "Apple",
+  "F0DCE2": "Samsung",
+  "5C497D": "Samsung",
+  "FCFBFB": "Samsung",
+  "3C5282": "HP",
+  "B07B25": "HP",
+  "F8B156": "Dell",
+  "001B21": "Dell",
+  "E04F43": "Ubiquiti",
+  "24A43C": "Ubiquiti",
+  "4C5E0C": "TP-Link",
+  "50C7BF": "TP-Link",
+  "D8EC5E": "Huawei",
+  "64CC2E": "Xiaomi",
+  "48A9D2": "MikroTik",
+  "FCA667": "Amazon"
+};
+        const vendor = vendorMap[oui] ?? "Unknown or not in built-in OUI list";
+        const addressType = isBroadcast
+          ? "Broadcast"
+          : isMulticast
+            ? "Multicast"
+            : "Unicast";
+
+        output.value =
+          `Input: ${text}\n` +
+          `Normalized: ${normalized}\n` +
+          `OUI prefix: ${oui}\n` +
+          `Vendor: ${vendor}\n` +
+          `Address type: ${addressType}\n` +
+          `Locally administered: ${isLocallyAdministered ? "Yes" : "No"}\n` +
+          `Zero address: ${isZero ? "Yes" : "No"}\n` +
+          `Broadcast address: ${isBroadcast ? "Yes" : "No"}`;
+
+        return;
+      }
+
+      if (slug === "mac-address-generator") {
+        const text = input.value.trim();
+
+        const config: Record<string, string> = {
+          count: "1",
+          separator: ":",
+          uppercase: "true",
+          locallyAdministered: "true",
+          multicast: "false",
+          prefix: ""
+        };
+
+        if (text) {
+          try {
+            const parsed = JSON.parse(text);
+
+            if (typeof parsed === "object" && parsed !== null && !Array.isArray(parsed)) {
+              Object.entries(parsed as Record<string, unknown>).forEach(([key, value]) => {
+                config[key] = String(value);
+              });
+            } else {
+              output.value = "JSON input must be an object.";
+              return;
+            }
+          } catch {
+            const lines = text
+              .split(/\r?\n/)
+              .map((line: string) => line.trim())
+              .filter((line: string) => line.length > 0);
+
+            for (const line of lines) {
+              const separatorIndex = line.indexOf("=");
+
+              if (separatorIndex === -1) {
+                output.value = `Invalid line: ${line}`;
+                return;
+              }
+
+              const key = line.slice(0, separatorIndex).trim();
+              const value = line.slice(separatorIndex + 1).trim();
+
+              config[key] = value;
+            }
+          }
+        }
+
+        const count = Math.max(1, Math.min(100, Number.parseInt(config.count ?? "1", 10) || 1));
+        const separatorInput = (config.separator ?? ":").toLowerCase();
+        const separator =
+          separatorInput === "dash" || separatorInput === "-"
+            ? "-"
+            : separatorInput === "none"
+              ? ""
+              : ":";
+
+        const uppercase = /^(true|1|yes|on)$/i.test(config.uppercase ?? "true");
+        const locallyAdministered = /^(true|1|yes|on)$/i.test(config.locallyAdministered ?? "true");
+        const multicast = /^(true|1|yes|on)$/i.test(config.multicast ?? "false");
+
+        const prefixRaw = (config.prefix ?? "").replace(/[^0-9a-f]/gi, "").toUpperCase();
+
+        if (prefixRaw.length > 12 || prefixRaw.length % 2 !== 0) {
+          output.value = "Prefix must contain full bytes only, like 001A2B or 00:1A:2B.";
+          return;
+        }
+
+        const prefixBytes = prefixRaw.match(/.{1,2}/g)?.map((part: string) => Number.parseInt(part, 16)) ?? [];
+        const results: string[] = [];
+
+        const formatMac = (bytes: number[]): string => {
+          const parts = bytes.map((byte: number) =>
+            byte.toString(16).toUpperCase().padStart(2, "0")
+          );
+
+          const formatted = separator ? parts.join(separator) : parts.join("");
+          return uppercase ? formatted : formatted.toLowerCase();
+        };
+
+        for (let index = 0; index < count; index++) {
+          const bytes = [...prefixBytes];
+
+          while (bytes.length < 6) {
+            bytes.push(Math.floor(Math.random() * 256));
+          }
+
+          if (prefixBytes.length === 0) {
+            if (multicast) {
+              bytes[0] = bytes[0] | 1;
+            } else {
+              bytes[0] = bytes[0] & 0xfe;
+            }
+
+            if (locallyAdministered) {
+              bytes[0] = bytes[0] | 2;
+            } else {
+              bytes[0] = bytes[0] & 0xfd;
+            }
+          }
+
+          results.push(formatMac(bytes.slice(0, 6)));
+        }
+
+        output.value = results.join("\n");
+        return;
+      }
+            if (slug === "sha1-hash-generator") {
+        const text = input.value;
+
+        if (!text) {
+          output.value = "Enter text to hash.";
+          return;
+        }
+
+        const toHex = (buffer: ArrayBuffer): string =>
+          Array.from(new Uint8Array(buffer))
+            .map((b: number) => b.toString(16).padStart(2, "0"))
+            .join("");
+
+        const encoder = new TextEncoder();
+        const data = encoder.encode(text);
+
+        crypto.subtle
+          .digest("SHA-1", data)
+          .then((hash: ArrayBuffer) => {
+            output.value = toHex(hash);
+          })
+          .catch(() => {
+            output.value = "Unable to generate SHA-1 hash in this browser.";
+          });
+
+        return;
+      }
+
+      if (slug === "sha512-hash-generator") {
+        const text = input.value;
+
+        if (!text) {
+          output.value = "Enter text to hash.";
+          return;
+        }
+
+        const toHex = (buffer: ArrayBuffer): string =>
+          Array.from(new Uint8Array(buffer))
+            .map((b: number) => b.toString(16).padStart(2, "0"))
+            .join("");
+
+        const encoder = new TextEncoder();
+        const data = encoder.encode(text);
+
+        crypto.subtle
+          .digest("SHA-512", data)
+          .then((hash: ArrayBuffer) => {
+            output.value = toHex(hash);
+          })
+          .catch(() => {
+            output.value = "Unable to generate SHA-512 hash in this browser.";
+          });
+
+        return;
+      }
+
+      if (slug === "bcrypt-hash-generator") {
+        const text = input.value.trim();
+
+        if (!text) {
+          output.value = "Enter text to hash, or use JSON or key=value input with text and cost.";
+          return;
+        }
+
+        const config: Record<string, string> = {
+          text: "",
+          cost: "10"
+        };
+
+        const applyPlainTextFallback = (): void => {
+          config.text = text;
+        };
+
+        try {
+          const parsed = JSON.parse(text);
+
+          if (typeof parsed === "object" && parsed !== null && !Array.isArray(parsed)) {
+            Object.entries(parsed as Record<string, unknown>).forEach(([key, value]) => {
+              config[key] = String(value);
+            });
+          } else {
+            applyPlainTextFallback();
+          }
+        } catch {
+          if (text.includes("=") && text.split(/\r?\n/).every((line: string) => !line.trim() || line.includes("="))) {
+            const lines = text
+              .split(/\r?\n/)
+              .map((line: string) => line.trim())
+              .filter((line: string) => line.length > 0);
+
+            for (const line of lines) {
+              const separatorIndex = line.indexOf("=");
+
+              if (separatorIndex === -1) {
+                output.value = `Invalid line: ${line}`;
+                return;
+              }
+
+              const key = line.slice(0, separatorIndex).trim();
+              const value = line.slice(separatorIndex + 1).trim();
+
+              config[key] = value;
+            }
+          } else {
+            applyPlainTextFallback();
+          }
+        }
+
+        const plainText = (config.text || config.value || config.message || "").trim();
+        const cost = Math.max(4, Math.min(15, Number.parseInt(config.cost || "10", 10) || 10));
+
+        if (!plainText) {
+          output.value = "Enter text to hash.";
+          return;
+        }
+
+        output.value = "Generating bcrypt hash...";
+
+        import("bcryptjs")
+          .then((bcryptModule: any) => {
+            const bcrypt = bcryptModule.default ?? bcryptModule;
+            const salt = bcrypt.genSaltSync(cost);
+            const hash = bcrypt.hashSync(plainText, salt);
+
+            output.value =
+              `Text: ${plainText}\n` +
+              `Cost: ${cost}\n` +
+              `Salt: ${salt}\n` +
+              `Bcrypt: ${hash}`;
+          })
+          .catch(() => {
+            output.value = "Unable to generate bcrypt hash.";
+          });
+
+        return;
+      }
+
+      if (slug === "hmac-generator") {
+        const text = input.value.trim();
+
+        if (!text) {
+          output.value = "Enter JSON or key=value input with key and message.";
+          return;
+        }
+
+        const config: Record<string, string> = {
+          algorithm: "SHA-256",
+          key: "",
+          message: ""
+        };
+
+        try {
+          const parsed = JSON.parse(text);
+
+          if (typeof parsed === "object" && parsed !== null && !Array.isArray(parsed)) {
+            Object.entries(parsed as Record<string, unknown>).forEach(([key, value]) => {
+              config[key] = String(value);
+            });
+          } else {
+            output.value = "JSON input must be an object.";
+            return;
+          }
+        } catch {
+          const lines = text
+            .split(/\r?\n/)
+            .map((line: string) => line.trim())
+            .filter((line: string) => line.length > 0);
+
+          if (lines.every((line: string) => line.includes("="))) {
+            for (const line of lines) {
+              const separatorIndex = line.indexOf("=");
+
+              if (separatorIndex === -1) {
+                output.value = `Invalid line: ${line}`;
+                return;
+              }
+
+              const key = line.slice(0, separatorIndex).trim();
+              const value = line.slice(separatorIndex + 1).trim();
+
+              config[key] = value;
+            }
+          } else {
+            output.value = "Use JSON or key=value lines with key and message.";
+            return;
+          }
+        }
+
+        const keyText = (config.key || config.secret || "").trim();
+        const messageText = (config.message || config.text || config.value || "").trim();
+        const algorithmInput = (config.algorithm || "SHA-256").toUpperCase().replace(/\s+/g, "");
+        const algorithm =
+          algorithmInput === "SHA1" ? "SHA-1" :
+          algorithmInput === "SHA256" ? "SHA-256" :
+          algorithmInput === "SHA512" ? "SHA-512" :
+          algorithmInput;
+
+        if (!["SHA-1", "SHA-256", "SHA-512"].includes(algorithm)) {
+          output.value = "Unsupported algorithm. Use SHA-1, SHA-256, or SHA-512.";
+          return;
+        }
+
+        if (!keyText || !messageText) {
+          output.value = "Both key and message are required.";
+          return;
+        }
+
+        const encoder = new TextEncoder();
+
+        const toHex = (buffer: ArrayBuffer): string =>
+          Array.from(new Uint8Array(buffer))
+            .map((b: number) => b.toString(16).padStart(2, "0"))
+            .join("");
+
+        crypto.subtle
+          .importKey(
+            "raw",
+            encoder.encode(keyText),
+            { name: "HMAC", hash: { name: algorithm } },
+            false,
+            ["sign"]
+          )
+          .then((cryptoKey: CryptoKey) =>
+            crypto.subtle.sign("HMAC", cryptoKey, encoder.encode(messageText))
+          )
+          .then((signature: ArrayBuffer) => {
+            output.value =
+              `Algorithm: ${algorithm}\n` +
+              `Key: ${keyText}\n` +
+              `Message: ${messageText}\n` +
+              `HMAC: ${toHex(signature)}`;
+          })
+          .catch(() => {
+            output.value = "Unable to generate HMAC in this browser.";
+          });
+
+        return;
+      }
+
+      if (slug === "hex-encoder") {
+        const text = input.value;
+
+        if (!text) {
+          output.value = "Enter text to encode.";
+          return;
+        }
+
+        const bytes = new TextEncoder().encode(text);
+        const hex = Array.from(bytes)
+          .map((byte: number) => byte.toString(16).padStart(2, "0"))
+          .join("");
+
+        output.value =
+          `Hex: ${hex}\n` +
+          `Spaced: ${hex.match(/.{1,2}/g)?.join(" ") ?? ""}\n` +
+          `Length: ${bytes.length} byte(s)`;
+
+        return;
+      }
+            if (slug === "hex-decoder") {
+        const text = input.value.trim();
+
+        if (!text) {
+          output.value = "Enter hex to decode.";
+          return;
+        }
+
+        const cleaned = text.replace(/\s+/g, "").replace(/^0x/i, "");
+
+        if (!/^[0-9a-fA-F]+$/.test(cleaned)) {
+          output.value = "Invalid hex input.";
+          return;
+        }
+
+        if (cleaned.length % 2 !== 0) {
+          output.value = "Hex input must have an even number of characters.";
+          return;
+        }
+
+        try {
+          const bytes = new Uint8Array(
+            cleaned.match(/.{1,2}/g)?.map((pair: string) => Number.parseInt(pair, 16)) ?? []
+          );
+
+          output.value = new TextDecoder().decode(bytes);
+        } catch {
+          output.value = "Unable to decode hex as UTF-8 text.";
+        }
+
+        return;
+      }
+
+      if (slug === "base16-encode") {
+        const text = input.value;
+
+        if (!text) {
+          output.value = "Enter text to encode.";
+          return;
+        }
+
+        const bytes = new TextEncoder().encode(text);
+        const encoded = Array.from(bytes)
+          .map((byte: number) => byte.toString(16).toUpperCase().padStart(2, "0"))
+          .join("");
+
+        output.value =
+          `Base16: ${encoded}\n` +
+          `Spaced: ${encoded.match(/.{1,2}/g)?.join(" ") ?? ""}\n` +
+          `Length: ${bytes.length} byte(s)`;
+
+        return;
+      }
+
+      if (slug === "base16-decode") {
+        const text = input.value.trim();
+
+        if (!text) {
+          output.value = "Enter Base16 to decode.";
+          return;
+        }
+
+        const cleaned = text.replace(/\s+/g, "").replace(/^0x/i, "");
+
+        if (!/^[0-9a-fA-F]+$/.test(cleaned)) {
+          output.value = "Invalid Base16 input.";
+          return;
+        }
+
+        if (cleaned.length % 2 !== 0) {
+          output.value = "Base16 input must have an even number of characters.";
+          return;
+        }
+
+        try {
+          const bytes = new Uint8Array(
+            cleaned.match(/.{1,2}/g)?.map((pair: string) => Number.parseInt(pair, 16)) ?? []
+          );
+
+          output.value = new TextDecoder().decode(bytes);
+        } catch {
+          output.value = "Unable to decode Base16 as UTF-8 text.";
+        }
+
+        return;
+      }
+
+      if (slug === "base85-encode") {
+        const text = input.value;
+
+        if (!text) {
+          output.value = "Enter text to encode.";
+          return;
+        }
+
+        const bytes = new TextEncoder().encode(text);
+
+        const encodeAscii85 = (inputBytes: Uint8Array): string => {
+          let result = "";
+
+          for (let index = 0; index < inputBytes.length; index += 4) {
+            const chunk = inputBytes.slice(index, index + 4);
+            const padding = 4 - chunk.length;
+            const padded = new Uint8Array(4);
+            padded.set(chunk);
+
+            let value =
+              ((padded[0] << 24) >>> 0) +
+              ((padded[1] << 16) >>> 0) +
+              ((padded[2] << 8) >>> 0) +
+              (padded[3] >>> 0);
+
+            if (chunk.length === 4 && value === 0) {
+              result += "z";
+              continue;
+            }
+
+            const chars = new Array<string>(5);
+
+            for (let position = 4; position >= 0; position--) {
+              chars[position] = String.fromCharCode((value % 85) + 33);
+              value = Math.floor(value / 85);
+            }
+
+            result += chars.slice(0, 5 - padding).join("");
+          }
+
+          return result;
+        };
+
+        const encoded = encodeAscii85(bytes);
+
+        output.value =
+          `Base85: ${encoded}\n` +
+          `Wrapped: <~${encoded}~>\n` +
+          `Length: ${bytes.length} byte(s)`;
+
+        return;
+      }
+
+      if (slug === "base85-decode") {
+        const text = input.value.trim();
+
+        if (!text) {
+          output.value = "Enter Base85 to decode.";
+          return;
+        }
+
+        const decodeAscii85 = (value: string): Uint8Array => {
+          const normalized = value
+            .replace(/^<~/, "")
+            .replace(/~>$/, "")
+            .replace(/\s+/g, "");
+
+          const output: number[] = [];
+          let group: string[] = [];
+
+          const flushGroup = (isFinalGroup = false): void => {
+            if (group.length === 0) {
+              return;
+            }
+
+            const originalLength = group.length;
+
+            while (group.length < 5) {
+              group.push("u");
+            }
+
+            let total = 0;
+
+            for (const char of group) {
+              const code = char.charCodeAt(0);
+
+              if (code < 33 || code > 117) {
+                throw new Error("Invalid Base85 character.");
+              }
+
+              total = total * 85 + (code - 33);
+            }
+
+            const chunk = [
+              (total >>> 24) & 255,
+              (total >>> 16) & 255,
+              (total >>> 8) & 255,
+              total & 255
+            ];
+
+            const bytesToTake = isFinalGroup ? Math.max(0, originalLength - 1) : 4;
+            output.push(...chunk.slice(0, bytesToTake));
+            group = [];
+          };
+
+          for (const char of normalized) {
+            if (char === "z") {
+              if (group.length !== 0) {
+                throw new Error("Invalid z position in Base85 input.");
+              }
+
+              output.push(0, 0, 0, 0);
+              continue;
+            }
+
+            group.push(char);
+
+            if (group.length === 5) {
+              flushGroup(false);
+            }
+          }
+
+          if (group.length === 1) {
+            throw new Error("Invalid final Base85 group.");
+          }
+
+          if (group.length > 1) {
+            flushGroup(true);
+          }
+
+          return new Uint8Array(output);
+        };
+
+        try {
+          const bytes = decodeAscii85(text);
+          output.value = new TextDecoder().decode(bytes);
+        } catch {
+          output.value = "Invalid Base85 input.";
+        }
+
+        return;
+      }
+            if (slug === "url-safe-base64-decoder") {
+        const text = input.value.trim();
+
+        if (!text) {
+          output.value = "Enter URL-safe Base64 to decode.";
+          return;
+        }
+
+        try {
+          const normalized = text
+            .replace(/\s+/g, "")
+            .replace(/-/g, "+")
+            .replace(/_/g, "/");
+
+          const padded = normalized + "=".repeat((4 - (normalized.length % 4)) % 4);
+          const binary = atob(padded);
+          const bytes = Uint8Array.from(binary, (char: string) => char.charCodeAt(0));
+
+          output.value = new TextDecoder().decode(bytes);
+        } catch {
+          output.value = "Invalid URL-safe Base64 input.";
+        }
+
+        return;
+      }
+
+      if (slug === "regex-generator") {
+        const text = input.value.trim();
+
+        if (!text) {
+          output.value = "Enter a regex type, JSON, or key=value settings.";
+          return;
+        }
+
+        const config: Record<string, string> = {
+          type: "",
+          flags: "",
+          anchored: "true",
+          capture: "false",
+          min: "3",
+          max: "20"
+        };
+
+        try {
+          const parsed = JSON.parse(text);
+
+          if (typeof parsed === "object" && parsed !== null && !Array.isArray(parsed)) {
+            Object.entries(parsed as Record<string, unknown>).forEach(([key, value]) => {
+              config[key] = String(value);
+            });
+          } else {
+            config.type = text;
+          }
+        } catch {
+          if (text.includes("=")) {
+            const lines = text
+              .split(/\r?\n/)
+              .map((line: string) => line.trim())
+              .filter((line: string) => line.length > 0);
+
+            for (const line of lines) {
+              const separatorIndex = line.indexOf("=");
+
+              if (separatorIndex === -1) {
+                output.value = `Invalid line: ${line}`;
+                return;
+              }
+
+              const key = line.slice(0, separatorIndex).trim();
+              const value = line.slice(separatorIndex + 1).trim();
+
+              config[key] = value;
+            }
+          } else {
+            config.type = text;
+          }
+        }
+
+        const type = (config.type || "").replace(/[\s_-]/g, "").toLowerCase();
+        const anchored = /^(true|1|yes|on)$/i.test(config.anchored ?? "true");
+        const capture = /^(true|1|yes|on)$/i.test(config.capture ?? "false");
+        const min = Math.max(1, Number.parseInt(config.min || "3", 10) || 3);
+        const max = Math.max(min, Number.parseInt(config.max || "20", 10) || 20);
+
+        let body = "";
+
+        switch (type) {
+          case "email":
+            body = "[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}";
+            break;
+          case "url":
+            body = "https?:\\/\\/(?:[\\w-]+\\.)+[\\w-]+(?:[\\/?#][^\\s]*)?";
+            break;
+          case "ipv4":
+            body = "(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(?:\\.(?:25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}";
+            break;
+          case "slug":
+            body = "[a-z0-9]+(?:-[a-z0-9]+)*";
+            break;
+          case "uuid":
+            body = "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}";
+            break;
+          case "hexcolor":
+          case "color":
+            body = "#?(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})";
+            break;
+          case "integer":
+            body = "-?\\d+";
+            break;
+          case "number":
+            body = "-?(?:\\d+|\\d*\\.\\d+)";
+            break;
+          case "username":
+            body = `[A-Za-z0-9_]{${min},${max}}`;
+            break;
+          case "date":
+          case "dateiso":
+            body = "\\d{4}-\\d{2}-\\d{2}";
+            break;
+          case "phone":
+            body = "\\+?[0-9()\\-\\s]{7,20}";
+            break;
+          case "password":
+          case "strongpassword":
+            body = "(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}";
+            break;
+          default:
+            output.value =
+              "Unsupported type.\n\nSupported types:\n" +
+              "email\nurl\nipv4\nslug\nuuid\nhexcolor\ninteger\nnumber\nusername\ndate\nphone\npassword";
+            return;
+        }
+
+        if (capture) {
+          body = `(${body})`;
+        }
+
+        const pattern = anchored ? `^${body}$` : body;
+        const flags = (config.flags || "").trim();
+
+        output.value =
+          `Type: ${config.type || type}\n` +
+          `Regex: ${pattern}\n` +
+          `Flags: ${flags || "none"}`;
+
+        return;
+      }
+
+      if (slug === "regex-escape") {
+        const text = input.value;
+
+        if (!text) {
+          output.value = "Enter text to escape.";
+          return;
+        }
+
+        output.value = text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+        return;
+      }
+
+      if (slug === "regex-match-extractor") {
+        const text = input.value.trim();
+
+        if (!text) {
+          output.value = "Enter JSON or key=value input with pattern, flags, and text.";
+          return;
+        }
+
+        let pattern = "";
+        let flags = "";
+        let sourceText = "";
+
+        try {
+          const parsed = JSON.parse(text);
+
+          if (typeof parsed === "object" && parsed !== null && !Array.isArray(parsed)) {
+            pattern = String((parsed as Record<string, unknown>).pattern ?? "");
+            flags = String((parsed as Record<string, unknown>).flags ?? "");
+            sourceText = String((parsed as Record<string, unknown>).text ?? "");
+          } else {
+            output.value = "JSON input must be an object.";
+            return;
+          }
+        } catch {
+          const blockParts = text.split(/\n---+\n/);
+
+          if (blockParts.length === 2) {
+            const headerLines = blockParts[0]
+              .split(/\r?\n/)
+              .map((line: string) => line.trim())
+              .filter((line: string) => line.length > 0);
+
+            for (const line of headerLines) {
+              const separatorIndex = line.indexOf("=");
+
+              if (separatorIndex === -1) {
+                output.value = `Invalid line: ${line}`;
+                return;
+              }
+
+              const key = line.slice(0, separatorIndex).trim();
+              const value = line.slice(separatorIndex + 1).trim();
+
+              if (key === "pattern") pattern = value;
+              if (key === "flags") flags = value;
+              if (key === "text") sourceText = value;
+            }
+
+            if (!sourceText) {
+              sourceText = blockParts[1];
+            }
+          } else {
+            const lines = text
+              .split(/\r?\n/)
+              .map((line: string) => line.trim())
+              .filter((line: string) => line.length > 0);
+
+            for (const line of lines) {
+              const separatorIndex = line.indexOf("=");
+
+              if (separatorIndex === -1) {
+                output.value = `Invalid line: ${line}`;
+                return;
+              }
+
+              const key = line.slice(0, separatorIndex).trim();
+              const value = line.slice(separatorIndex + 1).trim();
+
+              if (key === "pattern") pattern = value;
+              if (key === "flags") flags = value;
+              if (key === "text") sourceText = value;
+            }
+          }
+        }
+
+        if (!pattern || sourceText === "") {
+          output.value = "Both pattern and text are required.";
+          return;
+        }
+
+        const literalMatch = pattern.match(/^\/([\s\S]*)\/([dgimsuvy]*)$/);
+
+        if (literalMatch) {
+          pattern = literalMatch[1];
+          if (!flags) {
+            flags = literalMatch[2];
+          }
+        }
+
+        try {
+          const effectiveFlags = Array.from(new Set((flags + "g").split(""))).join("");
+          const regex = new RegExp(pattern, effectiveFlags);
+          const matches: Array<Record<string, unknown>> = [];
+          let match: RegExpExecArray | null;
+
+          while ((match = regex.exec(sourceText)) !== null) {
+            const item: Record<string, unknown> = {
+              match: match[0],
+              index: match.index,
+              groups: match.slice(1)
+            };
+
+            if (match.groups && Object.keys(match.groups).length > 0) {
+              item.namedGroups = match.groups;
+            }
+
+            matches.push(item);
+
+            if (match[0] === "") {
+              regex.lastIndex++;
+            }
+
+            if (matches.length >= 1000) {
+              break;
+            }
+          }
+
+          output.value = JSON.stringify(
+            {
+              pattern,
+              flags: effectiveFlags,
+              count: matches.length,
+              matches
+            },
+            null,
+            2
+          );
+        } catch {
+          output.value = "Invalid regex pattern or flags.";
+        }
+
+        return;
+      }
+
+      if (slug === "lorem-ipsum-generator") {
+        const text = input.value.trim();
+
+        const config: Record<string, string> = {
+          unit: "paragraphs",
+          count: "1",
+          startWithLorem: "true"
+        };
+
+        if (text) {
+          try {
+            const parsed = JSON.parse(text);
+
+            if (typeof parsed === "object" && parsed !== null && !Array.isArray(parsed)) {
+              Object.entries(parsed as Record<string, unknown>).forEach(([key, value]) => {
+                config[key] = String(value);
+              });
+            } else {
+              output.value = "JSON input must be an object.";
+              return;
+            }
+          } catch {
+            const lines = text
+              .split(/\r?\n/)
+              .map((line: string) => line.trim())
+              .filter((line: string) => line.length > 0);
+
+            for (const line of lines) {
+              const separatorIndex = line.indexOf("=");
+
+              if (separatorIndex === -1) {
+                output.value = `Invalid line: ${line}`;
+                return;
+              }
+
+              const key = line.slice(0, separatorIndex).trim();
+              const value = line.slice(separatorIndex + 1).trim();
+
+              config[key] = value;
+            }
+          }
+        }
+
+        const unit = (config.unit || "paragraphs").trim().toLowerCase();
+        const count = Math.max(1, Math.min(100, Number.parseInt(config.count || "1", 10) || 1));
+        const startWithLorem = /^(true|1|yes|on)$/i.test(config.startWithLorem ?? "true");
+
+        const loremWords = [
+          "lorem", "ipsum", "dolor", "sit", "amet", "consectetur", "adipiscing", "elit",
+          "sed", "do", "eiusmod", "tempor", "incididunt", "ut", "labore", "et", "dolore",
+          "magna", "aliqua", "ut", "enim", "ad", "minim", "veniam", "quis", "nostrud",
+          "exercitation", "ullamco", "laboris", "nisi", "ut", "aliquip", "ex", "ea",
+          "commodo", "consequat"
+        ];
+
+        const loremSentences = [
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+          "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+          "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+          "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+          "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        ];
+
+        const wordOffset = startWithLorem ? 0 : 2;
+        const sentenceOffset = startWithLorem ? 0 : 1;
+
+        const generateWords = (wordCount: number): string => {
+          const words = Array.from({ length: wordCount }, (_, index: number) => {
+            return loremWords[(index + wordOffset) % loremWords.length];
+          });
+
+          const result = words.join(" ");
+          return result.charAt(0).toUpperCase() + result.slice(1);
+        };
+
+        const generateSentences = (sentenceCount: number): string => {
+          return Array.from({ length: sentenceCount }, (_, index: number) => {
+            return loremSentences[(index + sentenceOffset) % loremSentences.length];
+          }).join(" ");
+        };
+
+        const generateParagraphs = (paragraphCount: number): string => {
+          return Array.from({ length: paragraphCount }, (_, paragraphIndex: number) => {
+            const base = (paragraphIndex * 3 + sentenceOffset) % loremSentences.length;
+
+            return [
+              loremSentences[base % loremSentences.length],
+              loremSentences[(base + 1) % loremSentences.length],
+              loremSentences[(base + 2) % loremSentences.length]
+            ].join(" ");
+          }).join("\n\n");
+        };
+
+        if (unit === "word" || unit === "words") {
+          output.value = generateWords(count);
+          return;
+        }
+
+        if (unit === "sentence" || unit === "sentences") {
+          output.value = generateSentences(count);
+          return;
+        }
+
+        if (unit === "paragraph" || unit === "paragraphs") {
+          output.value = generateParagraphs(count);
+          return;
+        }
+
+        output.value = "Unsupported unit. Use words, sentences, or paragraphs.";
+        return;
+      }
+            if (slug === "api-request-body-formatter") {
+        const text = input.value.trim();
+
+        if (!text) {
+          output.value = "Enter a request body to format.";
+          return;
+        }
+
+        const assignNestedValue = (
+          target: Record<string, unknown>,
+          path: string[],
+          value: unknown
+        ): void => {
+          let current: Record<string, unknown> = target;
+
+          path.forEach((part: string, index: number) => {
+            const isLast = index === path.length - 1;
+
+            if (isLast) {
+              if (Object.prototype.hasOwnProperty.call(current, part)) {
+                const existing = current[part];
+                current[part] = Array.isArray(existing) ? [...existing, value] : [existing, value];
+              } else {
+                current[part] = value;
+              }
+
+              return;
+            }
+
+            if (
+              !Object.prototype.hasOwnProperty.call(current, part) ||
+              typeof current[part] !== "object" ||
+              current[part] === null ||
+              Array.isArray(current[part])
+            ) {
+              current[part] = {};
+            }
+
+            current = current[part] as Record<string, unknown>;
+          });
+        };
+
+        const parseScalar = (value: string): unknown => {
+          const trimmed = value.trim();
+
+          if (trimmed === "") {
+            return "";
+          }
+
+          if (/^(true|false)$/i.test(trimmed)) {
+            return trimmed.toLowerCase() === "true";
+          }
+
+          if (/^null$/i.test(trimmed)) {
+            return null;
+          }
+
+          if (/^-?\d+(\.\d+)?$/.test(trimmed)) {
+            return Number(trimmed);
+          }
+
+          if (
+            (trimmed.startsWith("{") && trimmed.endsWith("}")) ||
+            (trimmed.startsWith("[") && trimmed.endsWith("]"))
+          ) {
+            try {
+              return JSON.parse(trimmed);
+            } catch {
+            }
+          }
+
+          return trimmed;
+        };
+
+        try {
+          const parsed = JSON.parse(text);
+          output.value = JSON.stringify(parsed, null, 2);
+          return;
+        } catch {
+        }
+
+        const normalized = text.replace(/\r\n/g, "\n");
+
+        if (/^[^=\n&]+=[^]*$/.test(normalized) && (normalized.includes("&") || !normalized.includes("\n"))) {
+          const params = new URLSearchParams(normalized);
+          const result: Record<string, unknown> = {};
+
+          for (const [key, value] of params.entries()) {
+            assignNestedValue(
+              result,
+              key.split(".").map((part: string) => part.trim()).filter(Boolean),
+              parseScalar(value)
+            );
+          }
+
+          output.value = JSON.stringify(result, null, 2);
+          return;
+        }
+
+        const lines = normalized
+          .split("\n")
+          .map((line: string) => line.trim())
+          .filter((line: string) => line.length > 0);
+
+        if (lines.every((line: string) => line.includes("="))) {
+          const result: Record<string, unknown> = {};
+
+          for (const line of lines) {
+            const separatorIndex = line.indexOf("=");
+
+            if (separatorIndex === -1) {
+              output.value = `Invalid line: ${line}`;
+              return;
+            }
+
+            const key = line.slice(0, separatorIndex).trim();
+            const value = line.slice(separatorIndex + 1).trim();
+
+            if (!key) {
+              output.value = `Invalid line: ${line}`;
+              return;
+            }
+
+            assignNestedValue(
+              result,
+              key.split(".").map((part: string) => part.trim()).filter(Boolean),
+              parseScalar(value)
+            );
+          }
+
+          output.value = JSON.stringify(result, null, 2);
+          return;
+        }
+
+        output.value = normalized
+          .split("\n")
+          .map((line: string) => line.trimEnd())
+          .join("\n")
+          .trim();
+
+        return;
+      }
+
+      if (slug === "json-diff-checker") {
+        const text = input.value.trim();
+
+        if (!text) {
+          output.value = "Enter two JSON values to compare.";
+          return;
+        }
+
+        let leftRaw = "";
+        let rightRaw = "";
+
+        try {
+          const parsed = JSON.parse(text);
+
+          if (typeof parsed === "object" && parsed !== null && !Array.isArray(parsed)) {
+            leftRaw = JSON.stringify((parsed as Record<string, unknown>).left ?? null);
+            rightRaw = JSON.stringify((parsed as Record<string, unknown>).right ?? null);
+          } else {
+            output.value = "JSON input must be an object with left and right fields.";
+            return;
+          }
+        } catch {
+          const parts = text.split(/\n---+\n/);
+
+          if (parts.length !== 2) {
+            output.value = 'Use JSON with "left" and "right", or separate the two JSON blocks with ---';
+            return;
+          }
+
+          leftRaw = parts[0].trim();
+          rightRaw = parts[1].trim();
+        }
+
+        let leftValue: unknown;
+        let rightValue: unknown;
+
+        try {
+          leftValue = JSON.parse(leftRaw);
+          rightValue = JSON.parse(rightRaw);
+        } catch {
+          output.value = "Invalid JSON input.";
+          return;
+        }
+
+        const diffs: Array<Record<string, unknown>> = [];
+
+        const getType = (value: unknown): string => {
+          if (Array.isArray(value)) {
+            return "array";
+          }
+
+          if (value === null) {
+            return "null";
+          }
+
+          return typeof value;
+        };
+
+        const compare = (left: unknown, right: unknown, path: string): void => {
+          const leftType = getType(left);
+          const rightType = getType(right);
+
+          if (leftType !== rightType) {
+            diffs.push({
+              type: "type-changed",
+              path: path || "$",
+              leftType,
+              rightType,
+              left,
+              right
+            });
+            return;
+          }
+
+          if (Array.isArray(left) && Array.isArray(right)) {
+            const maxLength = Math.max(left.length, right.length);
+
+            for (let index = 0; index < maxLength; index++) {
+              const nextPath = `${path || "$"}[${index}]`;
+
+              if (index >= left.length) {
+                diffs.push({
+                  type: "added",
+                  path: nextPath,
+                  right: right[index]
+                });
+                continue;
+              }
+
+              if (index >= right.length) {
+                diffs.push({
+                  type: "removed",
+                  path: nextPath,
+                  left: left[index]
+                });
+                continue;
+              }
+
+              compare(left[index], right[index], nextPath);
+            }
+
+            return;
+          }
+
+          if (
+            typeof left === "object" &&
+            left !== null &&
+            typeof right === "object" &&
+            right !== null
+          ) {
+            const keys = Array.from(
+              new Set([
+                ...Object.keys(left as Record<string, unknown>),
+                ...Object.keys(right as Record<string, unknown>)
+              ])
+            ).sort();
+
+            for (const key of keys) {
+              const nextPath = path ? `${path}.${key}` : `$.${key}`;
+              const leftObject = left as Record<string, unknown>;
+              const rightObject = right as Record<string, unknown>;
+
+              if (!Object.prototype.hasOwnProperty.call(leftObject, key)) {
+                diffs.push({
+                  type: "added",
+                  path: nextPath,
+                  right: rightObject[key]
+                });
+                continue;
+              }
+
+              if (!Object.prototype.hasOwnProperty.call(rightObject, key)) {
+                diffs.push({
+                  type: "removed",
+                  path: nextPath,
+                  left: leftObject[key]
+                });
+                continue;
+              }
+
+              compare(leftObject[key], rightObject[key], nextPath);
+            }
+
+            return;
+          }
+
+          if (left !== right) {
+            diffs.push({
+              type: "changed",
+              path: path || "$",
+              left,
+              right
+            });
+          }
+        };
+
+        compare(leftValue, rightValue, "$");
+
+        output.value = JSON.stringify(
+          {
+            equal: diffs.length === 0,
+            diffCount: diffs.length,
+            diffs
+          },
+          null,
+          2
+        );
+
+        return;
+      }
+
+      if (slug === "text-diff-checker") {
+        const text = input.value.trim();
+
+        if (!text) {
+          output.value = "Enter two text blocks to compare.";
+          return;
+        }
+
+        let leftText = "";
+        let rightText = "";
+
+        try {
+          const parsed = JSON.parse(text);
+
+          if (typeof parsed === "object" && parsed !== null && !Array.isArray(parsed)) {
+            leftText = String((parsed as Record<string, unknown>).left ?? "");
+            rightText = String((parsed as Record<string, unknown>).right ?? "");
+          } else {
+            output.value = "JSON input must be an object with left and right fields.";
+            return;
+          }
+        } catch {
+          const parts = text.split(/\n---+\n/);
+
+          if (parts.length !== 2) {
+            output.value = 'Use JSON with "left" and "right", or separate the two text blocks with ---';
+            return;
+          }
+
+          leftText = parts[0];
+          rightText = parts[1];
+        }
+
+        const leftLines = leftText.replace(/\r\n/g, "\n").split("\n");
+        const rightLines = rightText.replace(/\r\n/g, "\n").split("\n");
+        const maxLength = Math.max(leftLines.length, rightLines.length);
+
+        const diffs: Array<Record<string, unknown>> = [];
+        let added = 0;
+        let removed = 0;
+        let changed = 0;
+        let unchanged = 0;
+
+        for (let index = 0; index < maxLength; index++) {
+          const leftLine = leftLines[index];
+          const rightLine = rightLines[index];
+          const lineNumber = index + 1;
+
+          if (leftLine === undefined) {
+            added++;
+            diffs.push({
+              type: "added",
+              line: lineNumber,
+              right: rightLine
+            });
+            continue;
+          }
+
+          if (rightLine === undefined) {
+            removed++;
+            diffs.push({
+              type: "removed",
+              line: lineNumber,
+              left: leftLine
+            });
+            continue;
+          }
+
+          if (leftLine === rightLine) {
+            unchanged++;
+            diffs.push({
+              type: "equal",
+              line: lineNumber,
+              text: leftLine
+            });
+            continue;
+          }
+
+          changed++;
+          diffs.push({
+            type: "changed",
+            line: lineNumber,
+            left: leftLine,
+            right: rightLine
+          });
+        }
+
+        output.value = JSON.stringify(
+          {
+            equal: added === 0 && removed === 0 && changed === 0,
+            summary: {
+              leftLines: leftLines.length,
+              rightLines: rightLines.length,
+              unchanged,
+              changed,
+              added,
+              removed
+            },
+            diffs
+          },
+          null,
+          2
+        );
+
+        return;
+      }
 
       output.value = "This tool logic is not connected yet.";
     });
@@ -3525,13 +8315,9 @@ if (slug === "ns-record-lookup") {
     });
 
     clearBtn?.addEventListener("click", () => {
-      if (input) {
-        input.value = "";
-      }
-
-      if (output) {
-        output.value = "";
-      }
+      if (!input || !output) return;
+      input.value = "";
+      output.value = "";
     });
 
     copyResultBtn?.addEventListener("click", async () => {
@@ -3546,7 +8332,7 @@ if (slug === "ns-record-lookup") {
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
-      link.download = `${window.location.pathname.split("/").filter(Boolean).pop() || "tool-output"}.txt`;
+      link.download = `${window.location.pathname.split("/").pop() || "tool-output"}.txt`;
       document.body.appendChild(link);
       link.click();
       link.remove();
