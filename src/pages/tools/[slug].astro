@@ -80,10 +80,10 @@ function formatCategoryLabel(category: string): string {
         )}
 
         <div class="button-row">
-          <button type="button" class="primary-button">Run Tool</button>
-          <button type="button" class="secondary-button">Copy Input</button>
-          <button type="button" class="secondary-button">Clear</button>
-        </div>
+  <button type="button" id="run-tool-btn" class="primary-button">Run Tool</button>
+  <button type="button" id="copy-input-btn" class="secondary-button">Copy Input</button>
+  <button type="button" id="clear-btn" class="secondary-button">Clear</button>
+</div>
       </div>
 
       <div class="tool-column">
@@ -97,10 +97,9 @@ function formatCategoryLabel(category: string): string {
         ></textarea>
 
         <div class="button-row">
-          <button type="button" class="secondary-button">Copy Result</button>
-          <button type="button" class="secondary-button">Download</button>
-        </div>
-      </div>
+  <button type="button" id="copy-result-btn" class="secondary-button">Copy Result</button>
+  <button type="button" id="download-btn" class="secondary-button">Download</button>
+</div>
     </div>
   </section>
 
@@ -130,14 +129,6 @@ function formatCategoryLabel(category: string): string {
       <li>Review the output and copy the result if needed.</li>
     </ul>
   </section>
-
-  <section class="card">
-  <h2>About this tool</h2>
-  <p>{tool.description}</p>
-  <p>
-    This {tool.name.toLowerCase()} helps you complete common tasks quickly in the browser without installing anything.
-  </p>
-</section>
 
   <section class="card">
     <h2>FAQ</h2>
