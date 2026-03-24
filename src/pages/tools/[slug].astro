@@ -8305,6 +8305,134 @@ if (slug === "toml-to-json") {
 
         return;
       }
+            if (slug === "whois-lookup") {
+        const value = input.value.trim();
+
+        if (!value) {
+          output.value = "Enter a domain name";
+          return;
+        }
+
+        let domain = value
+          .replace(/^https?:\/\//i, "")
+          .replace(/^www\./i, "")
+          .split("/")[0]
+          .trim();
+
+        if (!domain) {
+          output.value = "Enter a valid domain name";
+          return;
+        }
+
+        output.value = "Checking WHOIS...";
+
+        fetch(`https://api.whois.vu/?q=${encodeURIComponent(domain)}`)
+          .then((response: Response) => response.json())
+          .then((data: any) => {
+            if (!data || data.error) {
+              output.value = "WHOIS lookup failed";
+              return;
+            }
+
+            const result = {
+              domain,
+              registrar: data.registrar ?? null,
+              created: data.created ?? null,
+              expires: data.expires ?? null,
+              updated: data.changed ?? data.updated ?? null,
+              nameservers: data.nameservers ?? [],
+              status: data.status ?? [],
+              whoisServer: data.whoisserver ?? null
+            };
+
+            output.value = JSON.stringify(result, null, 2);
+          })
+          .catch(() => {
+            output.value = "WHOIS lookup failed";
+          });
+
+        return;
+      }
+
+      if (slug === "txt-lookup") {
+        const value = input.value.trim();
+
+        if (!value) {
+          output.value = "Enter a domain name";
+          return;
+        }
+
+        let domain = value
+          .replace(/^https?:\/\//i, "")
+          .replace(/^www\./i, "")
+          .split("/")[0]
+          .trim();
+
+        if (!domain) {
+          output.value = "Enter a valid domain name";
+          return;
+        }
+
+        output.value = "Checking TXT records...";
+
+        fetch(`https://dns.google/resolve?name=${encodeURIComponent(domain)}&type=TXT`)
+          .then((response: Response) => response.json())
+          .then((data: any) => {
+            const answers = Array.isArray(data.Answer)
+              ? data.Answer.map((item: any) => item.data)
+              : [];
+
+            output.value =
+              answers.length > 0
+                ? answers.join("\n")
+                : "No TXT records found";
+          })
+          .catch(() => {
+            output.value = "TXT lookup failed";
+          });
+
+        return;
+      }
+
+      if (slug === "cname-lookup") {
+        const value = input.value.trim();
+
+        if (!value) {
+          output.value = "Enter a domain or subdomain";
+          return;
+        }
+
+        let domain = value
+          .replace(/^https?:\/\//i, "")
+          .replace(/^www\./i, "")
+          .split("/")[0]
+          .trim();
+
+        if (!domain) {
+          output.value = "Enter a valid domain or subdomain";
+          return;
+        }
+
+        output.value = "Checking CNAME records...";
+
+        fetch(`https://dns.google/resolve?name=${encodeURIComponent(domain)}&type=CNAME`)
+          .then((response: Response) => response.json())
+          .then((data: any) => {
+            const answers = Array.isArray(data.Answer)
+              ? data.Answer.map((item: any) => item.data)
+              : [];
+
+            output.value =
+              answers.length > 0
+                ? answers.join("\n")
+                : "No CNAME records found";
+          })
+          .catch(() => {
+            output.value = "CNAME lookup failed";
+          });
+
+        return;
+      }
 
       output.value = "This tool logic is not connected yet.";
     });

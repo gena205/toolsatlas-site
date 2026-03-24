@@ -5585,6 +5585,66 @@
     }
   ],
   "related": ["json-diff-checker", "remove-line-breaks", "text-compare"]
+},
+{
+  "id": "whois-lookup",
+  "name": "WHOIS Lookup",
+  "slug": "whois-lookup",
+  "category": "network-tools",
+  "intro": "Look up domain WHOIS information quickly in the browser.",
+  "description": "Check WHOIS details for a domain, including registrar, creation date, expiration date, updated date, nameservers, and status data when available. Useful for domain research, troubleshooting, and verification.",
+  "keywords": ["whois lookup", "domain whois lookup", "check whois"],
+  "faq": [
+    {
+      "q": "What does WHOIS Lookup return?",
+      "a": "It returns common WHOIS fields such as registrar, creation date, expiration date, updated date, nameservers, and status information when available."
+    },
+    {
+      "q": "Who is this useful for?",
+      "a": "It is useful for domain owners, SEO work, troubleshooting, and checking registration details."
+    }
+  ],
+  "related": ["dns-record-checker", "ns-record-lookup", "txt-lookup"]
+},
+{
+  "id": "txt-lookup",
+  "name": "TXT Lookup",
+  "slug": "txt-lookup",
+  "category": "network-tools",
+  "intro": "Check TXT DNS records for a domain quickly.",
+  "description": "Look up TXT DNS records such as SPF, verification strings, and other text-based DNS entries. Useful for mail setup, domain verification, and DNS troubleshooting.",
+  "keywords": ["txt lookup", "txt record lookup", "dns txt lookup"],
+  "faq": [
+    {
+      "q": "What does TXT Lookup check?",
+      "a": "It checks TXT DNS records such as SPF entries, verification records, and other text values stored in DNS."
+    },
+    {
+      "q": "What input should I use?",
+      "a": "Enter a domain name directly, such as example.com."
+    }
+  ],
+  "related": ["mx-record-lookup", "cname-lookup", "dns-record-checker"]
+},
+{
+  "id": "cname-lookup",
+  "name": "CNAME Lookup",
+  "slug": "cname-lookup",
+  "category": "network-tools",
+  "intro": "Check CNAME DNS records for a domain or subdomain.",
+  "description": "Look up CNAME DNS records and see which canonical hostname a domain or subdomain points to. Useful for DNS setup, CDN configuration, subdomain routing, and troubleshooting.",
+  "keywords": ["cname lookup", "cname record lookup", "dns cname lookup"],
+  "faq": [
+    {
+      "q": "What does CNAME Lookup return?",
+      "a": "It returns the canonical hostname target for the queried domain or subdomain when a CNAME record exists."
+    },
+    {
+      "q": "When is this useful?",
+      "a": "It is useful for checking subdomain routing, CDN setup, hosting configuration, and DNS troubleshooting."
+    }
+  ],
+  "related": ["txt-lookup", "ns-record-lookup", "dns-record-checker"]
 }
   
 ]
