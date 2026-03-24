@@ -327,7 +327,7 @@ function formatCategoryLabel(category: string): string {
     const copyResultBtn = secondaryButtons[2] as HTMLButtonElement | undefined;
     const downloadBtn = secondaryButtons[3] as HTMLButtonElement | undefined;
 
-    const slug = window.location.pathname.split("/").pop();
+    const slug = window.location.pathname.replace(/\/+$/, "").split("/").pop() || "";
 
 
     runBtn?.addEventListener("click", () => {
