@@ -8544,6 +8544,106 @@ if (slug === "ip-lookup") {
   return;
 }
 
+if (slug === "dns-lookup") {
+  const raw = input.value.trim().toLowerCase();
+
+  if (!raw) {
+    output.value = "Enter a domain like: example.com";
+    return;
+  }
+
+  const domain = raw
+    .replace(/^https?:\/\//, "")
+    .replace(/^www\./, "")
+    .split("/")[0]
+    .split(":")[0]
+    .trim();
+
+  const isValidDomain =
+    /^(?=.{1,253}$)(?!-)(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,63}$/i.test(domain);
+
+  if (!isValidDomain) {
+    output.value = "Invalid domain. Example: example.com";
+    return;
+  }
+
+  output.value = "Looking up DNS records...";
+
+  const types: string[] = ["A", "AAAA", "MX", "NS", "TXT", "CNAME"];
+
+  Promise.all(
+    types.map((type: string) =>
+      fetch(
+        `https://dns.google/resolve?name=${encodeURIComponent(domain)}&type=${encodeURIComponent(type)}`,
+        { cache: "no-store" }
+      )
+        .then((response: Response) => {
+          if (!response.ok) {
+            throw new Error(`Failed ${type}`);
+          }
+          return response.json();
+        })
+        .then((data: {
+          Answer?: Array<{ data?: string; type?: number }>;
+          Status?: number;
+          Comment?: string;
+        }) => ({
+          type,
+          answers: Array.isArray(data.Answer) ? data.Answer : [],
+          status: data.Status,
+          comment: data.Comment || "",
+        }))
+        .catch(() => ({
+          type,
+          answers: [],
+          status: -1,
+          comment: "",
+        }))
+    )
+  )
+    .then(
+      (
+        results: Array<{
+          type: string;
+          answers: Array<{ data?: string; type?: number }>;
+          status?: number;
+          comment?: string;
+        }>
+      ) => {
+        const lines: string[] = [`Domain: ${domain}`, ""];
+
+        let hasAnyRecords = false;
+
+        for (const result of results) {
+          lines.push(`${result.type} Records:`);
+
+          if (result.answers.length > 0) {
+            hasAnyRecords = true;
+
+            result.answers.forEach((answer: { data?: string }, index: number) => {
+              lines.push(`${index + 1}. ${answer.data || "-"}`);
+            });
+          } else {
+            lines.push("No records found.");
+          }
+
+          lines.push("");
+        }
+
+        if (!hasAnyRecords) {
+          lines.push("No DNS records found for this domain.");
+        }
+
+        output.value = lines.join("\n");
+      }
+    )
+    .catch(() => {
+      output.value = "Unable to look up DNS records right now.";
+    });
+
+  return;
+}
+
       output.value = "This tool logic is not connected yet.";
     });
 
