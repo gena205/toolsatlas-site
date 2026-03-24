@@ -8706,6 +8706,120 @@ if (slug === "ping-test") {
   return;
 }
 
+if (slug === "port-checker") {
+  const raw = input.value.trim().toLowerCase();
+
+  if (!raw) {
+    output.value = "Enter a host and port like: google.com:443";
+    return;
+  }
+
+  const normalized = raw
+    .replace(/^https?:\/\//, "")
+    .replace(/^www\./, "")
+    .split("/")[0]
+    .trim();
+
+  const parts = normalized.split(":");
+  if (parts.length !== 2) {
+    output.value = "Use format: domain.com:443";
+    return;
+  }
+
+  const host = parts[0].trim();
+  const port = Number(parts[1].trim());
+
+  const isValidHost =
+    /^(?=.{1,253}$)(?!-)(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,63}$/i.test(host);
+
+  if (!isValidHost) {
+    output.value = "Invalid domain. Example: google.com:443";
+    return;
+  }
+
+  if (!Number.isInteger(port) || port < 1 || port > 65535) {
+    output.value = "Invalid port. Use a number from 1 to 65535.";
+    return;
+  }
+
+  const supportedPorts: number[] = [80, 443, 8080, 8443];
+
+  if (!supportedPorts.includes(port)) {
+    output.value = [
+      `Host: ${host}`,
+      `Port: ${port}`,
+      "",
+      "This browser-based checker supports only these web ports:",
+      "80, 443, 8080, 8443",
+    ].join("\n");
+    return;
+  }
+
+  const scheme = port === 443 || port === 8443 ? "https" : "http";
+  const testUrl = `${scheme}://${host}:${port}/favicon.ico?portcheck=${Date.now()}`;
+
+  output.value = "Checking port...";
+
+  const startedAt = performance.now();
+  const timeoutMs = 5000;
+
+  let finished = false;
+
+  const done = (message: string) => {
+    if (finished) return;
+    finished = true;
+    output.value = message;
+  };
+
+  const timeoutId = window.setTimeout(() => {
+    done(
+      [
+        `Host: ${host}`,
+        `Port: ${port}`,
+        "Status: Closed, filtered, or no response",
+        "",
+        "The request timed out.",
+      ].join("\n")
+    );
+  }, timeoutMs);
+
+  fetch(testUrl, {
+    method: "GET",
+    mode: "no-cors",
+    cache: "no-store",
+  })
+    .then(() => {
+      window.clearTimeout(timeoutId);
+      const ms = Math.round(performance.now() - startedAt);
+
+      done(
+        [
+          `Host: ${host}`,
+          `Port: ${port}`,
+          "Status: Open or reachable",
+          `Response Time: ${ms} ms`,
+          "",
+          "Note: This is a browser-based check for web ports.",
+        ].join("\n")
+      );
+    })
+    .catch(() => {
+      window.clearTimeout(timeoutId);
+
+      done(
+        [
+          `Host: ${host}`,
+          `Port: ${port}`,
+          "Status: Closed, blocked, or unreachable",
+          "",
+          "The host may block browser requests on this port.",
+        ].join("\n")
+      );
+    });
+
+  return;
+}
+
       output.value = "This tool logic is not connected yet.";
     });
 
