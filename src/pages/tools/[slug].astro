@@ -8819,6 +8819,513 @@ if (slug === "port-checker") {
 
   return;
 }
+if (slug === "cname-lookup") {
+  const domain = input.value.trim().replace(/^https?:\/\//i, "").replace(/\/.*$/, "");
+
+  if (!domain) {
+    output.value = "Enter a domain or subdomain.";
+    return;
+  }
+
+  output.value = "Loading CNAME records...";
+
+  fetch(`https://dns.google/resolve?name=${encodeURIComponent(domain)}&type=CNAME`, { cache: "no-store" })
+    .then((response: Response) => {
+      if (!response.ok) {
+        throw new Error("Request failed");
+      }
+      return response.json();
+    })
+    .then((data: any) => {
+      const answers = Array.isArray(data.Answer) ? data.Answer : [];
+
+      if (!answers.length) {
+        output.value = `No CNAME records found for ${domain}.`;
+        return;
+      }
+
+      output.value = answers
+        .map((item: any, index: number) => {
+          const name = item.name || domain;
+          const ttl = item.TTL ?? "n/a";
+          const value = item.data || "";
+          return `${index + 1}. Name: ${name}\nTTL: ${ttl}\nTarget: ${value}`;
+        })
+        .join("\n\n");
+    })
+    .catch(() => {
+      output.value = "Unable to fetch CNAME records.";
+    });
+
+  return;
+}
+
+if (slug === "soa-lookup") {
+  const domain = input.value.trim().replace(/^https?:\/\//i, "").replace(/\/.*$/, "");
+
+  if (!domain) {
+    output.value = "Enter a domain.";
+    return;
+  }
+
+  output.value = "Loading SOA record...";
+
+  fetch(`https://dns.google/resolve?name=${encodeURIComponent(domain)}&type=SOA`, { cache: "no-store" })
+    .then((response: Response) => {
+      if (!response.ok) {
+        throw new Error("Request failed");
+      }
+      return response.json();
+    })
+    .then((data: any) => {
+      const answers = Array.isArray(data.Answer) ? data.Answer : [];
+
+      if (!answers.length) {
+        output.value = `No SOA record found for ${domain}.`;
+        return;
+      }
+
+      const item = answers[0];
+      const raw = String(item.data || "").trim();
+      const parts = raw.split(/\s+/);
+
+      output.value = [
+        `Domain: ${item.name || domain}`,
+        `TTL: ${item.TTL ?? "n/a"}`,
+        `Primary NS: ${parts[0] || "n/a"}`,
+        `Responsible: ${parts[1] || "n/a"}`,
+        `Serial: ${parts[2] || "n/a"}`,
+        `Refresh: ${parts[3] || "n/a"}`,
+        `Retry: ${parts[4] || "n/a"}`,
+        `Expire: ${parts[5] || "n/a"}`,
+        `Minimum TTL: ${parts[6] || "n/a"}`
+      ].join("\n");
+    })
+    .catch(() => {
+      output.value = "Unable to fetch SOA record.";
+    });
+
+  return;
+}
+
+if (slug === "srv-lookup") {
+  const domain = input.value.trim().replace(/^https?:\/\//i, "").replace(/\/.*$/, "");
+
+  if (!domain) {
+    output.value = "Enter an SRV hostname like _sip._tcp.example.com.";
+    return;
+  }
+
+  output.value = "Loading SRV records...";
+
+  fetch(`https://dns.google/resolve?name=${encodeURIComponent(domain)}&type=SRV`, { cache: "no-store" })
+    .then((response: Response) => {
+      if (!response.ok) {
+        throw new Error("Request failed");
+      }
+      return response.json();
+    })
+    .then((data: any) => {
+      const answers = Array.isArray(data.Answer) ? data.Answer : [];
+
+      if (!answers.length) {
+        output.value = `No SRV records found for ${domain}.`;
+        return;
+      }
+
+      output.value = answers
+        .map((item: any, index: number) => {
+          const raw = String(item.data || "").trim();
+          const parts = raw.split(/\s+/);
+          return [
+            `${index + 1}. Name: ${item.name || domain}`,
+            `TTL: ${item.TTL ?? "n/a"}`,
+            `Priority: ${parts[0] || "n/a"}`,
+            `Weight: ${parts[1] || "n/a"}`,
+            `Port: ${parts[2] || "n/a"}`,
+            `Target: ${parts[3] || "n/a"}`
+          ].join("\n");
+        })
+        .join("\n\n");
+    })
+    .catch(() => {
+      output.value = "Unable to fetch SRV records.";
+    });
+
+  return;
+}
+
+if (slug === "dns-propagation-checker") {
+  const domain = input.value.trim().replace(/^https?:\/\//i, "").replace(/\/.*$/, "");
+
+  if (!domain) {
+    output.value = "Enter a domain or subdomain.";
+    return;
+  }
+
+  output.value = "Checking public DNS resolvers...";
+
+  const resolvers = [
+    {
+      name: "Google DNS",
+      url: `https://dns.google/resolve?name=${encodeURIComponent(domain)}&type=A`
+    },
+    {
+      name: "Cloudflare DNS",
+      url: `https://cloudflare-dns.com/dns-query?name=${encodeURIComponent(domain)}&type=A`
+    }
+  ];
+
+  Promise.all(
+    resolvers.map((resolver) =>
+      fetch(resolver.url, {
+        cache: "no-store",
+        headers: { Accept: "application/dns-json" }
+      })
+        .then((response: Response) => {
+          if (!response.ok) {
+            throw new Error("Request failed");
+          }
+          return response.json();
+        })
+        .then((data: any) => {
+          const answers = Array.isArray(data.Answer) ? data.Answer : [];
+          return {
+            name: resolver.name,
+            ok: answers.length > 0,
+            values: answers.map((item: any) => item.data).filter(Boolean)
+          };
+        })
+        .catch(() => ({
+          name: resolver.name,
+          ok: false,
+          values: [] as string[]
+        }))
+    )
+  )
+    .then((results) => {
+      output.value = results
+        .map((result) => {
+          return [
+            `${result.name}: ${result.ok ? "Resolved" : "No result"}`,
+            result.values.length ? `Values: ${result.values.join(", ")}` : ""
+          ]
+            .filter(Boolean)
+            .join("\n");
+        })
+        .join("\n\n");
+    })
+    .catch(() => {
+      output.value = "Unable to check DNS propagation.";
+    });
+
+  return;
+}
+
+if (slug === "open-graph-checker") {
+  const rawUrl = input.value.trim();
+
+  if (!rawUrl) {
+    output.value = "Enter a full URL like https://example.com.";
+    return;
+  }
+
+  let targetUrl = rawUrl;
+
+  if (!/^https?:\/\//i.test(targetUrl)) {
+    targetUrl = `https://${targetUrl}`;
+  }
+
+  output.value = "Loading Open Graph tags...";
+
+  fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(targetUrl)}`, { cache: "no-store" })
+    .then((response: Response) => {
+      if (!response.ok) {
+        throw new Error("Request failed");
+      }
+      return response.json();
+    })
+    .then((data: any) => {
+      const html = String(data?.contents || "");
+
+      if (!html) {
+        output.value = "Unable to fetch page HTML.";
+        return;
+      }
+
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, "text/html");
+
+      const getOg = (property: string): string => {
+        return doc.querySelector(`meta[property="${property}"]`)?.getAttribute("content")?.trim() || "";
+      };
+
+      const tags = [
+        ["og:title", getOg("og:title")],
+        ["og:description", getOg("og:description")],
+        ["og:image", getOg("og:image")],
+        ["og:url", getOg("og:url")],
+        ["og:type", getOg("og:type")],
+        ["og:site_name", getOg("og:site_name")]
+      ];
+
+      const found = tags.filter(([, value]) => value);
+
+      if (!found.length) {
+        output.value = `No Open Graph tags found for ${targetUrl}.`;
+        return;
+      }
+
+      output.value = found.map(([key, value]) => `${key}: ${value}`).join("\n\n");
+    })
+    .catch(() => {
+      output.value = "Unable to fetch or parse Open Graph tags.";
+    });
+
+  return;
+}
+if (slug === "website-header-checker") {
+  const rawUrl = input.value.trim();
+
+  if (!rawUrl) {
+    output.value = "Enter a full URL like https://example.com.";
+    return;
+  }
+
+  let targetUrl = rawUrl;
+  if (!/^https?:\/\//i.test(targetUrl)) {
+    targetUrl = `https://${targetUrl}`;
+  }
+
+  output.value = "Loading headers...";
+
+  fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(`https://api.hackertarget.com/httpheaders/?q=${targetUrl}`)}`, {
+    cache: "no-store"
+  })
+    .then((response: Response) => {
+      if (!response.ok) {
+        throw new Error("Request failed");
+      }
+      return response.json();
+    })
+    .then((data: any) => {
+      const text = String(data?.contents || "").trim();
+
+      if (!text) {
+        output.value = "No headers found.";
+        return;
+      }
+
+      output.value = text;
+    })
+    .catch(() => {
+      output.value = "Unable to fetch website headers.";
+    });
+
+  return;
+}
+
+if (slug === "website-redirect-checker") {
+  const rawUrl = input.value.trim();
+
+  if (!rawUrl) {
+    output.value = "Enter a full URL like http://example.com.";
+    return;
+  }
+
+  let targetUrl = rawUrl;
+  if (!/^https?:\/\//i.test(targetUrl)) {
+    targetUrl = `https://${targetUrl}`;
+  }
+
+  output.value = "Checking redirects...";
+
+  fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(targetUrl)}`, { cache: "no-store" })
+    .then((response: Response) => {
+      if (!response.ok) {
+        throw new Error("Request failed");
+      }
+      return response.json();
+    })
+    .then((data: any) => {
+      const status = data?.status || {};
+      const finalUrl = String(status?.url || "").trim();
+      const httpCode = status?.http_code ?? "n/a";
+
+      if (!finalUrl) {
+        output.value = "Unable to determine final URL.";
+        return;
+      }
+
+      const redirected = finalUrl !== targetUrl;
+
+      output.value = [
+        `Input URL: ${targetUrl}`,
+        `Final URL: ${finalUrl}`,
+        `HTTP Status: ${httpCode}`,
+        `Redirect Detected: ${redirected ? "Yes" : "No"}`
+      ].join("\n");
+    })
+    .catch(() => {
+      output.value = "Unable to check redirects.";
+    });
+
+  return;
+}
+if (slug === "website-redirect-checker") {
+  const rawUrl = input.value.trim();
+
+  if (!rawUrl) {
+    output.value = "Enter a full URL like http://example.com.";
+    return;
+  }
+
+  output.value = "Checking redirects...";
+
+  fetch(`/api/site-check.json?type=redirect&target=${encodeURIComponent(rawUrl)}`, {
+    cache: "no-store"
+  })
+    .then((response: Response) => response.json())
+    .then((data: any) => {
+      if (data?.error) {
+        output.value = data.error;
+        return;
+      }
+
+      const chain = Array.isArray(data?.chain) ? data.chain : [];
+
+      output.value = [
+        `Input URL: ${data.inputUrl || rawUrl}`,
+        `Final URL: ${data.finalUrl || "n/a"}`,
+        `Redirect Detected: ${data.redirectDetected ? "Yes" : "No"}`,
+        "",
+        "Redirect Chain:",
+        ...chain.map((step: any, index: number) => {
+          const locationLine = step.location ? ` -> ${step.location}` : "";
+          return `${index + 1}. ${step.status} ${step.url}${locationLine}`;
+        })
+      ].join("\n");
+    })
+    .catch(() => {
+      output.value = "Unable to check redirects.";
+    });
+
+  return;
+}
+
+if (slug === "ssl-certificate-checker") {
+  const domain = input.value.trim();
+
+  if (!domain) {
+    output.value = "Enter a domain.";
+    return;
+  }
+
+  output.value = "Loading SSL certificate data...";
+
+  fetch(`/api/site-check.json?type=ssl-cert&target=${encodeURIComponent(domain)}`, {
+    cache: "no-store"
+  })
+    .then((response: Response) => response.json())
+    .then((data: any) => {
+      if (data?.error) {
+        output.value = data.error;
+        return;
+      }
+
+      output.value = [
+        `Domain: ${data.domain || "n/a"}`,
+        `Subject: ${JSON.stringify(data.subject || {})}`,
+        `Issuer: ${JSON.stringify(data.issuer || {})}`,
+        `SAN: ${data.subjectaltname || "n/a"}`,
+        `Valid From: ${data.valid_from || "n/a"}`,
+        `Valid Until: ${data.valid_to || "n/a"}`,
+        `Serial Number: ${data.serialNumber || "n/a"}`,
+        `Fingerprint: ${data.fingerprint256 || data.fingerprint || "n/a"}`,
+        `Key Bits: ${data.bits || "n/a"}`,
+        `Key Type: ${data.pubkeyAlgorithm || "n/a"}`,
+        `Negotiated Protocol: ${data.negotiatedProtocol || "n/a"}`
+      ].join("\n");
+    })
+    .catch(() => {
+      output.value = "Unable to fetch SSL certificate data.";
+    });
+
+  return;
+}
+
+if (slug === "ssl-expiry-checker") {
+  const domain = input.value.trim();
+
+  if (!domain) {
+    output.value = "Enter a domain.";
+    return;
+  }
+
+  output.value = "Checking SSL expiry...";
+
+  fetch(`/api/site-check.json?type=ssl-expiry&target=${encodeURIComponent(domain)}`, {
+    cache: "no-store"
+  })
+    .then((response: Response) => response.json())
+    .then((data: any) => {
+      if (data?.error) {
+        output.value = data.error;
+        return;
+      }
+
+      output.value = [
+        `Domain: ${data.domain || "n/a"}`,
+        `Expires: ${data.valid_to || "n/a"}`,
+        `Days Left: ${data.daysLeft ?? "n/a"}`
+      ].join("\n");
+    })
+    .catch(() => {
+      output.value = "Unable to check SSL expiry.";
+    });
+
+  return;
+}
+
+if (slug === "tls-version-checker") {
+  const domain = input.value.trim();
+
+  if (!domain) {
+    output.value = "Enter a domain.";
+    return;
+  }
+
+  output.value = "Checking TLS versions...";
+
+  fetch(`/api/site-check.json?type=tls-version&target=${encodeURIComponent(domain)}`, {
+    cache: "no-store"
+  })
+    .then((response: Response) => response.json())
+    .then((data: any) => {
+      if (data?.error) {
+        output.value = data.error;
+        return;
+      }
+
+      const supported = Array.isArray(data?.supportedProtocols) ? data.supportedProtocols : [];
+
+      if (!supported.length) {
+        output.value = `No TLS version data found for ${domain}.`;
+        return;
+      }
+
+      output.value = [
+        `Domain: ${data.domain || domain}`,
+        `Supported Protocols:`,
+        ...supported.map((item: string) => `- ${item}`)
+      ].join("\n");
+    })
+    .catch(() => {
+      output.value = "Unable to check TLS versions.";
+    });
+
+  return;
+}
 
       output.value = "This tool logic is not connected yet.";
     });

@@ -5685,6 +5685,206 @@
     }
   ],
   "related": ["mx-record-lookup", "ns-record-lookup", "whois-lookup"]
+},
+{
+  "id": "cname-lookup",
+  "name": "CNAME Lookup",
+  "slug": "cname-lookup",
+  "category": "network-tools",
+  "intro": "Look up CNAME DNS records for any domain.",
+  "description": "Use this CNAME lookup tool to check canonical name records for a domain or subdomain. It is useful for DNS troubleshooting, CDN setup, and domain verification.",
+  "keywords": ["cname lookup", "dns cname checker", "cname record lookup"],
+  "faq": [
+    {
+      "q": "What does a CNAME record do?",
+      "a": "A CNAME record points one hostname to another hostname instead of directly to an IP address."
+    },
+    {
+      "q": "Can I check subdomains?",
+      "a": "Yes. You can enter a full subdomain like www.example.com."
+    }
+  ],
+  "related": ["dns-lookup", "soa-lookup", "srv-lookup"]
+},
+{
+  "id": "soa-lookup",
+  "name": "SOA Lookup",
+  "slug": "soa-lookup",
+  "category": "network-tools",
+  "intro": "Look up SOA DNS records for any domain.",
+  "description": "Use this SOA lookup tool to inspect the Start of Authority record for a domain. It helps with DNS zone checks, nameserver validation, and troubleshooting DNS configuration.",
+  "keywords": ["soa lookup", "dns soa checker", "soa record lookup"],
+  "faq": [
+    {
+      "q": "What information is in an SOA record?",
+      "a": "An SOA record usually includes the primary nameserver, responsible email, serial number, refresh, retry, expire, and minimum TTL values."
+    },
+    {
+      "q": "Why check an SOA record?",
+      "a": "It helps confirm that a DNS zone is configured correctly and can reveal zone serial and timing values."
+    }
+  ],
+  "related": ["dns-lookup", "ns-lookup", "cname-lookup"]
+},
+{
+  "id": "srv-lookup",
+  "name": "SRV Lookup",
+  "slug": "srv-lookup",
+  "category": "network-tools",
+  "intro": "Look up SRV DNS records for any service domain.",
+  "description": "Use this SRV lookup tool to find service records for protocols like SIP, XMPP, LDAP, and other services. It is helpful for troubleshooting service discovery and domain-based routing.",
+  "keywords": ["srv lookup", "dns srv checker", "service record lookup"],
+  "faq": [
+    {
+      "q": "What format should I enter?",
+      "a": "Enter a full SRV hostname like _sip._tcp.example.com."
+    },
+    {
+      "q": "What does an SRV record contain?",
+      "a": "It usually includes priority, weight, port, and target host."
+    }
+  ],
+  "related": ["dns-lookup", "cname-lookup", "soa-lookup"]
+},
+{
+  "id": "dns-propagation-checker",
+  "name": "DNS Propagation Checker",
+  "slug": "dns-propagation-checker",
+  "category": "network-tools",
+  "intro": "Check whether DNS records resolve across public DNS resolvers.",
+  "description": "Use this DNS propagation checker to test whether a domain resolves across multiple public DNS resolvers. It is useful after DNS changes, nameserver updates, or record migrations.",
+  "keywords": ["dns propagation checker", "dns propagation", "dns checker"],
+  "faq": [
+    {
+      "q": "What should I enter?",
+      "a": "Enter a domain or subdomain like example.com or www.example.com."
+    },
+    {
+      "q": "Does this check every DNS server worldwide?",
+      "a": "No. It checks a set of public resolvers to give a practical propagation snapshot."
+    }
+  ],
+  "related": ["dns-lookup", "cname-lookup", "soa-lookup"]
+},
+{
+  "id": "open-graph-checker",
+  "name": "Open Graph Checker",
+  "slug": "open-graph-checker",
+  "category": "developer-tools",
+  "intro": "Check Open Graph tags on any web page.",
+  "description": "Use this Open Graph checker to inspect og:title, og:description, og:image, og:url, and other social preview tags on a page. It is useful for SEO, social sharing, and debugging link previews.",
+  "keywords": ["open graph checker", "og tags checker", "social meta tags checker"],
+  "faq": [
+    {
+      "q": "Which tags are checked?",
+      "a": "The tool checks common Open Graph tags like og:title, og:description, og:image, og:url, og:type, and og:site_name."
+    },
+    {
+      "q": "Do I need the full URL?",
+      "a": "Yes. Enter the full page URL, including https://."
+    }
+  ],
+  "related": ["website-header-checker", "website-meta-tag-checker", "website-status-checker"]
+},
+{
+  "id": "website-header-checker",
+  "name": "Website Header Checker",
+  "slug": "website-header-checker",
+  "category": "developer-tools",
+  "intro": "Check HTTP response headers for a website.",
+  "description": "Use this website header checker to inspect HTTP response headers such as content type, cache control, server, and security-related headers. It is useful for debugging websites, APIs, and SEO issues.",
+  "keywords": ["website header checker", "http headers checker", "response headers tool"],
+  "faq": [
+    {
+      "q": "What does this tool check?",
+      "a": "It retrieves HTTP response headers for the target website and shows them in a readable format."
+    },
+    {
+      "q": "Can I use a full URL?",
+      "a": "Yes. You can enter a full URL like https://example.com."
+    }
+  ],
+  "related": ["website-redirect-checker", "open-graph-checker", "ssl-certificate-checker"]
+},
+{
+  "id": "website-redirect-checker",
+  "name": "Website Redirect Checker",
+  "slug": "website-redirect-checker",
+  "category": "developer-tools",
+  "intro": "Check whether a URL redirects and where it ends up.",
+  "description": "Use this website redirect checker to test redirects for a page URL and see the final resolved destination. It is useful for SEO, canonical checks, migration validation, and debugging HTTP redirects.",
+  "keywords": ["website redirect checker", "url redirect checker", "redirect test tool"],
+  "faq": [
+    {
+      "q": "What can I test with this tool?",
+      "a": "You can test whether a URL redirects and compare the original URL with the final destination."
+    },
+    {
+      "q": "Why is this useful for SEO?",
+      "a": "It helps confirm that pages redirect to the correct canonical or migrated URL."
+    }
+  ],
+  "related": ["website-header-checker", "open-graph-checker", "ssl-certificate-checker"]
+},
+{
+  "id": "ssl-certificate-checker",
+  "name": "SSL Certificate Checker",
+  "slug": "ssl-certificate-checker",
+  "category": "network-tools",
+  "intro": "Inspect SSL certificate details for a domain.",
+  "description": "Use this SSL certificate checker to view certificate details for a domain, including issuer, subject, validity dates, signature algorithm, and more. It is useful for HTTPS troubleshooting and website audits.",
+  "keywords": ["ssl certificate checker", "https certificate checker", "tls certificate tool"],
+  "faq": [
+    {
+      "q": "What details can I see?",
+      "a": "The tool can show issuer, subject, common name, validity period, and related certificate information."
+    },
+    {
+      "q": "Do I need to enter https:// ?",
+      "a": "No. A plain domain like example.com is enough."
+    }
+  ],
+  "related": ["ssl-expiry-checker", "tls-version-checker", "website-header-checker"]
+},
+{
+  "id": "ssl-expiry-checker",
+  "name": "SSL Expiry Checker",
+  "slug": "ssl-expiry-checker",
+  "category": "network-tools",
+  "intro": "Check SSL certificate expiration for a domain.",
+  "description": "Use this SSL expiry checker to see when a website certificate expires and how many days remain before expiration. It is useful for monitoring HTTPS certificates and preventing downtime.",
+  "keywords": ["ssl expiry checker", "certificate expiration checker", "https expiry tool"],
+  "faq": [
+    {
+      "q": "What does this tool show?",
+      "a": "It shows the certificate expiration date and the number of days left until expiry."
+    },
+    {
+      "q": "Why does SSL expiry matter?",
+      "a": "An expired SSL certificate can trigger browser warnings and break trust for visitors."
+    }
+  ],
+  "related": ["ssl-certificate-checker", "tls-version-checker", "website-header-checker"]
+},
+{
+  "id": "tls-version-checker",
+  "name": "TLS Version Checker",
+  "slug": "tls-version-checker",
+  "category": "network-tools",
+  "intro": "Check supported TLS versions for a domain.",
+  "description": "Use this TLS version checker to inspect which TLS protocol versions are supported by a website. It is useful for HTTPS audits, compatibility checks, and security reviews.",
+  "keywords": ["tls version checker", "supported tls versions", "https protocol checker"],
+  "faq": [
+    {
+      "q": "What versions can this tool detect?",
+      "a": "It can show supported TLS versions such as TLS 1.0, 1.1, 1.2, and 1.3 when available."
+    },
+    {
+      "q": "Why is this useful?",
+      "a": "It helps identify outdated protocol support and confirm modern TLS compatibility."
+    }
+  ],
+  "related": ["ssl-certificate-checker", "ssl-expiry-checker", "website-header-checker"]
 }
   
 ]

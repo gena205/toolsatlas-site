@@ -12,7 +12,9 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/netlify": "^7.0.4",
     "astro": "^6.0.5",
-    "bcryptjs": "^3.0.3"
+    "bcryptjs": "^3.0.3",
+    "tslib": "^2.8.1"
   }
 }
