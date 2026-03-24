@@ -5587,64 +5587,104 @@
   "related": ["json-diff-checker", "remove-line-breaks", "text-compare"]
 },
 {
+  "id": "reverse-dns-lookup",
+  "name": "Reverse DNS Lookup",
+  "slug": "reverse-dns-lookup",
+  "category": "network-tools",
+  "intro": "Look up the PTR hostname for an IPv4 address.",
+  "description": "Use this Reverse DNS Lookup tool to find the PTR hostname linked to an IPv4 address. It is useful for troubleshooting, server checks, and DNS verification.",
+  "keywords": ["reverse dns lookup", "ptr lookup", "ip to hostname", "dns ptr checker"],
+  "faq": [
+    {
+      "q": "What does Reverse DNS Lookup do?",
+      "a": "It converts an IP address into a PTR lookup query and tries to find the hostname assigned to that IP."
+    },
+    {
+      "q": "Can I use it for any IP address?",
+      "a": "Yes, for public IPv4 addresses. If no PTR record exists, the tool will show no result."
+    }
+  ],
+  "related": ["whois-lookup", "ns-record-lookup", "txt-record-lookup"]
+},
+{
   "id": "whois-lookup",
   "name": "WHOIS Lookup",
   "slug": "whois-lookup",
   "category": "network-tools",
-  "intro": "Look up domain WHOIS information quickly in the browser.",
-  "description": "Check WHOIS details for a domain, including registrar, creation date, expiration date, updated date, nameservers, and status data when available. Useful for domain research, troubleshooting, and verification.",
-  "keywords": ["whois lookup", "domain whois lookup", "check whois"],
+  "intro": "Check registration and ownership details for a domain or IP.",
+  "description": "Use this WHOIS Lookup tool to view registration details for a domain or IP address. It is useful for domain research, ownership checks, and technical investigation.",
+  "keywords": ["whois lookup", "domain whois", "ip whois", "whois checker"],
   "faq": [
     {
-      "q": "What does WHOIS Lookup return?",
-      "a": "It returns common WHOIS fields such as registrar, creation date, expiration date, updated date, nameservers, and status information when available."
+      "q": "What can WHOIS Lookup show?",
+      "a": "It can show registrar data, registration dates, nameservers, status values, and other public registration details."
     },
     {
-      "q": "Who is this useful for?",
-      "a": "It is useful for domain owners, SEO work, troubleshooting, and checking registration details."
+      "q": "Can I look up both domains and IP addresses?",
+      "a": "Yes. This tool supports both domain and IPv4 input."
     }
   ],
-  "related": ["dns-record-checker", "ns-record-lookup", "txt-lookup"]
+  "related": ["reverse-dns-lookup", "ns-record-lookup", "mx-record-lookup"]
 },
 {
-  "id": "txt-lookup",
+  "id": "mx-record-lookup",
+  "name": "MX Lookup",
+  "slug": "mx-record-lookup",
+  "category": "network-tools",
+  "intro": "Find MX records for a domain.",
+  "description": "Use this MX Lookup tool to check the mail exchange servers configured for a domain. It is useful for email routing checks, mail setup validation, and DNS troubleshooting.",
+  "keywords": ["mx lookup", "mx record lookup", "mail server lookup", "dns mx checker"],
+  "faq": [
+    {
+      "q": "What is an MX record?",
+      "a": "An MX record tells email systems which mail servers receive messages for a domain."
+    },
+    {
+      "q": "Why would I check MX records?",
+      "a": "You can use it when setting up email, fixing delivery issues, or confirming mail routing."
+    }
+  ],
+  "related": ["ns-record-lookup", "txt-record-lookup", "whois-lookup"]
+},
+{
+  "id": "ns-record-lookup",
+  "name": "NS Lookup",
+  "slug": "ns-record-lookup",
+  "category": "network-tools",
+  "intro": "Find nameservers for a domain.",
+  "description": "Use this NS Lookup tool to check which authoritative nameservers are configured for a domain. It is useful for DNS setup, migration checks, and troubleshooting.",
+  "keywords": ["ns lookup", "ns record lookup", "nameserver lookup", "dns ns checker"],
+  "faq": [
+    {
+      "q": "What does NS Lookup show?",
+      "a": "It shows the authoritative nameservers assigned to the domain."
+    },
+    {
+      "q": "When should I use it?",
+      "a": "Use it when checking DNS delegation, moving domains, or troubleshooting DNS propagation issues."
+    }
+  ],
+  "related": ["mx-record-lookup", "txt-record-lookup", "whois-lookup"]
+},
+{
+  "id": "txt-record-lookup",
   "name": "TXT Lookup",
-  "slug": "txt-lookup",
+  "slug": "txt-record-lookup",
   "category": "network-tools",
-  "intro": "Check TXT DNS records for a domain quickly.",
-  "description": "Look up TXT DNS records such as SPF, verification strings, and other text-based DNS entries. Useful for mail setup, domain verification, and DNS troubleshooting.",
-  "keywords": ["txt lookup", "txt record lookup", "dns txt lookup"],
+  "intro": "Find TXT records for a domain.",
+  "description": "Use this TXT Lookup tool to check TXT records for a domain. It is useful for SPF, DKIM, verification records, and general DNS inspection.",
+  "keywords": ["txt lookup", "txt record lookup", "spf lookup", "dns txt checker"],
   "faq": [
     {
-      "q": "What does TXT Lookup check?",
-      "a": "It checks TXT DNS records such as SPF entries, verification records, and other text values stored in DNS."
+      "q": "What can TXT records contain?",
+      "a": "TXT records often contain SPF policies, domain verification tokens, DKIM-related values, and other text-based DNS data."
     },
     {
-      "q": "What input should I use?",
-      "a": "Enter a domain name directly, such as example.com."
+      "q": "Why would I check TXT records?",
+      "a": "You can use it for email authentication checks, verification setup, and DNS troubleshooting."
     }
   ],
-  "related": ["mx-record-lookup", "cname-lookup", "dns-record-checker"]
-},
-{
-  "id": "cname-lookup",
-  "name": "CNAME Lookup",
-  "slug": "cname-lookup",
-  "category": "network-tools",
-  "intro": "Check CNAME DNS records for a domain or subdomain.",
-  "description": "Look up CNAME DNS records and see which canonical hostname a domain or subdomain points to. Useful for DNS setup, CDN configuration, subdomain routing, and troubleshooting.",
-  "keywords": ["cname lookup", "cname record lookup", "dns cname lookup"],
-  "faq": [
-    {
-      "q": "What does CNAME Lookup return?",
-      "a": "It returns the canonical hostname target for the queried domain or subdomain when a CNAME record exists."
-    },
-    {
-      "q": "When is this useful?",
-      "a": "It is useful for checking subdomain routing, CDN setup, hosting configuration, and DNS troubleshooting."
-    }
-  ],
-  "related": ["txt-lookup", "ns-record-lookup", "dns-record-checker"]
+  "related": ["mx-record-lookup", "ns-record-lookup", "whois-lookup"]
 }
   
 ]

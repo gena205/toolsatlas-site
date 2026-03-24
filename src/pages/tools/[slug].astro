@@ -8305,134 +8305,233 @@ if (slug === "toml-to-json") {
 
         return;
       }
-            if (slug === "whois-lookup") {
-        const value = input.value.trim();
+      
+      if (slug === "reverse-dns-lookup") {
+  const ip = input.value.trim();
 
-        if (!value) {
-          output.value = "Enter a domain name";
-          return;
-        }
+  const parts = ip.split(".");
+  const validIp =
+    parts.length === 4 &&
+    parts.every((part: string) => {
+      const n = Number(part);
+      return Number.isInteger(n) && n >= 0 && n <= 255;
+    });
 
-        let domain = value
-          .replace(/^https?:\/\//i, "")
-          .replace(/^www\./i, "")
-          .split("/")[0]
-          .trim();
+  if (!validIp) {
+    output.value = "Enter an IPv4 address like: 8.8.8.8";
+    return;
+  }
 
-        if (!domain) {
-          output.value = "Enter a valid domain name";
-          return;
-        }
+  const ptrName = `${parts.reverse().join(".")}.in-addr.arpa`;
 
-        output.value = "Checking WHOIS...";
+  output.value = "Looking up PTR record...";
 
-        fetch(`https://api.whois.vu/?q=${encodeURIComponent(domain)}`)
-          .then((response: Response) => response.json())
-          .then((data: any) => {
-            if (!data || data.error) {
-              output.value = "WHOIS lookup failed";
-              return;
-            }
-
-            const result = {
-              domain,
-              registrar: data.registrar ?? null,
-              created: data.created ?? null,
-              expires: data.expires ?? null,
-              updated: data.changed ?? data.updated ?? null,
-              nameservers: data.nameservers ?? [],
-              status: data.status ?? [],
-              whoisServer: data.whoisserver ?? null
-            };
-
-            output.value = JSON.stringify(result, null, 2);
-          })
-          .catch(() => {
-            output.value = "WHOIS lookup failed";
-          });
-
+  fetch(`https://dns.google/resolve?name=${encodeURIComponent(ptrName)}&type=PTR`, { cache: "no-store" })
+    .then((response: Response) => response.json())
+    .then((data: { Answer?: Array<{ data?: string }> }) => {
+      if (!Array.isArray(data.Answer) || data.Answer.length === 0) {
+        output.value = "No PTR record found.";
         return;
       }
 
-      if (slug === "txt-lookup") {
-        const value = input.value.trim();
+      const result = data.Answer
+        .map((item: { data?: string }) => (item.data || "").replace(/\.$/, ""))
+        .filter((value: string) => value.length > 0)
+        .join("\n");
 
-        if (!value) {
-          output.value = "Enter a domain name";
-          return;
+      output.value = result || "No PTR record found.";
+    })
+    .catch(() => {
+      output.value = "Unable to look up PTR record.";
+    });
+
+  return;
+}
+
+if (slug === "whois-lookup") {
+  const query = input.value.trim().toLowerCase();
+
+  if (!query) {
+    output.value = "Enter a domain or IPv4 address like: google.com or 8.8.8.8";
+    return;
+  }
+
+  const ipParts = query.split(".");
+  const isIpv4 =
+    ipParts.length === 4 &&
+    ipParts.every((part: string) => {
+      const n = Number(part);
+      return Number.isInteger(n) && n >= 0 && n <= 255;
+    });
+
+  const endpoint = isIpv4
+    ? `https://rdap.org/ip/${encodeURIComponent(query)}`
+    : `https://rdap.org/domain/${encodeURIComponent(query)}`;
+
+  output.value = "Looking up WHOIS / RDAP data...";
+
+  fetch(endpoint, { cache: "no-store" })
+    .then((response: Response) => {
+      if (!response.ok) {
+        throw new Error("Lookup failed");
+      }
+      return response.json();
+    })
+    .then((data: {
+      ldhName?: string;
+      handle?: string;
+      name?: string;
+      unicodeName?: string;
+      status?: string[];
+      nameservers?: Array<{ ldhName?: string }>;
+      events?: Array<{ eventAction?: string; eventDate?: string }>;
+    }) => {
+      const lines: string[] = [];
+
+      if (data.ldhName) lines.push(`Name: ${data.ldhName}`);
+      else if (data.unicodeName) lines.push(`Name: ${data.unicodeName}`);
+      else if (data.name) lines.push(`Name: ${data.name}`);
+
+      if (data.handle) lines.push(`Handle: ${data.handle}`);
+
+      if (Array.isArray(data.status) && data.status.length > 0) {
+        lines.push(`Status: ${data.status.join(", ")}`);
+      }
+
+      if (Array.isArray(data.nameservers) && data.nameservers.length > 0) {
+        const ns = data.nameservers
+          .map((item: { ldhName?: string }) => item.ldhName || "")
+          .filter((value: string) => value.length > 0);
+
+        if (ns.length > 0) {
+          lines.push("");
+          lines.push("Nameservers:");
+          lines.push(...ns);
         }
+      }
 
-        let domain = value
-          .replace(/^https?:\/\//i, "")
-          .replace(/^www\./i, "")
-          .split("/")[0]
-          .trim();
+      if (Array.isArray(data.events) && data.events.length > 0) {
+        const mapped = data.events
+          .filter((item: { eventAction?: string; eventDate?: string }) => item.eventAction && item.eventDate)
+          .map((item: { eventAction?: string; eventDate?: string }) => `${item.eventAction}: ${item.eventDate}`);
 
-        if (!domain) {
-          output.value = "Enter a valid domain name";
-          return;
+        if (mapped.length > 0) {
+          lines.push("");
+          lines.push("Events:");
+          lines.push(...mapped);
         }
+      }
 
-        output.value = "Checking TXT records...";
+      output.value = lines.length > 0 ? lines.join("\n") : "No WHOIS / RDAP data found.";
+    })
+    .catch(() => {
+      output.value = "Unable to look up WHOIS / RDAP data.";
+    });
 
-        fetch(`https://dns.google/resolve?name=${encodeURIComponent(domain)}&type=TXT`)
-          .then((response: Response) => response.json())
-          .then((data: any) => {
-            const answers = Array.isArray(data.Answer)
-              ? data.Answer.map((item: any) => item.data)
-              : [];
+  return;
+}
 
-            output.value =
-              answers.length > 0
-                ? answers.join("\n")
-                : "No TXT records found";
-          })
-          .catch(() => {
-            output.value = "TXT lookup failed";
-          });
+if (slug === "mx-record-lookup") {
+  const domain = input.value.trim().toLowerCase();
 
+  if (!domain) {
+    output.value = "Enter a domain like: google.com";
+    return;
+  }
+
+  output.value = "Looking up MX records...";
+
+  fetch(`https://dns.google/resolve?name=${encodeURIComponent(domain)}&type=MX`, { cache: "no-store" })
+    .then((response: Response) => response.json())
+    .then((data: {
+      Answer?: Array<{ data?: string }>;
+    }) => {
+      if (!Array.isArray(data.Answer) || data.Answer.length === 0) {
+        output.value = "No MX records found.";
         return;
       }
 
-      if (slug === "cname-lookup") {
-        const value = input.value.trim();
+      const result = data.Answer
+        .map((item: { data?: string }) => item.data || "")
+        .filter((value: string) => value.length > 0)
+        .join("\n");
 
-        if (!value) {
-          output.value = "Enter a domain or subdomain";
-          return;
-        }
+      output.value = result || "No MX records found.";
+    })
+    .catch(() => {
+      output.value = "Unable to look up MX records.";
+    });
 
-        let domain = value
-          .replace(/^https?:\/\//i, "")
-          .replace(/^www\./i, "")
-          .split("/")[0]
-          .trim();
+  return;
+}
 
-        if (!domain) {
-          output.value = "Enter a valid domain or subdomain";
-          return;
-        }
+if (slug === "ns-record-lookup") {
+  const domain = input.value.trim().toLowerCase();
 
-        output.value = "Checking CNAME records...";
+  if (!domain) {
+    output.value = "Enter a domain like: google.com";
+    return;
+  }
 
-        fetch(`https://dns.google/resolve?name=${encodeURIComponent(domain)}&type=CNAME`)
-          .then((response: Response) => response.json())
-          .then((data: any) => {
-            const answers = Array.isArray(data.Answer)
-              ? data.Answer.map((item: any) => item.data)
-              : [];
+  output.value = "Looking up NS records...";
 
-            output.value =
-              answers.length > 0
-                ? answers.join("\n")
-                : "No CNAME records found";
-          })
-          .catch(() => {
-            output.value = "CNAME lookup failed";
-          });
-
+  fetch(`https://dns.google/resolve?name=${encodeURIComponent(domain)}&type=NS`, { cache: "no-store" })
+    .then((response: Response) => response.json())
+    .then((data: {
+      Answer?: Array<{ data?: string }>;
+    }) => {
+      if (!Array.isArray(data.Answer) || data.Answer.length === 0) {
+        output.value = "No NS records found.";
         return;
       }
+
+      const result = data.Answer
+        .map((item: { data?: string }) => (item.data || "").replace(/\.$/, ""))
+        .filter((value: string) => value.length > 0)
+        .join("\n");
+
+      output.value = result || "No NS records found.";
+    })
+    .catch(() => {
+      output.value = "Unable to look up NS records.";
+    });
+
+  return;
+}
+
+if (slug === "txt-record-lookup") {
+  const domain = input.value.trim().toLowerCase();
+
+  if (!domain) {
+    output.value = "Enter a domain like: google.com";
+    return;
+  }
+
+  output.value = "Looking up TXT records...";
+
+  fetch(`https://dns.google/resolve?name=${encodeURIComponent(domain)}&type=TXT`, { cache: "no-store" })
+    .then((response: Response) => response.json())
+    .then((data: {
+      Answer?: Array<{ data?: string }>;
+    }) => {
+      if (!Array.isArray(data.Answer) || data.Answer.length === 0) {
+        output.value = "No TXT records found.";
+        return;
+      }
+
+      const result = data.Answer
+        .map((item: { data?: string }) => item.data || "")
+        .filter((value: string) => value.length > 0)
+        .join("\n");
+
+      output.value = result || "No TXT records found.";
+    })
+    .catch(() => {
+      output.value = "Unable to look up TXT records.";
+    });
+
+  return;
+}
 
       output.value = "This tool logic is not connected yet.";
     });
