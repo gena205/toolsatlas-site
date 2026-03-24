@@ -8644,6 +8644,68 @@ if (slug === "dns-lookup") {
   return;
 }
 
+if (slug === "ping-test") {
+  const raw = input.value.trim().toLowerCase();
+
+  if (!raw) {
+    output.value = "Enter a domain like: google.com";
+    return;
+  }
+
+  const host = raw
+    .replace(/^https?:\/\//, "")
+    .replace(/^www\./, "")
+    .split("/")[0]
+    .split(":")[0]
+    .trim();
+
+  const isValidHost =
+    /^(?=.{1,253}$)(?!-)(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,63}$/i.test(host);
+
+  if (!isValidHost) {
+    output.value = "Invalid domain. Example: google.com";
+    return;
+  }
+
+  output.value = "Testing response time...";
+
+  const testUrl = `https://${host}/favicon.ico?ping=${Date.now()}`;
+  const startedAt = performance.now();
+
+  fetch(testUrl, {
+    method: "GET",
+    mode: "no-cors",
+    cache: "no-store",
+  })
+    .then(() => {
+      const ms = Math.round(performance.now() - startedAt);
+
+      let quality = "Slow";
+      if (ms < 100) quality = "Excellent";
+      else if (ms < 200) quality = "Good";
+      else if (ms < 400) quality = "Average";
+
+      output.value = [
+        `Host: ${host}`,
+        `Status: Reachable`,
+        `Response Time: ${ms} ms`,
+        `Quality: ${quality}`,
+        "",
+        "Note: This is a browser-based latency check, not raw ICMP ping.",
+      ].join("\n");
+    })
+    .catch(() => {
+      output.value = [
+        `Host: ${host}`,
+        "Status: Unreachable or blocked",
+        "",
+        "The site may block cross-origin requests or may be offline.",
+      ].join("\n");
+    });
+
+  return;
+}
+
       output.value = "This tool logic is not connected yet.";
     });
 
