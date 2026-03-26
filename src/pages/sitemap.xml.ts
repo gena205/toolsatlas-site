@@ -33,11 +33,11 @@ export async function GET() {
   urls.push(buildUrl(`${base}/tools/`, today));
 
   for (const category of categorySlugs) {
-    urls.push(buildUrl(`${base}/tools/category/${category}`, today));
+    urls.push(buildUrl(`${base}/tools/category/${category}/`, today));
   }
 
   for (const tool of allTools) {
-    urls.push(buildUrl(`${base}/tools/${tool.slug}`, today));
+    urls.push(buildUrl(`${base}/tools/${tool.slug}/`, today));
   }
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
