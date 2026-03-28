@@ -9508,6 +9508,57 @@ if (slug === "hsts-checker") {
 
   return;
 }
+if (slug === "uuid-generator") {
+  const count = Math.max(
+    1,
+    Math.min(
+      100,
+      Number.parseInt(input.value.trim() || "1", 10) || 1
+    )
+  );
+
+  const createUuid = (): string => {
+    if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
+      return crypto.randomUUID();
+    }
+
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (char) => {
+      const random = Math.floor(Math.random() * 16);
+      const value = char === "x" ? random : (random & 0x3) | 0x8;
+      return value.toString(16);
+    });
+  };
+
+  output.value = Array.from({ length: count }, () => createUuid()).join("\n");
+  return;
+}
+if (slug === "sha256-hash-generator") {
+  const text = input.value;
+
+  if (!text) {
+    output.value = "Enter text to hash.";
+    return;
+  }
+
+  const toHex = (buffer: ArrayBuffer): string =>
+    Array.from(new Uint8Array(buffer))
+      .map((b: number) => b.toString(16).padStart(2, "0"))
+      .join("");
+
+  const encoder = new TextEncoder();
+  const data = encoder.encode(text);
+
+  crypto.subtle
+    .digest("SHA-256", data)
+    .then((buffer: ArrayBuffer) => {
+      output.value = toHex(buffer);
+    })
+    .catch(() => {
+      output.value = "Unable to generate SHA256 hash.";
+    });
+
+  return;
+}
 
 
       output.value = "This tool logic is not connected yet.";
