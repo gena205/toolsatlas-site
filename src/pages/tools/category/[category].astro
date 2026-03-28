@@ -81,7 +81,7 @@ const categoryTools = allTools.filter((tool) => tool.category === currentCategor
     {categoryTools.length > 0 ? (
       <div class="tool-grid">
         {categoryTools.map((tool) => (
-          <a class="tool-card" href={`/tools/${tool.slug}`}>
+          <a class="tool-card" href={`/tools/${tool.slug}/`}>
             <strong>{tool.name}</strong>
             <p>{tool.intro}</p>
           </a>

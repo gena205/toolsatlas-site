@@ -7,6 +7,17 @@ type ToolFaqItem = {
   a: string;
 };
 
+type ToolExampleItem = {
+  input: string;
+  output: string;
+  explanation?: string;
+};
+
+type ToolCommonErrorItem = {
+  issue: string;
+  fix: string;
+};
+
 type ToolItem = {
   id: string;
   name: string;
@@ -17,6 +28,11 @@ type ToolItem = {
   keywords?: string[];
   faq?: ToolFaqItem[];
   related?: string[];
+  whyUse?: string[];
+  howToUse?: string[];
+  examples?: ToolExampleItem[];
+  useCases?: string[];
+  commonErrors?: ToolCommonErrorItem[];
 };
 
 const allTools = tools as ToolItem[];
@@ -106,29 +122,62 @@ function formatCategoryLabel(category: string): string {
     <section class="card">
     <h2>About this tool</h2>
     <p>{tool.description}</p>
-    <p>
-      This {tool.name.toLowerCase()} helps you complete common tasks quickly in the browser without installing anything.
-    </p>
+    <p>Use {tool.name.toLowerCase()} when you need a fast browser-based result without extra setup. It works well for quick checks, one-off tasks, and routine formatting or calculation work.</p>
   </section>
 
+  {tool.whyUse && tool.whyUse.length > 0 && (
+    <section class="card">
+      <h2>Why use this tool</h2>
+      <ul>
+        {tool.whyUse.map((item) => (
+          <li>{item}</li>
+        ))}
+      </ul>
+    </section>
+  )}
 
-  <section class="card">
-  <h2>Why use this tool</h2>
-  <ul>
-    <li>Fast and simple to use directly in your browser</li>
-    <li>No installation or signup required</li>
-    <li>Works instantly on any device</li>
-  </ul>
-</section>
+  {tool.howToUse && tool.howToUse.length > 0 && (
+    <section class="card">
+      <h2>How to use</h2>
+      <ol class="steps-list">
+        {tool.howToUse.map((item) => (
+          <li>{item}</li>
+        ))}
+      </ol>
+    </section>
+  )}
 
-  <section class="card">
-    <h2>How to use</h2>
-    <ul class="steps-list">
-      <li>Paste your text, value, or raw input into the input box.</li>
-      <li>Run the tool to process the input.</li>
-      <li>Review the output and copy the result if needed.</li>
-    </ul>
-  </section>
+  {tool.examples && tool.examples.length > 0 && (
+    <section class="card">
+      <h2>Examples</h2>
+      <div class="examples-grid">
+        {tool.examples.map((example) => (
+          <div class="example-card">
+            <h3>Example</h3>
+            <p><strong>Input</strong></p>
+            <pre>{example.input}</pre>
+            <p><strong>Output</strong></p>
+            <pre>{example.output}</pre>
+            {example.explanation && <p class="example-note">{example.explanation}</p>}
+          </div>
+        ))}
+      </div>
+    </section>
+  )}
+
+  {tool.commonErrors && tool.commonErrors.length > 0 && (
+    <section class="card">
+      <h2>Common errors</h2>
+      <div class="errors-list">
+        {tool.commonErrors.map((item) => (
+          <div class="error-item">
+            <h3>{item.issue}</h3>
+            <p><strong>Fix:</strong> {item.fix}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  )}
 
   <section class="card">
     <h2>FAQ</h2>
@@ -140,21 +189,23 @@ function formatCategoryLabel(category: string): string {
     ))}
   </section>
 
-  <section class="card">
-  <h2>Use cases</h2>
-  <ul>
-    <li>Developers working with data and APIs</li>
-    <li>Students and learners</li>
-    <li>Quick everyday text or data tasks</li>
-  </ul>
-</section>
+  {tool.useCases && tool.useCases.length > 0 && (
+    <section class="card">
+      <h2>Use cases</h2>
+      <ul>
+        {tool.useCases.map((item) => (
+          <li>{item}</li>
+        ))}
+      </ul>
+    </section>
+  )}
 
   <section class="card">
     <h2>Related tools</h2>
     <ul class="related-list">
       {relatedTools.map((item) => (
         <li>
-          <a href={`/tools/${item.slug}`}>{item.name}</a>
+          <a href={`/tools/${item.slug}/`}>{item.name}</a>
         </li>
       ))}
     </ul>
@@ -282,6 +333,49 @@ function formatCategoryLabel(category: string): string {
   .steps-list li + li,
   .related-list li + li {
     margin-top: 10px;
+  }
+
+
+  .examples-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+  }
+
+  .example-card,
+  .error-item {
+    padding: 16px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: #0d1528;
+  }
+
+  .example-card h3,
+  .error-item h3 {
+    margin-bottom: 10px;
+  }
+
+  .example-card pre {
+    margin: 8px 0 14px;
+    padding: 12px;
+    border-radius: 12px;
+    background: #081120;
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  .example-note {
+    color: var(--muted);
+    margin-bottom: 0;
+  }
+
+  .errors-list {
+    display: grid;
+    gap: 14px;
   }
 
   .faq-item + .faq-item {
@@ -8648,7 +8742,7 @@ if (slug === "ping-test") {
   const raw = input.value.trim().toLowerCase();
 
   if (!raw) {
-    output.value = "Enter a domain like: google.com";
+    output.value = "Enter a domain or IPv4 address like: google.com or 8.8.8.8";
     return;
   }
 
@@ -8659,17 +8753,23 @@ if (slug === "ping-test") {
     .split(":")[0]
     .trim();
 
-  const isValidHost =
+  const isDomain =
     /^(?=.{1,253}$)(?!-)(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,63}$/i.test(host);
 
-  if (!isValidHost) {
-    output.value = "Invalid domain. Example: google.com";
+  const isIPv4 =
+    /^(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}$/.test(host);
+
+  if (!isDomain && !isIPv4) {
+    output.value = "Invalid host. Example: google.com or 8.8.8.8";
     return;
   }
 
   output.value = "Testing response time...";
 
-  const testUrl = `https://${host}/favicon.ico?ping=${Date.now()}`;
+  const testUrl = isIPv4
+    ? `https://${host}/?ping=${Date.now()}`
+    : `https://${host}/favicon.ico?ping=${Date.now()}`;
+
   const startedAt = performance.now();
 
   fetch(testUrl, {
@@ -8687,7 +8787,7 @@ if (slug === "ping-test") {
 
       output.value = [
         `Host: ${host}`,
-        `Status: Reachable`,
+        "Status: Reachable",
         `Response Time: ${ms} ms`,
         `Quality: ${quality}`,
         "",
@@ -8699,7 +8799,8 @@ if (slug === "ping-test") {
         `Host: ${host}`,
         "Status: Unreachable or blocked",
         "",
-        "The site may block cross-origin requests or may be offline.",
+        "The target may block browser requests, may be offline, or may not respond over HTTPS.",
+        "Note: This is a browser-based latency check, not raw ICMP ping.",
       ].join("\n");
     });
 
@@ -9326,6 +9427,88 @@ if (slug === "tls-version-checker") {
 
   return;
 }
+if (slug === "hsts-checker") {
+  const domain = input.value
+    .trim()
+    .replace(/^https?:\/\//i, "")
+    .replace(/^www\./i, "")
+    .split("/")[0]
+    .trim();
+
+  if (!domain) {
+    output.value = "Enter a domain.";
+    return;
+  }
+
+  output.value = "Checking HSTS...";
+
+  fetch(`/api/site-check.json?type=hsts&target=${encodeURIComponent(domain)}`, {
+    cache: "no-store"
+  })
+    .then((response: Response) => response.json())
+    .then((data: any) => {
+      if (data?.error) {
+        output.value = data.error;
+        return;
+      }
+
+      const header =
+        typeof data?.header === "string"
+          ? data.header
+          : typeof data?.strictTransportSecurity === "string"
+            ? data.strictTransportSecurity
+            : "";
+
+      const hasHsts =
+        typeof data?.hasHsts === "boolean"
+          ? data.hasHsts
+          : Boolean(header);
+
+      const maxAge =
+        data?.maxAge ?? data?.max_age ?? "n/a";
+
+      const includeSubDomains =
+        typeof data?.includeSubDomains === "boolean"
+          ? data.includeSubDomains
+            ? "Yes"
+            : "No"
+          : /includesubdomains/i.test(header)
+            ? "Yes"
+            : "No";
+
+      const preload =
+        typeof data?.preload === "boolean"
+          ? data.preload
+            ? "Yes"
+            : "No"
+          : /preload/i.test(header)
+            ? "Yes"
+            : "No";
+
+      if (!hasHsts) {
+        output.value = [
+          `Domain: ${data?.domain || domain}`,
+          "HSTS: Not present"
+        ].join("\n");
+        return;
+      }
+
+      output.value = [
+        `Domain: ${data?.domain || domain}`,
+        "HSTS: Present",
+        `Header: ${header || "n/a"}`,
+        `Max-Age: ${maxAge}`,
+        `Include Subdomains: ${includeSubDomains}`,
+        `Preload: ${preload}`
+      ].join("\n");
+    })
+    .catch(() => {
+      output.value = "Unable to check HSTS.";
+    });
+
+  return;
+}
+
 
       output.value = "This tool logic is not connected yet.";
     });

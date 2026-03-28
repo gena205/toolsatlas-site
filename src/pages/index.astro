@@ -84,7 +84,7 @@ const totalTools = allTools.length;
     <h2>Browse tool categories</h2>
     <div class="category-grid">
       {toolsByCategory.map((category) => (
-        <a class="category-card" href={`/tools/category/${category.id}`}>
+        <a class="category-card" href={`/tools/category/${category.id}/`}>
           <strong>{category.name}</strong>
           <p>{category.description}</p>
           <span>{category.tools.length} tools</span>
@@ -111,7 +111,7 @@ const totalTools = allTools.length;
       <h2>{category.name}</h2>
       <p class="section-text">{category.description}</p>
       <p class="section-link">
-        <a href={`/tools/category/${category.id}`}>View all {category.name.toLowerCase()}</a>
+        <a href={`/tools/category/${category.id}/`}>View all {category.name.toLowerCase()}</a>
       </p>
 
       <ul class="tool-list">
