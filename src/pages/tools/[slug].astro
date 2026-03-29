@@ -10362,6 +10362,114 @@ if (slug === "hostname-to-ip-lookup") {
 
   return;
 }
+if (slug === "ip-range-calculator" || slug === "broadcast-address-calculator") {
+  const raw = input.value.trim();
+
+  if (!raw) {
+    output.value = "Enter IPv4 with CIDR like: 192.168.1.10/24";
+    return;
+  }
+
+  const match = raw.match(/^(\d{1,3}(?:\.\d{1,3}){3})\s*\/\s*(\d{1,2})$/);
+
+  if (!match) {
+    output.value = "Enter IPv4 with CIDR like: 192.168.1.10/24";
+    return;
+  }
+
+  const ip = match[1];
+  const cidr = Number(match[2]);
+  const octets = ip.split(".").map(Number);
+
+  const validIp = octets.length === 4 && octets.every((n) => Number.isInteger(n) && n >= 0 && n <= 255);
+
+  if (!validIp || !Number.isInteger(cidr) || cidr < 0 || cidr > 32) {
+    output.value = "Invalid IPv4 or CIDR. Use something like: 192.168.1.10/24";
+    return;
+  }
+
+  const ipInt =
+    ((octets[0] << 24) >>> 0) +
+    ((octets[1] << 16) >>> 0) +
+    ((octets[2] << 8) >>> 0) +
+    (octets[3] >>> 0);
+
+  const mask = cidr === 0 ? 0 : (0xffffffff << (32 - cidr)) >>> 0;
+  const network = (ipInt & mask) >>> 0;
+  const broadcast = (network | (~mask >>> 0)) >>> 0;
+  const totalAddresses = 2 ** (32 - cidr);
+  const usableHosts = cidr >= 31 ? 0 : Math.max(totalAddresses - 2, 0);
+
+  const intToIp = (value: number): string =>
+    [
+      (value >>> 24) & 255,
+      (value >>> 16) & 255,
+      (value >>> 8) & 255,
+      value & 255
+    ].join(".");
+
+  const networkIp = intToIp(network);
+  const broadcastIp = intToIp(broadcast);
+
+  if (slug === "broadcast-address-calculator") {
+    output.value = [
+      `Network: ${networkIp}`,
+      `Broadcast: ${broadcastIp}`
+    ].join("\n");
+    return;
+  }
+
+  let firstUsable = "n/a";
+  let lastUsable = "n/a";
+
+  if (cidr < 31) {
+    firstUsable = intToIp(network + 1);
+    lastUsable = intToIp(broadcast - 1);
+  }
+
+  output.value = [
+    `Network: ${networkIp}`,
+    `First Usable: ${firstUsable}`,
+    `Last Usable: ${lastUsable}`,
+    `Broadcast: ${broadcastIp}`,
+    `Total Addresses: ${totalAddresses}`,
+    `Usable Hosts: ${usableHosts}`
+  ].join("\n");
+  return;
+}
+
+if (slug === "network-mask-calculator") {
+  const raw = input.value.trim();
+
+  if (!raw) {
+    output.value = "Enter a CIDR prefix like: 24 or /24";
+    return;
+  }
+
+  const cleaned = raw.replace("/", "").trim();
+  const cidr = Number(cleaned);
+
+  if (!Number.isInteger(cidr) || cidr < 0 || cidr > 32) {
+    output.value = "Enter a valid CIDR prefix between 0 and 32.";
+    return;
+  }
+
+  const mask = cidr === 0 ? 0 : (0xffffffff << (32 - cidr)) >>> 0;
+
+  const subnetMask = [
+    (mask >>> 24) & 255,
+    (mask >>> 16) & 255,
+    (mask >>> 8) & 255,
+    mask & 255
+  ].join(".");
+
+  output.value = [
+    `CIDR: /${cidr}`,
+    `Subnet Mask: ${subnetMask}`
+  ].join("\n");
+  return;
+}
+
       output.value = "This tool logic is not connected yet.";
     });
 

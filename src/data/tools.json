@@ -19797,4 +19797,265 @@
     "website-status-checker"
   ]
 }
+,
+{
+  "id": "ip-range-calculator",
+  "name": "IP Range Calculator",
+  "slug": "ip-range-calculator",
+  "category": "network-tools",
+  "intro": "Calculate the usable IP range for an IPv4 subnet from CIDR input.",
+  "description": "Use this IP Range Calculator to find the network address, first usable IP, last usable IP, broadcast address, and total host count for an IPv4 subnet. It is useful for subnetting practice, network planning, and quick troubleshooting.",
+  "keywords": [
+    "ip range calculator",
+    "cidr ip range",
+    "subnet ip range calculator",
+    "usable ip range"
+  ],
+  "whyUse": [
+    "Quickly calculates usable host ranges from CIDR.",
+    "Useful for subnetting study and network planning.",
+    "Shows key values in one clear result.",
+    "Helps avoid manual subnet math mistakes.",
+    "Works instantly in the browser."
+  ],
+  "howToUse": [
+    "Enter an IPv4 address with CIDR notation like 192.168.1.10/24.",
+    "Run the tool to calculate the subnet.",
+    "Review the network, first host, last host, and broadcast values.",
+    "Use the result for planning or troubleshooting."
+  ],
+  "examples": [
+    {
+      "input": "192.168.1.10/24",
+      "output": "Network: 192.168.1.0\nFirst Usable: 192.168.1.1\nLast Usable: 192.168.1.254\nBroadcast: 192.168.1.255\nTotal Addresses: 256\nUsable Hosts: 254",
+      "explanation": "Shows the standard usable host range for a /24 subnet."
+    },
+    {
+      "input": "10.0.0.5/30",
+      "output": "Network: 10.0.0.4\nFirst Usable: 10.0.0.5\nLast Usable: 10.0.0.6\nBroadcast: 10.0.0.7\nTotal Addresses: 4\nUsable Hosts: 2",
+      "explanation": "Useful for small point-to-point style IPv4 subnets."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The input is missing CIDR notation.",
+      "fix": "Use a format like 192.168.1.10/24."
+    },
+    {
+      "issue": "An octet is outside the valid IPv4 range.",
+      "fix": "Make sure each IPv4 octet is between 0 and 255."
+    },
+    {
+      "issue": "The CIDR prefix is invalid.",
+      "fix": "Use a prefix between 0 and 32."
+    }
+  ],
+  "useCases": [
+    "Planning host ranges for small office networks.",
+    "Checking usable IPs during subnetting practice.",
+    "Verifying network boundaries before configuration.",
+    "Quickly reviewing an IPv4 subnet during troubleshooting."
+  ],
+  "faq": [
+    {
+      "q": "What does this tool calculate?",
+      "a": "It calculates the network address, usable host range, broadcast address, and address counts for an IPv4 subnet."
+    },
+    {
+      "q": "What input format should I use?",
+      "a": "Use IPv4 with CIDR notation, such as 192.168.1.10/24."
+    },
+    {
+      "q": "Does it support IPv6?",
+      "a": "No. This version is for IPv4 subnet calculations only."
+    },
+    {
+      "q": "What is the usable host range?",
+      "a": "It is the range between the network address and the broadcast address, excluding both in standard subnets."
+    },
+    {
+      "q": "Why is this useful?",
+      "a": "It helps with subnetting, network design, exam prep, and avoiding manual calculation mistakes."
+    }
+  ],
+  "related": [
+    "network-mask-calculator",
+    "broadcast-address-calculator",
+    "ipv4-validator"
+  ]
+}
+,
+{
+  "id": "network-mask-calculator",
+  "name": "Network Mask Calculator",
+  "slug": "network-mask-calculator",
+  "category": "network-tools",
+  "intro": "Convert an IPv4 CIDR prefix into its subnet mask.",
+  "description": "Use this Network Mask Calculator to convert CIDR notation like /24 into a dotted decimal subnet mask such as 255.255.255.0. It is useful for subnetting practice, network configuration, and quick IPv4 reference checks.",
+  "keywords": [
+    "network mask calculator",
+    "cidr to subnet mask",
+    "subnet mask calculator",
+    "ipv4 mask calculator"
+  ],
+  "whyUse": [
+    "Quickly converts CIDR into dotted subnet masks.",
+    "Useful for IPv4 configuration and planning.",
+    "Helps with subnetting learning and exam practice.",
+    "Avoids manual binary conversion mistakes.",
+    "Simple one-input one-result tool."
+  ],
+  "howToUse": [
+    "Enter a CIDR prefix like /24 or just 24.",
+    "Run the tool to convert the prefix.",
+    "Review the dotted decimal subnet mask.",
+    "Use the result in network configuration or planning."
+  ],
+  "examples": [
+    {
+      "input": "24",
+      "output": "CIDR: /24\nSubnet Mask: 255.255.255.0",
+      "explanation": "Converts a common /24 subnet into dotted decimal form."
+    },
+    {
+      "input": "/30",
+      "output": "CIDR: /30\nSubnet Mask: 255.255.255.252",
+      "explanation": "Useful for small subnets and point-to-point configurations."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Users enter a full IP/CIDR instead of only the prefix.",
+      "fix": "Enter just the prefix like 24 or /24 for this tool."
+    },
+    {
+      "issue": "The prefix is outside the valid range.",
+      "fix": "Use a number between 0 and 32."
+    },
+    {
+      "issue": "Users expect IPv6 masks.",
+      "fix": "This tool is only for IPv4 subnet masks."
+    }
+  ],
+  "useCases": [
+    "Converting CIDR into subnet mask format for router setup.",
+    "Checking subnet masks during study and lab work.",
+    "Quickly verifying IPv4 mask values before configuration.",
+    "Reviewing common prefixes used in enterprise networks."
+  ],
+  "faq": [
+    {
+      "q": "What does this tool convert?",
+      "a": "It converts an IPv4 CIDR prefix into a dotted decimal subnet mask."
+    },
+    {
+      "q": "Can I enter 24 instead of /24?",
+      "a": "Yes. Both 24 and /24 are accepted."
+    },
+    {
+      "q": "Does this tool support IPv6?",
+      "a": "No. It is only for IPv4 subnet masks."
+    },
+    {
+      "q": "Why is dotted decimal mask format still useful?",
+      "a": "Many devices, documents, and labs still use dotted decimal subnet masks."
+    },
+    {
+      "q": "What is the subnet mask for /24?",
+      "a": "It is 255.255.255.0."
+    }
+  ],
+  "related": [
+    "ip-range-calculator",
+    "broadcast-address-calculator",
+    "ipv4-validator"
+  ]
+}
+,
+{
+  "id": "broadcast-address-calculator",
+  "name": "Broadcast Address Calculator",
+  "slug": "broadcast-address-calculator",
+  "category": "network-tools",
+  "intro": "Calculate the IPv4 broadcast address from an IP and CIDR.",
+  "description": "Use this Broadcast Address Calculator to find the broadcast address for an IPv4 subnet from input like 192.168.1.10/24. It is useful for subnetting practice, lab work, network planning, and quick address verification.",
+  "keywords": [
+    "broadcast address calculator",
+    "ipv4 broadcast calculator",
+    "cidr broadcast address",
+    "subnet broadcast checker"
+  ],
+  "whyUse": [
+    "Quickly finds the broadcast address for IPv4 subnets.",
+    "Useful for subnetting and network planning.",
+    "Helps verify subnet boundaries during lab work.",
+    "Avoids manual binary calculation mistakes.",
+    "Fast single-purpose network calculator."
+  ],
+  "howToUse": [
+    "Enter an IPv4 address with CIDR notation like 192.168.1.10/24.",
+    "Run the tool to calculate the subnet broadcast address.",
+    "Review the result in the output area.",
+    "Use it for subnet verification or planning."
+  ],
+  "examples": [
+    {
+      "input": "192.168.1.10/24",
+      "output": "Network: 192.168.1.0\nBroadcast: 192.168.1.255",
+      "explanation": "Shows the broadcast address for a typical /24 subnet."
+    },
+    {
+      "input": "10.0.0.5/30",
+      "output": "Network: 10.0.0.4\nBroadcast: 10.0.0.7",
+      "explanation": "Useful when checking very small IPv4 subnets."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The input does not include CIDR notation.",
+      "fix": "Use a format like 10.0.0.5/30."
+    },
+    {
+      "issue": "An IPv4 octet is invalid.",
+      "fix": "Make sure all IPv4 octets are between 0 and 255."
+    },
+    {
+      "issue": "Users expect a full subnet summary.",
+      "fix": "This tool focuses on network and broadcast results only."
+    }
+  ],
+  "useCases": [
+    "Checking IPv4 broadcast addresses during subnetting practice.",
+    "Verifying subnet boundaries before assigning hosts.",
+    "Reviewing lab addressing during troubleshooting.",
+    "Quickly calculating broadcast values for network planning."
+  ],
+  "faq": [
+    {
+      "q": "What does a broadcast address do?",
+      "a": "It identifies the last address in a standard IPv4 subnet and is used to send traffic to all hosts in that subnet."
+    },
+    {
+      "q": "What input format should I use?",
+      "a": "Use IPv4 with CIDR notation, such as 192.168.1.10/24."
+    },
+    {
+      "q": "Does this support IPv6?",
+      "a": "No. Broadcast addresses are an IPv4 concept and this tool is for IPv4 only."
+    },
+    {
+      "q": "Why is this useful?",
+      "a": "It helps validate subnet boundaries and supports subnetting practice and configuration work."
+    },
+    {
+      "q": "Is the broadcast address always the last address in the subnet?",
+      "a": "Yes, in standard IPv4 subnetting it is the last address in the subnet range."
+    }
+  ],
+  "related": [
+    "ip-range-calculator",
+    "network-mask-calculator",
+    "ipv4-validator"
+  ]
+}
 ]
