@@ -20058,4 +20058,266 @@
     "ipv4-validator"
   ]
 }
+
+,
+{
+  "id": "usable-hosts-calculator",
+  "name": "Usable Hosts Calculator",
+  "slug": "usable-hosts-calculator",
+  "category": "network-tools",
+  "intro": "Calculate the number of usable IPv4 hosts from a CIDR prefix.",
+  "description": "Use this Usable Hosts Calculator to find how many usable IPv4 host addresses are available in a subnet based on CIDR notation. It is useful for subnetting practice, network planning, and quick IPv4 calculations.",
+  "keywords": [
+    "usable hosts calculator",
+    "cidr usable hosts",
+    "subnet host calculator",
+    "ipv4 host count"
+  ],
+  "whyUse": [
+    "Quickly calculates usable IPv4 host counts.",
+    "Useful for subnetting study and exam practice.",
+    "Helps plan subnet sizes without manual math.",
+    "Good for validating network design choices.",
+    "Fast single-purpose calculator for IPv4 work."
+  ],
+  "howToUse": [
+    "Enter a CIDR prefix like /24 or just 24.",
+    "Run the tool to calculate the subnet size.",
+    "Review total addresses and usable host count.",
+    "Use the result for planning or subnetting practice."
+  ],
+  "examples": [
+    {
+      "input": "24",
+      "output": "CIDR: /24\nTotal Addresses: 256\nUsable Hosts: 254",
+      "explanation": "Shows the standard usable host count for a /24 subnet."
+    },
+    {
+      "input": "30",
+      "output": "CIDR: /30\nTotal Addresses: 4\nUsable Hosts: 2",
+      "explanation": "Useful for very small IPv4 subnets."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The prefix is outside the valid range.",
+      "fix": "Use a CIDR value between 0 and 32."
+    },
+    {
+      "issue": "Users expect IPv6 calculations.",
+      "fix": "This tool is only for IPv4 host calculations."
+    },
+    {
+      "issue": "Users confuse total addresses with usable hosts.",
+      "fix": "Remember usable hosts usually exclude network and broadcast addresses."
+    }
+  ],
+  "useCases": [
+    "Checking subnet size before assigning hosts.",
+    "Practicing IPv4 subnetting for exams.",
+    "Planning VLAN or subnet capacity.",
+    "Quickly comparing multiple CIDR options."
+  ],
+  "faq": [
+    {
+      "q": "What does this tool calculate?",
+      "a": "It calculates total IPv4 addresses and usable host addresses from a CIDR prefix."
+    },
+    {
+      "q": "What input format should I use?",
+      "a": "Use a prefix like 24 or /24."
+    },
+    {
+      "q": "Does it support IPv6?",
+      "a": "No. This version is for IPv4 only."
+    },
+    {
+      "q": "Why are usable hosts fewer than total addresses?",
+      "a": "Because standard IPv4 subnets reserve one address for the network and one for broadcast."
+    },
+    {
+      "q": "What is the usable host count for /24?",
+      "a": "A /24 subnet has 254 usable IPv4 hosts."
+    }
+  ],
+  "related": [
+    "ip-range-calculator",
+    "network-mask-calculator",
+    "broadcast-address-calculator"
+  ]
+}
+,
+{
+  "id": "port-range-checker",
+  "name": "Port Range Checker",
+  "slug": "port-range-checker",
+  "category": "network-tools",
+  "intro": "Check whether a port number falls into a well-known, registered, or dynamic range.",
+  "description": "Use this Port Range Checker to classify a TCP or UDP port number into the standard well-known, registered, or dynamic/private port ranges. It is useful for networking study, firewall reviews, and basic port reference checks.",
+  "keywords": [
+    "port range checker",
+    "port classification",
+    "well known ports",
+    "registered port range"
+  ],
+  "whyUse": [
+    "Quickly classifies a port into its standard range.",
+    "Useful for networking study and exam prep.",
+    "Helps review firewall or service port choices.",
+    "Simple way to understand port categories.",
+    "Fast browser-based reference check."
+  ],
+  "howToUse": [
+    "Enter a port number between 0 and 65535.",
+    "Run the tool to classify the port.",
+    "Review the port range category returned.",
+    "Use the result for study, planning, or troubleshooting."
+  ],
+  "examples": [
+    {
+      "input": "80",
+      "output": "Port: 80\nRange: Well-Known Ports\nDescription: 0-1023",
+      "explanation": "Port 80 belongs to the well-known system port range."
+    },
+    {
+      "input": "49152",
+      "output": "Port: 49152\nRange: Dynamic / Private Ports\nDescription: 49152-65535",
+      "explanation": "Shows a port in the dynamic/private range."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The input is not a whole number.",
+      "fix": "Enter an integer port value between 0 and 65535."
+    },
+    {
+      "issue": "The port is outside the valid range.",
+      "fix": "Use a value from 0 to 65535."
+    },
+    {
+      "issue": "Users expect open-port scanning.",
+      "fix": "This tool classifies the port range only and does not test whether the port is open."
+    }
+  ],
+  "useCases": [
+    "Studying networking and port classifications.",
+    "Checking whether a service port is system, registered, or dynamic.",
+    "Reviewing firewall rules during documentation work.",
+    "Doing quick port reference checks during troubleshooting."
+  ],
+  "faq": [
+    {
+      "q": "What does this tool check?",
+      "a": "It checks which standard port range a port number belongs to."
+    },
+    {
+      "q": "Does it scan whether the port is open?",
+      "a": "No. It classifies the number only and does not test live connectivity."
+    },
+    {
+      "q": "What are well-known ports?",
+      "a": "They are ports from 0 to 1023 typically reserved for common system services."
+    },
+    {
+      "q": "What are registered ports?",
+      "a": "They are ports from 1024 to 49151 often used by user applications and vendor services."
+    },
+    {
+      "q": "What are dynamic or private ports?",
+      "a": "They are ports from 49152 to 65535 commonly used for ephemeral client-side connections."
+    }
+  ],
+  "related": [
+    "port-checker",
+    "usable-hosts-calculator",
+    "ipv4-validator"
+  ]
+}
+,
+{
+  "id": "email-header-analyzer",
+  "name": "Email Header Analyzer",
+  "slug": "email-header-analyzer",
+  "category": "network-tools",
+  "intro": "Analyze raw email headers and extract key delivery and authentication fields.",
+  "description": "Use this Email Header Analyzer to inspect raw email headers and extract important fields such as From, To, Subject, Date, Message-ID, Received, Return-Path, SPF, DKIM, and DMARC-related results. It is useful for troubleshooting delivery issues, understanding mail flow, and basic email analysis.",
+  "keywords": [
+    "email header analyzer",
+    "analyze email headers",
+    "mail header parser",
+    "raw email header checker"
+  ],
+  "whyUse": [
+    "Quickly extracts important fields from raw email headers.",
+    "Useful for mail troubleshooting and delivery analysis.",
+    "Helps review SPF, DKIM, and authentication-related lines.",
+    "Good for understanding Received chains and routing.",
+    "Works locally in the browser without external lookup."
+  ],
+  "howToUse": [
+    "Paste the raw email headers into the input box.",
+    "Run the tool to parse the header lines.",
+    "Review the extracted summary and key fields.",
+    "Use the result to inspect routing and authentication data."
+  ],
+  "examples": [
+    {
+      "input": "From: sender@example.com\nTo: user@example.net\nSubject: Test message\nDate: Tue, 1 Jan 2026 10:00:00 +0000\nMessage-ID: <abc123@example.com>",
+      "output": "From: sender@example.com\nTo: user@example.net\nSubject: Test message\nDate: Tue, 1 Jan 2026 10:00:00 +0000\nMessage-ID: <abc123@example.com>",
+      "explanation": "Extracts common top-level email header fields."
+    },
+    {
+      "input": "Received: from mail.example.com ...\nAuthentication-Results: spf=pass dkim=pass dmarc=pass ...",
+      "output": "Received Count: 1\nSPF: pass\nDKIM: pass\nDMARC: pass",
+      "explanation": "Useful for quick authentication result checks."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The full email body is pasted instead of headers only.",
+      "fix": "Paste the raw header block for the clearest output."
+    },
+    {
+      "issue": "Headers are incomplete or truncated.",
+      "fix": "Copy the full original raw headers from the email client."
+    },
+    {
+      "issue": "Users expect live DNS or reputation checks.",
+      "fix": "This tool parses header content only and does not perform external reputation lookups."
+    }
+  ],
+  "useCases": [
+    "Reviewing mail routing from Received headers.",
+    "Checking SPF, DKIM, and DMARC outcomes.",
+    "Troubleshooting email delivery issues.",
+    "Inspecting raw headers during support or admin work."
+  ],
+  "faq": [
+    {
+      "q": "What does this tool analyze?",
+      "a": "It analyzes pasted raw email headers and extracts key delivery and authentication fields."
+    },
+    {
+      "q": "Does it perform live DNS checks?",
+      "a": "No. It parses only the header content you paste into the tool."
+    },
+    {
+      "q": "Can it show Received hops?",
+      "a": "Yes. It counts and lists Received lines found in the header block."
+    },
+    {
+      "q": "Can it detect SPF, DKIM, and DMARC results?",
+      "a": "Yes. It can extract those results when they appear in the headers."
+    },
+    {
+      "q": "Why is this useful?",
+      "a": "It helps understand how an email was delivered and whether authentication checks passed."
+    }
+  ],
+  "related": [
+    "website-header-checker",
+    "meta-tag-analyzer",
+    "port-range-checker"
+  ]
+}
 ]

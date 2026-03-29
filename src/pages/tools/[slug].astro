@@ -10469,6 +10469,106 @@ if (slug === "network-mask-calculator") {
   ].join("\n");
   return;
 }
+if (slug === "usable-hosts-calculator") {
+  const raw = input.value.trim();
+
+  if (!raw) {
+    output.value = "Enter a CIDR prefix like: 24 or /24";
+    return;
+  }
+
+  const cleaned = raw.replace("/", "").trim();
+  const cidr = Number(cleaned);
+
+  if (!Number.isInteger(cidr) || cidr < 0 || cidr > 32) {
+    output.value = "Enter a valid CIDR prefix between 0 and 32.";
+    return;
+  }
+
+  const totalAddresses = 2 ** (32 - cidr);
+  const usableHosts = cidr >= 31 ? 0 : Math.max(totalAddresses - 2, 0);
+
+  output.value = [
+    `CIDR: /${cidr}`,
+    `Total Addresses: ${totalAddresses}`,
+    `Usable Hosts: ${usableHosts}`
+  ].join("\n");
+  return;
+}
+
+if (slug === "port-range-checker") {
+  const raw = input.value.trim();
+  const port = Number(raw);
+
+  if (!Number.isInteger(port) || port < 0 || port > 65535) {
+    output.value = "Enter a whole port number between 0 and 65535.";
+    return;
+  }
+
+  let range = "";
+  let description = "";
+
+  if (port <= 1023) {
+    range = "Well-Known Ports";
+    description = "0-1023";
+  } else if (port <= 49151) {
+    range = "Registered Ports";
+    description = "1024-49151";
+  } else {
+    range = "Dynamic / Private Ports";
+    description = "49152-65535";
+  }
+
+  output.value = [
+    `Port: ${port}`,
+    `Range: ${range}`,
+    `Description: ${description}`
+  ].join("\n");
+  return;
+}
+
+if (slug === "email-header-analyzer") {
+  const raw = input.value.trim();
+
+  if (!raw) {
+    output.value = "Paste raw email headers to analyze.";
+    return;
+  }
+
+  const getHeaderValue = (name: string): string => {
+    const regex = new RegExp(`^${name}:\\s*(.+)$`, "im");
+    const match = raw.match(regex);
+    return match ? match[1].trim() : "";
+  };
+
+  const receivedLines = raw.match(/^Received:\s*.+$/gim) || [];
+  const authResults = getHeaderValue("Authentication-Results");
+  const from = getHeaderValue("From");
+  const to = getHeaderValue("To");
+  const subject = getHeaderValue("Subject");
+  const date = getHeaderValue("Date");
+  const messageId = getHeaderValue("Message-ID");
+  const returnPath = getHeaderValue("Return-Path");
+
+  const spfMatch = raw.match(/\bspf=(pass|fail|softfail|neutral|none|temperror|permerror)\b/i);
+  const dkimMatch = raw.match(/\bdkim=(pass|fail|none|temperror|permerror)\b/i);
+  const dmarcMatch = raw.match(/\bdmarc=(pass|fail|bestguesspass|none|temperror|permerror)\b/i);
+
+  output.value = [
+    `From: ${from || "Not found"}`,
+    `To: ${to || "Not found"}`,
+    `Subject: ${subject || "Not found"}`,
+    `Date: ${date || "Not found"}`,
+    `Message-ID: ${messageId || "Not found"}`,
+    `Return-Path: ${returnPath || "Not found"}`,
+    `Received Count: ${receivedLines.length}`,
+    `SPF: ${spfMatch ? spfMatch[1] : "Not found"}`,
+    `DKIM: ${dkimMatch ? dkimMatch[1] : "Not found"}`,
+    `DMARC: ${dmarcMatch ? dmarcMatch[1] : "Not found"}`,
+    `Authentication-Results: ${authResults || "Not found"}`
+  ].join("\n");
+  return;
+}
 
       output.value = "This tool logic is not connected yet.";
     });
