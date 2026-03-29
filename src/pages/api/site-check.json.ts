@@ -267,6 +267,7 @@ function extractMetaContent(html: string, attrName: "name" | "property", attrVal
   const match = html.match(regex);
   return decodeHtml((match?.[1] || match?.[2] || "").trim());
 }
+
 function requestWithTiming(targetUrl: string): Promise<{ url: string; status: number; responseTimeMs: number }> {
   return new Promise((resolve, reject) => {
     const started = Date.now();
@@ -354,8 +355,13 @@ function runTraceroute(targetHost: string): Promise<any[]> {
   });
 }
 
-async function fetchJsonUrl(targetUrl: string): Promise<any> {
+async function fetchJsonUrl(targetUrl: string, depth = 0): Promise<any> {
   return new Promise((resolve, reject) => {
+    if (depth > 5) {
+      reject(new Error("Too many redirects"));
+      return;
+    }
+
     const urlObj = new URL(targetUrl);
     const lib = urlObj.protocol === "https:" ? https : http;
 
@@ -373,6 +379,20 @@ async function fetchJsonUrl(targetUrl: string): Promise<any> {
         timeout: 15000
       },
       (res) => {
+        const status = res.statusCode || 0;
+        const locationHeader = res.headers.location;
+
+        if ([301, 302, 303, 307, 308].includes(status) && typeof locationHeader === "string") {
+          const nextUrl = new URL(locationHeader, targetUrl).toString();
+          res.resume();
+
+          fetchJsonUrl(nextUrl, depth + 1)
+            .then(resolve)
+            .catch(reject);
+
+          return;
+        }
+
         let body = "";
 
         res.on("data", (chunk) => {
@@ -384,7 +404,7 @@ async function fetchJsonUrl(targetUrl: string): Promise<any> {
             const parsed = JSON.parse(body);
             resolve(parsed);
           } catch {
-            reject(new Error("Invalid JSON response"));
+            reject(new Error(`Invalid JSON response (status ${status})`));
           }
         });
       }
@@ -558,7 +578,8 @@ export async function GET({ url }: { url: URL }) {
         supportedProtocols: supported
       });
     }
-        if (type === "response-time") {
+
+    if (type === "response-time") {
       const targetUrl = normalizeUrl(target);
       const data = await requestWithTiming(targetUrl);
       return json(data);
@@ -575,15 +596,16 @@ export async function GET({ url }: { url: URL }) {
     }
 
     if (type === "traceroute") {
-      const host = extractHost(target);
-      const hops = await runTraceroute(host);
+      const routeHost = extractHost(target);
+      const hops = await runTraceroute(routeHost);
 
       return json({
-        target: host,
+        target: routeHost,
         hops
       });
     }
-        if (type === "hostname-to-ip") {
+
+    if (type === "hostname-to-ip") {
       let hostname = String(target || "").trim();
 
       try {
@@ -631,7 +653,8 @@ export async function GET({ url }: { url: URL }) {
         }, 200);
       }
     }
-        if (type === "domain-age") {
+
+    if (type === "domain-age") {
       const domain = extractDomainFromInput(target);
 
       if (!domain || !/^[a-z0-9.-]+\.[a-z]{2,}$/i.test(domain)) {
@@ -646,7 +669,11 @@ export async function GET({ url }: { url: URL }) {
 
         const registrationDate = getRdapEventDate(events, ["registration"]);
         const expirationDate = getRdapEventDate(events, ["expiration", "registrar expiration"]);
-        const lastUpdated = getRdapEventDate(events, ["last changed", "last update of rdap database", "last update of RDAP database"]);
+        const lastUpdated = getRdapEventDate(events, [
+          "last changed",
+          "last update of rdap database",
+          "last update of RDAP database"
+        ]);
 
         let ageDays: number | null = null;
         let ageYears: string | null = null;
@@ -669,9 +696,9 @@ export async function GET({ url }: { url: URL }) {
           ageDays,
           ageYears
         });
-      } catch {
+      } catch (error: any) {
         return json({
-          error: "Unable to check domain age."
+          error: error?.message || "Unable to check domain age."
         }, 200);
       }
     }
