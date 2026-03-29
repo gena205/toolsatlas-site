@@ -19712,89 +19712,89 @@
 }
 ,
 {
-  "id": "traceroute-tool",
-  "name": "Traceroute Tool",
-  "slug": "traceroute-tool",
+  "id": "hostname-to-ip-lookup",
+  "name": "Hostname to IP Lookup",
+  "slug": "hostname-to-ip-lookup",
   "category": "network-tools",
-  "intro": "Run a basic traceroute-style check and inspect the route to a host.",
-  "description": "Use this Traceroute Tool to perform a simple route check to a domain or IP address. It is useful for networking study, troubleshooting connectivity problems, and understanding how traffic reaches a destination.",
+  "intro": "Resolve a hostname or domain into its IP addresses.",
+  "description": "Use this Hostname to IP Lookup tool to resolve a domain or hostname into IPv4 and IPv6 addresses. It is useful for DNS troubleshooting, server checks, networking study, and quick hostname validation.",
   "keywords": [
-    "traceroute tool",
-    "online traceroute",
-    "route checker",
-    "trace route host"
+    "hostname to ip",
+    "domain to ip lookup",
+    "resolve hostname",
+    "dns ip lookup"
   ],
   "whyUse": [
-    "Helps inspect the path to a destination host.",
-    "Useful for basic network troubleshooting and learning.",
-    "Can reveal where a route appears to stop or fail.",
-    "Good for comparing route behavior between targets.",
-    "Simple way to run a traceroute-style check online."
+    "Quickly resolve a hostname into IP addresses.",
+    "Useful for basic DNS and connectivity troubleshooting.",
+    "Shows IPv4 and IPv6 results separately.",
+    "Good for server checks and network study.",
+    "Works better for a site than traceroute-style tools."
   ],
   "howToUse": [
-    "Paste a domain or IP address into the input box.",
-    "Run the tool to start the route check.",
-    "Review the hop list and route output.",
-    "Use the result to identify where the path changes or stops."
+    "Paste a domain or hostname into the input box.",
+    "Run the tool to resolve DNS records.",
+    "Review the IPv4 and IPv6 addresses returned.",
+    "Use the result for troubleshooting or validation."
   ],
   "examples": [
     {
       "input": "example.com",
-      "output": "Target: example.com\nHop 1: ...\nHop 2: ...\nHop 3: ...",
-      "explanation": "Shows the route path toward the target host."
+      "output": "Hostname: example.com\nIPv4:\n93.184.216.34\n\nIPv6:\n2606:2800:220:1:248:1893:25c8:1946",
+      "explanation": "Shows both IPv4 and IPv6 addresses when available."
     },
     {
-      "input": "8.8.8.8",
-      "output": "Target: 8.8.8.8\nHop 1: ...\nHop 2: ...\nHop 3: ...",
-      "explanation": "Useful when checking the route to a public IP address."
+      "input": "google.com",
+      "output": "Hostname: google.com\nIPv4:\n...\n\nIPv6:\n...",
+      "explanation": "Useful for quickly checking DNS resolution for a public hostname."
     }
   ],
   "commonErrors": [
     {
-      "issue": "Users expect a browser-only traceroute without backend support.",
-      "fix": "Traceroute-style checks usually need server-side logic to work."
+      "issue": "A full URL is entered instead of a hostname.",
+      "fix": "Use the domain or hostname only, or let the tool extract the host from a URL."
     },
     {
-      "issue": "A private or malformed target is entered.",
-      "fix": "Use a valid public domain or IP address."
+      "issue": "The hostname does not exist.",
+      "fix": "Check for typos and try again with the correct domain."
     },
     {
-      "issue": "Some hops do not reply.",
-      "fix": "That can be normal because some routers do not respond to traceroute probes."
+      "issue": "Users expect ownership or geo data.",
+      "fix": "This tool resolves IP addresses only. Use other tools for whois or IP info."
     }
   ],
   "useCases": [
-    "Learning how network routes work.",
-    "Troubleshooting connectivity issues to a host.",
-    "Checking where a route appears to stop.",
-    "Comparing path behavior to different destinations."
+    "Checking whether a domain resolves correctly.",
+    "Comparing IPv4 and IPv6 availability.",
+    "Doing quick DNS troubleshooting before deeper checks.",
+    "Validating server hostnames during setup or support."
   ],
   "faq": [
     {
-      "q": "What does traceroute do?",
-      "a": "Traceroute shows the intermediate hops between the source and the destination host."
+      "q": "What does this tool do?",
+      "a": "It resolves a hostname or domain into its IP addresses."
     },
     {
-      "q": "Can some hops be missing?",
-      "a": "Yes. Some network devices do not respond to traceroute requests."
+      "q": "Can it show both IPv4 and IPv6?",
+      "a": "Yes. It checks both address families separately when available."
     },
     {
-      "q": "Can I enter a domain or an IP address?",
-      "a": "Yes. Both are valid for this tool."
+      "q": "Can I paste a full URL?",
+      "a": "Yes. The tool can extract the hostname from a full URL."
     },
     {
-      "q": "Why is this useful?",
-      "a": "It helps identify where connectivity slows down, changes route, or appears to fail."
+      "q": "Why would no IP address be returned?",
+      "a": "The domain may not resolve, may be typed incorrectly, or may not have records for that address family."
     },
     {
-      "q": "Does this guarantee the exact full route every time?",
-      "a": "No. Network paths can change and some hops may not respond."
+      "q": "Is this the same as ping?",
+      "a": "No. This tool only resolves DNS to IP addresses and does not test reachability."
     }
   ],
   "related": [
-    "ping-test",
     "dns-lookup",
-    "response-time-checker"
+    "ip-lookup",
+    "website-status-checker"
   ]
 }
 ]

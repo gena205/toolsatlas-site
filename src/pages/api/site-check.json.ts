@@ -2,6 +2,7 @@ import http from "node:http";
 import https from "node:https";
 import tls from "node:tls";
 import { spawn } from "node:child_process";
+import dns from "node:dns/promises";
 
 export const prerender = false;
 
@@ -497,6 +498,54 @@ export async function GET({ url }: { url: URL }) {
         target: host,
         hops
       });
+    }
+        if (type === "hostname-to-ip") {
+      let hostname = String(target || "").trim();
+
+      try {
+        if (/^https?:\/\//i.test(hostname)) {
+          hostname = new URL(hostname).hostname;
+        }
+      } catch {
+        return json({ error: "Invalid URL" }, 200);
+      }
+
+      if (!hostname) {
+        return json({ error: "Invalid hostname" }, 200);
+      }
+
+      try {
+        const [ipv4Raw, ipv6Raw] = await Promise.allSettled([
+          dns.resolve4(hostname),
+          dns.resolve6(hostname)
+        ]);
+
+        const ipv4 =
+          ipv4Raw.status === "fulfilled" && Array.isArray(ipv4Raw.value)
+            ? ipv4Raw.value
+            : [];
+
+        const ipv6 =
+          ipv6Raw.status === "fulfilled" && Array.isArray(ipv6Raw.value)
+            ? ipv6Raw.value
+            : [];
+
+        if (!ipv4.length && !ipv6.length) {
+          return json({
+            error: "No IP records found for this hostname."
+          }, 200);
+        }
+
+        return json({
+          hostname,
+          ipv4,
+          ipv6
+        });
+      } catch {
+        return json({
+          error: "Unable to resolve hostname."
+        }, 200);
+      }
     }
 
     return json({ error: "Unsupported type" }, 400);

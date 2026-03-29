@@ -10323,17 +10323,17 @@ if (slug === "website-status-checker") {
   return;
 }
 
-if (slug === "traceroute-tool") {
-  const rawTarget = input.value.trim();
+if (slug === "hostname-to-ip-lookup") {
+  const rawInput = input.value.trim();
 
-  if (!rawTarget) {
-    output.value = "Enter a domain or IP address like example.com or 8.8.8.8.";
+  if (!rawInput) {
+    output.value = "Enter a domain or hostname like example.com.";
     return;
   }
 
-  output.value = "Running traceroute...";
+  output.value = "Resolving hostname...";
 
-  fetch(`/api/site-check.json?type=traceroute&target=${encodeURIComponent(rawTarget)}`, {
+  fetch(`/api/site-check.json?type=hostname-to-ip&target=${encodeURIComponent(rawInput)}`, {
     cache: "no-store"
   })
     .then((response: Response) => response.json())
@@ -10343,20 +10343,21 @@ if (slug === "traceroute-tool") {
         return;
       }
 
-      const hops = Array.isArray(data?.hops) ? data.hops : [];
-
-      if (!hops.length) {
-        output.value = `Target: ${data.target || rawTarget}\nNo traceroute result available.`;
-        return;
-      }
+      const ipv4 = Array.isArray(data?.ipv4) ? data.ipv4 : [];
+      const ipv6 = Array.isArray(data?.ipv6) ? data.ipv6 : [];
 
       output.value = [
-        `Target: ${data.target || rawTarget}`,
-        ...hops.map((hop: any) => `Hop ${hop.hop}: ${hop.host || "*"}${hop.ip ? ` (${hop.ip})` : ""}${hop.timeMs != null ? ` - ${hop.timeMs} ms` : ""}`)
+        `Hostname: ${data.hostname || rawInput}`,
+        "",
+        "IPv4:",
+        ...(ipv4.length ? ipv4 : ["No IPv4 records found"]),
+        "",
+        "IPv6:",
+        ...(ipv6.length ? ipv6 : ["No IPv6 records found"])
       ].join("\n");
     })
     .catch(() => {
-      output.value = "Unable to run traceroute.";
+      output.value = "Unable to resolve hostname.";
     });
 
   return;
