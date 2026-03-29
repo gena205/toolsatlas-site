@@ -204,6 +204,68 @@ async function getTlsVersions(host: string) {
   return supported;
 }
 
+async function fetchRemoteText(targetUrl: string): Promise<{ text: string; status: number }> {
+  return new Promise((resolve, reject) => {
+    const urlObj = new URL(targetUrl);
+    const lib = urlObj.protocol === "https:" ? https : http;
+
+    const req = lib.request(
+      {
+        protocol: urlObj.protocol,
+        hostname: urlObj.hostname,
+        port: urlObj.port || undefined,
+        path: `${urlObj.pathname}${urlObj.search}`,
+        method: "GET",
+        headers: {
+          "User-Agent": "ToolsAtlas/1.0",
+          "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
+        },
+        timeout: 10000
+      },
+      (res) => {
+        let body = "";
+
+        res.on("data", (chunk) => {
+          body += chunk.toString();
+        });
+
+        res.on("end", () => {
+          resolve({
+            text: body,
+            status: res.statusCode || 0
+          });
+        });
+      }
+    );
+
+    req.on("timeout", () => {
+      req.destroy(new Error("timeout"));
+    });
+
+    req.on("error", reject);
+    req.end();
+  });
+}
+
+function decodeHtml(value: string): string {
+  return value
+    .replace(/&amp;/g, "&")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">");
+}
+
+function extractMetaContent(html: string, attrName: "name" | "property", attrValue: string): string {
+  const regex = new RegExp(
+    `<meta[^>]*${attrName}=["']${attrValue}["'][^>]*content=["']([^"']*)["'][^>]*>|<meta[^>]*content=["']([^"']*)["'][^>]*${attrName}=["']${attrValue}["'][^>]*>`,
+    "i"
+  );
+
+  const match = html.match(regex);
+  return decodeHtml((match?.[1] || match?.[2] || "").trim());
+}
+
 export async function GET({ url }: { url: URL }) {
   const type = url.searchParams.get("type") || "";
   const target = url.searchParams.get("target") || "";
@@ -216,6 +278,70 @@ export async function GET({ url }: { url: URL }) {
     if (type === "redirect") {
       const data = await traceRedirects(target);
       return json(data);
+    }
+
+    if (type === "meta-tags") {
+      const targetUrl = normalizeUrl(target);
+      const { text } = await fetchRemoteText(targetUrl);
+
+      const titleMatch = text.match(/<title[^>]*>([\s\S]*?)<\/title>/i);
+      const canonicalMatch = text.match(/<link[^>]*rel=["']canonical["'][^>]*href=["']([^"']*)["'][^>]*>/i);
+
+      return json({
+        url: targetUrl,
+        title: decodeHtml((titleMatch?.[1] || "").replace(/\s+/g, " ").trim()),
+        metaDescription: extractMetaContent(text, "name", "description"),
+        metaRobots: extractMetaContent(text, "name", "robots"),
+        viewport: extractMetaContent(text, "name", "viewport"),
+        canonical: decodeHtml((canonicalMatch?.[1] || "").trim()),
+        ogTitle: extractMetaContent(text, "property", "og:title"),
+        ogDescription: extractMetaContent(text, "property", "og:description")
+      });
+    }
+
+    if (type === "sitemap") {
+      const normalized = normalizeUrl(target);
+      const origin = new URL(normalized).origin;
+
+      const candidates = [
+        `${origin}/sitemap.xml`,
+        `${origin}/sitemap_index.xml`,
+        `${origin}/sitemap-index.xml`
+      ];
+
+      for (const candidate of candidates) {
+        try {
+          const { text, status } = await fetchRemoteText(candidate);
+
+          if (!text) continue;
+
+          const isUrlSet = /<urlset\b/i.test(text);
+          const isSitemapIndex = /<sitemapindex\b/i.test(text);
+
+          if (!isUrlSet && !isSitemapIndex) {
+            continue;
+          }
+
+          const urlEntries = (text.match(/<url>/gi) || []).length;
+          const sitemapEntries = (text.match(/<sitemap>/gi) || []).length;
+
+          return json({
+            checkedUrl: candidate,
+            found: true,
+            status,
+            type: isSitemapIndex ? "sitemapindex" : "urlset",
+            urlEntries,
+            sitemapEntries
+          });
+        } catch {
+        }
+      }
+
+      return json({
+        checkedUrl: `${origin}/sitemap.xml`,
+        found: false,
+        status: "n/a"
+      });
     }
 
     const host = extractHost(target);

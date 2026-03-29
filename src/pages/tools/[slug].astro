@@ -9958,72 +9958,34 @@ if (slug === "sitemap-checker") {
     return;
   }
 
-  let targetUrl = rawUrl;
-  if (!/^https?:\/\//i.test(targetUrl)) {
-    targetUrl = `https://${targetUrl}`;
-  }
-
-  let baseOrigin = "";
-
-  try {
-    baseOrigin = new URL(targetUrl).origin;
-  } catch {
-    output.value = "Invalid URL";
-    return;
-  }
-
-  const candidates = [
-    `${baseOrigin}/sitemap.xml`,
-    `${baseOrigin}/sitemap_index.xml`,
-    `${baseOrigin}/sitemap-index.xml`
-  ];
-
   output.value = "Checking sitemap...";
 
-  Promise.all(
-    candidates.map((candidate: string) =>
-      fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(candidate)}`, {
-        cache: "no-store"
-      })
-        .then((response: Response) => {
-          if (!response.ok) {
-            throw new Error("Request failed");
-          }
-          return response.json();
-        })
-        .then((data: any) => ({
-          url: candidate,
-          text: String(data?.contents || "").trim(),
-          status: data?.status?.http_code ?? "n/a"
-        }))
-        .catch(() => ({
-          url: candidate,
-          text: "",
-          status: "n/a"
-        }))
-    )
-  )
-    .then((results) => {
-      const found = results.find((item) => item.text.startsWith("<?xml") || /<(urlset|sitemapindex)\b/i.test(item.text));
-
-      if (!found) {
-        output.value = results
-          .map((item) => `${item.url}\nFound: No\nStatus: ${item.status}`)
-          .join("\n\n");
+  fetch(`/api/site-check.json?type=sitemap&target=${encodeURIComponent(rawUrl)}`, {
+    cache: "no-store"
+  })
+    .then((response: Response) => response.json())
+    .then((data: any) => {
+      if (data?.error) {
+        output.value = data.error;
         return;
       }
 
-      const isIndex = /<sitemapindex\b/i.test(found.text);
-      const urlEntries = (found.text.match(/<url>\b|<url>/gi) || []).length;
-      const sitemapEntries = (found.text.match(/<sitemap>\b|<sitemap>/gi) || []).length;
+      if (!data?.found) {
+        output.value = [
+          `Checked URL: ${data.checkedUrl || "n/a"}`,
+          "Found: No",
+          `Status: ${data.status ?? "n/a"}`
+        ].join("\n");
+        return;
+      }
 
       output.value = [
-        `Checked URL: ${found.url}`,
+        `Checked URL: ${data.checkedUrl || "n/a"}`,
         "Found: Yes",
-        `Status: ${found.status}`,
-        `Type: ${isIndex ? "sitemapindex" : "urlset"}`,
-        `URL entries: ${urlEntries}`,
-        `Nested sitemap entries: ${sitemapEntries}`
+        `Status: ${data.status ?? "n/a"}`,
+        `Type: ${data.type || "n/a"}`,
+        `URL entries: ${data.urlEntries ?? 0}`,
+        `Nested sitemap entries: ${data.sitemapEntries ?? 0}`
       ].join("\n");
     })
     .catch(() => {
@@ -10110,55 +10072,27 @@ if (slug === "meta-tag-analyzer") {
     return;
   }
 
-  let targetUrl = rawUrl;
-  if (!/^https?:\/\//i.test(targetUrl)) {
-    targetUrl = `https://${targetUrl}`;
-  }
-
   output.value = "Analyzing meta tags...";
 
-  fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(targetUrl)}`, {
+  fetch(`/api/site-check.json?type=meta-tags&target=${encodeURIComponent(rawUrl)}`, {
     cache: "no-store"
   })
-    .then((response: Response) => {
-      if (!response.ok) {
-        throw new Error("Request failed");
-      }
-      return response.json();
-    })
+    .then((response: Response) => response.json())
     .then((data: any) => {
-      const html = String(data?.contents || "");
-
-      if (!html) {
-        output.value = "Unable to fetch page HTML.";
+      if (data?.error) {
+        output.value = data.error;
         return;
       }
 
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(html, "text/html");
-
-      const title = doc.querySelector("title")?.textContent?.trim() || "";
-      const getMetaByName = (name: string): string =>
-        doc.querySelector(`meta[name="${name}"]`)?.getAttribute("content")?.trim() || "";
-      const getMetaByProperty = (property: string): string =>
-        doc.querySelector(`meta[property="${property}"]`)?.getAttribute("content")?.trim() || "";
-
-      const description = getMetaByName("description");
-      const robots = getMetaByName("robots");
-      const viewport = getMetaByName("viewport");
-      const canonical = doc.querySelector('link[rel="canonical"]')?.getAttribute("href")?.trim() || "";
-      const ogTitle = getMetaByProperty("og:title");
-      const ogDescription = getMetaByProperty("og:description");
-
       output.value = [
-        `URL: ${targetUrl}`,
-        `Title: ${title || "Not found"}`,
-        `Meta Description: ${description || "Not found"}`,
-        `Meta Robots: ${robots || "Not found"}`,
-        `Viewport: ${viewport || "Not found"}`,
-        `Canonical: ${canonical || "Not found"}`,
-        `OG Title: ${ogTitle || "Not found"}`,
-        `OG Description: ${ogDescription || "Not found"}`
+        `URL: ${data.url || rawUrl}`,
+        `Title: ${data.title || "Not found"}`,
+        `Meta Description: ${data.metaDescription || "Not found"}`,
+        `Meta Robots: ${data.metaRobots || "Not found"}`,
+        `Viewport: ${data.viewport || "Not found"}`,
+        `Canonical: ${data.canonical || "Not found"}`,
+        `OG Title: ${data.ogTitle || "Not found"}`,
+        `OG Description: ${data.ogDescription || "Not found"}`
       ].join("\n");
     })
     .catch(() => {
