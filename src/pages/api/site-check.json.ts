@@ -1,6 +1,7 @@
 import http from "node:http";
 import https from "node:https";
 import tls from "node:tls";
+import { spawn } from "node:child_process";
 
 export const prerender = false;
 
@@ -306,7 +307,6 @@ function requestWithTiming(targetUrl: string): Promise<{ url: string; status: nu
 
 function runTraceroute(targetHost: string): Promise<any[]> {
   return new Promise((resolve, reject) => {
-    const { spawn } = require("node:child_process");
     const isWindows = process.platform === "win32";
 
     const cmd = isWindows ? "tracert" : "traceroute";
@@ -317,11 +317,11 @@ function runTraceroute(targetHost: string): Promise<any[]> {
     let stdout = "";
     let stderr = "";
 
-    child.stdout.on("data", (chunk: Buffer) => {
+    child.stdout.on("data", (chunk) => {
       stdout += chunk.toString();
     });
 
-    child.stderr.on("data", (chunk: Buffer) => {
+    child.stderr.on("data", (chunk) => {
       stderr += chunk.toString();
     });
 
