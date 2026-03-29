@@ -354,6 +354,90 @@ function runTraceroute(targetHost: string): Promise<any[]> {
   });
 }
 
+async function fetchJsonUrl(targetUrl: string): Promise<any> {
+  return new Promise((resolve, reject) => {
+    const urlObj = new URL(targetUrl);
+    const lib = urlObj.protocol === "https:" ? https : http;
+
+    const req = lib.request(
+      {
+        protocol: urlObj.protocol,
+        hostname: urlObj.hostname,
+        port: urlObj.port || undefined,
+        path: `${urlObj.pathname}${urlObj.search}`,
+        method: "GET",
+        headers: {
+          "User-Agent": "ToolsAtlas/1.0",
+          "Accept": "application/rdap+json, application/json, */*"
+        },
+        timeout: 15000
+      },
+      (res) => {
+        let body = "";
+
+        res.on("data", (chunk) => {
+          body += chunk.toString();
+        });
+
+        res.on("end", () => {
+          try {
+            const parsed = JSON.parse(body);
+            resolve(parsed);
+          } catch {
+            reject(new Error("Invalid JSON response"));
+          }
+        });
+      }
+    );
+
+    req.on("timeout", () => {
+      req.destroy(new Error("timeout"));
+    });
+
+    req.on("error", reject);
+    req.end();
+  });
+}
+
+function extractDomainFromInput(input: string): string {
+  const raw = String(input || "").trim();
+
+  if (!raw) {
+    return "";
+  }
+
+  try {
+    if (/^https?:\/\//i.test(raw)) {
+      return new URL(raw).hostname.toLowerCase();
+    }
+  } catch {
+    return "";
+  }
+
+  return raw
+    .replace(/^www\./i, "")
+    .replace(/\/.*$/, "")
+    .toLowerCase();
+}
+
+function getRdapEventDate(events: any[], actionNames: string[]): string {
+  if (!Array.isArray(events)) {
+    return "";
+  }
+
+  for (const actionName of actionNames) {
+    const found = events.find((item: any) =>
+      String(item?.eventAction || "").toLowerCase() === actionName.toLowerCase()
+    );
+
+    if (found?.eventDate) {
+      return String(found.eventDate);
+    }
+  }
+
+  return "";
+}
+
 export async function GET({ url }: { url: URL }) {
   const type = url.searchParams.get("type") || "";
   const target = url.searchParams.get("target") || "";
@@ -544,6 +628,50 @@ export async function GET({ url }: { url: URL }) {
       } catch {
         return json({
           error: "Unable to resolve hostname."
+        }, 200);
+      }
+    }
+        if (type === "domain-age") {
+      const domain = extractDomainFromInput(target);
+
+      if (!domain || !/^[a-z0-9.-]+\.[a-z]{2,}$/i.test(domain)) {
+        return json({ error: "Enter a valid domain like example.com." }, 200);
+      }
+
+      try {
+        const rdapUrl = `https://rdap.org/domain/${encodeURIComponent(domain)}`;
+        const data = await fetchJsonUrl(rdapUrl);
+
+        const events = Array.isArray(data?.events) ? data.events : [];
+
+        const registrationDate = getRdapEventDate(events, ["registration"]);
+        const expirationDate = getRdapEventDate(events, ["expiration", "registrar expiration"]);
+        const lastUpdated = getRdapEventDate(events, ["last changed", "last update of rdap database", "last update of RDAP database"]);
+
+        let ageDays: number | null = null;
+        let ageYears: string | null = null;
+
+        if (registrationDate) {
+          const registeredAt = new Date(registrationDate);
+          const diffMs = Date.now() - registeredAt.getTime();
+
+          if (Number.isFinite(diffMs) && diffMs >= 0) {
+            ageDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+            ageYears = (diffMs / (1000 * 60 * 60 * 24 * 365.25)).toFixed(2);
+          }
+        }
+
+        return json({
+          domain,
+          registrationDate: registrationDate || "",
+          lastUpdated: lastUpdated || "",
+          expirationDate: expirationDate || "",
+          ageDays,
+          ageYears
+        });
+      } catch {
+        return json({
+          error: "Unable to check domain age."
         }, 200);
       }
     }

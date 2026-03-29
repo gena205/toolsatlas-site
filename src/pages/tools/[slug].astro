@@ -10570,6 +10570,42 @@ if (slug === "email-header-analyzer") {
   return;
 }
 
+if (slug === "domain-age-checker") {
+  const rawInput = input.value.trim();
+
+  if (!rawInput) {
+    output.value = "Enter a domain like example.com.";
+    return;
+  }
+
+  output.value = "Checking domain age...";
+
+  fetch(`/api/site-check.json?type=domain-age&target=${encodeURIComponent(rawInput)}`, {
+    cache: "no-store"
+  })
+    .then((response: Response) => response.json())
+    .then((data: any) => {
+      if (data?.error) {
+        output.value = data.error;
+        return;
+      }
+
+      output.value = [
+        `Domain: ${data.domain || rawInput}`,
+        `Registration Date: ${data.registrationDate || "Not found"}`,
+        `Last Updated: ${data.lastUpdated || "Not found"}`,
+        `Expiration Date: ${data.expirationDate || "Not found"}`,
+        `Estimated Age: ${data.ageDays != null ? `${data.ageDays} days` : "Not found"}`,
+        `${data.ageYears != null ? `Estimated Age (Years): ${data.ageYears}` : "Estimated Age (Years): Not found"}`
+      ].join("\n");
+    })
+    .catch(() => {
+      output.value = "Unable to check domain age.";
+    });
+
+  return;
+}
+
       output.value = "This tool logic is not connected yet.";
     });
 

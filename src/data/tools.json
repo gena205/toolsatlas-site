@@ -20320,4 +20320,91 @@
     "port-range-checker"
   ]
 }
+,
+{
+  "id": "domain-age-checker",
+  "name": "Domain Age Checker",
+  "slug": "domain-age-checker",
+  "category": "network-tools",
+  "intro": "Check domain registration age and key dates from public registration data.",
+  "description": "Use this Domain Age Checker to look up a domain's registration date, expiration date, last updated date, and estimated age in years and days. It is useful for SEO reviews, domain research, competitor checks, and quick registration lookups.",
+  "keywords": [
+    "domain age checker",
+    "check domain age",
+    "domain registration date",
+    "domain age lookup"
+  ],
+  "whyUse": [
+    "Quickly find when a domain was registered.",
+    "Useful for SEO research and domain reviews.",
+    "Shows key dates in one clear result.",
+    "Helps compare newer and older domains.",
+    "Good for quick public registration checks."
+  ],
+  "howToUse": [
+    "Enter a domain like example.com.",
+    "Run the tool to request public registration data.",
+    "Review registration, update, and expiration dates.",
+    "Use the age result for research or comparison."
+  ],
+  "examples": [
+    {
+      "input": "example.com",
+      "output": "Domain: example.com\nRegistration Date: 1995-08-14T04:00:00Z\nLast Updated: 2025-08-14T07:01:39Z\nExpiration Date: 2026-08-13T04:00:00Z\nEstimated Age: 11185 days",
+      "explanation": "Shows the main dates returned from RDAP-style domain registration data."
+    },
+    {
+      "input": "openai.com",
+      "output": "Domain: openai.com\nRegistration Date: ...\nLast Updated: ...\nExpiration Date: ...\nEstimated Age: ... days",
+      "explanation": "Useful for researching a public domain quickly."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "A full URL is pasted instead of a domain.",
+      "fix": "Use the domain only, or let the tool extract the hostname from a URL."
+    },
+    {
+      "issue": "The domain does not exist or the lookup returns no data.",
+      "fix": "Check the spelling and try again with a valid public domain."
+    },
+    {
+      "issue": "Some dates are missing in the result.",
+      "fix": "That can happen because public RDAP data may vary by registry and TLD."
+    }
+  ],
+  "useCases": [
+    "Checking how old a domain is during SEO research.",
+    "Reviewing public registration dates before buying a domain.",
+    "Comparing domain age across competitors.",
+    "Quickly checking expiration and update dates."
+  ],
+  "faq": [
+    {
+      "q": "What does this tool check?",
+      "a": "It checks public registration data and estimates the age of a domain from its registration date."
+    },
+    {
+      "q": "What input should I use?",
+      "a": "Use a domain like example.com. A full URL can also work if the hostname is valid."
+    },
+    {
+      "q": "Does it always show every date?",
+      "a": "Not always. Public registration data can vary depending on the registry and TLD."
+    },
+    {
+      "q": "Why is domain age useful?",
+      "a": "It is commonly used for SEO research, domain comparison, and general background checks."
+    },
+    {
+      "q": "Is this based on public registration data?",
+      "a": "Yes. The result depends on what the public RDAP response returns."
+    }
+  ],
+  "related": [
+    "whois-lookup",
+    "dns-lookup",
+    "domain-availability-checker"
+  ]
+}
 ]
