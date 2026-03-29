@@ -10159,7 +10159,208 @@ if (slug === "http-to-https-checker") {
 
   return;
 }
+if (slug === "www-redirect-checker") {
+  const rawUrl = input.value.trim();
 
+  if (!rawUrl) {
+    output.value = "Enter a domain like example.com or a full URL.";
+    return;
+  }
+
+  let normalized = rawUrl;
+  if (!/^https?:\/\//i.test(normalized)) {
+    normalized = `https://${normalized}`;
+  }
+
+  let parsed: URL;
+
+  try {
+    parsed = new URL(normalized);
+  } catch {
+    output.value = "Invalid URL";
+    return;
+  }
+
+  const host = parsed.hostname.replace(/^www\./i, "");
+
+  if (!host) {
+    output.value = "Invalid domain";
+    return;
+  }
+
+  const nonWwwUrl = `${parsed.protocol}//${host}/`;
+  const wwwUrl = `${parsed.protocol}//www.${host}/`;
+
+  output.value = "Checking www and non-www redirects...";
+
+  Promise.all([
+    fetch(`/api/site-check.json?type=redirect&target=${encodeURIComponent(nonWwwUrl)}`, {
+      cache: "no-store"
+    }).then((response: Response) => response.json()),
+    fetch(`/api/site-check.json?type=redirect&target=${encodeURIComponent(wwwUrl)}`, {
+      cache: "no-store"
+    }).then((response: Response) => response.json())
+  ])
+    .then(([nonWwwData, wwwData]: any[]) => {
+      if (nonWwwData?.error) {
+        output.value = nonWwwData.error;
+        return;
+      }
+
+      if (wwwData?.error) {
+        output.value = wwwData.error;
+        return;
+      }
+
+      const nonWwwFinal = String(nonWwwData?.finalUrl || "").trim();
+      const wwwFinal = String(wwwData?.finalUrl || "").trim();
+
+      const prefersWww =
+        /^https?:\/\/www\./i.test(nonWwwFinal) &&
+        /^https?:\/\/www\./i.test(wwwFinal);
+
+      const prefersNonWww =
+        nonWwwFinal.length > 0 &&
+        wwwFinal.length > 0 &&
+        !/^https?:\/\/www\./i.test(nonWwwFinal) &&
+        !/^https?:\/\/www\./i.test(wwwFinal);
+
+      let preferredVersion = "Mixed or inconsistent";
+
+      if (prefersWww) {
+        preferredVersion = "www";
+      } else if (prefersNonWww) {
+        preferredVersion = "non-www";
+      }
+
+      output.value = [
+        `Preferred Version: ${preferredVersion}`,
+        "",
+        "Non-WWW Test:",
+        `Input URL: ${nonWwwData?.inputUrl || nonWwwUrl}`,
+        `Final URL: ${nonWwwFinal || "n/a"}`,
+        `Redirect Detected: ${nonWwwData?.redirectDetected ? "Yes" : "No"}`,
+        "",
+        "WWW Test:",
+        `Input URL: ${wwwData?.inputUrl || wwwUrl}`,
+        `Final URL: ${wwwFinal || "n/a"}`,
+        `Redirect Detected: ${wwwData?.redirectDetected ? "Yes" : "No"}`
+      ].join("\n");
+    })
+    .catch(() => {
+      output.value = "Unable to check www redirects.";
+    });
+
+  return;
+}
+
+if (slug === "response-time-checker") {
+  const rawUrl = input.value.trim();
+
+  if (!rawUrl) {
+    output.value = "Enter a domain or full URL like https://example.com.";
+    return;
+  }
+
+  output.value = "Checking response time...";
+
+  fetch(`/api/site-check.json?type=response-time&target=${encodeURIComponent(rawUrl)}`, {
+    cache: "no-store"
+  })
+    .then((response: Response) => response.json())
+    .then((data: any) => {
+      if (data?.error) {
+        output.value = data.error;
+        return;
+      }
+
+      output.value = [
+        `URL: ${data.url || rawUrl}`,
+        `Status: ${data.status ?? "n/a"}`,
+        `Response Time: ${data.responseTimeMs ?? "n/a"} ms`
+      ].join("\n");
+    })
+    .catch(() => {
+      output.value = "Unable to check response time.";
+    });
+
+  return;
+}
+
+if (slug === "website-status-checker") {
+  const rawUrl = input.value.trim();
+
+  if (!rawUrl) {
+    output.value = "Enter a domain or full URL like https://example.com.";
+    return;
+  }
+
+  output.value = "Checking website status...";
+
+  fetch(`/api/site-check.json?type=website-status&target=${encodeURIComponent(rawUrl)}`, {
+    cache: "no-store"
+  })
+    .then((response: Response) => response.json())
+    .then((data: any) => {
+      if (data?.error) {
+        output.value = data.error;
+        return;
+      }
+
+      const statusCode = Number(data?.status);
+      const isUp = Number.isFinite(statusCode) && statusCode > 0 && statusCode < 400;
+
+      output.value = [
+        `URL: ${data.url || rawUrl}`,
+        `Website Up: ${isUp ? "Yes" : "No"}`,
+        `Status: ${data.status ?? "n/a"}`
+      ].join("\n");
+    })
+    .catch(() => {
+      output.value = "Unable to check website status.";
+    });
+
+  return;
+}
+
+if (slug === "traceroute-tool") {
+  const rawTarget = input.value.trim();
+
+  if (!rawTarget) {
+    output.value = "Enter a domain or IP address like example.com or 8.8.8.8.";
+    return;
+  }
+
+  output.value = "Running traceroute...";
+
+  fetch(`/api/site-check.json?type=traceroute&target=${encodeURIComponent(rawTarget)}`, {
+    cache: "no-store"
+  })
+    .then((response: Response) => response.json())
+    .then((data: any) => {
+      if (data?.error) {
+        output.value = data.error;
+        return;
+      }
+
+      const hops = Array.isArray(data?.hops) ? data.hops : [];
+
+      if (!hops.length) {
+        output.value = `Target: ${data.target || rawTarget}\nNo traceroute result available.`;
+        return;
+      }
+
+      output.value = [
+        `Target: ${data.target || rawTarget}`,
+        ...hops.map((hop: any) => `Hop ${hop.hop}: ${hop.host || "*"}${hop.ip ? ` (${hop.ip})` : ""}${hop.timeMs != null ? ` - ${hop.timeMs} ms` : ""}`)
+      ].join("\n");
+    })
+    .catch(() => {
+      output.value = "Unable to run traceroute.";
+    });
+
+  return;
+}
       output.value = "This tool logic is not connected yet.";
     });
 

@@ -265,6 +265,93 @@ function extractMetaContent(html: string, attrName: "name" | "property", attrVal
   const match = html.match(regex);
   return decodeHtml((match?.[1] || match?.[2] || "").trim());
 }
+function requestWithTiming(targetUrl: string): Promise<{ url: string; status: number; responseTimeMs: number }> {
+  return new Promise((resolve, reject) => {
+    const started = Date.now();
+    const urlObj = new URL(targetUrl);
+    const lib = urlObj.protocol === "https:" ? https : http;
+
+    const req = lib.request(
+      {
+        protocol: urlObj.protocol,
+        hostname: urlObj.hostname,
+        port: urlObj.port || undefined,
+        path: `${urlObj.pathname}${urlObj.search}`,
+        method: "GET",
+        headers: {
+          "User-Agent": "ToolsAtlas/1.0",
+          "Accept": "*/*"
+        },
+        timeout: 10000
+      },
+      (res) => {
+        res.resume();
+
+        resolve({
+          url: targetUrl,
+          status: res.statusCode || 0,
+          responseTimeMs: Date.now() - started
+        });
+      }
+    );
+
+    req.on("timeout", () => {
+      req.destroy(new Error("timeout"));
+    });
+
+    req.on("error", reject);
+    req.end();
+  });
+}
+
+function runTraceroute(targetHost: string): Promise<any[]> {
+  return new Promise((resolve, reject) => {
+    const { spawn } = require("node:child_process");
+    const isWindows = process.platform === "win32";
+
+    const cmd = isWindows ? "tracert" : "traceroute";
+    const args = isWindows ? ["-d", targetHost] : ["-n", targetHost];
+
+    const child = spawn(cmd, args, { timeout: 20000 });
+
+    let stdout = "";
+    let stderr = "";
+
+    child.stdout.on("data", (chunk: Buffer) => {
+      stdout += chunk.toString();
+    });
+
+    child.stderr.on("data", (chunk: Buffer) => {
+      stderr += chunk.toString();
+    });
+
+    child.on("error", reject);
+
+    child.on("close", () => {
+      const text = `${stdout}\n${stderr}`;
+      const lines = text.split(/\r?\n/);
+
+      const hops = lines
+        .map((line: string) => line.trim())
+        .filter((line: string) => /^\d+\s+/.test(line))
+        .map((line: string) => {
+          const hopMatch = line.match(/^(\d+)/);
+          const ipMatch = line.match(/\b\d{1,3}(?:\.\d{1,3}){3}\b/);
+          const timeMatch = line.match(/(\d+)\s*ms/i);
+
+          return {
+            hop: hopMatch ? Number(hopMatch[1]) : null,
+            ip: ipMatch ? ipMatch[0] : "",
+            host: ipMatch ? ipMatch[0] : line,
+            timeMs: timeMatch ? Number(timeMatch[1]) : null
+          };
+        })
+        .filter((item: any) => Number.isFinite(item.hop));
+
+      resolve(hops);
+    });
+  });
+}
 
 export async function GET({ url }: { url: URL }) {
   const type = url.searchParams.get("type") || "";
@@ -384,6 +471,31 @@ export async function GET({ url }: { url: URL }) {
       return json({
         domain: host,
         supportedProtocols: supported
+      });
+    }
+        if (type === "response-time") {
+      const targetUrl = normalizeUrl(target);
+      const data = await requestWithTiming(targetUrl);
+      return json(data);
+    }
+
+    if (type === "website-status") {
+      const targetUrl = normalizeUrl(target);
+      const data = await requestWithTiming(targetUrl);
+
+      return json({
+        url: data.url,
+        status: data.status
+      });
+    }
+
+    if (type === "traceroute") {
+      const host = extractHost(target);
+      const hops = await runTraceroute(host);
+
+      return json({
+        target: host,
+        hops
       });
     }
 

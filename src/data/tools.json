@@ -19449,4 +19449,352 @@
     "ssl-certificate-checker"
   ]
 }
+,
+{
+  "id": "www-redirect-checker",
+  "name": "WWW Redirect Checker",
+  "slug": "www-redirect-checker",
+  "category": "developer-tools",
+  "intro": "Check whether a site redirects correctly between www and non-www versions.",
+  "description": "Use this WWW Redirect Checker to test whether a domain forces www, removes www, or leaves both versions accessible. It is useful for SEO audits, canonical domain checks, migration reviews, and redirect validation.",
+  "keywords": [
+    "www redirect checker",
+    "www non www redirect",
+    "canonical domain checker",
+    "www redirect test"
+  ],
+  "whyUse": [
+    "Quickly see whether a site forces www or removes it.",
+    "Useful for technical SEO and canonical domain checks.",
+    "Helps catch cases where both hostname versions stay accessible.",
+    "Good for migrations, redirects, and domain cleanup.",
+    "Shows final destinations for both versions in one result."
+  ],
+  "howToUse": [
+    "Paste a domain or full URL into the input box.",
+    "Run the tool to test both www and non-www versions.",
+    "Review the final URL for each version.",
+    "Check whether the site consistently prefers one hostname."
+  ],
+  "examples": [
+    {
+      "input": "example.com",
+      "output": "Preferred Version: www\n\nNon-WWW Test:\nInput URL: https://example.com/\nFinal URL: https://www.example.com/\nRedirect Detected: Yes\n\nWWW Test:\nInput URL: https://www.example.com/\nFinal URL: https://www.example.com/\nRedirect Detected: No",
+      "explanation": "Shows a site that forces the www version."
+    },
+    {
+      "input": "example.com",
+      "output": "Preferred Version: non-www\n\nNon-WWW Test:\nInput URL: https://example.com/\nFinal URL: https://example.com/\nRedirect Detected: No\n\nWWW Test:\nInput URL: https://www.example.com/\nFinal URL: https://example.com/\nRedirect Detected: Yes",
+      "explanation": "Shows a site that removes www and keeps the root domain as canonical."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "A page URL is used when only the main domain should be checked.",
+      "fix": "Use the root domain like example.com for the clearest www vs non-www result."
+    },
+    {
+      "issue": "Users confuse redirects with canonical tags.",
+      "fix": "This tool checks real redirects. Use a canonical checker for rel=canonical tags."
+    },
+    {
+      "issue": "Both versions load without redirect and look fine.",
+      "fix": "That can still be an SEO issue because the hostname preference is inconsistent."
+    }
+  ],
+  "useCases": [
+    "Checking canonical hostname behavior during SEO audits.",
+    "Verifying www vs non-www redirects after migration.",
+    "Spot-checking a site before updating DNS or SSL settings.",
+    "Confirming only one hostname version is preferred."
+  ],
+  "faq": [
+    {
+      "q": "What does this tool check?",
+      "a": "It checks how a domain behaves between www and non-www versions and shows the final destination for both."
+    },
+    {
+      "q": "Why is this useful for SEO?",
+      "a": "It helps confirm that only one hostname version is preferred, which supports cleaner canonical signals."
+    },
+    {
+      "q": "Can I enter just a domain?",
+      "a": "Yes. A plain domain like example.com is enough."
+    },
+    {
+      "q": "What if both versions stay accessible?",
+      "a": "That usually means the site is not enforcing a single preferred hostname consistently."
+    },
+    {
+      "q": "How is this different from Website Redirect Checker?",
+      "a": "Website Redirect Checker tests a single URL path, while this tool compares www and non-www hostname behavior specifically."
+    }
+  ],
+  "related": [
+    "website-redirect-checker",
+    "canonical-tag-checker",
+    "http-to-https-checker"
+  ]
+}
+,
+{
+  "id": "response-time-checker",
+  "name": "Response Time Checker",
+  "slug": "response-time-checker",
+  "category": "network-tools",
+  "intro": "Check basic website response time for a domain or URL.",
+  "description": "Use this Response Time Checker to measure how quickly a website responds to a request. It is useful for basic uptime checks, performance spot checks, launch QA, and comparing slow versus fast pages.",
+  "keywords": [
+    "response time checker",
+    "website response time",
+    "check site speed response",
+    "server response checker"
+  ],
+  "whyUse": [
+    "Quickly see whether a site responds fast or slowly.",
+    "Useful for basic performance spot checks.",
+    "Helps compare multiple sites or environments.",
+    "Good for simple uptime and latency testing.",
+    "Fast browser-based check without extra tools."
+  ],
+  "howToUse": [
+    "Paste a domain or full URL into the input box.",
+    "Run the tool to send a request.",
+    "Review the HTTP status and response time.",
+    "Use the result for quick troubleshooting or comparison."
+  ],
+  "examples": [
+    {
+      "input": "https://example.com",
+      "output": "URL: https://example.com/\nStatus: 200\nResponse Time: 245 ms",
+      "explanation": "Shows a successful request and the total time it took to receive the response."
+    },
+    {
+      "input": "example.com",
+      "output": "URL: https://example.com/\nStatus: 301\nResponse Time: 180 ms",
+      "explanation": "Useful when checking whether a site responds quickly even before a redirect."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "A malformed URL is entered.",
+      "fix": "Use a valid domain or full URL like example.com or https://example.com."
+    },
+    {
+      "issue": "Users expect a full speed audit.",
+      "fix": "This tool checks basic server response time, not full page performance metrics."
+    },
+    {
+      "issue": "The site blocks requests or times out.",
+      "fix": "Retry the check and compare with another public site to confirm the issue."
+    }
+  ],
+  "useCases": [
+    "Comparing response speed across multiple sites.",
+    "Spot-checking a website after deployment.",
+    "Testing whether a slow site responds at all.",
+    "Doing a quick health check before deeper analysis."
+  ],
+  "faq": [
+    {
+      "q": "What does this tool measure?",
+      "a": "It measures how long a site takes to respond to a request and shows the returned status code."
+    },
+    {
+      "q": "Is this the same as a page speed audit?",
+      "a": "No. It measures basic response time, not full rendering or Core Web Vitals."
+    },
+    {
+      "q": "Can I enter a domain only?",
+      "a": "Yes. A plain domain like example.com is enough."
+    },
+    {
+      "q": "Why can a fast site still feel slow?",
+      "a": "Because response time is only one part of performance. Rendering, scripts, and assets also matter."
+    },
+    {
+      "q": "What if the request times out?",
+      "a": "The tool will show an error so you can tell the site did not respond normally."
+    }
+  ],
+  "related": [
+    "website-status-checker",
+    "ping-test",
+    "website-redirect-checker"
+  ]
+}
+,
+{
+  "id": "website-status-checker",
+  "name": "Website Status Checker",
+  "slug": "website-status-checker",
+  "category": "network-tools",
+  "intro": "Check whether a website is up and see its HTTP status code.",
+  "description": "Use this Website Status Checker to test whether a site responds successfully and which HTTP status code it returns. It is useful for uptime checks, support work, launch reviews, and quick website troubleshooting.",
+  "keywords": [
+    "website status checker",
+    "is website up",
+    "site status checker",
+    "http status checker"
+  ],
+  "whyUse": [
+    "Quickly confirm whether a site is reachable.",
+    "Shows the returned HTTP status code clearly.",
+    "Useful for launch checks and support troubleshooting.",
+    "Good for spotting redirects and server errors.",
+    "Simple way to check if a public site is responding."
+  ],
+  "howToUse": [
+    "Paste a domain or full URL into the input box.",
+    "Run the tool to send a request.",
+    "Review whether the site is up and which status code was returned.",
+    "Use the result to decide whether further checks are needed."
+  ],
+  "examples": [
+    {
+      "input": "https://example.com",
+      "output": "URL: https://example.com/\nWebsite Up: Yes\nStatus: 200",
+      "explanation": "Shows that the website is reachable and returned a normal success status."
+    },
+    {
+      "input": "https://example.com/missing-page",
+      "output": "URL: https://example.com/missing-page\nWebsite Up: No\nStatus: 404",
+      "explanation": "Useful for checking whether a path returns an error instead of loading normally."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "An invalid or incomplete URL is entered.",
+      "fix": "Use a valid domain or full URL."
+    },
+    {
+      "issue": "Users expect content validation instead of status checking.",
+      "fix": "This tool checks availability and status code, not page content quality."
+    },
+    {
+      "issue": "A redirect is mistaken for a working final page.",
+      "fix": "Check the returned status and use a redirect checker if needed."
+    }
+  ],
+  "useCases": [
+    "Checking if a site is currently reachable.",
+    "Verifying a page after deployment.",
+    "Testing whether a URL returns 200, 404, or 500.",
+    "Doing a quick support check before deeper debugging."
+  ],
+  "faq": [
+    {
+      "q": "What does this tool check?",
+      "a": "It checks whether a website responds and shows the HTTP status code returned by the server."
+    },
+    {
+      "q": "What does status 200 mean?",
+      "a": "It usually means the request succeeded and the page responded normally."
+    },
+    {
+      "q": "Can this tool detect redirects?",
+      "a": "Yes. Redirect responses like 301 or 302 can appear in the result."
+    },
+    {
+      "q": "Can I test a full page URL?",
+      "a": "Yes. You can test either a root domain or a specific page URL."
+    },
+    {
+      "q": "What if the site is down?",
+      "a": "The tool will show an error or a non-success result so you can tell the site is not responding normally."
+    }
+  ],
+  "related": [
+    "response-time-checker",
+    "website-redirect-checker",
+    "ping-test"
+  ]
+}
+,
+{
+  "id": "traceroute-tool",
+  "name": "Traceroute Tool",
+  "slug": "traceroute-tool",
+  "category": "network-tools",
+  "intro": "Run a basic traceroute-style check and inspect the route to a host.",
+  "description": "Use this Traceroute Tool to perform a simple route check to a domain or IP address. It is useful for networking study, troubleshooting connectivity problems, and understanding how traffic reaches a destination.",
+  "keywords": [
+    "traceroute tool",
+    "online traceroute",
+    "route checker",
+    "trace route host"
+  ],
+  "whyUse": [
+    "Helps inspect the path to a destination host.",
+    "Useful for basic network troubleshooting and learning.",
+    "Can reveal where a route appears to stop or fail.",
+    "Good for comparing route behavior between targets.",
+    "Simple way to run a traceroute-style check online."
+  ],
+  "howToUse": [
+    "Paste a domain or IP address into the input box.",
+    "Run the tool to start the route check.",
+    "Review the hop list and route output.",
+    "Use the result to identify where the path changes or stops."
+  ],
+  "examples": [
+    {
+      "input": "example.com",
+      "output": "Target: example.com\nHop 1: ...\nHop 2: ...\nHop 3: ...",
+      "explanation": "Shows the route path toward the target host."
+    },
+    {
+      "input": "8.8.8.8",
+      "output": "Target: 8.8.8.8\nHop 1: ...\nHop 2: ...\nHop 3: ...",
+      "explanation": "Useful when checking the route to a public IP address."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Users expect a browser-only traceroute without backend support.",
+      "fix": "Traceroute-style checks usually need server-side logic to work."
+    },
+    {
+      "issue": "A private or malformed target is entered.",
+      "fix": "Use a valid public domain or IP address."
+    },
+    {
+      "issue": "Some hops do not reply.",
+      "fix": "That can be normal because some routers do not respond to traceroute probes."
+    }
+  ],
+  "useCases": [
+    "Learning how network routes work.",
+    "Troubleshooting connectivity issues to a host.",
+    "Checking where a route appears to stop.",
+    "Comparing path behavior to different destinations."
+  ],
+  "faq": [
+    {
+      "q": "What does traceroute do?",
+      "a": "Traceroute shows the intermediate hops between the source and the destination host."
+    },
+    {
+      "q": "Can some hops be missing?",
+      "a": "Yes. Some network devices do not respond to traceroute requests."
+    },
+    {
+      "q": "Can I enter a domain or an IP address?",
+      "a": "Yes. Both are valid for this tool."
+    },
+    {
+      "q": "Why is this useful?",
+      "a": "It helps identify where connectivity slows down, changes route, or appears to fail."
+    },
+    {
+      "q": "Does this guarantee the exact full route every time?",
+      "a": "No. Network paths can change and some hops may not respond."
+    }
+  ],
+  "related": [
+    "ping-test",
+    "dns-lookup",
+    "response-time-checker"
+  ]
+}
 ]
