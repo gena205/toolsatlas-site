@@ -3,6 +3,6 @@ import netlify from '@astrojs/netlify';
 
 export default defineConfig({
   site: 'https://toolsatlas.dev',
-  trailingSlash: 'always',
+  trailingSlash: 'ignore',
   adapter: netlify()
 });

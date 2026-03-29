@@ -19014,5 +19014,439 @@
     "ssl-expiry-checker",
     "tls-version-checker"
   ]
+},
+{
+  "id": "robots-txt-checker",
+  "name": "Robots.txt Checker",
+  "slug": "robots-txt-checker",
+  "category": "developer-tools",
+  "intro": "Check whether a site has a robots.txt file and review its main directives.",
+  "description": "Use this Robots.txt Checker to fetch and inspect a website robots.txt file. It helps you confirm whether the file exists, review common directives like User-agent, Disallow, Allow, and Sitemap, and spot obvious crawl-control issues during SEO checks.",
+  "keywords": [
+    "robots txt checker",
+    "check robots txt",
+    "robots.txt validator",
+    "robots file checker"
+  ],
+  "whyUse": [
+    "Quickly confirm whether robots.txt exists on a site.",
+    "Useful for basic SEO audits and crawl debugging.",
+    "Helps spot blocked sections before indexing work.",
+    "Shows sitemap lines found inside robots.txt.",
+    "Fast browser-based check without opening DevTools."
+  ],
+  "howToUse": [
+    "Paste a full URL or domain into the input box.",
+    "Run the tool to fetch the site robots.txt file.",
+    "Review status, file location, and detected directives.",
+    "Check Disallow, Allow, and Sitemap lines for issues."
+  ],
+  "examples": [
+    {
+      "input": "https://example.com",
+      "output": "Robots.txt URL: https://example.com/robots.txt\nFound: Yes\nStatus: 200\nUser-agent lines: 1\nDisallow lines: 1\nAllow lines: 0\nSitemap lines: 1",
+      "explanation": "Shows a valid robots.txt file with common directives."
+    },
+    {
+      "input": "example.com",
+      "output": "Robots.txt URL: https://example.com/robots.txt\nFound: No",
+      "explanation": "Useful when checking whether a site is missing a robots.txt file."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "A page URL is pasted instead of the domain root.",
+      "fix": "Use the main site URL or domain. The tool will check /robots.txt on that origin."
+    },
+    {
+      "issue": "The site blocks remote fetching or the request fails.",
+      "fix": "Retry with the full URL and compare the result manually in the browser if needed."
+    },
+    {
+      "issue": "Users think robots.txt guarantees no indexing.",
+      "fix": "Remember robots.txt controls crawling, not always indexing behavior."
+    }
+  ],
+  "useCases": [
+    "Checking crawl rules before publishing SEO changes.",
+    "Confirming sitemap lines inside robots.txt.",
+    "Reviewing blocked paths during technical audits.",
+    "Spot-checking a client domain after migration."
+  ],
+  "faq": [
+    {
+      "q": "What does this tool check?",
+      "a": "It checks whether a robots.txt file exists and extracts common directives such as User-agent, Disallow, Allow, and Sitemap."
+    },
+    {
+      "q": "Do I need to enter a full URL?",
+      "a": "No. You can enter a domain like example.com or a full URL."
+    },
+    {
+      "q": "Does this validate every robots.txt rule perfectly?",
+      "a": "No. It is a practical checker for existence and common directives, not a full crawler simulator."
+    },
+    {
+      "q": "Why is robots.txt useful for SEO?",
+      "a": "It helps control crawler access and can reveal blocked sections or sitemap references."
+    },
+    {
+      "q": "What if no robots.txt file is found?",
+      "a": "The tool will show that the file is missing so you can review whether that is expected."
+    }
+  ],
+  "related": [
+    "sitemap-checker",
+    "canonical-tag-checker",
+    "meta-tag-analyzer"
+  ]
+}
+,
+{
+  "id": "sitemap-checker",
+  "name": "Sitemap Checker",
+  "slug": "sitemap-checker",
+  "category": "developer-tools",
+  "intro": "Check whether a sitemap exists and inspect key sitemap details.",
+  "description": "Use this Sitemap Checker to test common sitemap locations such as /sitemap.xml and review whether the sitemap looks valid. It is useful for technical SEO audits, launch checks, and indexing preparation.",
+  "keywords": [
+    "sitemap checker",
+    "check sitemap xml",
+    "xml sitemap checker",
+    "sitemap validator"
+  ],
+  "whyUse": [
+    "Quickly confirm whether a sitemap exists.",
+    "Useful during launches, migrations, and SEO audits.",
+    "Helps detect missing or broken sitemap files.",
+    "Shows basic XML and URL count signals.",
+    "Fast way to check common sitemap paths."
+  ],
+  "howToUse": [
+    "Paste a full URL or domain into the input box.",
+    "Run the tool to test common sitemap locations.",
+    "Review which sitemap URL responded successfully.",
+    "Check whether the XML looks like a sitemap or sitemap index."
+  ],
+  "examples": [
+    {
+      "input": "https://example.com",
+      "output": "Checked URL: https://example.com/sitemap.xml\nFound: Yes\nType: urlset\nURL entries: 24",
+      "explanation": "Shows a standard XML sitemap with URL entries."
+    },
+    {
+      "input": "example.com",
+      "output": "Checked URL: https://example.com/sitemap.xml\nFound: No",
+      "explanation": "Useful for catching missing sitemap files."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Only a page URL is checked instead of the site root.",
+      "fix": "Use the domain or main site URL so the tool can test standard sitemap paths."
+    },
+    {
+      "issue": "The site uses a non-standard sitemap path.",
+      "fix": "Check robots.txt too, since the sitemap location may be declared there."
+    },
+    {
+      "issue": "A sitemap exists but contains invalid XML or unexpected structure.",
+      "fix": "Review the output type and open the sitemap directly for deeper inspection."
+    }
+  ],
+  "useCases": [
+    "Checking a new site before submitting it to search engines.",
+    "Verifying sitemap health after migration.",
+    "Confirming that an XML sitemap is publicly reachable.",
+    "Spot-checking sitemap index vs standard sitemap output."
+  ],
+  "faq": [
+    {
+      "q": "What sitemap locations does this tool check?",
+      "a": "It checks common sitemap URLs like /sitemap.xml and related standard paths."
+    },
+    {
+      "q": "Can this detect sitemap indexes?",
+      "a": "Yes. It can identify whether the XML looks like a sitemap index or a normal URL sitemap."
+    },
+    {
+      "q": "Why is a sitemap important?",
+      "a": "A sitemap helps search engines discover pages and understand site structure more efficiently."
+    },
+    {
+      "q": "What if no sitemap is found?",
+      "a": "The tool will show that no common sitemap location responded successfully."
+    },
+    {
+      "q": "Should I also check robots.txt?",
+      "a": "Yes. Many sites include their sitemap location inside robots.txt."
+    }
+  ],
+  "related": [
+    "robots-txt-checker",
+    "canonical-tag-checker",
+    "http-to-https-checker"
+  ]
+}
+,
+{
+  "id": "canonical-tag-checker",
+  "name": "Canonical Tag Checker",
+  "slug": "canonical-tag-checker",
+  "category": "developer-tools",
+  "intro": "Check the canonical tag on a page and compare it with the input URL.",
+  "description": "Use this Canonical Tag Checker to fetch a page and inspect its rel=canonical tag. It helps confirm whether a page points to itself, another preferred URL, or has no canonical tag at all during technical SEO reviews.",
+  "keywords": [
+    "canonical tag checker",
+    "check canonical tag",
+    "rel canonical checker",
+    "seo canonical checker"
+  ],
+  "whyUse": [
+    "Quickly verify whether a page has a canonical tag.",
+    "Useful for SEO audits and duplicate-content checks.",
+    "Helps compare input URL with canonical destination.",
+    "Good for migration and redirect validation.",
+    "Shows when a canonical tag is missing."
+  ],
+  "howToUse": [
+    "Paste a full page URL into the input box.",
+    "Run the tool to fetch the page HTML.",
+    "Review the canonical URL found in the head section.",
+    "Compare the canonical value with the input URL."
+  ],
+  "examples": [
+    {
+      "input": "https://example.com/page",
+      "output": "Input URL: https://example.com/page\nCanonical Found: Yes\nCanonical URL: https://example.com/page\nSelf Canonical: Yes",
+      "explanation": "Shows a page using a self-referencing canonical tag."
+    },
+    {
+      "input": "https://example.com/page?utm_source=test",
+      "output": "Input URL: https://example.com/page?utm_source=test\nCanonical Found: Yes\nCanonical URL: https://example.com/page\nSelf Canonical: No",
+      "explanation": "Useful when checking canonical cleanup for parameterized URLs."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "A domain is entered instead of a full page URL.",
+      "fix": "Use the exact page URL you want to inspect, not just the homepage."
+    },
+    {
+      "issue": "Users expect redirects and canonicals to be the same thing.",
+      "fix": "A canonical tag is only a page hint, while a redirect changes the destination URL."
+    },
+    {
+      "issue": "The page head cannot be fetched remotely.",
+      "fix": "Retry with the full URL and verify manually in source code if needed."
+    }
+  ],
+  "useCases": [
+    "Checking self-canonical setup on landing pages.",
+    "Reviewing parameterized URLs during SEO audits.",
+    "Spot-checking canonical tags after migrations.",
+    "Comparing duplicate pages and preferred URLs."
+  ],
+  "faq": [
+    {
+      "q": "What does a canonical tag do?",
+      "a": "It tells search engines which URL is the preferred version of a page."
+    },
+    {
+      "q": "Can a page have no canonical tag?",
+      "a": "Yes. The tool will show when no rel=canonical tag is found."
+    },
+    {
+      "q": "Is a canonical tag the same as a redirect?",
+      "a": "No. A canonical is a page signal, while a redirect sends users and bots to a different URL."
+    },
+    {
+      "q": "Should the canonical always match the input URL?",
+      "a": "Not always. Parameter pages or duplicates often point to a cleaner preferred version."
+    },
+    {
+      "q": "Why is this useful for SEO?",
+      "a": "It helps reduce duplicate-content confusion and supports clearer indexing signals."
+    }
+  ],
+  "related": [
+    "meta-tag-analyzer",
+    "http-to-https-checker",
+    "website-redirect-checker"
+  ]
+}
+,
+{
+  "id": "meta-tag-analyzer",
+  "name": "Meta Tag Analyzer",
+  "slug": "meta-tag-analyzer",
+  "category": "developer-tools",
+  "intro": "Analyze a page title and core SEO meta tags in one place.",
+  "description": "Use this Meta Tag Analyzer to inspect core on-page SEO tags such as title, meta description, robots, canonical, viewport, and Open Graph basics. It is useful for quick page audits, launch reviews, and metadata spot checks.",
+  "keywords": [
+    "meta tag analyzer",
+    "seo meta tag checker",
+    "analyze meta tags",
+    "meta description checker"
+  ],
+  "whyUse": [
+    "Quickly review key meta tags on a page.",
+    "Useful for on-page SEO audits and QA checks.",
+    "Shows missing tags without opening page source.",
+    "Good for title and meta description spot checks.",
+    "Helps compare page metadata before publishing."
+  ],
+  "howToUse": [
+    "Paste a full page URL into the input box.",
+    "Run the tool to fetch the page HTML.",
+    "Review the extracted title and major meta tags.",
+    "Use the result to spot missing or weak metadata."
+  ],
+  "examples": [
+    {
+      "input": "https://example.com/page",
+      "output": "Title: Example Page\nMeta Description: Example description\nMeta Robots: index,follow\nCanonical: https://example.com/page",
+      "explanation": "Shows the core meta tags most often checked during SEO reviews."
+    },
+    {
+      "input": "https://example.com/page-with-missing-meta",
+      "output": "Title: Found\nMeta Description: Not found\nMeta Robots: Not found\nCanonical: Not found",
+      "explanation": "Useful for catching missing metadata before indexing work."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Only the domain is checked when a specific page should be audited.",
+      "fix": "Paste the exact page URL you want to analyze."
+    },
+    {
+      "issue": "Users expect Open Graph analysis only.",
+      "fix": "Use Open Graph Checker for OG-specific review and this tool for broader metadata."
+    },
+    {
+      "issue": "The page HTML cannot be fetched remotely.",
+      "fix": "Retry with the full URL and compare the result manually if needed."
+    }
+  ],
+  "useCases": [
+    "Checking page metadata before launch.",
+    "Reviewing title and description tags during content QA.",
+    "Spot-auditing a page after CMS changes.",
+    "Comparing metadata across landing pages."
+  ],
+  "faq": [
+    {
+      "q": "What tags does this tool analyze?",
+      "a": "It checks common page tags such as title, meta description, robots, canonical, viewport, and selected Open Graph fields."
+    },
+    {
+      "q": "How is this different from Open Graph Checker?",
+      "a": "Open Graph Checker focuses on OG tags only, while this tool reviews broader on-page metadata."
+    },
+    {
+      "q": "Can I use it for homepage and internal pages?",
+      "a": "Yes. It works for any public page URL you want to inspect."
+    },
+    {
+      "q": "Why is this useful for SEO?",
+      "a": "It helps you catch missing or weak metadata that can affect indexing and snippet quality."
+    },
+    {
+      "q": "What if some tags are missing?",
+      "a": "The output will show which core tags were found and which were not."
+    }
+  ],
+  "related": [
+    "canonical-tag-checker",
+    "open-graph-checker",
+    "website-header-checker"
+  ]
+}
+,
+{
+  "id": "http-to-https-checker",
+  "name": "HTTP to HTTPS Checker",
+  "slug": "http-to-https-checker",
+  "category": "developer-tools",
+  "intro": "Check whether an HTTP URL redirects to the HTTPS version correctly.",
+  "description": "Use this HTTP to HTTPS Checker to verify whether a site redirects from HTTP to HTTPS and where the final secure destination ends up. It is useful for SEO, migration checks, SSL rollouts, and canonical redirect validation.",
+  "keywords": [
+    "http to https checker",
+    "http https redirect checker",
+    "force https checker",
+    "https redirect test"
+  ],
+  "whyUse": [
+    "Quickly confirm whether insecure URLs redirect to HTTPS.",
+    "Useful during SSL setup and migration checks.",
+    "Helps catch mixed redirect behavior early.",
+    "Good for technical SEO validation.",
+    "Shows final destination and redirect status."
+  ],
+  "howToUse": [
+    "Paste a domain or full URL into the input box.",
+    "Run the tool to test the HTTP version of the URL.",
+    "Review the final URL and redirect result.",
+    "Confirm that the destination uses HTTPS correctly."
+  ],
+  "examples": [
+    {
+      "input": "example.com",
+      "output": "Checked URL: http://example.com\nFinal URL: https://example.com/\nHTTPS Redirect: Yes",
+      "explanation": "Shows a correct forced HTTPS redirect."
+    },
+    {
+      "input": "http://example.com/page",
+      "output": "Checked URL: http://example.com/page\nFinal URL: http://example.com/page\nHTTPS Redirect: No",
+      "explanation": "Useful for finding pages that do not move to HTTPS."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Users paste an HTTPS URL and expect an HTTP redirect test.",
+      "fix": "The tool will normalize the check to start from HTTP where possible."
+    },
+    {
+      "issue": "A redirect exists but goes to the wrong final page.",
+      "fix": "Review the final URL carefully, not only the yes or no result."
+    },
+    {
+      "issue": "Users confuse canonical tags with redirect behavior.",
+      "fix": "Use Canonical Tag Checker for page hints and this tool for actual redirect behavior."
+    }
+  ],
+  "useCases": [
+    "Checking forced HTTPS after SSL setup.",
+    "Reviewing redirect behavior after migration.",
+    "Spot-auditing landing pages for secure routing.",
+    "Confirming non-secure URLs do not stay on HTTP."
+  ],
+  "faq": [
+    {
+      "q": "What does this tool test?",
+      "a": "It tests whether the HTTP version of a URL redirects to an HTTPS destination."
+    },
+    {
+      "q": "Why is this useful for SEO?",
+      "a": "It helps confirm that insecure versions of pages do not remain accessible as separate crawl targets."
+    },
+    {
+      "q": "Can I enter just a domain?",
+      "a": "Yes. You can enter a domain or a full URL."
+    },
+    {
+      "q": "Is this the same as a canonical check?",
+      "a": "No. This checks real redirect behavior, while a canonical tag is only a page signal."
+    },
+    {
+      "q": "What if the site stays on HTTP?",
+      "a": "The tool will show that no HTTPS redirect was detected so you can review the site configuration."
+    }
+  ],
+  "related": [
+    "website-redirect-checker",
+    "canonical-tag-checker",
+    "ssl-certificate-checker"
+  ]
 }
 ]

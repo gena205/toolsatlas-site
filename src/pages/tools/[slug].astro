@@ -9734,7 +9734,497 @@ if (slug === "md5-hash-generator") {
   output.value = md5(text);
   return;
 }
+if (slug === "timestamp-converter") {
+  const value = input.value.trim();
 
+  if (!value) {
+    output.value = "Enter a Unix timestamp.";
+    return;
+  }
+
+  const numeric = Number(value.replace(",", "."));
+
+  if (!Number.isFinite(numeric)) {
+    output.value = "Enter a valid Unix timestamp.";
+    return;
+  }
+
+  const ms = value.length >= 13 ? Math.trunc(numeric) : Math.trunc(numeric * 1000);
+  const date = new Date(ms);
+
+  if (Number.isNaN(date.getTime())) {
+    output.value = "Invalid Unix timestamp.";
+    return;
+  }
+
+  output.value =
+    `Timestamp: ${Math.trunc(numeric)}\n` +
+    `ISO: ${date.toISOString()}\n` +
+    `UTC: ${date.toUTCString()}\n` +
+    `Local: ${date.toString()}`;
+  return;
+}
+
+if (slug === "bytes-to-mb-converter") {
+  const value = Number(input.value.trim().replace(",", "."));
+
+  if (!Number.isFinite(value) || value < 0) {
+    output.value = "Enter a byte value like: 1048576";
+    return;
+  }
+
+  const decimalMb = value / 1000000;
+  const binaryMiB = value / 1048576;
+
+  output.value =
+    `Bytes: ${value}\n` +
+    `MB (decimal): ${decimalMb.toFixed(6)}\n` +
+    `MiB (binary): ${binaryMiB.toFixed(6)}`;
+  return;
+}
+
+if (slug === "percentage-calculator") {
+  const numbers = input.value.match(/-?\d+(?:[.,]\d+)?/g)?.map((v: string) => Number(v.replace(",", "."))) || [];
+  const percent = numbers[0];
+  const total = numbers[1];
+
+  if (!Number.isFinite(percent) || !Number.isFinite(total)) {
+    output.value = "Enter percentage on the first line and total on the second line.\n\nExample:\n15\n200";
+    return;
+  }
+
+  const value = (percent / 100) * total;
+
+  output.value =
+    `${percent}% of ${total} = ${value.toFixed(4)}\n` +
+    `Percentage: ${percent.toFixed(2)}%\n` +
+    `Total: ${total.toFixed(2)}\n` +
+    `Result: ${value.toFixed(4)}`;
+  return;
+}
+
+if (slug === "age-calculator") {
+  const value = input.value.trim();
+
+  if (!value) {
+    output.value = "Enter a birth date in YYYY-MM-DD format.";
+    return;
+  }
+
+  const birthDate = new Date(`${value}T00:00:00`);
+  const today = new Date();
+
+  if (Number.isNaN(birthDate.getTime())) {
+    output.value = "Invalid date format. Use YYYY-MM-DD.";
+    return;
+  }
+
+  if (birthDate > today) {
+    output.value = "Birth date cannot be in the future.";
+    return;
+  }
+
+  let years = today.getFullYear() - birthDate.getFullYear();
+  let months = today.getMonth() - birthDate.getMonth();
+  let days = today.getDate() - birthDate.getDate();
+
+  if (days < 0) {
+    const previousMonth = new Date(today.getFullYear(), today.getMonth(), 0);
+    days += previousMonth.getDate();
+    months--;
+  }
+
+  if (months < 0) {
+    months += 12;
+    years--;
+  }
+
+  output.value =
+    `Birth date: ${value}\n` +
+    `Age: ${years} years, ${months} months, ${days} days`;
+  return;
+}
+
+if (slug === "sql-formatter" || slug === "sql-beautifier") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter SQL to format.";
+    return;
+  }
+
+  const keywords = [
+    "SELECT", "FROM", "WHERE", "GROUP BY", "ORDER BY", "HAVING", "LIMIT",
+    "INSERT INTO", "VALUES", "UPDATE", "SET", "DELETE", "INNER JOIN",
+    "LEFT JOIN", "RIGHT JOIN", "FULL JOIN", "JOIN", "ON", "AND", "OR"
+  ];
+
+  let formatted = text.replace(/\s+/g, " ").trim();
+
+  formatted = formatted.replace(/,\s*/g, ",\n  ");
+
+  keywords.forEach((keyword: string) => {
+    const pattern = new RegExp("\\b" + keyword.replace(/\s+/g, "\\s+") + "\\b", "gi");
+    formatted = formatted.replace(pattern, `\n${keyword}`);
+  });
+
+  formatted = formatted
+    .replace(/\n+/g, "\n")
+    .replace(/\n\s*\n/g, "\n")
+    .trim();
+
+  output.value = formatted;
+  return;
+}
+if (slug === "robots-txt-checker") {
+  const rawUrl = input.value.trim();
+
+  if (!rawUrl) {
+    output.value = "Enter a domain or full URL like https://example.com.";
+    return;
+  }
+
+  let targetUrl = rawUrl;
+  if (!/^https?:\/\//i.test(targetUrl)) {
+    targetUrl = `https://${targetUrl}`;
+  }
+
+  let robotsUrl = "";
+
+  try {
+    const parsed = new URL(targetUrl);
+    robotsUrl = `${parsed.origin}/robots.txt`;
+  } catch {
+    output.value = "Invalid URL";
+    return;
+  }
+
+  output.value = "Checking robots.txt...";
+
+  fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(robotsUrl)}`, {
+    cache: "no-store"
+  })
+    .then((response: Response) => {
+      if (!response.ok) {
+        throw new Error("Request failed");
+      }
+      return response.json();
+    })
+    .then((data: any) => {
+      const text = String(data?.contents || "").trim();
+      const status = data?.status || {};
+      const httpCode = status?.http_code ?? "n/a";
+
+      if (!text) {
+        output.value = [
+          `Robots.txt URL: ${robotsUrl}`,
+          "Found: No",
+          `Status: ${httpCode}`
+        ].join("\n");
+        return;
+      }
+
+      const lines = text.split(/\r?\n/).map((line: string) => line.trim());
+      const userAgents = lines.filter((line: string) => /^user-agent:/i.test(line));
+      const disallow = lines.filter((line: string) => /^disallow:/i.test(line));
+      const allow = lines.filter((line: string) => /^allow:/i.test(line));
+      const sitemaps = lines.filter((line: string) => /^sitemap:/i.test(line));
+
+      output.value = [
+        `Robots.txt URL: ${robotsUrl}`,
+        "Found: Yes",
+        `Status: ${httpCode}`,
+        `User-agent lines: ${userAgents.length}`,
+        `Disallow lines: ${disallow.length}`,
+        `Allow lines: ${allow.length}`,
+        `Sitemap lines: ${sitemaps.length}`,
+        "",
+        "Preview:",
+        ...lines.slice(0, 20)
+      ].join("\n");
+    })
+    .catch(() => {
+      output.value = "Unable to fetch robots.txt.";
+    });
+
+  return;
+}
+
+if (slug === "sitemap-checker") {
+  const rawUrl = input.value.trim();
+
+  if (!rawUrl) {
+    output.value = "Enter a domain or full URL like https://example.com.";
+    return;
+  }
+
+  let targetUrl = rawUrl;
+  if (!/^https?:\/\//i.test(targetUrl)) {
+    targetUrl = `https://${targetUrl}`;
+  }
+
+  let baseOrigin = "";
+
+  try {
+    baseOrigin = new URL(targetUrl).origin;
+  } catch {
+    output.value = "Invalid URL";
+    return;
+  }
+
+  const candidates = [
+    `${baseOrigin}/sitemap.xml`,
+    `${baseOrigin}/sitemap_index.xml`,
+    `${baseOrigin}/sitemap-index.xml`
+  ];
+
+  output.value = "Checking sitemap...";
+
+  Promise.all(
+    candidates.map((candidate: string) =>
+      fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(candidate)}`, {
+        cache: "no-store"
+      })
+        .then((response: Response) => {
+          if (!response.ok) {
+            throw new Error("Request failed");
+          }
+          return response.json();
+        })
+        .then((data: any) => ({
+          url: candidate,
+          text: String(data?.contents || "").trim(),
+          status: data?.status?.http_code ?? "n/a"
+        }))
+        .catch(() => ({
+          url: candidate,
+          text: "",
+          status: "n/a"
+        }))
+    )
+  )
+    .then((results) => {
+      const found = results.find((item) => item.text.startsWith("<?xml") || /<(urlset|sitemapindex)\b/i.test(item.text));
+
+      if (!found) {
+        output.value = results
+          .map((item) => `${item.url}\nFound: No\nStatus: ${item.status}`)
+          .join("\n\n");
+        return;
+      }
+
+      const isIndex = /<sitemapindex\b/i.test(found.text);
+      const urlEntries = (found.text.match(/<url>\b|<url>/gi) || []).length;
+      const sitemapEntries = (found.text.match(/<sitemap>\b|<sitemap>/gi) || []).length;
+
+      output.value = [
+        `Checked URL: ${found.url}`,
+        "Found: Yes",
+        `Status: ${found.status}`,
+        `Type: ${isIndex ? "sitemapindex" : "urlset"}`,
+        `URL entries: ${urlEntries}`,
+        `Nested sitemap entries: ${sitemapEntries}`
+      ].join("\n");
+    })
+    .catch(() => {
+      output.value = "Unable to check sitemap.";
+    });
+
+  return;
+}
+
+if (slug === "canonical-tag-checker") {
+  const rawUrl = input.value.trim();
+
+  if (!rawUrl) {
+    output.value = "Enter a full page URL like https://example.com/page.";
+    return;
+  }
+
+  let targetUrl = rawUrl;
+  if (!/^https?:\/\//i.test(targetUrl)) {
+    targetUrl = `https://${targetUrl}`;
+  }
+
+  output.value = "Checking canonical tag...";
+
+  fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(targetUrl)}`, {
+    cache: "no-store"
+  })
+    .then((response: Response) => {
+      if (!response.ok) {
+        throw new Error("Request failed");
+      }
+      return response.json();
+    })
+    .then((data: any) => {
+      const html = String(data?.contents || "");
+
+      if (!html) {
+        output.value = "Unable to fetch page HTML.";
+        return;
+      }
+
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, "text/html");
+      const canonicalValue =
+        doc.querySelector('link[rel="canonical"]')?.getAttribute("href")?.trim() || "";
+
+      if (!canonicalValue) {
+        output.value = [
+          `Input URL: ${targetUrl}`,
+          "Canonical Found: No"
+        ].join("\n");
+        return;
+      }
+
+      let resolvedCanonical = canonicalValue;
+
+      try {
+        resolvedCanonical = new URL(canonicalValue, targetUrl).href;
+      } catch {
+        resolvedCanonical = canonicalValue;
+      }
+
+      const selfCanonical = resolvedCanonical.replace(/\/+$/, "") === targetUrl.replace(/\/+$/, "");
+
+      output.value = [
+        `Input URL: ${targetUrl}`,
+        "Canonical Found: Yes",
+        `Canonical URL: ${resolvedCanonical}`,
+        `Self Canonical: ${selfCanonical ? "Yes" : "No"}`
+      ].join("\n");
+    })
+    .catch(() => {
+      output.value = "Unable to fetch or parse canonical tag.";
+    });
+
+  return;
+}
+
+if (slug === "meta-tag-analyzer") {
+  const rawUrl = input.value.trim();
+
+  if (!rawUrl) {
+    output.value = "Enter a full page URL like https://example.com/page.";
+    return;
+  }
+
+  let targetUrl = rawUrl;
+  if (!/^https?:\/\//i.test(targetUrl)) {
+    targetUrl = `https://${targetUrl}`;
+  }
+
+  output.value = "Analyzing meta tags...";
+
+  fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(targetUrl)}`, {
+    cache: "no-store"
+  })
+    .then((response: Response) => {
+      if (!response.ok) {
+        throw new Error("Request failed");
+      }
+      return response.json();
+    })
+    .then((data: any) => {
+      const html = String(data?.contents || "");
+
+      if (!html) {
+        output.value = "Unable to fetch page HTML.";
+        return;
+      }
+
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, "text/html");
+
+      const title = doc.querySelector("title")?.textContent?.trim() || "";
+      const getMetaByName = (name: string): string =>
+        doc.querySelector(`meta[name="${name}"]`)?.getAttribute("content")?.trim() || "";
+      const getMetaByProperty = (property: string): string =>
+        doc.querySelector(`meta[property="${property}"]`)?.getAttribute("content")?.trim() || "";
+
+      const description = getMetaByName("description");
+      const robots = getMetaByName("robots");
+      const viewport = getMetaByName("viewport");
+      const canonical = doc.querySelector('link[rel="canonical"]')?.getAttribute("href")?.trim() || "";
+      const ogTitle = getMetaByProperty("og:title");
+      const ogDescription = getMetaByProperty("og:description");
+
+      output.value = [
+        `URL: ${targetUrl}`,
+        `Title: ${title || "Not found"}`,
+        `Meta Description: ${description || "Not found"}`,
+        `Meta Robots: ${robots || "Not found"}`,
+        `Viewport: ${viewport || "Not found"}`,
+        `Canonical: ${canonical || "Not found"}`,
+        `OG Title: ${ogTitle || "Not found"}`,
+        `OG Description: ${ogDescription || "Not found"}`
+      ].join("\n");
+    })
+    .catch(() => {
+      output.value = "Unable to fetch or analyze meta tags.";
+    });
+
+  return;
+}
+
+if (slug === "http-to-https-checker") {
+  const rawUrl = input.value.trim();
+
+  if (!rawUrl) {
+    output.value = "Enter a domain or full URL like example.com or http://example.com/page.";
+    return;
+  }
+
+  let targetUrl = rawUrl;
+  if (!/^https?:\/\//i.test(targetUrl)) {
+    targetUrl = `http://${targetUrl}`;
+  }
+
+  try {
+    const parsed = new URL(targetUrl);
+    parsed.protocol = "http:";
+    targetUrl = parsed.href;
+  } catch {
+    output.value = "Invalid URL";
+    return;
+  }
+
+  output.value = "Checking HTTP to HTTPS redirect...";
+
+  fetch(`/api/site-check.json?type=redirect&target=${encodeURIComponent(targetUrl)}`, {
+    cache: "no-store"
+  })
+    .then((response: Response) => response.json())
+    .then((data: any) => {
+      if (data?.error) {
+        output.value = data.error;
+        return;
+      }
+
+      const chain = Array.isArray(data?.chain) ? data.chain : [];
+      const finalUrl = String(data?.finalUrl || chain[chain.length - 1]?.url || "").trim();
+
+      if (!finalUrl) {
+        output.value = "Unable to determine final URL.";
+        return;
+      }
+
+      const httpsRedirect = /^https:\/\//i.test(finalUrl);
+
+      output.value = [
+        `Checked URL: ${targetUrl}`,
+        `Final URL: ${finalUrl}`,
+        `HTTPS Redirect: ${httpsRedirect ? "Yes" : "No"}`,
+        `Redirect Steps: ${chain.length}`
+      ].join("\n");
+    })
+    .catch(() => {
+      output.value = "Unable to check HTTP to HTTPS redirect.";
+    });
+
+  return;
+}
 
       output.value = "This tool logic is not connected yet.";
     });
