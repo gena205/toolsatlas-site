@@ -20407,4 +20407,2795 @@
     "domain-availability-checker"
   ]
 }
+,
+{
+  "id": "spf-record-checker",
+  "name": "SPF Record Checker",
+  "slug": "spf-record-checker",
+  "category": "network-tools",
+  "intro": "Check the SPF TXT record for a domain.",
+  "description": "Use this SPF Record Checker to look up SPF TXT records for a domain and review whether an SPF policy is present. It is useful for email setup, domain verification, and troubleshooting sender authentication.",
+  "keywords": [
+    "spf record checker",
+    "check spf record",
+    "spf lookup",
+    "spf txt record"
+  ],
+  "whyUse": [
+    "Quickly check whether a domain has an SPF record.",
+    "Useful for email authentication troubleshooting.",
+    "Helps validate basic sender policy setup.",
+    "Good for domain and mail configuration reviews.",
+    "Simple DNS-based lookup without extra tools."
+  ],
+  "howToUse": [
+    "Enter a domain like example.com.",
+    "Run the tool to query TXT records.",
+    "Review the SPF record returned.",
+    "Use the result to confirm mail policy setup."
+  ],
+  "examples": [
+    {
+      "input": "example.com",
+      "output": "Domain: example.com\nSPF Found: Yes\nRecord: v=spf1 include:_spf.example.com ~all",
+      "explanation": "Shows the domain SPF policy if present."
+    },
+    {
+      "input": "example.com",
+      "output": "Domain: example.com\nSPF Found: No",
+      "explanation": "Useful when confirming a domain has no SPF TXT record."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "A full URL is pasted instead of a domain.",
+      "fix": "Use the domain name only, or let the tool extract the hostname."
+    },
+    {
+      "issue": "Users expect MX or DKIM checks instead.",
+      "fix": "This tool checks SPF TXT records only."
+    },
+    {
+      "issue": "The domain has many TXT records and no SPF policy.",
+      "fix": "Look specifically for a TXT record that starts with v=spf1."
+    }
+  ],
+  "useCases": [
+    "Checking whether a domain publishes SPF.",
+    "Troubleshooting email sender authentication.",
+    "Reviewing DNS mail setup during onboarding.",
+    "Verifying SPF before testing outbound mail."
+  ],
+  "faq": [
+    {
+      "q": "What does this tool check?",
+      "a": "It checks whether a domain has an SPF TXT record and shows the value if found."
+    },
+    {
+      "q": "What does an SPF record look like?",
+      "a": "It usually starts with v=spf1 and contains allowed senders and a policy ending such as ~all or -all."
+    },
+    {
+      "q": "Can I enter a full URL?",
+      "a": "Yes, but a plain domain like example.com is best."
+    },
+    {
+      "q": "Why is SPF useful?",
+      "a": "SPF helps receiving mail systems evaluate whether a sender is authorized to send mail for a domain."
+    },
+    {
+      "q": "What if no SPF record is found?",
+      "a": "The tool will show that no SPF TXT record was detected."
+    }
+  ],
+  "related": [
+    "dkim-record-checker",
+    "dmarc-record-checker",
+    "dns-lookup"
+  ]
+}
+,
+{
+  "id": "dkim-record-checker",
+  "name": "DKIM Record Checker",
+  "slug": "dkim-record-checker",
+  "category": "network-tools",
+  "intro": "Check a DKIM TXT record for a selector and domain.",
+  "description": "Use this DKIM Record Checker to look up a DKIM DNS record using a selector and domain. It is useful for email authentication setup, DNS validation, and troubleshooting outgoing mail signing.",
+  "keywords": [
+    "dkim record checker",
+    "check dkim record",
+    "dkim lookup",
+    "dkim selector checker"
+  ],
+  "whyUse": [
+    "Quickly confirm whether a DKIM record exists.",
+    "Useful for mail authentication setup and troubleshooting.",
+    "Helps validate selector and domain combinations.",
+    "Good for DNS checks after email provider changes.",
+    "Simple way to inspect DKIM TXT values."
+  ],
+  "howToUse": [
+    "Enter the selector on the first line.",
+    "Enter the domain on the second line.",
+    "Run the tool to query the DKIM DNS record.",
+    "Review the returned TXT value or no-record result."
+  ],
+  "examples": [
+    {
+      "input": "default\nexample.com",
+      "output": "Host: default._domainkey.example.com\nDKIM Found: Yes\nRecord: v=DKIM1; k=rsa; p=...",
+      "explanation": "Checks the DKIM record for the selector and domain pair."
+    },
+    {
+      "input": "google\nexample.com",
+      "output": "Host: google._domainkey.example.com\nDKIM Found: No",
+      "explanation": "Useful when verifying whether a selector exists."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Only a domain is entered without a selector.",
+      "fix": "Enter selector on the first line and domain on the second line."
+    },
+    {
+      "issue": "Users paste a full DKIM-Signature header.",
+      "fix": "Extract the selector and domain first, then run the DNS check."
+    },
+    {
+      "issue": "The wrong selector is used.",
+      "fix": "Confirm the selector from your mail provider or DKIM-Signature header."
+    }
+  ],
+  "useCases": [
+    "Checking whether a DKIM selector is published.",
+    "Validating DNS after mail provider setup.",
+    "Troubleshooting email signing issues.",
+    "Reviewing DKIM before sending production mail."
+  ],
+  "faq": [
+    {
+      "q": "What input does this tool need?",
+      "a": "It needs a DKIM selector and a domain."
+    },
+    {
+      "q": "What host does DKIM use in DNS?",
+      "a": "It usually checks selector._domainkey.example.com."
+    },
+    {
+      "q": "What does a DKIM record look like?",
+      "a": "It often starts with v=DKIM1 and includes a public key value."
+    },
+    {
+      "q": "Why is DKIM useful?",
+      "a": "DKIM helps receiving mail systems verify that a message was signed by an authorized sender."
+    },
+    {
+      "q": "What if no DKIM record is found?",
+      "a": "The tool will show that the selector and domain combination did not return a DKIM TXT record."
+    }
+  ],
+  "related": [
+    "spf-record-checker",
+    "dmarc-record-checker",
+    "dns-lookup"
+  ]
+}
+,
+{
+  "id": "dmarc-record-checker",
+  "name": "DMARC Record Checker",
+  "slug": "dmarc-record-checker",
+  "category": "network-tools",
+  "intro": "Check the DMARC TXT record for a domain.",
+  "description": "Use this DMARC Record Checker to look up a domain DMARC policy record and review whether a DMARC policy is present. It is useful for email authentication setup, DNS verification, and mail security troubleshooting.",
+  "keywords": [
+    "dmarc record checker",
+    "check dmarc record",
+    "dmarc lookup",
+    "dmarc policy checker"
+  ],
+  "whyUse": [
+    "Quickly check whether a domain publishes DMARC.",
+    "Useful for email security and authentication reviews.",
+    "Helps validate mail policy rollout.",
+    "Good for troubleshooting SPF and DKIM alignment issues.",
+    "Simple DNS-based lookup for mail admins."
+  ],
+  "howToUse": [
+    "Enter a domain like example.com.",
+    "Run the tool to query the _dmarc host.",
+    "Review the DMARC record if found.",
+    "Use the result to confirm the policy and reporting values."
+  ],
+  "examples": [
+    {
+      "input": "example.com",
+      "output": "Host: _dmarc.example.com\nDMARC Found: Yes\nRecord: v=DMARC1; p=quarantine; rua=mailto:dmarc@example.com",
+      "explanation": "Shows the domain DMARC policy when present."
+    },
+    {
+      "input": "example.com",
+      "output": "Host: _dmarc.example.com\nDMARC Found: No",
+      "explanation": "Useful when confirming a domain does not publish DMARC."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "A full URL is pasted instead of a domain.",
+      "fix": "Use the domain only, or let the tool extract the hostname."
+    },
+    {
+      "issue": "Users expect SPF or DKIM results instead.",
+      "fix": "This tool checks the DMARC policy record only."
+    },
+    {
+      "issue": "The record exists but users do not understand the policy.",
+      "fix": "Look at the p= value to see whether the domain uses none, quarantine, or reject."
+    }
+  ],
+  "useCases": [
+    "Checking whether a domain has DMARC configured.",
+    "Reviewing mail security posture for a domain.",
+    "Troubleshooting email alignment issues.",
+    "Validating DMARC rollout after DNS changes."
+  ],
+  "faq": [
+    {
+      "q": "What host does this tool check?",
+      "a": "It checks the _dmarc subdomain for the domain you enter."
+    },
+    {
+      "q": "What does a DMARC record look like?",
+      "a": "It usually starts with v=DMARC1 and includes a policy such as p=none, p=quarantine, or p=reject."
+    },
+    {
+      "q": "Why is DMARC useful?",
+      "a": "DMARC helps domain owners define how failed email authentication should be handled and where reports should be sent."
+    },
+    {
+      "q": "Can I enter a full URL?",
+      "a": "Yes, but a plain domain like example.com is best."
+    },
+    {
+      "q": "What if no DMARC record is found?",
+      "a": "The tool will show that no DMARC TXT record was detected."
+    }
+  ],
+  "related": [
+    "spf-record-checker",
+    "dkim-record-checker",
+    "dns-lookup"
+  ]
+}
+,
+{
+  "id": "alternating-case-converter",
+  "name": "Alternating Case Converter",
+  "slug": "alternating-case-converter",
+  "category": "text-tools",
+  "intro": "Convert text into alternating upper and lower case characters.",
+  "description": "Use this alternating case converter to switch text into alternating capitalization for memes, stylized copy, usernames, and playful formatting.",
+  "keywords": [
+    "alternating case converter",
+    "mocking text converter",
+    "spongebob text generator",
+    "alternate uppercase lowercase"
+  ],
+  "whyUse": [
+    "Creates stylized text instantly without manual editing.",
+    "Useful for meme text, playful messages, and social captions.",
+    "Helps transform long sentences faster than editing character by character.",
+    "Works well for quick browser-based text formatting tasks."
+  ],
+  "howToUse": [
+    "Paste or type your text into the input box.",
+    "Run the tool to convert the text into alternating case.",
+    "Review the output and copy the transformed version.",
+    "Edit the original input if you want a different result."
+  ],
+  "examples": [
+    {
+      "title": "Simple phrase",
+      "input": "hello world",
+      "output": "HeLlO WoRlD",
+      "explanation": "Alternates uppercase and lowercase letters across the phrase."
+    },
+    {
+      "title": "Sentence",
+      "input": "this is funny text",
+      "output": "ThIs Is FuNnY TeXt",
+      "explanation": "Useful for playful or meme-style text formatting."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Expecting sentence case or title case output.",
+      "fix": "Use this tool only when you want alternating capitalization, not normal writing capitalization."
+    },
+    {
+      "issue": "Spaces and punctuation do not alternate the way you expected.",
+      "fix": "Check the output and adjust the input if you want a different visual pattern."
+    },
+    {
+      "issue": "Comparing this tool to uppercase or lowercase tools.",
+      "fix": "Use related case tools if you need standard capitalization instead of alternating text."
+    }
+  ],
+  "useCases": [
+    "Creating meme-style text for social posts.",
+    "Formatting playful chat messages.",
+    "Generating stylized text for usernames or mock headlines.",
+    "Testing text transformations quickly in the browser."
+  ],
+  "faq": [
+    {
+      "q": "What does an alternating case converter do?",
+      "a": "It changes text so letters alternate between uppercase and lowercase."
+    },
+    {
+      "q": "Is this useful for meme text?",
+      "a": "Yes. It is commonly used for meme-style or mocking text formatting."
+    },
+    {
+      "q": "Does it change punctuation too?",
+      "a": "No. It mainly changes letter capitalization while leaving punctuation and symbols as they are."
+    },
+    {
+      "q": "Can I use long text?",
+      "a": "Yes. You can paste short or long text blocks and convert them instantly."
+    },
+    {
+      "q": "How is it different from uppercase or title case?",
+      "a": "Uppercase changes all letters to capitals, title case capitalizes words, and alternating case switches letter case back and forth."
+    }
+  ],
+  "related": [
+    "text-case-converter",
+    "uppercase-converter",
+    "lowercase-converter"
+  ]
+},
+{
+  "id": "camel-case-converter",
+  "name": "Camel Case Converter",
+  "slug": "camel-case-converter",
+  "category": "text-tools",
+  "intro": "Convert text into camelCase for code, variables, and field names.",
+  "description": "Use this camel case converter to turn words and phrases into camelCase format for JavaScript variables, JSON keys, CSS-in-JS names, and development workflows.",
+  "keywords": [
+    "camel case converter",
+    "text to camel case",
+    "camelcase generator",
+    "variable name converter"
+  ],
+  "whyUse": [
+    "Helps create cleaner variable and field names quickly.",
+    "Useful for JavaScript, TypeScript, JSON, and frontend development.",
+    "Removes manual editing when converting titles into code-friendly names.",
+    "Good for developers, students, and anyone preparing structured labels."
+  ],
+  "howToUse": [
+    "Paste or type a word, title, or phrase into the input box.",
+    "Run the tool to convert the text into camelCase.",
+    "Review the output and copy it into your code or config.",
+    "Adjust the input if you want a shorter or cleaner result."
+  ],
+  "examples": [
+    {
+      "title": "Basic phrase",
+      "input": "hello world example",
+      "output": "helloWorldExample",
+      "explanation": "The first word stays lowercase and the next words are capitalized."
+    },
+    {
+      "title": "Messy input",
+      "input": "  user-profile name  ",
+      "output": "userProfileName",
+      "explanation": "Spaces and separators are cleaned before conversion."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Expecting PascalCase instead of camelCase.",
+      "fix": "Use Pascal Case Converter if you want the first word capitalized too."
+    },
+    {
+      "issue": "Symbols or unusual separators create unexpected output.",
+      "fix": "Use clean words or phrases and review the final result before copying."
+    },
+    {
+      "issue": "Trying to preserve original punctuation.",
+      "fix": "Camel case removes separators because the goal is a code-friendly identifier."
+    }
+  ],
+  "useCases": [
+    "Creating JavaScript and TypeScript variable names.",
+    "Preparing JSON keys or API field names.",
+    "Converting article titles into code-friendly labels.",
+    "Normalizing phrases for frontend configuration values."
+  ],
+  "faq": [
+    {
+      "q": "What is camelCase?",
+      "a": "camelCase is a naming style where the first word is lowercase and each following word starts with a capital letter."
+    },
+    {
+      "q": "Who uses camel case?",
+      "a": "Developers often use camel case for variables, object keys, and function names."
+    },
+    {
+      "q": "Does this tool remove spaces?",
+      "a": "Yes. It joins words together and capitalizes later words to create camelCase."
+    },
+    {
+      "q": "How is camel case different from Pascal case?",
+      "a": "camelCase starts with a lowercase first word, while PascalCase capitalizes the first word too."
+    },
+    {
+      "q": "Can I paste hyphenated or underscored text?",
+      "a": "Yes. The tool can clean common separators and convert the result into camelCase."
+    }
+  ],
+  "related": [
+    "pascal-case-converter",
+    "slug-generator",
+    "text-case-converter"
+  ]
+},
+{
+  "id": "pascal-case-converter",
+  "name": "Pascal Case Converter",
+  "slug": "pascal-case-converter",
+  "category": "text-tools",
+  "intro": "Convert text into PascalCase for class names, components, and structured identifiers.",
+  "description": "Use this Pascal case converter to turn text into PascalCase for class names, React component names, C# properties, and other development naming patterns.",
+  "keywords": [
+    "pascal case converter",
+    "text to pascal case",
+    "pascalcase generator",
+    "class name converter"
+  ],
+  "whyUse": [
+    "Useful for class names, components, and structured code identifiers.",
+    "Helps convert plain text into development-friendly naming style quickly.",
+    "Saves time when creating consistent naming across projects.",
+    "Works well for developers, students, and documentation cleanup."
+  ],
+  "howToUse": [
+    "Paste or type a phrase into the input box.",
+    "Run the tool to convert the text into PascalCase.",
+    "Review the output and copy it into your project or notes.",
+    "Use the related camel case tool if you need a lowercase first letter."
+  ],
+  "examples": [
+    {
+      "title": "Basic phrase",
+      "input": "hello world example",
+      "output": "HelloWorldExample",
+      "explanation": "Each word starts with a capital letter and spaces are removed."
+    },
+    {
+      "title": "Mixed separators",
+      "input": "user-profile name",
+      "output": "UserProfileName",
+      "explanation": "Useful when converting labels into class or component names."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Expecting camelCase output instead of PascalCase.",
+      "fix": "Use Camel Case Converter if you want the first word to stay lowercase."
+    },
+    {
+      "issue": "Pasting very messy input with symbols.",
+      "fix": "Use clear words or phrases and verify the cleaned output before using it in code."
+    },
+    {
+      "issue": "Confusing Pascal case with title case.",
+      "fix": "PascalCase removes spaces, while title case keeps words separated."
+    }
+  ],
+  "useCases": [
+    "Creating React component names.",
+    "Preparing class names in C#, Java, or TypeScript.",
+    "Converting labels into structured identifiers.",
+    "Normalizing headings into code-friendly names."
+  ],
+  "faq": [
+    {
+      "q": "What is PascalCase?",
+      "a": "PascalCase is a naming style where every word starts with a capital letter and all spaces are removed."
+    },
+    {
+      "q": "Who uses Pascal case?",
+      "a": "Developers often use it for class names, component names, and constructors."
+    },
+    {
+      "q": "Does this tool remove spaces and separators?",
+      "a": "Yes. It joins the words and capitalizes each one to create PascalCase."
+    },
+    {
+      "q": "How is Pascal case different from title case?",
+      "a": "PascalCase removes spaces between words, while title case keeps spaces."
+    },
+    {
+      "q": "How is Pascal case different from camel case?",
+      "a": "PascalCase capitalizes the first word, while camelCase keeps the first word lowercase."
+    }
+  ],
+  "related": [
+    "camel-case-converter",
+    "title-case-converter",
+    "slug-generator"
+  ]
+}
+,
+{
+  "id": "snake-case-converter",
+  "name": "Snake Case Converter",
+  "slug": "snake-case-converter",
+  "category": "text-tools",
+  "intro": "Convert text into snake_case for variables, keys, and structured names.",
+  "description": "Use this snake case converter to turn words and phrases into snake_case format for programming, database fields, config keys, and naming cleanup.",
+  "keywords": [
+    "snake case converter",
+    "text to snake case",
+    "snake_case generator",
+    "underscore case converter"
+  ],
+  "whyUse": [
+    "Creates code-friendly names without manual editing.",
+    "Useful for database fields, config keys, and backend naming.",
+    "Cleans mixed text and separators into a consistent format.",
+    "Helps standardize variable-style naming quickly."
+  ],
+  "howToUse": [
+    "Paste or type your text into the input box.",
+    "Run the tool to convert the text into snake_case.",
+    "Review the output and copy the cleaned result.",
+    "Adjust the original input if you want a shorter identifier."
+  ],
+  "examples": [
+    {
+      "title": "Basic phrase",
+      "input": "hello world example",
+      "output": "hello_world_example",
+      "explanation": "Spaces are replaced with underscores and text becomes lowercase."
+    },
+    {
+      "title": "Mixed separators",
+      "input": "user-profile name",
+      "output": "user_profile_name",
+      "explanation": "Hyphens and spaces are normalized into underscores."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Expecting kebab-case or camelCase instead of snake_case.",
+      "fix": "Use the related case converter that matches the exact output format you need."
+    },
+    {
+      "issue": "Symbols create unexpected separators.",
+      "fix": "Paste clean words or review the normalized output before using it in code."
+    },
+    {
+      "issue": "Trying to preserve original punctuation.",
+      "fix": "Snake case is meant to normalize text into a clean identifier."
+    }
+  ],
+  "useCases": [
+    "Creating database column or field names.",
+    "Preparing config keys and environment-style labels.",
+    "Converting headings into backend-friendly identifiers.",
+    "Normalizing copied phrases for structured naming."
+  ],
+  "faq": [
+    {
+      "q": "What is snake_case?",
+      "a": "snake_case is a naming style where words are lowercase and separated with underscores."
+    },
+    {
+      "q": "Who uses snake case?",
+      "a": "Developers often use it for variables, fields, database columns, and configuration keys."
+    },
+    {
+      "q": "Does this tool remove spaces?",
+      "a": "Yes. It replaces spaces and common separators with underscores."
+    },
+    {
+      "q": "How is snake case different from kebab case?",
+      "a": "Snake case uses underscores, while kebab case uses hyphens."
+    },
+    {
+      "q": "Can I paste messy text with hyphens or symbols?",
+      "a": "Yes. The tool cleans common separators and converts the result into snake_case."
+    }
+  ],
+  "related": [
+    "kebab-case-converter",
+    "camel-case-converter",
+    "pascal-case-converter"
+  ]
+},
+{
+  "id": "kebab-case-converter",
+  "name": "Kebab Case Converter",
+  "slug": "kebab-case-converter",
+  "category": "text-tools",
+  "intro": "Convert text into kebab-case for URLs, slugs, and clean labels.",
+  "description": "Use this kebab case converter to turn words and phrases into kebab-case for slugs, CSS class names, file naming, and frontend workflows.",
+  "keywords": [
+    "kebab case converter",
+    "text to kebab case",
+    "kebab-case generator",
+    "hyphen case converter"
+  ],
+  "whyUse": [
+    "Creates clean hyphen-separated output quickly.",
+    "Useful for slugs, class names, and readable identifiers.",
+    "Removes manual cleanup when converting titles into kebab-case.",
+    "Works well for frontend, SEO, and content workflows."
+  ],
+  "howToUse": [
+    "Paste or type your text into the input box.",
+    "Run the tool to convert it into kebab-case.",
+    "Review the output and copy the final string.",
+    "Use the slug generator instead if you only need a simple URL slug workflow."
+  ],
+  "examples": [
+    {
+      "title": "Basic phrase",
+      "input": "hello world example",
+      "output": "hello-world-example",
+      "explanation": "Spaces are replaced with hyphens and the text is lowercased."
+    },
+    {
+      "title": "Mixed separators",
+      "input": "user_profile name",
+      "output": "user-profile-name",
+      "explanation": "Underscores and spaces are normalized into hyphens."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Expecting underscores instead of hyphens.",
+      "fix": "Use Snake Case Converter when you need underscores."
+    },
+    {
+      "issue": "Comparing this tool directly with a slug generator.",
+      "fix": "This tool focuses on kebab-case conversion, while slug workflows may add extra URL cleanup."
+    },
+    {
+      "issue": "Symbols in the input create unexpected splits.",
+      "fix": "Review the final result and clean the source text if needed."
+    }
+  ],
+  "useCases": [
+    "Creating readable slugs and path-like labels.",
+    "Preparing CSS class names or frontend identifiers.",
+    "Converting article titles into kebab-case strings.",
+    "Normalizing text for filenames or lightweight URLs."
+  ],
+  "faq": [
+    {
+      "q": "What is kebab-case?",
+      "a": "kebab-case is a naming style where words are lowercase and separated with hyphens."
+    },
+    {
+      "q": "Who uses kebab case?",
+      "a": "It is often used in URLs, CSS classes, filenames, and frontend naming."
+    },
+    {
+      "q": "Does this tool remove spaces?",
+      "a": "Yes. It converts spaces and common separators into hyphens."
+    },
+    {
+      "q": "How is kebab case different from snake case?",
+      "a": "Kebab case uses hyphens, while snake case uses underscores."
+    },
+    {
+      "q": "Can I convert mixed text with underscores and punctuation?",
+      "a": "Yes. The tool cleans common separators and converts the result into kebab-case."
+    }
+  ],
+  "related": [
+    "snake-case-converter",
+    "slug-generator",
+    "dot-case-converter"
+  ]
+},
+{
+  "id": "constant-case-converter",
+  "name": "Constant Case Converter",
+  "slug": "constant-case-converter",
+  "category": "text-tools",
+  "intro": "Convert text into CONSTANT_CASE for constants, enums, and environment keys.",
+  "description": "Use this constant case converter to turn text into CONSTANT_CASE format for constants, enum values, environment variable names, and configuration labels.",
+  "keywords": [
+    "constant case converter",
+    "text to constant case",
+    "CONSTANT_CASE generator",
+    "uppercase underscore converter"
+  ],
+  "whyUse": [
+    "Creates uppercase constant-style names instantly.",
+    "Useful for environment variables, constants, and enum labels.",
+    "Helps standardize naming across code and config files.",
+    "Saves time compared with manual uppercase underscore editing."
+  ],
+  "howToUse": [
+    "Paste or type your text into the input box.",
+    "Run the tool to convert the text into CONSTANT_CASE.",
+    "Review the output and copy the result into your code or config.",
+    "Check related tools if you need lowercase separated formats instead."
+  ],
+  "examples": [
+    {
+      "title": "Basic phrase",
+      "input": "hello world example",
+      "output": "HELLO_WORLD_EXAMPLE",
+      "explanation": "Words are uppercased and separated with underscores."
+    },
+    {
+      "title": "Mixed text",
+      "input": "api base url",
+      "output": "API_BASE_URL",
+      "explanation": "Useful for constants and environment-style variable names."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Expecting lowercase snake_case output.",
+      "fix": "Use Snake Case Converter when you need lowercase identifiers."
+    },
+    {
+      "issue": "Pasting messy text with many symbols.",
+      "fix": "Review the converted output and clean the source text if necessary."
+    },
+    {
+      "issue": "Using this tool for normal sentence formatting.",
+      "fix": "Use case tools only when you need code-style or config-style naming."
+    }
+  ],
+  "useCases": [
+    "Creating environment variable names.",
+    "Preparing constants and enum-like labels.",
+    "Standardizing configuration keys.",
+    "Converting headings into uppercase code identifiers."
+  ],
+  "faq": [
+    {
+      "q": "What is CONSTANT_CASE?",
+      "a": "CONSTANT_CASE is a naming style where words are uppercase and separated with underscores."
+    },
+    {
+      "q": "Who uses constant case?",
+      "a": "Developers often use it for constants, environment variables, and enum values."
+    },
+    {
+      "q": "Does this tool remove spaces?",
+      "a": "Yes. It turns spaces and common separators into underscores and uppercases the result."
+    },
+    {
+      "q": "How is constant case different from snake case?",
+      "a": "Constant case is uppercase with underscores, while snake case is lowercase with underscores."
+    },
+    {
+      "q": "Can I paste mixed text or hyphenated phrases?",
+      "a": "Yes. The tool normalizes common separators and converts the text into CONSTANT_CASE."
+    }
+  ],
+  "related": [
+    "snake-case-converter",
+    "uppercase-converter",
+    "camel-case-converter"
+  ]
+},
+{
+  "id": "dot-case-converter",
+  "name": "Dot Case Converter",
+  "slug": "dot-case-converter",
+  "category": "text-tools",
+  "intro": "Convert text into dot.case for keys, namespaces, and structured labels.",
+  "description": "Use this dot case converter to turn words and phrases into dot.case format for object keys, namespaces, event names, translation keys, and config naming.",
+  "keywords": [
+    "dot case converter",
+    "text to dot case",
+    "dot.case generator",
+    "period separated text converter"
+  ],
+  "whyUse": [
+    "Creates dot-separated naming quickly.",
+    "Useful for translation keys, namespaces, and event labels.",
+    "Helps normalize text into a structured machine-friendly format.",
+    "Saves time when building dotted key paths manually."
+  ],
+  "howToUse": [
+    "Paste or type your text into the input box.",
+    "Run the tool to convert it into dot.case.",
+    "Review the output and copy it into your config or project.",
+    "Use Path Case Converter if you need slashes instead of dots."
+  ],
+  "examples": [
+    {
+      "title": "Basic phrase",
+      "input": "hello world example",
+      "output": "hello.world.example",
+      "explanation": "Words are lowercased and separated with dots."
+    },
+    {
+      "title": "Translation key style",
+      "input": "User Profile Name",
+      "output": "user.profile.name",
+      "explanation": "Useful for i18n and nested key naming."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Expecting slashes instead of dots.",
+      "fix": "Use Path Case Converter when you need slash-separated output."
+    },
+    {
+      "issue": "Comparing dot.case with domains or full URLs.",
+      "fix": "This tool formats plain text into dotted segments, not real web addresses."
+    },
+    {
+      "issue": "Symbols create extra separators.",
+      "fix": "Review the output and simplify the input if you want cleaner segments."
+    }
+  ],
+  "useCases": [
+    "Creating translation or localization keys.",
+    "Preparing namespaced config labels.",
+    "Building dotted event or message identifiers.",
+    "Converting headings into structured dotted names."
+  ],
+  "faq": [
+    {
+      "q": "What is dot.case?",
+      "a": "dot.case is a naming style where words are lowercase and separated with dots."
+    },
+    {
+      "q": "Who uses dot case?",
+      "a": "It is often used for translation keys, namespaces, configuration paths, and event naming."
+    },
+    {
+      "q": "Does this tool remove spaces?",
+      "a": "Yes. It turns spaces and common separators into dots."
+    },
+    {
+      "q": "How is dot case different from path case?",
+      "a": "Dot case uses periods, while path case uses forward slashes."
+    },
+    {
+      "q": "Can I paste mixed text with punctuation?",
+      "a": "Yes. The tool cleans common separators and converts the text into dot.case."
+    }
+  ],
+  "related": [
+    "path-case-converter",
+    "kebab-case-converter",
+    "snake-case-converter"
+  ]
+},
+{
+  "id": "path-case-converter",
+  "name": "Path Case Converter",
+  "slug": "path-case-converter",
+  "category": "text-tools",
+  "intro": "Convert text into path/case format for route-like and folder-like naming.",
+  "description": "Use this path case converter to turn phrases into path/case format for route segments, folder-like labels, nested identifiers, and structured content paths.",
+  "keywords": [
+    "path case converter",
+    "text to path case",
+    "slash separated text converter",
+    "path/case generator"
+  ],
+  "whyUse": [
+    "Creates slash-separated output instantly.",
+    "Useful for route-like strings, nested labels, and content paths.",
+    "Helps normalize text into readable segmented paths.",
+    "Saves time when building structured path-style names."
+  ],
+  "howToUse": [
+    "Paste or type your text into the input box.",
+    "Run the tool to convert the text into path/case.",
+    "Review the output and copy the result.",
+    "Use Dot Case Converter instead if you need periods between segments."
+  ],
+  "examples": [
+    {
+      "title": "Basic phrase",
+      "input": "hello world example",
+      "output": "hello/world/example",
+      "explanation": "Words are lowercased and separated with slashes."
+    },
+    {
+      "title": "Section naming",
+      "input": "User Profile Settings",
+      "output": "user/profile/settings",
+      "explanation": "Useful for route-like or nested content naming."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Expecting real file system validation.",
+      "fix": "This tool formats text into path-style output, but it does not validate actual files or folders."
+    },
+    {
+      "issue": "Confusing path case with kebab case or dot case.",
+      "fix": "Path case uses slashes, kebab case uses hyphens, and dot case uses periods."
+    },
+    {
+      "issue": "Symbols produce more splits than expected.",
+      "fix": "Review the generated output and clean the source phrase if needed."
+    }
+  ],
+  "useCases": [
+    "Creating route-like labels for documentation.",
+    "Preparing nested content or section paths.",
+    "Formatting structured identifiers with slash-separated segments.",
+    "Converting headings into readable path-style output."
+  ],
+  "faq": [
+    {
+      "q": "What is path/case?",
+      "a": "Path case is a naming style where words are lowercase and separated with forward slashes."
+    },
+    {
+      "q": "Who uses path case?",
+      "a": "It can be useful for route-like labels, nested content structures, and slash-separated identifiers."
+    },
+    {
+      "q": "Does this tool remove spaces?",
+      "a": "Yes. It replaces spaces and common separators with forward slashes."
+    },
+    {
+      "q": "How is path case different from dot case?",
+      "a": "Path case uses forward slashes, while dot case uses periods."
+    },
+    {
+      "q": "Can I use this for route-style text?",
+      "a": "Yes. It is useful when you want plain text converted into a clean slash-separated structure."
+    }
+  ],
+  "related": [
+    "dot-case-converter",
+    "kebab-case-converter",
+    "slug-generator"
+  ]
+}
+,
+{
+  "id": "remove-punctuation",
+  "name": "Remove Punctuation",
+  "slug": "remove-punctuation",
+  "category": "text-tools",
+  "intro": "Remove punctuation marks from text instantly.",
+  "description": "Use this remove punctuation tool to strip punctuation marks from text while keeping letters, numbers, spaces, and line breaks for cleanup, exports, and text preprocessing.",
+  "keywords": [
+    "remove punctuation",
+    "strip punctuation from text",
+    "delete punctuation marks",
+    "text punctuation remover"
+  ],
+  "whyUse": [
+    "Cleans punctuation without removing words or numbers.",
+    "Useful for text preprocessing, exports, and data cleanup.",
+    "Helps normalize pasted text before further analysis.",
+    "Works quickly for one-off cleanup in the browser."
+  ],
+  "howToUse": [
+    "Paste or type your text into the input box.",
+    "Run the tool to remove punctuation marks.",
+    "Review the cleaned output.",
+    "Copy the result or continue with other cleanup tools if needed."
+  ],
+  "examples": [
+    {
+      "title": "Sentence cleanup",
+      "input": "Hello, world! How are you?",
+      "output": "Hello world How are you",
+      "explanation": "Removes commas, exclamation marks, and question marks while keeping letters and spaces."
+    },
+    {
+      "title": "Mixed content",
+      "input": "Order #123: paid.",
+      "output": "Order 123 paid",
+      "explanation": "Keeps numbers but removes punctuation symbols."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Expecting numbers to be removed too.",
+      "fix": "Use Remove Numbers from Text if you want digits removed."
+    },
+    {
+      "issue": "Expecting symbols and punctuation to be treated differently.",
+      "fix": "This tool removes punctuation-style characters; use Remove Special Characters for broader cleanup."
+    },
+    {
+      "issue": "Trying to preserve punctuation inside abbreviations.",
+      "fix": "Check the output carefully if dots or separators are important in your text."
+    }
+  ],
+  "useCases": [
+    "Cleaning text before word analysis.",
+    "Preparing exports for spreadsheets or scripts.",
+    "Normalizing copied text from PDFs or websites.",
+    "Removing punctuation before keyword processing."
+  ],
+  "faq": [
+    {
+      "q": "What does Remove Punctuation do?",
+      "a": "It removes punctuation marks from text while keeping letters, digits, and spaces."
+    },
+    {
+      "q": "Does it remove numbers too?",
+      "a": "No. Numbers stay unless you use a separate number-removal tool."
+    },
+    {
+      "q": "Does it keep spaces and line breaks?",
+      "a": "Yes. It keeps normal text spacing and line structure."
+    },
+    {
+      "q": "How is this different from Remove Special Characters?",
+      "a": "Remove Punctuation focuses on punctuation marks, while Remove Special Characters removes a wider range of non-letter and non-digit symbols."
+    },
+    {
+      "q": "Can I use this on long text?",
+      "a": "Yes. You can paste long text blocks and clean them in one step."
+    }
+  ],
+  "related": [
+    "remove-special-characters",
+    "remove-numbers-from-text",
+    "remove-extra-spaces"
+  ]
+},
+{
+  "id": "remove-numbers-from-text",
+  "name": "Remove Numbers from Text",
+  "slug": "remove-numbers-from-text",
+  "category": "text-tools",
+  "intro": "Remove digits from text while keeping letters and symbols.",
+  "description": "Use this remove numbers from text tool to delete digits from copied text, notes, exports, and mixed content while keeping letters, punctuation, and spacing.",
+  "keywords": [
+    "remove numbers from text",
+    "delete digits from text",
+    "strip numbers from string",
+    "text number remover"
+  ],
+  "whyUse": [
+    "Removes digits without changing the rest of the text more than needed.",
+    "Useful for cleanup, anonymization, and preprocessing.",
+    "Helps normalize copied strings before sorting or analysis.",
+    "Fast for simple browser-based text cleanup."
+  ],
+  "howToUse": [
+    "Paste or type your text into the input box.",
+    "Run the tool to remove all digits.",
+    "Review the result and copy the cleaned text.",
+    "Use other cleanup tools if you want to remove symbols or punctuation too."
+  ],
+  "examples": [
+    {
+      "title": "Simple cleanup",
+      "input": "Room 123 is ready",
+      "output": "Room  is ready",
+      "explanation": "Removes all digits and keeps the letters and spaces."
+    },
+    {
+      "title": "Mixed text",
+      "input": "v2 build 45",
+      "output": "v build ",
+      "explanation": "Useful when you need the text only and no numeric values."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Expecting punctuation to be removed too.",
+      "fix": "Use Remove Special Characters or Remove Punctuation if you also want symbols removed."
+    },
+    {
+      "issue": "Wanting to remove numeric words like one or two.",
+      "fix": "This tool removes digits only, not spelled-out numbers."
+    },
+    {
+      "issue": "Seeing extra spaces after digits are removed.",
+      "fix": "Run the result through Remove Extra Spaces if you want tighter cleanup."
+    }
+  ],
+  "useCases": [
+    "Cleaning mixed text before analysis.",
+    "Removing numeric parts from identifiers or notes.",
+    "Preparing text-only labels from exported content.",
+    "Preprocessing strings before formatting or sorting."
+  ],
+  "faq": [
+    {
+      "q": "What does Remove Numbers from Text do?",
+      "a": "It removes all digits from the text and leaves the remaining characters in place."
+    },
+    {
+      "q": "Does it remove decimal points or punctuation?",
+      "a": "No. It removes digits only."
+    },
+    {
+      "q": "Does it remove spelled numbers like ten?",
+      "a": "No. It removes only numeric digits such as 0 to 9."
+    },
+    {
+      "q": "Why are there extra spaces in the result?",
+      "a": "Removing digits can leave spacing behind. You can clean that with Remove Extra Spaces."
+    },
+    {
+      "q": "How is this different from Remove Letters from Text?",
+      "a": "This tool removes digits, while Remove Letters from Text removes alphabetic characters."
+    }
+  ],
+  "related": [
+    "remove-letters-from-text",
+    "remove-special-characters",
+    "remove-extra-spaces"
+  ]
+},
+{
+  "id": "remove-letters-from-text",
+  "name": "Remove Letters from Text",
+  "slug": "remove-letters-from-text",
+  "category": "text-tools",
+  "intro": "Remove alphabetic characters from text while keeping digits and symbols.",
+  "description": "Use this remove letters from text tool to delete letters from mixed strings while keeping numbers, punctuation, symbols, and spacing for cleanup and extraction tasks.",
+  "keywords": [
+    "remove letters from text",
+    "delete letters from string",
+    "strip alphabetic characters",
+    "text letter remover"
+  ],
+  "whyUse": [
+    "Keeps digits and symbols while removing letters.",
+    "Useful for extracting numeric or symbolic parts from mixed strings.",
+    "Helps separate letters from IDs, codes, or messy text.",
+    "Fast for quick browser-based cleanup and testing."
+  ],
+  "howToUse": [
+    "Paste or type your text into the input box.",
+    "Run the tool to remove alphabetic characters.",
+    "Review the output and copy the remaining text.",
+    "Use other cleanup tools if you want to remove symbols or extra spaces too."
+  ],
+  "examples": [
+    {
+      "title": "Code cleanup",
+      "input": "Order123-AB",
+      "output": "123-",
+      "explanation": "Removes letters and keeps digits and punctuation."
+    },
+    {
+      "title": "Mixed line",
+      "input": "Room 45B",
+      "output": " 45",
+      "explanation": "Useful when extracting non-letter parts from short strings."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Expecting digits to be removed too.",
+      "fix": "Use Remove Numbers from Text if you want digits removed."
+    },
+    {
+      "issue": "Unexpected spaces remain after letters are removed.",
+      "fix": "Use Remove Extra Spaces if you want cleaner spacing."
+    },
+    {
+      "issue": "Expecting punctuation and symbols to disappear.",
+      "fix": "This tool keeps non-letter characters. Use Remove Special Characters for broader cleanup."
+    }
+  ],
+  "useCases": [
+    "Extracting digits and symbols from mixed identifiers.",
+    "Cleaning codes or labels that mix letters with numbers.",
+    "Testing string preprocessing rules.",
+    "Separating text parts before analysis."
+  ],
+  "faq": [
+    {
+      "q": "What does Remove Letters from Text do?",
+      "a": "It removes alphabetic characters and keeps the rest of the text."
+    },
+    {
+      "q": "Does it keep numbers?",
+      "a": "Yes. Numbers stay in the output."
+    },
+    {
+      "q": "Does it remove spaces?",
+      "a": "No. Spaces remain unless you clean them with another tool."
+    },
+    {
+      "q": "Does it remove punctuation too?",
+      "a": "No. Punctuation and symbols remain."
+    },
+    {
+      "q": "How is this different from Remove Special Characters?",
+      "a": "This tool removes letters only, while Remove Special Characters removes non-letter and non-digit symbols."
+    }
+  ],
+  "related": [
+    "remove-numbers-from-text",
+    "remove-special-characters",
+    "remove-extra-spaces"
+  ]
+},
+{
+  "id": "remove-special-characters",
+  "name": "Remove Special Characters",
+  "slug": "remove-special-characters",
+  "category": "text-tools",
+  "intro": "Remove special characters while keeping letters, numbers, spaces, and line breaks.",
+  "description": "Use this remove special characters tool to strip symbols and non-alphanumeric characters from text while keeping letters, digits, spaces, and line structure for cleanup and preprocessing.",
+  "keywords": [
+    "remove special characters",
+    "strip special characters from text",
+    "delete symbols from text",
+    "clean alphanumeric text"
+  ],
+  "whyUse": [
+    "Removes symbols while keeping normal text and numbers intact.",
+    "Useful for cleanup before import, search, or analysis.",
+    "Helps normalize copied content from websites, exports, and forms.",
+    "Good for preparing alphanumeric text quickly in the browser."
+  ],
+  "howToUse": [
+    "Paste or type your text into the input box.",
+    "Run the tool to remove special characters.",
+    "Review the cleaned output.",
+    "Use related tools if you need narrower cleanup like punctuation-only or number-only removal."
+  ],
+  "examples": [
+    {
+      "title": "Mixed symbols",
+      "input": "Hello@world#2026!",
+      "output": "Helloworld2026",
+      "explanation": "Removes symbol characters and keeps letters and digits."
+    },
+    {
+      "title": "Short code",
+      "input": "A_B-C.12",
+      "output": "ABC12",
+      "explanation": "Useful when you need alphanumeric-only output."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Expecting punctuation-only cleanup.",
+      "fix": "Use Remove Punctuation if you want a narrower punctuation-focused result."
+    },
+    {
+      "issue": "Unexpected words merge together after symbols are removed.",
+      "fix": "This is normal when separators are deleted. Review the result or use a different cleanup flow."
+    },
+    {
+      "issue": "Wanting to keep underscores or hyphens.",
+      "fix": "This tool removes special characters broadly. Use a more specific tool if you need certain separators preserved."
+    }
+  ],
+  "useCases": [
+    "Preparing alphanumeric text for import or matching.",
+    "Cleaning copied strings from forms or exports.",
+    "Removing symbols before keyword or text analysis.",
+    "Normalizing mixed content into a simpler text format."
+  ],
+  "faq": [
+    {
+      "q": "What does Remove Special Characters do?",
+      "a": "It removes symbols and non-alphanumeric characters while keeping letters, digits, spaces, and line breaks."
+    },
+    {
+      "q": "Does it keep numbers?",
+      "a": "Yes. Numbers stay in the output."
+    },
+    {
+      "q": "Does it keep spaces and line breaks?",
+      "a": "Yes. Normal text structure stays in place."
+    },
+    {
+      "q": "How is this different from Remove Punctuation?",
+      "a": "Remove Special Characters is broader and removes many symbol characters, not just punctuation marks."
+    },
+    {
+      "q": "Can I use it on long text?",
+      "a": "Yes. It works for short strings and longer text blocks."
+    }
+  ],
+  "related": [
+    "remove-punctuation",
+    "remove-numbers-from-text",
+    "remove-letters-from-text"
+  ]
+}
+,
+{
+  "id": "keep-only-numbers",
+  "name": "Keep Only Numbers",
+  "slug": "keep-only-numbers",
+  "category": "text-tools",
+  "intro": "Keep only numeric digits from mixed text instantly.",
+  "description": "Use this keep only numbers tool to extract digits from mixed text while removing letters, punctuation, symbols, and other non-numeric characters.",
+  "keywords": [
+    "keep only numbers",
+    "extract numbers from text",
+    "text to digits",
+    "numeric text extractor"
+  ],
+  "whyUse": [
+    "Extracts numeric content quickly from mixed strings.",
+    "Useful for IDs, codes, phone-like values, and cleanup tasks.",
+    "Helps separate digits from noisy copied text.",
+    "Works well for fast browser-based preprocessing."
+  ],
+  "howToUse": [
+    "Paste or type mixed text into the input box.",
+    "Run the tool to keep only numeric digits.",
+    "Review the extracted result.",
+    "Copy the output or continue with other cleanup tools if needed."
+  ],
+  "examples": [
+    {
+      "title": "Mixed string",
+      "input": "Order #123-45AB",
+      "output": "12345",
+      "explanation": "Keeps only digits and removes everything else."
+    },
+    {
+      "title": "Phone-like text",
+      "input": "+1 (800) 555-0199",
+      "output": "18005550199",
+      "explanation": "Useful when you need the numeric part only."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Expecting spaces or separators to remain.",
+      "fix": "This tool keeps only digits, so separators are removed too."
+    },
+    {
+      "issue": "Wanting letters removed but punctuation kept.",
+      "fix": "Use Remove Letters from Text if you want to keep symbols and punctuation."
+    },
+    {
+      "issue": "Expecting spelled numbers like ten to remain.",
+      "fix": "This tool keeps numeric digits only, not number words."
+    }
+  ],
+  "useCases": [
+    "Extracting digits from IDs and reference strings.",
+    "Cleaning pasted phone or account-like values.",
+    "Preparing numeric-only text for import or matching.",
+    "Separating numbers from mixed labels or notes."
+  ],
+  "faq": [
+    {
+      "q": "What does Keep Only Numbers do?",
+      "a": "It removes everything except numeric digits."
+    },
+    {
+      "q": "Does it keep decimal points or plus signs?",
+      "a": "No. It keeps digits only."
+    },
+    {
+      "q": "Does it keep spaces?",
+      "a": "No. All non-digit characters are removed."
+    },
+    {
+      "q": "How is this different from Remove Letters from Text?",
+      "a": "Keep Only Numbers returns digits only, while Remove Letters from Text keeps all non-letter characters."
+    },
+    {
+      "q": "Can I use it on long text?",
+      "a": "Yes. It works on short strings and long text blocks."
+    }
+  ],
+  "related": [
+    "keep-only-letters",
+    "keep-only-alphanumeric",
+    "remove-letters-from-text"
+  ]
+},
+{
+  "id": "keep-only-letters",
+  "name": "Keep Only Letters",
+  "slug": "keep-only-letters",
+  "category": "text-tools",
+  "intro": "Keep only letters from mixed text and remove digits and symbols.",
+  "description": "Use this keep only letters tool to extract alphabetic characters from mixed text while removing numbers, punctuation, symbols, and other non-letter characters.",
+  "keywords": [
+    "keep only letters",
+    "extract letters from text",
+    "letters only tool",
+    "alphabetic text extractor"
+  ],
+  "whyUse": [
+    "Extracts alphabetic text quickly from mixed input.",
+    "Useful for cleanup, preprocessing, and label normalization.",
+    "Helps isolate words from strings that mix letters with numbers or symbols.",
+    "Fast for one-off browser-based text extraction."
+  ],
+  "howToUse": [
+    "Paste or type mixed text into the input box.",
+    "Run the tool to keep only letters.",
+    "Review the extracted text result.",
+    "Copy the output or continue with other text cleanup tools."
+  ],
+  "examples": [
+    {
+      "title": "Mixed string",
+      "input": "Order #123-AB",
+      "output": "OrderAB",
+      "explanation": "Keeps letters only and removes digits and punctuation."
+    },
+    {
+      "title": "Code-like text",
+      "input": "Room 45B",
+      "output": "RoomB",
+      "explanation": "Useful when you need the alphabetic part of a mixed string."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Expecting spaces to remain.",
+      "fix": "This tool keeps letters only, so spaces are removed too."
+    },
+    {
+      "issue": "Wanting digits to remain with letters.",
+      "fix": "Use Keep Only Alphanumeric if you want both letters and numbers."
+    },
+    {
+      "issue": "Expecting punctuation to stay.",
+      "fix": "This tool removes non-letter characters, including punctuation."
+    }
+  ],
+  "useCases": [
+    "Extracting text-only content from mixed identifiers.",
+    "Cleaning labels before formatting or matching.",
+    "Separating words from strings that contain numbers and symbols.",
+    "Preparing alphabetic-only text for preprocessing."
+  ],
+  "faq": [
+    {
+      "q": "What does Keep Only Letters do?",
+      "a": "It removes everything except alphabetic characters."
+    },
+    {
+      "q": "Does it keep spaces?",
+      "a": "No. It keeps letters only."
+    },
+    {
+      "q": "Does it keep accented or non-Latin letters?",
+      "a": "Yes. It keeps letter characters recognized as letters by the browser regex engine."
+    },
+    {
+      "q": "How is this different from Remove Numbers from Text?",
+      "a": "Keep Only Letters returns letters only, while Remove Numbers from Text removes digits but keeps other characters."
+    },
+    {
+      "q": "Can I use it on long text?",
+      "a": "Yes. It can process both short and long text."
+    }
+  ],
+  "related": [
+    "keep-only-numbers",
+    "keep-only-alphanumeric",
+    "remove-numbers-from-text"
+  ]
+},
+{
+  "id": "keep-only-alphanumeric",
+  "name": "Keep Only Alphanumeric",
+  "slug": "keep-only-alphanumeric",
+  "category": "text-tools",
+  "intro": "Keep only letters and numbers from text while removing symbols and punctuation.",
+  "description": "Use this keep only alphanumeric tool to strip symbols, punctuation, and special characters while keeping letters and digits for cleanup, import, and matching tasks.",
+  "keywords": [
+    "keep only alphanumeric",
+    "alphanumeric text cleaner",
+    "remove symbols keep letters numbers",
+    "letters and numbers only"
+  ],
+  "whyUse": [
+    "Creates clean alphanumeric output quickly.",
+    "Useful for normalization before import, search, or comparison.",
+    "Removes symbols while preserving readable text and numbers.",
+    "Helps prepare mixed content for simple matching workflows."
+  ],
+  "howToUse": [
+    "Paste or type your text into the input box.",
+    "Run the tool to keep only letters and numbers.",
+    "Review the cleaned result.",
+    "Copy the output or continue with spacing cleanup if needed."
+  ],
+  "examples": [
+    {
+      "title": "Mixed symbols",
+      "input": "Hello@world#2026!",
+      "output": "Helloworld2026",
+      "explanation": "Removes symbols and punctuation while keeping letters and numbers."
+    },
+    {
+      "title": "Code-like input",
+      "input": "A_B-C.12",
+      "output": "ABC12",
+      "explanation": "Useful when you need only letters and digits."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Expecting spaces to remain.",
+      "fix": "This tool removes non-alphanumeric characters, including spaces."
+    },
+    {
+      "issue": "Wanting only digits or only letters.",
+      "fix": "Use Keep Only Numbers or Keep Only Letters for narrower extraction."
+    },
+    {
+      "issue": "Wanting underscores or hyphens preserved.",
+      "fix": "This tool removes symbols broadly, so separators are removed too."
+    }
+  ],
+  "useCases": [
+    "Preparing clean alphanumeric strings for import.",
+    "Normalizing mixed content for search or matching.",
+    "Cleaning copied IDs, tags, or labels.",
+    "Removing symbols before simple preprocessing."
+  ],
+  "faq": [
+    {
+      "q": "What does Keep Only Alphanumeric do?",
+      "a": "It removes everything except letters and digits."
+    },
+    {
+      "q": "Does it keep spaces?",
+      "a": "No. It keeps only alphanumeric characters."
+    },
+    {
+      "q": "Does it keep punctuation?",
+      "a": "No. Punctuation and symbols are removed."
+    },
+    {
+      "q": "How is this different from Remove Special Characters?",
+      "a": "Keep Only Alphanumeric returns only letters and digits, while Remove Special Characters can preserve spaces and line breaks."
+    },
+    {
+      "q": "Can I use it on long text?",
+      "a": "Yes. It works for both short strings and larger text blocks."
+    }
+  ],
+  "related": [
+    "keep-only-numbers",
+    "keep-only-letters",
+    "remove-special-characters"
+  ]
+},
+{
+  "id": "paragraph-counter",
+  "name": "Paragraph Counter",
+  "slug": "paragraph-counter",
+  "category": "text-tools",
+  "intro": "Count paragraphs in text quickly and clearly.",
+  "description": "Use this paragraph counter to measure how many paragraphs appear in your text, which is useful for writing, editing, formatting checks, and content preparation.",
+  "keywords": [
+    "paragraph counter",
+    "count paragraphs",
+    "text paragraph counter",
+    "paragraph count tool"
+  ],
+  "whyUse": [
+    "Gives a fast paragraph count for writing and editing.",
+    "Useful for articles, essays, notes, and draft cleanup.",
+    "Helps review content structure beyond words and characters.",
+    "Works well for quick browser-based text measurement."
+  ],
+  "howToUse": [
+    "Paste or type your text into the input box.",
+    "Run the tool to count paragraphs.",
+    "Review the paragraph total in the output area.",
+    "Use other counters if you also need word, line, or sentence counts."
+  ],
+  "examples": [
+    {
+      "title": "Two paragraphs",
+      "input": "First paragraph.\n\nSecond paragraph.",
+      "output": "Paragraphs: 2",
+      "explanation": "Blank-line-separated blocks are counted as separate paragraphs."
+    },
+    {
+      "title": "Single block",
+      "input": "One paragraph only.",
+      "output": "Paragraphs: 1",
+      "explanation": "A single text block counts as one paragraph."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Expecting every line to count as a paragraph.",
+      "fix": "This tool counts paragraph blocks, not single lines."
+    },
+    {
+      "issue": "Using inconsistent spacing between paragraphs.",
+      "fix": "Paragraphs are usually recognized as text blocks separated by blank lines."
+    },
+    {
+      "issue": "Expecting words or sentences to be counted too.",
+      "fix": "Use related counters if you need other text measurements."
+    }
+  ],
+  "useCases": [
+    "Checking article or essay structure.",
+    "Reviewing draft formatting before publishing.",
+    "Measuring paragraph count in copied content.",
+    "Preparing content for editing or layout work."
+  ],
+  "faq": [
+    {
+      "q": "What does a paragraph counter do?",
+      "a": "It counts how many paragraph blocks are present in the text."
+    },
+    {
+      "q": "How does it detect paragraphs?",
+      "a": "It treats text blocks separated by blank lines as separate paragraphs."
+    },
+    {
+      "q": "Does every line count as a paragraph?",
+      "a": "No. Lines are different from paragraphs."
+    },
+    {
+      "q": "Can I use it for long articles?",
+      "a": "Yes. It works for short notes and long content."
+    },
+    {
+      "q": "How is it different from Line Counter?",
+      "a": "Line Counter measures lines, while Paragraph Counter measures text blocks."
+    }
+  ],
+  "related": [
+    "line-counter",
+    "word-counter",
+    "sentence-counter"
+  ]
+}
+,
+{
+  "id": "extract-hashtags",
+  "name": "Extract Hashtags",
+  "slug": "extract-hashtags",
+  "category": "text-tools",
+  "intro": "Extract hashtags from text instantly.",
+  "description": "Use this extract hashtags tool to pull hashtag values from social posts, notes, drafts, and copied text while keeping only the hashtag matches in a clean list.",
+  "keywords": [
+    "extract hashtags",
+    "hashtag extractor",
+    "find hashtags in text",
+    "pull hashtags from text"
+  ],
+  "whyUse": [
+    "Finds hashtag values quickly without manual scanning.",
+    "Useful for social posts, drafts, exports, and copied text.",
+    "Helps clean hashtag lists for reuse or analysis.",
+    "Works well for fast browser-based text extraction."
+  ],
+  "howToUse": [
+    "Paste or type text into the input box.",
+    "Run the tool to extract hashtag matches.",
+    "Review the result list in the output area.",
+    "Copy the extracted hashtags if needed."
+  ],
+  "examples": [
+    {
+      "title": "Social text",
+      "input": "Post about #SEO and #ToolsAtlas today",
+      "output": "#SEO\n#ToolsAtlas",
+      "explanation": "The tool finds all hashtag-style matches and lists them one per line."
+    },
+    {
+      "title": "Repeated tags",
+      "input": "Testing #alpha #beta #alpha",
+      "output": "#alpha\n#beta\n#alpha",
+      "explanation": "The tool extracts hashtags in the same order they appear."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Expecting normal words without # to be extracted.",
+      "fix": "This tool only extracts words that start with the hashtag symbol."
+    },
+    {
+      "issue": "Using punctuation right after the hashtag.",
+      "fix": "The tool extracts the hashtag word itself and ignores trailing punctuation."
+    },
+    {
+      "issue": "Expecting deduplication.",
+      "fix": "This tool extracts matches as found. Use a line deduplication tool after that if needed."
+    }
+  ],
+  "useCases": [
+    "Collecting hashtags from social post drafts.",
+    "Cleaning copied hashtag lists from notes.",
+    "Preparing tags for reports or reuse.",
+    "Extracting hashtag data from longer text blocks."
+  ],
+  "faq": [
+    {
+      "q": "What does Extract Hashtags do?",
+      "a": "It finds hashtag-style values in text and returns them in a list."
+    },
+    {
+      "q": "Does it keep the # symbol?",
+      "a": "Yes. The extracted result keeps the hashtag symbol."
+    },
+    {
+      "q": "Does it remove duplicates?",
+      "a": "No. It extracts matches in order and keeps repeated hashtags."
+    },
+    {
+      "q": "Can I use it on long text?",
+      "a": "Yes. It works on short posts and larger text blocks."
+    },
+    {
+      "q": "How is it different from Extract Mentions?",
+      "a": "Extract Hashtags finds #tags, while Extract Mentions finds @mentions."
+    }
+  ],
+  "related": [
+    "extract-mentions",
+    "word-counter",
+    "unique-lines"
+  ]
+},
+{
+  "id": "extract-mentions",
+  "name": "Extract Mentions",
+  "slug": "extract-mentions",
+  "category": "text-tools",
+  "intro": "Extract @mentions from text instantly.",
+  "description": "Use this extract mentions tool to pull @mention values from chats, drafts, social content, and copied text into a clean result list.",
+  "keywords": [
+    "extract mentions",
+    "mention extractor",
+    "find @mentions in text",
+    "pull mentions from text"
+  ],
+  "whyUse": [
+    "Finds mention values quickly in copied text.",
+    "Useful for chats, social drafts, exports, and moderation workflows.",
+    "Helps build clean mention lists without manual scanning.",
+    "Works well for quick browser-based extraction."
+  ],
+  "howToUse": [
+    "Paste or type text into the input box.",
+    "Run the tool to extract @mentions.",
+    "Review the output list.",
+    "Copy the extracted values if needed."
+  ],
+  "examples": [
+    {
+      "title": "Chat text",
+      "input": "Thanks @alex and @maria for the update",
+      "output": "@alex\n@maria",
+      "explanation": "The tool finds all mention-style matches and lists them one per line."
+    },
+    {
+      "title": "Repeated mentions",
+      "input": "@john please review with @john and @anna",
+      "output": "@john\n@john\n@anna",
+      "explanation": "Repeated mentions stay in the result in the same order."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Expecting plain names without @ to be extracted.",
+      "fix": "This tool only extracts words that start with @."
+    },
+    {
+      "issue": "Expecting duplicates to be removed.",
+      "fix": "The tool returns matches as found. Deduplicate the result afterward if needed."
+    },
+    {
+      "issue": "Using spaces inside mention names.",
+      "fix": "Mention extraction works on continuous mention-style tokens."
+    }
+  ],
+  "useCases": [
+    "Collecting mentions from social drafts.",
+    "Reviewing chats or comment exports.",
+    "Preparing mention lists for reports.",
+    "Extracting tagged usernames from longer text."
+  ],
+  "faq": [
+    {
+      "q": "What does Extract Mentions do?",
+      "a": "It finds @mention-style values in text and returns them in a list."
+    },
+    {
+      "q": "Does it keep the @ symbol?",
+      "a": "Yes. The extracted result keeps the @ symbol."
+    },
+    {
+      "q": "Does it remove duplicates?",
+      "a": "No. It extracts matches in order and keeps repeated mentions."
+    },
+    {
+      "q": "Can I use it on long text?",
+      "a": "Yes. It works for short messages and large text blocks."
+    },
+    {
+      "q": "How is it different from Extract Hashtags?",
+      "a": "Extract Mentions finds @mentions, while Extract Hashtags finds #tags."
+    }
+  ],
+  "related": [
+    "extract-hashtags",
+    "word-counter",
+    "unique-lines"
+  ]
+},
+{
+  "id": "character-frequency-counter",
+  "name": "Character Frequency Counter",
+  "slug": "character-frequency-counter",
+  "category": "text-tools",
+  "intro": "Count how often each character appears in text.",
+  "description": "Use this character frequency counter to analyze repeated characters in text for cleanup, debugging, simple analysis, and formatting checks.",
+  "keywords": [
+    "character frequency counter",
+    "character count frequency",
+    "text character analysis",
+    "count repeated characters"
+  ],
+  "whyUse": [
+    "Shows repeated characters clearly in one result.",
+    "Useful for debugging, cleanup, and simple text analysis.",
+    "Helps spot overused symbols, spaces, or repeated letters.",
+    "Works well for quick browser-based inspection."
+  ],
+  "howToUse": [
+    "Paste or type text into the input box.",
+    "Run the tool to count character frequency.",
+    "Review the character-by-character result in the output area.",
+    "Copy the result if you need to use it elsewhere."
+  ],
+  "examples": [
+    {
+      "title": "Simple text",
+      "input": "hello",
+      "output": "\"h\": 1\n\"e\": 1\n\"l\": 2\n\"o\": 1",
+      "explanation": "The tool counts how many times each character appears."
+    },
+    {
+      "title": "Text with spaces",
+      "input": "a a",
+      "output": "\"a\": 2\n\" \": 1",
+      "explanation": "Spaces are counted too, so structure remains visible."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Expecting word counts instead of character counts.",
+      "fix": "Use Word Frequency Counter if you need per-word results."
+    },
+    {
+      "issue": "Not expecting spaces to appear in the output.",
+      "fix": "Spaces are characters too, so they are counted."
+    },
+    {
+      "issue": "Expecting automatic sorting by alphabet only.",
+      "fix": "This tool sorts by highest frequency first for easier review."
+    }
+  ],
+  "useCases": [
+    "Checking repeated symbols or spaces in text.",
+    "Analyzing character distribution quickly.",
+    "Debugging formatting problems in copied content.",
+    "Reviewing short strings, code snippets, or notes."
+  ],
+  "faq": [
+    {
+      "q": "What does Character Frequency Counter do?",
+      "a": "It counts how many times each character appears in the input text."
+    },
+    {
+      "q": "Does it count spaces?",
+      "a": "Yes. Spaces are counted as characters."
+    },
+    {
+      "q": "Does it count punctuation too?",
+      "a": "Yes. Every character in the text is counted."
+    },
+    {
+      "q": "How is it different from Character Counter?",
+      "a": "Character Counter gives totals, while Character Frequency Counter shows counts for each individual character."
+    },
+    {
+      "q": "Can I use it on long text?",
+      "a": "Yes, but it is most readable on short to medium text blocks."
+    }
+  ],
+  "related": [
+    "character-counter",
+    "word-frequency-counter",
+    "word-counter"
+  ]
+},
+{
+  "id": "word-frequency-counter",
+  "name": "Word Frequency Counter",
+  "slug": "word-frequency-counter",
+  "category": "text-tools",
+  "intro": "Count how often each word appears in text.",
+  "description": "Use this word frequency counter to analyze repeated words in text for writing review, keyword checks, cleanup, and quick content analysis.",
+  "keywords": [
+    "word frequency counter",
+    "word frequency analyzer",
+    "count repeated words",
+    "text word analysis"
+  ],
+  "whyUse": [
+    "Shows repeated words clearly in one list.",
+    "Useful for writing review, keyword checks, and content cleanup.",
+    "Helps identify repeated terms quickly.",
+    "Works well for fast browser-based text analysis."
+  ],
+  "howToUse": [
+    "Paste or type text into the input box.",
+    "Run the tool to count word frequency.",
+    "Review the result list sorted by frequency.",
+    "Copy the output if needed."
+  ],
+  "examples": [
+    {
+      "title": "Short text",
+      "input": "apple banana apple",
+      "output": "apple: 2\nbanana: 1",
+      "explanation": "The tool groups the same words and counts how many times each appears."
+    },
+    {
+      "title": "Mixed case text",
+      "input": "SEO seo Tools",
+      "output": "seo: 2\ntools: 1",
+      "explanation": "Words are normalized to lowercase for cleaner counting."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Expecting punctuation-marked words to stay separate.",
+      "fix": "The tool normalizes text by extracting word-like tokens."
+    },
+    {
+      "issue": "Expecting original capitalization to stay in the output.",
+      "fix": "Words are lowercased so repeated forms count together."
+    },
+    {
+      "issue": "Wanting character counts instead of word counts.",
+      "fix": "Use Character Frequency Counter for per-character analysis."
+    }
+  ],
+  "useCases": [
+    "Checking repeated words in drafts.",
+    "Reviewing keyword repetition in content.",
+    "Cleaning copied text before editing.",
+    "Analyzing short articles, notes, or descriptions."
+  ],
+  "faq": [
+    {
+      "q": "What does Word Frequency Counter do?",
+      "a": "It counts how many times each word appears in the text."
+    },
+    {
+      "q": "Does it ignore capitalization?",
+      "a": "Yes. Words are normalized to lowercase so matching words count together."
+    },
+    {
+      "q": "Does it ignore punctuation?",
+      "a": "It extracts word-like tokens and counts those words."
+    },
+    {
+      "q": "How is it different from Word Counter?",
+      "a": "Word Counter gives a total number of words, while Word Frequency Counter shows counts for each word."
+    },
+    {
+      "q": "Can I use it on long text?",
+      "a": "Yes, though the output is easiest to read on short to medium text blocks."
+    }
+  ],
+  "related": [
+    "word-counter",
+    "character-frequency-counter",
+    "remove-duplicate-words"
+  ]
+},
+{
+  "id": "longest-line-finder",
+  "name": "Longest Line Finder",
+  "slug": "longest-line-finder",
+  "category": "text-tools",
+  "intro": "Find the longest line in a text block instantly.",
+  "description": "Use this longest line finder to identify the longest line in pasted text, logs, lists, and copied content for formatting checks and quick analysis.",
+  "keywords": [
+    "longest line finder",
+    "find longest line in text",
+    "text line length checker",
+    "longest line tool"
+  ],
+  "whyUse": [
+    "Finds the longest line quickly without manual checking.",
+    "Useful for logs, code, lists, and formatting review.",
+    "Helps detect layout or wrapping problems.",
+    "Works well for fast browser-based line inspection."
+  ],
+  "howToUse": [
+    "Paste or type multi-line text into the input box.",
+    "Run the tool to inspect line lengths.",
+    "Review the longest line and its length in the output area.",
+    "Copy or edit the source text if needed."
+  ],
+  "examples": [
+    {
+      "title": "Three lines",
+      "input": "short\nmuch longer line\nmid",
+      "output": "Longest line length: 16\nLine number: 2\nmuch longer line",
+      "explanation": "The tool finds the longest line and shows where it appears."
+    },
+    {
+      "title": "Single line",
+      "input": "one line only",
+      "output": "Longest line length: 13\nLine number: 1\none line only",
+      "explanation": "If there is only one line, that line is returned."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Expecting paragraph-level analysis.",
+      "fix": "This tool works line by line, not by paragraph blocks."
+    },
+    {
+      "issue": "Using text without line breaks and expecting multiple results.",
+      "fix": "If there is one line only, that one line is the result."
+    },
+    {
+      "issue": "Expecting all long lines, not just the top result.",
+      "fix": "This tool returns the longest single line only."
+    }
+  ],
+  "useCases": [
+    "Checking long lines in logs or lists.",
+    "Reviewing copied text for wrapping issues.",
+    "Finding the widest line in multi-line content.",
+    "Inspecting content before formatting or publishing."
+  ],
+  "faq": [
+    {
+      "q": "What does Longest Line Finder do?",
+      "a": "It finds the longest line in a text block and shows its length and position."
+    },
+    {
+      "q": "Does it count spaces in the line length?",
+      "a": "Yes. The full visible line length is counted, including spaces."
+    },
+    {
+      "q": "What if multiple lines have the same maximum length?",
+      "a": "The tool returns the first longest line it finds."
+    },
+    {
+      "q": "How is it different from Line Counter?",
+      "a": "Line Counter counts how many lines exist, while Longest Line Finder identifies the line with the greatest length."
+    },
+    {
+      "q": "Can I use it on logs or pasted exports?",
+      "a": "Yes. It is useful for any multi-line text."
+    }
+  ],
+  "related": [
+    "line-counter",
+    "paragraph-counter",
+    "character-counter"
+  ]
+}
+,
+{
+  "id": "keyword-density-checker",
+  "name": "Keyword Density Checker",
+  "slug": "keyword-density-checker",
+  "category": "text-tools",
+  "intro": "Check keyword frequency and density in pasted text.",
+  "description": "Use this keyword density checker to analyze how often words and phrases appear in your text. It is useful for SEO review, content editing, and spotting overused keywords quickly.",
+  "keywords": [
+    "keyword density checker",
+    "keyword density tool",
+    "seo keyword checker",
+    "text keyword frequency"
+  ],
+  "whyUse": [
+    "Shows repeated keywords and rough density in one result.",
+    "Useful for SEO review, editing, and content cleanup.",
+    "Helps spot overused terms without manual counting.",
+    "Fast for browser-based content checks."
+  ],
+  "howToUse": [
+    "Paste your text into the input box.",
+    "Optionally add a keyword phrase on the first line, then leave a blank line, then paste the text.",
+    "Run the tool to calculate counts and density.",
+    "Review the output and copy the result if needed."
+  ],
+  "examples": [
+    {
+      "title": "Single keyword",
+      "input": "seo\n\nSEO tools help with SEO planning and SEO review.",
+      "output": "Keyword: seo\nOccurrences: 3\nTotal words: 9\nDensity: 33.33%",
+      "explanation": "Counts the chosen keyword and shows its density relative to total words."
+    },
+    {
+      "title": "Top words mode",
+      "input": "Tools help teams build tools and compare tool ideas.",
+      "output": "Top keywords by frequency with counts and density",
+      "explanation": "If no separate keyword is supplied, the tool shows the most frequent words."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Pasting only a keyword and no text body.",
+      "fix": "Put the keyword first, then a blank line, then the text to analyze."
+    },
+    {
+      "issue": "Expecting punctuation variants to count separately.",
+      "fix": "The tool normalizes words for simpler counting."
+    },
+    {
+      "issue": "Using very short filler words as target keywords.",
+      "fix": "Use meaningful content terms for better density checks."
+    }
+  ],
+  "useCases": [
+    "Checking SEO copy before publishing.",
+    "Reviewing landing pages for repeated terms.",
+    "Comparing keyword use across short drafts.",
+    "Finding overused words in edited content."
+  ],
+  "faq": [
+    {
+      "q": "What does Keyword Density Checker do?",
+      "a": "It counts how often a keyword appears and shows its density relative to the total word count."
+    },
+    {
+      "q": "Can I check a specific keyword phrase?",
+      "a": "Yes. Put the keyword or phrase on the first line, then a blank line, then the text."
+    },
+    {
+      "q": "What happens if I do not enter a keyword?",
+      "a": "The tool shows the most frequent words in the text instead."
+    },
+    {
+      "q": "Does it ignore capitalization?",
+      "a": "Yes. The analysis normalizes text to lowercase for cleaner counting."
+    },
+    {
+      "q": "Is this a full SEO audit?",
+      "a": "No. It is a quick text-based keyword density check, not a full page SEO analysis."
+    }
+  ],
+  "related": [
+    "word-frequency-counter",
+    "word-counter",
+    "character-counter"
+  ]
+},
+{
+  "id": "random-word-generator",
+  "name": "Random Word Generator",
+  "slug": "random-word-generator",
+  "category": "text-tools",
+  "intro": "Generate random words instantly for writing, naming, and testing.",
+  "description": "Use this random word generator to create random words for brainstorming, placeholder content, game prompts, naming practice, and lightweight testing tasks.",
+  "keywords": [
+    "random word generator",
+    "generate random words",
+    "word generator",
+    "random words tool"
+  ],
+  "whyUse": [
+    "Creates random words quickly without manual lists.",
+    "Useful for prompts, placeholders, and brainstorming.",
+    "Helps test text workflows and UI states.",
+    "Fast for simple browser-based generation."
+  ],
+  "howToUse": [
+    "Enter how many words you want on the first line.",
+    "Run the tool to generate random words.",
+    "Review the generated list in the output box.",
+    "Run it again if you want a different set."
+  ],
+  "examples": [
+    {
+      "title": "Three words",
+      "input": "3",
+      "output": "ocean\nsignal\nmaple",
+      "explanation": "Generates the requested number of random words."
+    },
+    {
+      "title": "Single word",
+      "input": "1",
+      "output": "random single word",
+      "explanation": "Useful for quick prompts or placeholders."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Entering text instead of a number.",
+      "fix": "Enter a whole number like 5 or 10."
+    },
+    {
+      "issue": "Requesting too many words at once.",
+      "fix": "Use a reasonable count such as 1 to 100."
+    },
+    {
+      "issue": "Expecting full sentences instead of words.",
+      "fix": "This tool generates words only, not phrases or paragraphs."
+    }
+  ],
+  "useCases": [
+    "Creating writing prompts.",
+    "Generating placeholder text tokens.",
+    "Testing UI lists and displays.",
+    "Brainstorming short naming ideas."
+  ],
+  "faq": [
+    {
+      "q": "What does Random Word Generator do?",
+      "a": "It generates one or more random words from a built-in word list."
+    },
+    {
+      "q": "Can I choose how many words to generate?",
+      "a": "Yes. Enter the desired word count on the first line."
+    },
+    {
+      "q": "Are the words repeated sometimes?",
+      "a": "They can repeat if you request many words."
+    },
+    {
+      "q": "Can I use this for writing prompts?",
+      "a": "Yes. It works well for prompts, brainstorming, and placeholders."
+    },
+    {
+      "q": "How is this different from Lorem Ipsum tools?",
+      "a": "This tool generates separate random words, not full sentences or paragraphs."
+    }
+  ],
+  "related": [
+    "random-string-generator",
+    "text-repeater",
+    "slug-generator"
+  ]
+},
+{
+  "id": "random-number-generator",
+  "name": "Random Number Generator",
+  "slug": "random-number-generator",
+  "category": "calculators",
+  "intro": "Generate random numbers between a minimum and maximum value.",
+  "description": "Use this random number generator to create one or more random integers within a chosen range for testing, games, picks, and quick calculations.",
+  "keywords": [
+    "random number generator",
+    "generate random numbers",
+    "random integer generator",
+    "number picker"
+  ],
+  "whyUse": [
+    "Generates random numbers quickly in the browser.",
+    "Useful for picks, testing, and lightweight simulations.",
+    "Lets you control minimum, maximum, and count.",
+    "Good for simple repeated number generation tasks."
+  ],
+  "howToUse": [
+    "Enter the minimum value on the first line.",
+    "Enter the maximum value on the second line.",
+    "Optionally enter how many numbers to generate on the third line.",
+    "Run the tool and review the generated result."
+  ],
+  "examples": [
+    {
+      "title": "Single number",
+      "input": "1\n10",
+      "output": "7",
+      "explanation": "Generates one random integer between the minimum and maximum."
+    },
+    {
+      "title": "Multiple numbers",
+      "input": "100\n999\n5",
+      "output": "Five random integers between 100 and 999",
+      "explanation": "Useful when you need several random values at once."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Entering a maximum smaller than the minimum.",
+      "fix": "Make sure the second number is greater than or equal to the first."
+    },
+    {
+      "issue": "Using decimals when whole numbers are expected.",
+      "fix": "This tool generates integers, so use whole numbers."
+    },
+    {
+      "issue": "Requesting too many values at once.",
+      "fix": "Use a smaller count such as 1 to 100 for readable output."
+    }
+  ],
+  "useCases": [
+    "Picking random values for tests.",
+    "Generating sample numbers for demos.",
+    "Choosing winners or random options.",
+    "Creating simple random integer sets."
+  ],
+  "faq": [
+    {
+      "q": "What does Random Number Generator do?",
+      "a": "It generates one or more random integers inside the range you provide."
+    },
+    {
+      "q": "Can I set a minimum and maximum value?",
+      "a": "Yes. Enter the minimum on the first line and the maximum on the second line."
+    },
+    {
+      "q": "Can I generate more than one number?",
+      "a": "Yes. Add the count on the third line."
+    },
+    {
+      "q": "Does it generate decimals?",
+      "a": "No. This version generates whole numbers only."
+    },
+    {
+      "q": "What happens if min and max are the same?",
+      "a": "The tool returns that same number."
+    }
+  ],
+  "related": [
+    "random-password-generator",
+    "average-calculator",
+    "percentage-calculator"
+  ]
+},
+{
+  "id": "random-password-generator",
+  "name": "Random Password Generator",
+  "slug": "random-password-generator",
+  "category": "developer-tools",
+  "intro": "Generate random passwords with letters, numbers, and symbols.",
+  "description": "Use this random password generator to create random passwords for testing, account setup, demos, and security-related workflows with configurable length and character options.",
+  "keywords": [
+    "random password generator",
+    "generate random password",
+    "password generator",
+    "strong password generator"
+  ],
+  "whyUse": [
+    "Creates password-style strings quickly.",
+    "Useful for testing forms, demos, and account setup flows.",
+    "Lets you control length and character types.",
+    "Separates password generation from generic random string tools."
+  ],
+  "howToUse": [
+    "Enter the password length on the first line.",
+    "Optionally enter options on the second line like upper, lower, digits, symbols.",
+    "Run the tool to generate a password.",
+    "Copy the result or rerun for another password."
+  ],
+  "examples": [
+    {
+      "title": "Default password",
+      "input": "16",
+      "output": "Random 16-character password",
+      "explanation": "Generates a mixed password using default character groups."
+    },
+    {
+      "title": "Letters and digits only",
+      "input": "12\nupper lower digits",
+      "output": "Random 12-character password without symbols",
+      "explanation": "Useful when you need a limited character set."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Entering a non-numeric length.",
+      "fix": "Use a whole number such as 12 or 20."
+    },
+    {
+      "issue": "Using unsupported option names.",
+      "fix": "Use option words like upper, lower, digits, or symbols."
+    },
+    {
+      "issue": "Choosing no valid character group.",
+      "fix": "Leave options empty for defaults or include at least one valid option."
+    }
+  ],
+  "useCases": [
+    "Generating test passwords for sign-up flows.",
+    "Creating sample credentials for demos.",
+    "Producing random passwords for temporary use.",
+    "Checking password field behavior with mixed characters."
+  ],
+  "faq": [
+    {
+      "q": "What does Random Password Generator do?",
+      "a": "It creates a random password-style string using the length and character options you provide."
+    },
+    {
+      "q": "Can I control the password length?",
+      "a": "Yes. Enter the desired length on the first line."
+    },
+    {
+      "q": "Can I exclude symbols?",
+      "a": "Yes. On the second line, use options like upper lower digits and leave out symbols."
+    },
+    {
+      "q": "How is this different from Random String Generator?",
+      "a": "This tool is focused on password-style output with selectable character groups."
+    },
+    {
+      "q": "What happens if I do not enter options?",
+      "a": "The tool uses a default mix of uppercase, lowercase, digits, and symbols."
+    }
+  ],
+  "related": [
+    "random-string-generator",
+    "uuid-generator",
+    "random-number-generator"
+  ]
+}
+,
+{
+  "id": "username-generator",
+  "name": "Username Generator",
+  "slug": "username-generator",
+  "category": "text-tools",
+  "intro": "Generate username ideas from a word or name instantly.",
+  "description": "Use this username generator to create simple username ideas from a name, keyword, or short phrase. It is useful for social profiles, test accounts, branding ideas, and placeholder usernames.",
+  "keywords": [
+    "username generator",
+    "generate username ideas",
+    "random username tool",
+    "username idea generator"
+  ],
+  "whyUse": [
+    "Creates multiple username ideas quickly from one input.",
+    "Useful for social profiles, test accounts, and placeholder users.",
+    "Helps brainstorm name variations without manual editing.",
+    "Fast for quick browser-based username generation."
+  ],
+  "howToUse": [
+    "Paste or type a name or keyword into the input box.",
+    "Run the tool to generate username ideas.",
+    "Review the suggested usernames in the output area.",
+    "Run again with a different base word if you want more variations."
+  ],
+  "examples": [
+    {
+      "title": "Name input",
+      "input": "alex",
+      "output": "alex\nalex01\nrealalex\nalexhub\nalexzone",
+      "explanation": "Generates a small set of readable username variations."
+    },
+    {
+      "title": "Keyword input",
+      "input": "pixel",
+      "output": "pixel\npixel01\nthepixel\npixellab\npixelworks",
+      "explanation": "Useful for profile names, projects, and test accounts."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Entering a very long phrase.",
+      "fix": "Use a short base name or keyword for cleaner username ideas."
+    },
+    {
+      "issue": "Expecting live availability checks.",
+      "fix": "This tool generates ideas only and does not check whether a username is available."
+    },
+    {
+      "issue": "Using punctuation-heavy input.",
+      "fix": "Use simple letters or words for better username suggestions."
+    }
+  ],
+  "useCases": [
+    "Generating social profile ideas.",
+    "Creating test usernames for apps or forms.",
+    "Brainstorming short brand-like names.",
+    "Producing placeholder usernames for demos."
+  ],
+  "faq": [
+    {
+      "q": "What does Username Generator do?",
+      "a": "It creates simple username ideas based on the text you enter."
+    },
+    {
+      "q": "Does it check username availability?",
+      "a": "No. It generates ideas only."
+    },
+    {
+      "q": "Can I use a full name?",
+      "a": "Yes, but short names or keywords usually produce cleaner results."
+    },
+    {
+      "q": "Does it generate random usernames?",
+      "a": "It generates patterned variations based on your input."
+    },
+    {
+      "q": "Can I use it for test accounts?",
+      "a": "Yes. It works well for sample usernames and placeholder profiles."
+    }
+  ],
+  "related": [
+    "random-word-generator",
+    "slug-generator",
+    "random-string-generator"
+  ]
+},
+{
+  "id": "palindrome-checker",
+  "name": "Palindrome Checker",
+  "slug": "palindrome-checker",
+  "category": "text-tools",
+  "intro": "Check whether text reads the same forward and backward.",
+  "description": "Use this palindrome checker to test whether a word, phrase, or short text reads the same forward and backward after normalizing spaces and punctuation.",
+  "keywords": [
+    "palindrome checker",
+    "check palindrome",
+    "palindrome test",
+    "text palindrome tool"
+  ],
+  "whyUse": [
+    "Checks palindrome text instantly.",
+    "Useful for word games, learning, and text experiments.",
+    "Normalizes spacing and punctuation for easier checking.",
+    "Fast for simple browser-based text validation."
+  ],
+  "howToUse": [
+    "Paste or type a word or phrase into the input box.",
+    "Run the tool to check whether it is a palindrome.",
+    "Review the result in the output area.",
+    "Try another phrase if you want to compare examples."
+  ],
+  "examples": [
+    {
+      "title": "Single word",
+      "input": "level",
+      "output": "Palindrome: Yes",
+      "explanation": "The word reads the same in both directions."
+    },
+    {
+      "title": "Phrase",
+      "input": "A man, a plan, a canal, Panama!",
+      "output": "Palindrome: Yes",
+      "explanation": "Spaces and punctuation are ignored for the palindrome check."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Expecting spaces and punctuation to matter.",
+      "fix": "This tool normalizes the text before checking."
+    },
+    {
+      "issue": "Using empty input.",
+      "fix": "Enter a word or phrase before running the tool."
+    },
+    {
+      "issue": "Comparing phrases with hidden formatting differences.",
+      "fix": "Use simple pasted text and review the normalized output if needed."
+    }
+  ],
+  "useCases": [
+    "Checking palindrome words and phrases.",
+    "Learning text pattern concepts.",
+    "Testing game or quiz ideas.",
+    "Reviewing text transformations quickly."
+  ],
+  "faq": [
+    {
+      "q": "What does Palindrome Checker do?",
+      "a": "It checks whether normalized text reads the same forward and backward."
+    },
+    {
+      "q": "Does it ignore spaces and punctuation?",
+      "a": "Yes. The tool removes non-letter and non-digit separators before checking."
+    },
+    {
+      "q": "Does capitalization matter?",
+      "a": "No. The text is normalized to lowercase first."
+    },
+    {
+      "q": "Can I use full phrases?",
+      "a": "Yes. It works on words and phrases."
+    },
+    {
+      "q": "Does it explain why the text failed?",
+      "a": "It returns a yes or no result and shows the normalized text used for checking."
+    }
+  ],
+  "related": [
+    "anagram-checker",
+    "text-reverser",
+    "character-counter"
+  ]
+},
+{
+  "id": "anagram-checker",
+  "name": "Anagram Checker",
+  "slug": "anagram-checker",
+  "category": "text-tools",
+  "intro": "Check whether two words or phrases are anagrams.",
+  "description": "Use this anagram checker to compare two words or phrases and see whether they contain the same letters after normalization. It is useful for word games, study, and simple text comparison.",
+  "keywords": [
+    "anagram checker",
+    "check anagram",
+    "anagram test",
+    "compare word letters"
+  ],
+  "whyUse": [
+    "Compares two words or phrases quickly.",
+    "Useful for word games, learning, and text experiments.",
+    "Ignores spacing and punctuation for cleaner checks.",
+    "Fast for simple browser-based comparison."
+  ],
+  "howToUse": [
+    "Enter the first word or phrase on the first line.",
+    "Enter the second word or phrase on the second line.",
+    "Run the tool to compare both values.",
+    "Review the result in the output area."
+  ],
+  "examples": [
+    {
+      "title": "Simple pair",
+      "input": "listen\nsilent",
+      "output": "Anagram: Yes",
+      "explanation": "Both words contain the same letters in a different order."
+    },
+    {
+      "title": "Phrase pair",
+      "input": "rail safety\nfairy tales",
+      "output": "Anagram: Yes",
+      "explanation": "Spaces are ignored during comparison."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Entering only one phrase.",
+      "fix": "Enter one value per line so the tool can compare both."
+    },
+    {
+      "issue": "Expecting punctuation to matter.",
+      "fix": "The tool normalizes and ignores punctuation for comparison."
+    },
+    {
+      "issue": "Using very different phrase lengths.",
+      "fix": "Anagrams must contain the same normalized characters."
+    }
+  ],
+  "useCases": [
+    "Checking word-game answers.",
+    "Comparing phrases for matching letters.",
+    "Learning string comparison ideas.",
+    "Testing normalized text comparison quickly."
+  ],
+  "faq": [
+    {
+      "q": "What does Anagram Checker do?",
+      "a": "It checks whether two normalized inputs contain the same characters in a different order."
+    },
+    {
+      "q": "Does it ignore spaces and punctuation?",
+      "a": "Yes. It compares cleaned text only."
+    },
+    {
+      "q": "Does capitalization matter?",
+      "a": "No. The inputs are normalized to lowercase first."
+    },
+    {
+      "q": "Can I compare full phrases?",
+      "a": "Yes. The tool works for words and phrases."
+    },
+    {
+      "q": "How is it different from Palindrome Checker?",
+      "a": "Anagram Checker compares two inputs, while Palindrome Checker tests one input against its reverse."
+    }
+  ],
+  "related": [
+    "palindrome-checker",
+    "text-sorter",
+    "character-frequency-counter"
+  ]
+},
+{
+  "id": "whitespace-normalizer",
+  "name": "Whitespace Normalizer",
+  "slug": "whitespace-normalizer",
+  "category": "text-tools",
+  "intro": "Normalize tabs, line breaks, and repeated spaces into clean single-spacing.",
+  "description": "Use this whitespace normalizer to convert tabs, line breaks, and repeated spaces into a clean single-space format. It is useful for text cleanup, copy normalization, and preprocessing before further editing.",
+  "keywords": [
+    "whitespace normalizer",
+    "normalize whitespace",
+    "clean spaces and line breaks",
+    "text whitespace cleaner"
+  ],
+  "whyUse": [
+    "Converts messy spacing into one clean line.",
+    "Useful for pasted text from PDFs, websites, and exports.",
+    "Helps normalize tabs, line breaks, and repeated spaces at once.",
+    "Fast for simple browser-based cleanup."
+  ],
+  "howToUse": [
+    "Paste or type your text into the input box.",
+    "Run the tool to normalize whitespace.",
+    "Review the cleaned single-line output.",
+    "Copy the result or continue with other text tools if needed."
+  ],
+  "examples": [
+    {
+      "title": "Mixed whitespace",
+      "input": "Hello\t\tworld\n\nthis   is   text",
+      "output": "Hello world this is text",
+      "explanation": "Tabs, line breaks, and repeated spaces are normalized into single spaces."
+    },
+    {
+      "title": "Pasted content",
+      "input": "  one line \n second\tline  ",
+      "output": "one line second line",
+      "explanation": "Leading and trailing spaces are removed too."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Expecting line breaks to stay in the output.",
+      "fix": "This tool converts all whitespace into a single-space format."
+    },
+    {
+      "issue": "Using it as a paragraph-preserving cleaner.",
+      "fix": "Use a narrower cleanup tool if you want to keep line structure."
+    },
+    {
+      "issue": "Comparing it directly to Remove Extra Spaces.",
+      "fix": "Whitespace Normalizer also converts tabs and line breaks into normal spaces."
+    }
+  ],
+  "useCases": [
+    "Cleaning text copied from PDFs.",
+    "Normalizing exported content into one line.",
+    "Preparing strings before matching or comparison.",
+    "Cleaning messy spacing before further formatting."
+  ],
+  "faq": [
+    {
+      "q": "What does Whitespace Normalizer do?",
+      "a": "It converts tabs, line breaks, and repeated spaces into single spaces."
+    },
+    {
+      "q": "Does it keep line breaks?",
+      "a": "No. It turns them into normal spaces."
+    },
+    {
+      "q": "Does it trim outer spaces too?",
+      "a": "Yes. Leading and trailing whitespace is removed."
+    },
+    {
+      "q": "How is it different from Remove Extra Spaces?",
+      "a": "Whitespace Normalizer also converts tabs and line breaks into regular spaces."
+    },
+    {
+      "q": "Can I use it on long text?",
+      "a": "Yes. It works on short strings and long pasted text."
+    }
+  ],
+  "related": [
+    "remove-extra-spaces",
+    "text-trimmer",
+    "remove-line-breaks"
+  ]
+}
 ]

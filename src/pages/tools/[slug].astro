@@ -10605,6 +10605,770 @@ if (slug === "domain-age-checker") {
 
   return;
 }
+if (slug === "spf-record-checker") {
+  const rawInput = input.value.trim();
+
+  if (!rawInput) {
+    output.value = "Enter a domain like example.com.";
+    return;
+  }
+
+  output.value = "Checking SPF record...";
+
+  fetch(`/api/site-check.json?type=spf-record&target=${encodeURIComponent(rawInput)}`, {
+    cache: "no-store"
+  })
+    .then((response: Response) => response.json())
+    .then((data: any) => {
+      if (data?.error) {
+        output.value = data.error;
+        return;
+      }
+
+      output.value = [
+        `Domain: ${data.domain || rawInput}`,
+        `SPF Found: ${data.found ? "Yes" : "No"}`,
+        ...(data.record ? [`Record: ${data.record}`] : [])
+      ].join("\n");
+    })
+    .catch(() => {
+      output.value = "Unable to check SPF record.";
+    });
+
+  return;
+}
+
+if (slug === "dkim-record-checker") {
+  const parts = input.value
+    .split(/\r?\n/)
+    .map((line: string) => line.trim())
+    .filter((line: string) => line.length > 0);
+
+  const selector = parts[0] || "";
+  const domain = parts[1] || "";
+
+  if (!selector || !domain) {
+    output.value = "Enter selector on the first line and domain on the second line.\n\nExample:\ndefault\nexample.com";
+    return;
+  }
+
+  output.value = "Checking DKIM record...";
+
+  fetch(`/api/site-check.json?type=dkim-record&target=${encodeURIComponent(`${selector}\n${domain}`)}`, {
+    cache: "no-store"
+  })
+    .then((response: Response) => response.json())
+    .then((data: any) => {
+      if (data?.error) {
+        output.value = data.error;
+        return;
+      }
+
+      output.value = [
+        `Host: ${data.host || `${selector}._domainkey.${domain}`}`,
+        `DKIM Found: ${data.found ? "Yes" : "No"}`,
+        ...(data.record ? [`Record: ${data.record}`] : [])
+      ].join("\n");
+    })
+    .catch(() => {
+      output.value = "Unable to check DKIM record.";
+    });
+
+  return;
+}
+
+if (slug === "dmarc-record-checker") {
+  const rawInput = input.value.trim();
+
+  if (!rawInput) {
+    output.value = "Enter a domain like example.com.";
+    return;
+  }
+
+  output.value = "Checking DMARC record...";
+
+  fetch(`/api/site-check.json?type=dmarc-record&target=${encodeURIComponent(rawInput)}`, {
+    cache: "no-store"
+  })
+    .then((response: Response) => response.json())
+    .then((data: any) => {
+      if (data?.error) {
+        output.value = data.error;
+        return;
+      }
+
+      output.value = [
+        `Host: ${data.host || `_dmarc.${rawInput}`}`,
+        `DMARC Found: ${data.found ? "Yes" : "No"}`,
+        ...(data.record ? [`Record: ${data.record}`] : [])
+      ].join("\n");
+    })
+    .catch(() => {
+      output.value = "Unable to check DMARC record.";
+    });
+
+  return;
+}
+if (slug === "alternating-case-converter") {
+  const text = input.value;
+
+  if (!text.trim()) {
+    output.value = "";
+    return;
+  }
+
+  let shouldUpper = true;
+
+  output.value = Array.from(text)
+    .map((char: string) => {
+      if (!/[a-zA-Zа-яА-ЯёЁ]/.test(char)) {
+        return char;
+      }
+
+      const converted = shouldUpper ? char.toUpperCase() : char.toLowerCase();
+      shouldUpper = !shouldUpper;
+      return converted;
+    })
+    .join("");
+
+  return;
+}
+
+if (slug === "camel-case-converter") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "";
+    return;
+  }
+
+  const words = text
+    .replace(/[_\-]+/g, " ")
+    .replace(/[^\p{L}\p{N}\s]+/gu, " ")
+    .split(/\s+/)
+    .filter((word: string) => word.length > 0);
+
+  if (words.length === 0) {
+    output.value = "";
+    return;
+  }
+
+  output.value = words
+    .map((word: string, index: number) => {
+      const lower = word.toLowerCase();
+      if (index === 0) return lower;
+      return lower.charAt(0).toUpperCase() + lower.slice(1);
+    })
+    .join("");
+
+  return;
+}
+
+if (slug === "pascal-case-converter") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "";
+    return;
+  }
+
+  const words = text
+    .replace(/[_\-]+/g, " ")
+    .replace(/[^\p{L}\p{N}\s]+/gu, " ")
+    .split(/\s+/)
+    .filter((word: string) => word.length > 0);
+
+  if (words.length === 0) {
+    output.value = "";
+    return;
+  }
+
+  output.value = words
+    .map((word: string) => {
+      const lower = word.toLowerCase();
+      return lower.charAt(0).toUpperCase() + lower.slice(1);
+    })
+    .join("");
+
+  return;
+}
+if (slug === "snake-case-converter") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "";
+    return;
+  }
+
+  const words = text
+    .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
+    .replace(/[_\-.\/\\]+/g, " ")
+    .replace(/[^\p{L}\p{N}\s]+/gu, " ")
+    .toLowerCase()
+    .split(/\s+/)
+    .filter((word: string) => word.length > 0);
+
+  output.value = words.join("_");
+  return;
+}
+
+if (slug === "kebab-case-converter") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "";
+    return;
+  }
+
+  const words = text
+    .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
+    .replace(/[_\-.\/\\]+/g, " ")
+    .replace(/[^\p{L}\p{N}\s]+/gu, " ")
+    .toLowerCase()
+    .split(/\s+/)
+    .filter((word: string) => word.length > 0);
+
+  output.value = words.join("-");
+  return;
+}
+
+if (slug === "constant-case-converter") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "";
+    return;
+  }
+
+  const words = text
+    .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
+    .replace(/[_\-.\/\\]+/g, " ")
+    .replace(/[^\p{L}\p{N}\s]+/gu, " ")
+    .toUpperCase()
+    .split(/\s+/)
+    .filter((word: string) => word.length > 0);
+
+  output.value = words.join("_");
+  return;
+}
+
+if (slug === "dot-case-converter") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "";
+    return;
+  }
+
+  const words = text
+    .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
+    .replace(/[_\-.\/\\]+/g, " ")
+    .replace(/[^\p{L}\p{N}\s]+/gu, " ")
+    .toLowerCase()
+    .split(/\s+/)
+    .filter((word: string) => word.length > 0);
+
+  output.value = words.join(".");
+  return;
+}
+
+if (slug === "path-case-converter") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "";
+    return;
+  }
+
+  const words = text
+    .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
+    .replace(/[_\-.\/\\]+/g, " ")
+    .replace(/[^\p{L}\p{N}\s]+/gu, " ")
+    .toLowerCase()
+    .split(/\s+/)
+    .filter((word: string) => word.length > 0);
+
+  output.value = words.join("/");
+  return;
+}
+if (slug === "remove-punctuation") {
+  const text = input.value;
+
+  if (!text.trim()) {
+    output.value = "";
+    return;
+  }
+
+  output.value = text.replace(/[\p{P}]+/gu, "");
+  return;
+}
+
+if (slug === "remove-numbers-from-text") {
+  const text = input.value;
+
+  if (!text.trim()) {
+    output.value = "";
+    return;
+  }
+
+  output.value = text.replace(/\d+/g, "");
+  return;
+}
+
+if (slug === "remove-letters-from-text") {
+  const text = input.value;
+
+  if (!text.trim()) {
+    output.value = "";
+    return;
+  }
+
+  output.value = text.replace(/[\p{L}]+/gu, "");
+  return;
+}
+
+if (slug === "remove-special-characters") {
+  const text = input.value;
+
+  if (!text.trim()) {
+    output.value = "";
+    return;
+  }
+
+  output.value = text.replace(/[^\p{L}\p{N}\s]+/gu, "");
+  return;
+}
+if (slug === "keep-only-numbers") {
+  const text = input.value;
+
+  if (!text.trim()) {
+    output.value = "";
+    return;
+  }
+
+  output.value = (text.match(/\d+/g) || []).join("");
+  return;
+}
+
+if (slug === "keep-only-letters") {
+  const text = input.value;
+
+  if (!text.trim()) {
+    output.value = "";
+    return;
+  }
+
+  output.value = (text.match(/\p{L}+/gu) || []).join("");
+  return;
+}
+
+if (slug === "keep-only-alphanumeric") {
+  const text = input.value;
+
+  if (!text.trim()) {
+    output.value = "";
+    return;
+  }
+
+  output.value = (text.match(/[\p{L}\p{N}]+/gu) || []).join("");
+  return;
+}
+
+if (slug === "paragraph-counter") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Paragraphs: 0";
+    return;
+  }
+
+  const paragraphs = text
+    .split(/\r?\n\s*\r?\n+/)
+    .map((part: string) => part.trim())
+    .filter((part: string) => part.length > 0);
+
+  output.value = `Paragraphs: ${paragraphs.length}`;
+  return;
+}
+if (slug === "extract-hashtags") {
+  const text = input.value;
+
+  if (!text.trim()) {
+    output.value = "";
+    return;
+  }
+
+  const matches = text.match(/#[\p{L}\p{N}_]+/gu) || [];
+  output.value = matches.length ? matches.join("\n") : "No hashtags found";
+  return;
+}
+
+if (slug === "extract-mentions") {
+  const text = input.value;
+
+  if (!text.trim()) {
+    output.value = "";
+    return;
+  }
+
+  const matches = text.match(/@[\p{L}\p{N}_.-]+/gu) || [];
+  output.value = matches.length ? matches.join("\n") : "No mentions found";
+  return;
+}
+
+if (slug === "character-frequency-counter") {
+  const text = input.value;
+
+  if (!text) {
+    output.value = "No characters found";
+    return;
+  }
+
+  const counts: Record<string, number> = {};
+
+  for (const char of Array.from(text)) {
+    counts[char] = (counts[char] || 0) + 1;
+  }
+
+  const result = Object.entries(counts)
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .map(([char, count]) => `"${char}": ${count}`)
+    .join("\n");
+
+  output.value = result || "No characters found";
+  return;
+}
+
+if (slug === "word-frequency-counter") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "No words found";
+    return;
+  }
+
+  const words = text.match(/[\p{L}\p{N}']+/gu)?.map((word: string) => word.toLowerCase()) || [];
+
+  if (!words.length) {
+    output.value = "No words found";
+    return;
+  }
+
+  const counts: Record<string, number> = {};
+
+  for (const word of words) {
+    counts[word] = (counts[word] || 0) + 1;
+  }
+
+  const result = Object.entries(counts)
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .map(([word, count]) => `${word}: ${count}`)
+    .join("\n");
+
+  output.value = result;
+  return;
+}
+
+if (slug === "longest-line-finder") {
+  const text = input.value;
+
+  if (!text.trim()) {
+    output.value = "No lines found";
+    return;
+  }
+
+  const lines = text.split(/\r?\n/);
+
+  let longestLine = "";
+  let longestIndex = -1;
+
+  lines.forEach((line: string, index: number) => {
+    if (line.length > longestLine.length) {
+      longestLine = line;
+      longestIndex = index;
+    }
+  });
+
+  output.value =
+    `Longest line length: ${longestLine.length}\n` +
+    `Line number: ${longestIndex + 1}\n` +
+    `${longestLine}`;
+
+  return;
+}
+if (slug === "keyword-density-checker") {
+  const raw = input.value.trim();
+
+  if (!raw) {
+    output.value = "Enter a keyword on the first line, then a blank line, then the text.\nOr paste only text to see top repeated words.";
+    return;
+  }
+
+  const parts = raw.split(/\r?\n\r?\n/);
+  const firstPart = parts[0]?.trim() || "";
+  const textBody = parts.length > 1 ? parts.slice(1).join("\n\n").trim() : raw;
+
+  const normalize = (value: string): string =>
+    value
+      .toLowerCase()
+      .replace(/[^\p{L}\p{N}\s]+/gu, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+
+  const normalizedText = normalize(textBody);
+  const words = normalizedText.match(/[\p{L}\p{N}']+/gu) || [];
+
+  if (!words.length) {
+    output.value = "No words found in the text.";
+    return;
+  }
+
+  if (parts.length > 1 && firstPart) {
+    const keyword = normalize(firstPart);
+
+    if (!keyword) {
+      output.value = "Invalid keyword.";
+      return;
+    }
+
+    const escaped = keyword.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const regex = new RegExp(`(?<!\\S)${escaped}(?!\\S)`, "gu");
+    const matches = normalizedText.match(regex) || [];
+    const density = (matches.length / words.length) * 100;
+
+    output.value =
+      `Keyword: ${keyword}\n` +
+      `Occurrences: ${matches.length}\n` +
+      `Total words: ${words.length}\n` +
+      `Density: ${density.toFixed(2)}%`;
+    return;
+  }
+
+  const counts: Record<string, number> = {};
+
+  for (const word of words) {
+    if (word.length < 3) continue;
+    counts[word] = (counts[word] || 0) + 1;
+  }
+
+  const result = Object.entries(counts)
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .slice(0, 10)
+    .map(([word, count]) => `${word}: ${count} (${((count / words.length) * 100).toFixed(2)}%)`)
+    .join("\n");
+
+  output.value = result || "No repeated keywords found.";
+  return;
+}
+
+if (slug === "random-word-generator") {
+  const raw = input.value.trim();
+  const count = raw ? Number(raw) : 1;
+
+  if (!Number.isInteger(count) || count < 1 || count > 100) {
+    output.value = "Enter a whole number between 1 and 100.";
+    return;
+  }
+
+  const wordList = [
+    "ocean", "signal", "maple", "stone", "alpha", "vector", "copper", "falcon",
+    "ember", "planet", "shadow", "rocket", "forest", "pixel", "anchor", "quiet",
+    "storm", "bridge", "silver", "delta", "window", "harbor", "circle", "puzzle",
+    "bright", "ladder", "candle", "mirror", "comet", "valley", "winter", "canvas"
+  ];
+
+  const words = Array.from({ length: count }, () => {
+    const index = Math.floor(Math.random() * wordList.length);
+    return wordList[index];
+  });
+
+  output.value = words.join("\n");
+  return;
+}
+
+if (slug === "random-number-generator") {
+  const lines = input.value
+    .split(/\r?\n/)
+    .map((line: string) => line.trim())
+    .filter((line: string) => line.length > 0);
+
+  const min = Number(lines[0] || "");
+  const max = Number(lines[1] || "");
+  const count = lines[2] ? Number(lines[2]) : 1;
+
+  if (!Number.isInteger(min) || !Number.isInteger(max) || !Number.isInteger(count)) {
+    output.value = "Enter min on the first line, max on the second line, and optional count on the third line.";
+    return;
+  }
+
+  if (max < min) {
+    output.value = "Max must be greater than or equal to min.";
+    return;
+  }
+
+  if (count < 1 || count > 100) {
+    output.value = "Count must be between 1 and 100.";
+    return;
+  }
+
+  const values = Array.from({ length: count }, () => {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  });
+
+  output.value = count === 1 ? String(values[0]) : values.join("\n");
+  return;
+}
+
+if (slug === "random-password-generator") {
+  const lines = input.value
+    .split(/\r?\n/)
+    .map((line: string) => line.trim());
+
+  const length = Number(lines[0] || "");
+  const optionsLine = (lines[1] || "").toLowerCase();
+
+  if (!Number.isInteger(length) || length < 4 || length > 128) {
+    output.value = "Enter password length on the first line. Use a whole number between 4 and 128.";
+    return;
+  }
+
+  let pools: string[] = [];
+
+  const upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const lower = "abcdefghijklmnopqrstuvwxyz";
+  const digits = "0123456789";
+  const symbols = "!@#$%^&*()_+-=[]{}<>?";
+
+  if (!optionsLine) {
+    pools = [upper, lower, digits, symbols];
+  } else {
+    if (optionsLine.includes("upper")) pools.push(upper);
+    if (optionsLine.includes("lower")) pools.push(lower);
+    if (optionsLine.includes("digits")) pools.push(digits);
+    if (optionsLine.includes("symbols")) pools.push(symbols);
+  }
+
+  if (!pools.length) {
+    output.value = "No valid character groups selected. Use upper, lower, digits, or symbols.";
+    return;
+  }
+
+  const allChars = pools.join("");
+  let password = "";
+
+  for (let i = 0; i < length; i++) {
+    password += allChars.charAt(Math.floor(Math.random() * allChars.length));
+  }
+
+  output.value = password;
+  return;
+}
+if (slug === "username-generator") {
+  const raw = input.value.trim().toLowerCase();
+
+  if (!raw) {
+    output.value = "Enter a name or keyword.";
+    return;
+  }
+
+  const base = raw
+    .replace(/[^\p{L}\p{N}\s]+/gu, " ")
+    .replace(/\s+/g, "")
+    .trim();
+
+  if (!base) {
+    output.value = "Enter a name or keyword.";
+    return;
+  }
+
+  const suffixes = ["01", "hub", "zone", "lab", "works", "team", "now", "x"];
+  const prefixes = ["real", "the", "its", "hey"];
+
+  const results = [
+    base,
+    `${base}01`,
+    `${prefixes[0]}${base}`,
+    `${base}${suffixes[1]}`,
+    `${base}${suffixes[2]}`,
+    `${prefixes[1]}${base}`,
+    `${base}${suffixes[3]}`,
+    `${base}${suffixes[4]}`
+  ];
+
+  output.value = [...new Set(results)].slice(0, 8).join("\n");
+  return;
+}
+
+if (slug === "palindrome-checker") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter text to check.";
+    return;
+  }
+
+  const normalized = text
+    .toLowerCase()
+    .replace(/[^\p{L}\p{N}]+/gu, "");
+
+  if (!normalized) {
+    output.value = "Enter text to check.";
+    return;
+  }
+
+  const reversed = normalized.split("").reverse().join("");
+  const isPalindrome = normalized === reversed;
+
+  output.value =
+    `Palindrome: ${isPalindrome ? "Yes" : "No"}\n` +
+    `Normalized text: ${normalized}`;
+  return;
+}
+
+if (slug === "anagram-checker") {
+  const lines = input.value
+    .split(/\r?\n/)
+    .map((line: string) => line.trim())
+    .filter((line: string) => line.length > 0);
+
+  const first = lines[0] || "";
+  const second = lines[1] || "";
+
+  if (!first || !second) {
+    output.value = "Enter the first value on the first line and the second value on the second line.";
+    return;
+  }
+
+  const normalize = (value: string): string =>
+    value
+      .toLowerCase()
+      .replace(/[^\p{L}\p{N}]+/gu, "")
+      .split("")
+      .sort()
+      .join("");
+
+  const firstNormalized = normalize(first);
+  const secondNormalized = normalize(second);
+  const isAnagram = firstNormalized === secondNormalized && firstNormalized.length > 0;
+
+  output.value =
+    `Anagram: ${isAnagram ? "Yes" : "No"}\n` +
+    `First normalized: ${firstNormalized}\n` +
+    `Second normalized: ${secondNormalized}`;
+  return;
+}
+
+if (slug === "whitespace-normalizer") {
+  const text = input.value;
+
+  if (!text.trim()) {
+    output.value = "";
+    return;
+  }
+
+  output.value = text.replace(/\s+/g, " ").trim();
+  return;
+}
 
       output.value = "This tool logic is not connected yet.";
     });

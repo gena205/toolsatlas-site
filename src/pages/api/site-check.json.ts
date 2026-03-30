@@ -457,6 +457,35 @@ function getRdapEventDate(events: any[], actionNames: string[]): string {
 
   return "";
 }
+function extractDomainLikeInput(input: string): string {
+  const raw = String(input || "").trim();
+
+  if (!raw) {
+    return "";
+  }
+
+  try {
+    if (/^https?:\/\//i.test(raw)) {
+      return new URL(raw).hostname.replace(/^www\./i, "").toLowerCase();
+    }
+  } catch {
+    return "";
+  }
+
+  return raw
+    .replace(/^www\./i, "")
+    .replace(/\/.*$/, "")
+    .toLowerCase();
+}
+
+async function resolveTxtSafe(hostname: string): Promise<string[]> {
+  try {
+    const result = await dns.resolveTxt(hostname);
+    return result.map((parts: string[]) => parts.join(""));
+  } catch {
+    return [];
+  }
+}
 
 export async function GET({ url }: { url: URL }) {
   const type = url.searchParams.get("type") || "";
@@ -701,6 +730,65 @@ export async function GET({ url }: { url: URL }) {
           error: error?.message || "Unable to check domain age."
         }, 200);
       }
+    }
+
+        if (type === "spf-record") {
+      const domain = extractDomainLikeInput(target);
+
+      if (!domain || !/^[a-z0-9.-]+\.[a-z]{2,}$/i.test(domain)) {
+        return json({ error: "Enter a valid domain like example.com." }, 200);
+      }
+
+      const txtRecords = await resolveTxtSafe(domain);
+      const spfRecord = txtRecords.find((record: string) => /^v=spf1\b/i.test(record)) || "";
+
+      return json({
+        domain,
+        found: !!spfRecord,
+        record: spfRecord
+      });
+    }
+
+    if (type === "dkim-record") {
+      const parts = String(target || "")
+        .split(/\r?\n/)
+        .map((line: string) => line.trim())
+        .filter((line: string) => line.length > 0);
+
+      const selector = parts[0] || "";
+      const domain = extractDomainLikeInput(parts[1] || "");
+
+      if (!selector || !domain) {
+        return json({ error: "Enter selector and domain." }, 200);
+      }
+
+      const host = `${selector}._domainkey.${domain}`;
+      const txtRecords = await resolveTxtSafe(host);
+      const dkimRecord = txtRecords.find((record: string) => /\bv=DKIM1\b/i.test(record)) || "";
+
+      return json({
+        host,
+        found: !!dkimRecord,
+        record: dkimRecord
+      });
+    }
+
+    if (type === "dmarc-record") {
+      const domain = extractDomainLikeInput(target);
+
+      if (!domain || !/^[a-z0-9.-]+\.[a-z]{2,}$/i.test(domain)) {
+        return json({ error: "Enter a valid domain like example.com." }, 200);
+      }
+
+      const host = `_dmarc.${domain}`;
+      const txtRecords = await resolveTxtSafe(host);
+      const dmarcRecord = txtRecords.find((record: string) => /^v=DMARC1\b/i.test(record)) || "";
+
+      return json({
+        host,
+        found: !!dmarcRecord,
+        record: dmarcRecord
+      });
     }
 
     return json({ error: "Unsupported type" }, 400);
