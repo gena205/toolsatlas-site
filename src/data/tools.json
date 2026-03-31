@@ -23198,4 +23198,2621 @@
     "remove-line-breaks"
   ]
 }
+,
+{
+  "id": "markdown-cleaner",
+  "name": "Markdown Cleaner",
+  "slug": "markdown-cleaner",
+  "category": "text-tools",
+  "intro": "Remove Markdown formatting and keep clean readable text.",
+  "description": "Use this Markdown cleaner to strip common Markdown syntax such as headings, emphasis, links, code marks, blockquotes, and list markers while keeping the readable text content.",
+  "keywords": [
+    "markdown cleaner",
+    "remove markdown formatting",
+    "strip markdown",
+    "markdown to plain text"
+  ],
+  "whyUse": [
+    "Turns Markdown content into readable plain text quickly.",
+    "Useful for notes, docs, exports, and pasted content cleanup.",
+    "Removes common Markdown markers without manual editing.",
+    "Fast for browser-based text cleanup tasks."
+  ],
+  "howToUse": [
+    "Paste or type Markdown into the input box.",
+    "Run the tool to remove Markdown syntax.",
+    "Review the cleaned text in the output area.",
+    "Copy the result if needed."
+  ],
+  "examples": [
+    {
+      "title": "Basic Markdown",
+      "input": "# Title\n\n**Bold** text with [link](https://example.com)",
+      "output": "Title\n\nBold text with link",
+      "explanation": "Headings, bold markers, and link syntax are removed while readable text stays."
+    },
+    {
+      "title": "List and quote",
+      "input": "> Note\n- Item one\n- Item two",
+      "output": "Note\nItem one\nItem two",
+      "explanation": "Blockquote and list markers are removed."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Expecting HTML conversion instead of text cleanup.",
+      "fix": "This tool removes Markdown syntax and returns readable text, not HTML."
+    },
+    {
+      "issue": "Using very complex Markdown features.",
+      "fix": "The tool handles common Markdown patterns best."
+    },
+    {
+      "issue": "Expecting link URLs to stay in the output.",
+      "fix": "This cleaner keeps readable link text and removes Markdown link syntax."
+    }
+  ],
+  "useCases": [
+    "Cleaning copied notes from Markdown editors.",
+    "Turning docs into plain text for reuse.",
+    "Removing formatting before analysis or export.",
+    "Preparing readable text from markdown-heavy content."
+  ],
+  "faq": [
+    {
+      "q": "What does Markdown Cleaner do?",
+      "a": "It removes common Markdown syntax and keeps the readable text."
+    },
+    {
+      "q": "Does it remove headings and bold markers?",
+      "a": "Yes. Common heading, emphasis, and list markers are removed."
+    },
+    {
+      "q": "Does it keep link text?",
+      "a": "Yes. It keeps the readable link text and removes the Markdown wrapper."
+    },
+    {
+      "q": "Can I use it on long notes?",
+      "a": "Yes. It works on short and long Markdown text."
+    },
+    {
+      "q": "How is it different from Markdown to HTML?",
+      "a": "Markdown Cleaner removes Markdown and returns plain text, while Markdown to HTML converts Markdown into HTML."
+    }
+  ],
+  "related": [
+    "markdown-to-html",
+    "remove-extra-spaces",
+    "html-stripper"
+  ]
+},
+{
+  "id": "bullet-list-cleaner",
+  "name": "Bullet List Cleaner",
+  "slug": "bullet-list-cleaner",
+  "category": "text-tools",
+  "intro": "Remove bullet and numbered list markers from text lines.",
+  "description": "Use this bullet list cleaner to remove bullets, dashes, stars, dots, and simple numbered list markers from the start of lines while keeping the list text itself.",
+  "keywords": [
+    "bullet list cleaner",
+    "remove bullets from text",
+    "strip list markers",
+    "clean bullet points"
+  ],
+  "whyUse": [
+    "Removes list markers without deleting the text content.",
+    "Useful for copied notes, exports, and presentation outlines.",
+    "Helps turn lists into clean plain text quickly.",
+    "Works well for browser-based cleanup of pasted lists."
+  ],
+  "howToUse": [
+    "Paste the list text into the input box.",
+    "Run the tool to remove bullets and numbering markers.",
+    "Review the cleaned lines in the output area.",
+    "Copy the result if needed."
+  ],
+  "examples": [
+    {
+      "title": "Bullets",
+      "input": "- First item\n* Second item\n• Third item",
+      "output": "First item\nSecond item\nThird item",
+      "explanation": "Common bullet symbols at the start of lines are removed."
+    },
+    {
+      "title": "Numbered list",
+      "input": "1. Apple\n2. Banana\n3. Orange",
+      "output": "Apple\nBanana\nOrange",
+      "explanation": "Simple numbered markers are removed from each line."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Expecting inline hyphens inside sentences to be removed.",
+      "fix": "This tool removes list markers mainly at the start of lines."
+    },
+    {
+      "issue": "Using unusual nested outline formats.",
+      "fix": "The tool is designed for common bullet and numbered list patterns."
+    },
+    {
+      "issue": "Wanting line deduplication as well.",
+      "fix": "Use a separate deduplication tool after cleaning if needed."
+    }
+  ],
+  "useCases": [
+    "Cleaning copied bullet lists from docs or slides.",
+    "Removing markers before text analysis.",
+    "Turning outlines into plain text lines.",
+    "Preparing cleaner list content for spreadsheets or forms."
+  ],
+  "faq": [
+    {
+      "q": "What does Bullet List Cleaner do?",
+      "a": "It removes common bullet and numbering markers from the beginning of lines."
+    },
+    {
+      "q": "Does it remove the text after the bullet?",
+      "a": "No. It keeps the line text and removes the marker only."
+    },
+    {
+      "q": "Can it clean numbered lists too?",
+      "a": "Yes. It removes simple markers like 1. or 2) at the start of lines."
+    },
+    {
+      "q": "Does it work on multi-line lists?",
+      "a": "Yes. It processes each line separately."
+    },
+    {
+      "q": "How is it different from Empty Line Remover?",
+      "a": "Bullet List Cleaner removes list markers, while Empty Line Remover deletes blank lines."
+    }
+  ],
+  "related": [
+    "empty-line-remover",
+    "line-number-adder",
+    "remove-extra-spaces"
+  ]
+},
+{
+  "id": "reverse-word-order",
+  "name": "Reverse Word Order",
+  "slug": "reverse-word-order",
+  "category": "text-tools",
+  "intro": "Reverse the order of words without reversing the letters inside each word.",
+  "description": "Use this reverse word order tool to flip the order of words in a sentence or text line while keeping each individual word readable.",
+  "keywords": [
+    "reverse word order",
+    "reverse words in sentence",
+    "flip word order",
+    "word order reverser"
+  ],
+  "whyUse": [
+    "Reverses word order instantly without changing the words themselves.",
+    "Useful for text experiments, games, and quick transformations.",
+    "Helps distinguish word-order reversal from full character reversal.",
+    "Fast for browser-based text manipulation."
+  ],
+  "howToUse": [
+    "Paste or type text into the input box.",
+    "Run the tool to reverse the word order.",
+    "Review the output in the result area.",
+    "Copy the result if needed."
+  ],
+  "examples": [
+    {
+      "title": "Simple sentence",
+      "input": "hello world again",
+      "output": "again world hello",
+      "explanation": "The words are reversed, but each word keeps its original letters."
+    },
+    {
+      "title": "Longer text",
+      "input": "this tool keeps words readable",
+      "output": "readable words keeps tool this",
+      "explanation": "Useful when you want to reverse sequence, not spelling."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Expecting letters inside each word to reverse too.",
+      "fix": "Use Text Reverser if you want full character reversal."
+    },
+    {
+      "issue": "Using multiple spaces and expecting exact spacing preservation.",
+      "fix": "The tool normalizes spacing while reversing words."
+    },
+    {
+      "issue": "Expecting line-by-line reversal.",
+      "fix": "This tool reverses the words in the whole text, not the line order."
+    }
+  ],
+  "useCases": [
+    "Testing sentence transformations.",
+    "Creating word-order puzzles or games.",
+    "Comparing word sequence changes quickly.",
+    "Manipulating copied text for experiments."
+  ],
+  "faq": [
+    {
+      "q": "What does Reverse Word Order do?",
+      "a": "It reverses the sequence of words while keeping each word readable."
+    },
+    {
+      "q": "Does it reverse letters too?",
+      "a": "No. It changes only the order of words."
+    },
+    {
+      "q": "Does it normalize spaces?",
+      "a": "Yes. It splits text into words and joins them back with single spaces."
+    },
+    {
+      "q": "How is it different from Text Reverser?",
+      "a": "Text Reverser flips all characters, while Reverse Word Order flips the order of words only."
+    },
+    {
+      "q": "Can I use it on long text?",
+      "a": "Yes. It works on short phrases and larger text blocks."
+    }
+  ],
+  "related": [
+    "text-reverser",
+    "reverse-lines",
+    "word-counter"
+  ]
+}
+,
+{
+  "id": "first-line-extractor",
+  "name": "First Line Extractor",
+  "slug": "first-line-extractor",
+  "category": "text-tools",
+  "intro": "Extract the first non-empty line from text instantly.",
+  "description": "Use this first line extractor to return the first non-empty line from pasted text, notes, logs, or copied content. It is useful for cleanup, previews, and quick extraction tasks.",
+  "keywords": [
+    "first line extractor",
+    "extract first line",
+    "get first line of text",
+    "text first line tool"
+  ],
+  "whyUse": [
+    "Gets the first useful line without manual scanning.",
+    "Useful for logs, pasted notes, and copied lists.",
+    "Helps extract headings or previews quickly.",
+    "Fast for simple browser-based text extraction."
+  ],
+  "howToUse": [
+    "Paste multi-line text into the input box.",
+    "Run the tool to extract the first non-empty line.",
+    "Review the result in the output area.",
+    "Copy the extracted line if needed."
+  ],
+  "examples": [
+    {
+      "title": "Simple block",
+      "input": "Title line\nSecond line\nThird line",
+      "output": "Title line",
+      "explanation": "Returns the first non-empty line from the text."
+    },
+    {
+      "title": "Leading blank lines",
+      "input": "\n\nFirst visible line\nAnother line",
+      "output": "First visible line",
+      "explanation": "Skips blank lines and extracts the first visible text line."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Expecting blank lines to be returned.",
+      "fix": "This tool returns the first non-empty line."
+    },
+    {
+      "issue": "Using single-line input and expecting multiple results.",
+      "fix": "This tool always returns only one line."
+    },
+    {
+      "issue": "Expecting trimming inside the extracted line.",
+      "fix": "Leading and trailing whitespace is trimmed from the returned line."
+    }
+  ],
+  "useCases": [
+    "Extracting the title from copied content.",
+    "Getting the first useful line from logs.",
+    "Taking a quick preview line from notes.",
+    "Cleaning multi-line text before reuse."
+  ],
+  "faq": [
+    {
+      "q": "What does First Line Extractor do?",
+      "a": "It returns the first non-empty line from the text."
+    },
+    {
+      "q": "Does it ignore blank lines at the top?",
+      "a": "Yes. It skips blank lines and extracts the first visible line."
+    },
+    {
+      "q": "Can I use it on logs or notes?",
+      "a": "Yes. It works on any multi-line text."
+    },
+    {
+      "q": "Does it return more than one line?",
+      "a": "No. It returns only one extracted line."
+    },
+    {
+      "q": "How is it different from Last Line Extractor?",
+      "a": "First Line Extractor returns the first non-empty line, while Last Line Extractor returns the last non-empty line."
+    }
+  ],
+  "related": [
+    "last-line-extractor",
+    "line-counter",
+    "paragraph-counter"
+  ]
+},
+{
+  "id": "last-line-extractor",
+  "name": "Last Line Extractor",
+  "slug": "last-line-extractor",
+  "category": "text-tools",
+  "intro": "Extract the last non-empty line from text instantly.",
+  "description": "Use this last line extractor to return the last non-empty line from pasted text, logs, notes, and copied content for quick cleanup and extraction.",
+  "keywords": [
+    "last line extractor",
+    "extract last line",
+    "get last line of text",
+    "text last line tool"
+  ],
+  "whyUse": [
+    "Gets the final useful line without manual checking.",
+    "Useful for logs, outputs, and copied lists.",
+    "Helps extract summaries, endings, or final values quickly.",
+    "Fast for browser-based line extraction tasks."
+  ],
+  "howToUse": [
+    "Paste multi-line text into the input box.",
+    "Run the tool to extract the last non-empty line.",
+    "Review the result in the output area.",
+    "Copy the extracted line if needed."
+  ],
+  "examples": [
+    {
+      "title": "Simple block",
+      "input": "Title line\nSecond line\nFinal line",
+      "output": "Final line",
+      "explanation": "Returns the last non-empty line."
+    },
+    {
+      "title": "Trailing blank lines",
+      "input": "One line\nTwo line\n\n",
+      "output": "Two line",
+      "explanation": "Skips trailing blank lines and returns the last visible line."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Expecting blank trailing lines to count.",
+      "fix": "This tool returns the last non-empty line."
+    },
+    {
+      "issue": "Using single-line input and expecting a different result.",
+      "fix": "If there is one non-empty line, that line is returned."
+    },
+    {
+      "issue": "Expecting full paragraph extraction.",
+      "fix": "This tool works line by line, not paragraph by paragraph."
+    }
+  ],
+  "useCases": [
+    "Extracting the final log line.",
+    "Taking the last useful line from pasted content.",
+    "Getting the final item from a multi-line list.",
+    "Cleaning exported text before reuse."
+  ],
+  "faq": [
+    {
+      "q": "What does Last Line Extractor do?",
+      "a": "It returns the last non-empty line from the text."
+    },
+    {
+      "q": "Does it ignore blank lines at the end?",
+      "a": "Yes. It skips trailing blank lines."
+    },
+    {
+      "q": "Can I use it on logs and notes?",
+      "a": "Yes. It works on any multi-line text."
+    },
+    {
+      "q": "Does it return more than one line?",
+      "a": "No. It returns only one extracted line."
+    },
+    {
+      "q": "How is it different from First Line Extractor?",
+      "a": "Last Line Extractor returns the last non-empty line, while First Line Extractor returns the first non-empty line."
+    }
+  ],
+  "related": [
+    "first-line-extractor",
+    "line-counter",
+    "longest-line-finder"
+  ]
+},
+{
+  "id": "prefix-lines",
+  "name": "Prefix Lines",
+  "slug": "prefix-lines",
+  "category": "text-tools",
+  "intro": "Add a prefix to every line in a text block.",
+  "description": "Use this prefix lines tool to add the same prefix to each line of text. It is useful for comments, bullets, code formatting, labels, and list preparation.",
+  "keywords": [
+    "prefix lines",
+    "add prefix to each line",
+    "line prefix tool",
+    "prepend text to lines"
+  ],
+  "whyUse": [
+    "Adds the same prefix to every line quickly.",
+    "Useful for comments, bullets, labels, and code snippets.",
+    "Helps transform lists without manual editing.",
+    "Fast for browser-based line formatting."
+  ],
+  "howToUse": [
+    "Enter the prefix on the first line.",
+    "Leave a blank line.",
+    "Paste the multi-line text below.",
+    "Run the tool and review the prefixed result."
+  ],
+  "examples": [
+    {
+      "title": "Comment lines",
+      "input": "//\n\nline one\nline two",
+      "output": "//line one\n//line two",
+      "explanation": "Adds the same prefix to every line."
+    },
+    {
+      "title": "Bullet formatting",
+      "input": "- \n\nApple\nBanana",
+      "output": "- Apple\n- Banana",
+      "explanation": "Useful for turning plain lines into bullet-style lists."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Forgetting the blank line between prefix and text.",
+      "fix": "Put the prefix first, then a blank line, then the body text."
+    },
+    {
+      "issue": "Expecting empty lines to be skipped.",
+      "fix": "This tool prefixes every line, including empty ones."
+    },
+    {
+      "issue": "Using a very long prefix.",
+      "fix": "Use a short consistent prefix for cleaner results."
+    }
+  ],
+  "useCases": [
+    "Adding comment markers to code lines.",
+    "Turning plain lines into bullets.",
+    "Adding labels or markers to each row.",
+    "Formatting exports or copied lists."
+  ],
+  "faq": [
+    {
+      "q": "What does Prefix Lines do?",
+      "a": "It adds the same prefix to every line in the text."
+    },
+    {
+      "q": "How do I enter the prefix?",
+      "a": "Put the prefix on the first line, then a blank line, then the text."
+    },
+    {
+      "q": "Does it affect empty lines?",
+      "a": "Yes. It processes every line in the block."
+    },
+    {
+      "q": "Can I use symbols like // or - ?",
+      "a": "Yes. Short prefixes like //, #, -, or > work well."
+    },
+    {
+      "q": "How is it different from Suffix Lines?",
+      "a": "Prefix Lines adds text at the start of each line, while Suffix Lines adds text at the end."
+    }
+  ],
+  "related": [
+    "suffix-lines",
+    "line-number-adder",
+    "bullet-list-cleaner"
+  ]
+},
+{
+  "id": "suffix-lines",
+  "name": "Suffix Lines",
+  "slug": "suffix-lines",
+  "category": "text-tools",
+  "intro": "Add a suffix to every line in a text block.",
+  "description": "Use this suffix lines tool to append the same suffix to each line of text. It is useful for commas, semicolons, quotes, tags, and structured list formatting.",
+  "keywords": [
+    "suffix lines",
+    "add suffix to each line",
+    "append text to lines",
+    "line suffix tool"
+  ],
+  "whyUse": [
+    "Adds the same suffix to every line quickly.",
+    "Useful for commas, semicolons, quotes, and tags.",
+    "Helps format lists without editing each line manually.",
+    "Fast for browser-based line formatting."
+  ],
+  "howToUse": [
+    "Enter the suffix on the first line.",
+    "Leave a blank line.",
+    "Paste the multi-line text below.",
+    "Run the tool and review the suffixed result."
+  ],
+  "examples": [
+    {
+      "title": "Comma ending",
+      "input": ",\n\nApple\nBanana",
+      "output": "Apple,\nBanana,",
+      "explanation": "Adds the same suffix to every line."
+    },
+    {
+      "title": "Quoted rows",
+      "input": "\"\n\nrow1\nrow2",
+      "output": "row1\"\nrow2\"",
+      "explanation": "Useful when you need the same ending marker on every line."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Forgetting the blank line between suffix and text.",
+      "fix": "Put the suffix first, then a blank line, then the body text."
+    },
+    {
+      "issue": "Expecting empty lines to be skipped.",
+      "fix": "This tool suffixes every line, including empty ones."
+    },
+    {
+      "issue": "Using a long suffix and getting hard-to-read output.",
+      "fix": "Use a short consistent suffix for cleaner formatting."
+    }
+  ],
+  "useCases": [
+    "Adding commas to every line.",
+    "Appending semicolons to code-like lists.",
+    "Adding quote markers to lines.",
+    "Formatting rows for export or reuse."
+  ],
+  "faq": [
+    {
+      "q": "What does Suffix Lines do?",
+      "a": "It adds the same suffix to every line in the text."
+    },
+    {
+      "q": "How do I enter the suffix?",
+      "a": "Put the suffix on the first line, then a blank line, then the text."
+    },
+    {
+      "q": "Does it affect empty lines?",
+      "a": "Yes. It processes every line in the block."
+    },
+    {
+      "q": "Can I use symbols like commas or semicolons?",
+      "a": "Yes. Common suffixes like commas, semicolons, or quotes work well."
+    },
+    {
+      "q": "How is it different from Prefix Lines?",
+      "a": "Suffix Lines adds text at the end of each line, while Prefix Lines adds text at the beginning."
+    }
+  ],
+  "related": [
+    "prefix-lines",
+    "newline-to-comma",
+    "line-number-adder"
+  ]
+},
+{
+  "id": "wrap-text",
+  "name": "Wrap Text",
+  "slug": "wrap-text",
+  "category": "text-tools",
+  "intro": "Wrap text with chosen opening and closing characters or strings.",
+  "description": "Use this wrap text tool to place a chosen opening and closing wrapper around the whole text. It is useful for quotes, brackets, tags, placeholders, and quick formatting tasks.",
+  "keywords": [
+    "wrap text",
+    "text wrapper",
+    "surround text with characters",
+    "add brackets or quotes to text"
+  ],
+  "whyUse": [
+    "Wraps text quickly with matching or custom wrappers.",
+    "Useful for quotes, brackets, tags, and placeholders.",
+    "Helps avoid repetitive manual formatting.",
+    "Fast for browser-based text transformation."
+  ],
+  "howToUse": [
+    "Enter the opening wrapper on the first line.",
+    "Enter the closing wrapper on the second line.",
+    "Leave a blank line and paste the text below.",
+    "Run the tool to wrap the text."
+  ],
+  "examples": [
+    {
+      "title": "Quote wrapper",
+      "input": "\"\n\"\n\nhello world",
+      "output": "\"hello world\"",
+      "explanation": "Wraps the whole text with opening and closing quotes."
+    },
+    {
+      "title": "Bracket wrapper",
+      "input": "(\n)\n\nsample text",
+      "output": "(sample text)",
+      "explanation": "Useful for quick bracket formatting."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Forgetting the blank line before the text body.",
+      "fix": "Use opening wrapper on line one, closing wrapper on line two, then a blank line, then the text."
+    },
+    {
+      "issue": "Expecting line-by-line wrapping.",
+      "fix": "This tool wraps the whole text block, not each line separately."
+    },
+    {
+      "issue": "Leaving wrappers empty.",
+      "fix": "Enter at least one wrapper value for meaningful output."
+    }
+  ],
+  "useCases": [
+    "Adding quotes around text.",
+    "Wrapping content in brackets or tags.",
+    "Preparing placeholders and formatted snippets.",
+    "Quickly surrounding copied text with markers."
+  ],
+  "faq": [
+    {
+      "q": "What does Wrap Text do?",
+      "a": "It adds an opening and closing wrapper around the full text block."
+    },
+    {
+      "q": "Can I use different opening and closing values?",
+      "a": "Yes. You can enter different wrappers on the first and second lines."
+    },
+    {
+      "q": "Does it wrap each line separately?",
+      "a": "No. It wraps the whole text block once."
+    },
+    {
+      "q": "Can I use quotes, brackets, or tags?",
+      "a": "Yes. Any short text wrapper can be used."
+    },
+    {
+      "q": "How is it different from Prefix Lines and Suffix Lines?",
+      "a": "Wrap Text surrounds the whole block once, while Prefix Lines and Suffix Lines modify each line."
+    }
+  ],
+  "related": [
+    "unwrap-text",
+    "prefix-lines",
+    "suffix-lines"
+  ]
+},
+{
+  "id": "unwrap-text",
+  "name": "Unwrap Text",
+  "slug": "unwrap-text",
+  "category": "text-tools",
+  "intro": "Remove matching opening and closing wrappers from text.",
+  "description": "Use this unwrap text tool to remove a chosen opening and closing wrapper from the start and end of the text. It is useful for quotes, brackets, tags, and quick text cleanup.",
+  "keywords": [
+    "unwrap text",
+    "remove text wrapper",
+    "strip opening and closing characters",
+    "remove quotes or brackets from text"
+  ],
+  "whyUse": [
+    "Removes matching wrappers from text quickly.",
+    "Useful for quotes, brackets, tags, and copied placeholders.",
+    "Helps clean wrapped content without manual editing.",
+    "Fast for browser-based text cleanup."
+  ],
+  "howToUse": [
+    "Enter the opening wrapper on the first line.",
+    "Enter the closing wrapper on the second line.",
+    "Leave a blank line and paste the wrapped text below.",
+    "Run the tool to unwrap the text."
+  ],
+  "examples": [
+    {
+      "title": "Quoted text",
+      "input": "\"\n\"\n\n\"hello world\"",
+      "output": "hello world",
+      "explanation": "Removes the matching opening and closing quotes."
+    },
+    {
+      "title": "Bracketed text",
+      "input": "(\n)\n\n(sample text)",
+      "output": "sample text",
+      "explanation": "Useful for removing a known wrapper pair."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Using wrappers that do not match the text edges.",
+      "fix": "The wrappers must match the exact start and end of the text."
+    },
+    {
+      "issue": "Forgetting the blank line before the text body.",
+      "fix": "Use opening wrapper on line one, closing wrapper on line two, then a blank line, then the text."
+    },
+    {
+      "issue": "Expecting all inner wrappers to be removed too.",
+      "fix": "This tool removes only the chosen outer wrapper pair."
+    }
+  ],
+  "useCases": [
+    "Removing quotes from wrapped text.",
+    "Cleaning copied bracketed content.",
+    "Stripping known outer tags or markers.",
+    "Quickly normalizing wrapped placeholders."
+  ],
+  "faq": [
+    {
+      "q": "What does Unwrap Text do?",
+      "a": "It removes the chosen opening and closing wrapper from the outside of the text."
+    },
+    {
+      "q": "Does it remove all matching symbols inside the text?",
+      "a": "No. It removes only the outer wrapper pair."
+    },
+    {
+      "q": "Do the wrappers need to match exactly?",
+      "a": "Yes. The text must start and end with the specified wrappers."
+    },
+    {
+      "q": "Can I use quotes, brackets, or short tags?",
+      "a": "Yes. Any chosen opening and closing text can be used."
+    },
+    {
+      "q": "How is it different from Wrap Text?",
+      "a": "Wrap Text adds wrappers, while Unwrap Text removes them."
+    }
+  ],
+  "related": [
+    "wrap-text",
+    "text-trimmer",
+    "remove-extra-spaces"
+  ]
+}
+,
+{
+  "id": "csv-column-extractor",
+  "name": "CSV Column Extractor",
+  "slug": "csv-column-extractor",
+  "category": "text-tools",
+  "intro": "Extract one specific column from CSV data by column number or header name.",
+  "description": "Use this CSV column extractor to pull one column from CSV content by column index or header name. It is useful for exports, quick cleanup, analysis, and preparing single-field lists.",
+  "keywords": [
+    "csv column extractor",
+    "extract csv column",
+    "csv column by name",
+    "csv field extractor"
+  ],
+  "whyUse": [
+    "Extracts one CSV column without manual copy and paste.",
+    "Useful for exports, email lists, IDs, and field cleanup.",
+    "Supports simple column index or header-based extraction.",
+    "Fast for browser-based CSV processing."
+  ],
+  "howToUse": [
+    "Enter the column name or column number on the first line.",
+    "Leave a blank line.",
+    "Paste the CSV data below.",
+    "Run the tool and review the extracted column values."
+  ],
+  "examples": [
+    {
+      "title": "Extract by header",
+      "input": "email\n\nname,email,role\nJohn,john@example.com,admin\nJane,jane@example.com,user",
+      "output": "john@example.com\njane@example.com",
+      "explanation": "The tool finds the matching header and returns the values from that column."
+    },
+    {
+      "title": "Extract by index",
+      "input": "2\n\nname,email,role\nJohn,john@example.com,admin\nJane,jane@example.com,user",
+      "output": "john@example.com\njane@example.com",
+      "explanation": "Column index is 1-based, so 2 means the second CSV column."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Forgetting the blank line between selector and CSV body.",
+      "fix": "Put the header or index first, then a blank line, then the CSV data."
+    },
+    {
+      "issue": "Using a column name that does not exist.",
+      "fix": "Check the first CSV row and use the exact header text."
+    },
+    {
+      "issue": "Using index 0 instead of 1.",
+      "fix": "This tool uses 1-based column numbering."
+    }
+  ],
+  "useCases": [
+    "Extracting email addresses from CSV exports.",
+    "Pulling ID fields into a clean list.",
+    "Getting one column for reuse in another tool.",
+    "Cleaning CSV data before import or review."
+  ],
+  "faq": [
+    {
+      "q": "What does CSV Column Extractor do?",
+      "a": "It extracts one selected column from CSV data and returns the values line by line."
+    },
+    {
+      "q": "Can I select a column by header name?",
+      "a": "Yes. Put the header name on the first line."
+    },
+    {
+      "q": "Can I select a column by number?",
+      "a": "Yes. Use a 1-based column number on the first line."
+    },
+    {
+      "q": "Does it keep the header row?",
+      "a": "No. It returns the values below the header row."
+    },
+    {
+      "q": "What if the column does not exist?",
+      "a": "The tool returns an error message so you can fix the selector."
+    }
+  ],
+  "related": [
+    "csv-to-tsv",
+    "tsv-to-csv",
+    "newline-to-comma"
+  ]
+},
+{
+  "id": "tsv-to-csv",
+  "name": "TSV to CSV",
+  "slug": "tsv-to-csv",
+  "category": "text-tools",
+  "intro": "Convert tab-separated values into comma-separated CSV format.",
+  "description": "Use this TSV to CSV converter to change tab-separated text into CSV format for spreadsheets, imports, exports, and quick delimiter conversion tasks.",
+  "keywords": [
+    "tsv to csv",
+    "convert tsv to csv",
+    "tab separated to comma separated",
+    "tsv csv converter"
+  ],
+  "whyUse": [
+    "Converts TSV into CSV quickly in the browser.",
+    "Useful for spreadsheets, exports, and data cleanup.",
+    "Helps prepare tab-separated data for CSV-based tools.",
+    "Avoids manual delimiter replacement line by line."
+  ],
+  "howToUse": [
+    "Paste TSV data into the input box.",
+    "Run the tool to convert tabs into CSV fields.",
+    "Review the CSV output.",
+    "Copy the result for import or reuse."
+  ],
+  "examples": [
+    {
+      "title": "Simple TSV",
+      "input": "name\temail\trole\nJohn\tjohn@example.com\tadmin",
+      "output": "name,email,role\nJohn,john@example.com,admin",
+      "explanation": "Tabs are converted into commas and values are escaped when needed."
+    },
+    {
+      "title": "Values with commas",
+      "input": "name\tnote\nJohn\tHello, world",
+      "output": "name,note\nJohn,\"Hello, world\"",
+      "explanation": "CSV quoting is added when a value contains commas."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Pasting comma-separated data instead of tab-separated data.",
+      "fix": "Use this tool only when fields are separated by tabs."
+    },
+    {
+      "issue": "Expecting spreadsheet validation.",
+      "fix": "This tool converts delimiters only and does not validate full spreadsheet structure."
+    },
+    {
+      "issue": "Seeing quotes in the result.",
+      "fix": "CSV quoting is normal when a value contains commas, quotes, or line breaks."
+    }
+  ],
+  "useCases": [
+    "Preparing tab-separated exports for CSV import.",
+    "Converting copied spreadsheet rows into CSV.",
+    "Normalizing TSV data for text processing.",
+    "Cleaning simple data tables before reuse."
+  ],
+  "faq": [
+    {
+      "q": "What does TSV to CSV do?",
+      "a": "It converts tab-separated rows into CSV rows with comma-separated fields."
+    },
+    {
+      "q": "Does it add quotes when needed?",
+      "a": "Yes. It escapes values when CSV quoting is required."
+    },
+    {
+      "q": "Can I use it on multi-line data?",
+      "a": "Yes. It processes all pasted lines."
+    },
+    {
+      "q": "Does it validate spreadsheet formulas or types?",
+      "a": "No. It only converts field delimiters and escapes text for CSV."
+    },
+    {
+      "q": "How is it different from CSV to TSV?",
+      "a": "TSV to CSV converts tabs to commas, while CSV to TSV converts commas to tabs."
+    }
+  ],
+  "related": [
+    "csv-to-tsv",
+    "csv-column-extractor",
+    "newline-to-comma"
+  ]
+},
+{
+  "id": "csv-to-tsv",
+  "name": "CSV to TSV",
+  "slug": "csv-to-tsv",
+  "category": "text-tools",
+  "intro": "Convert comma-separated CSV data into tab-separated TSV format.",
+  "description": "Use this CSV to TSV converter to turn CSV content into tab-separated text for spreadsheets, exports, copy-paste workflows, and quick delimiter conversion tasks.",
+  "keywords": [
+    "csv to tsv",
+    "convert csv to tsv",
+    "comma separated to tab separated",
+    "csv tsv converter"
+  ],
+  "whyUse": [
+    "Converts CSV into TSV quickly in the browser.",
+    "Useful for spreadsheet paste workflows and exports.",
+    "Helps prepare CSV data for tab-separated tools or editors.",
+    "Avoids manual comma replacement that would break quoted fields."
+  ],
+  "howToUse": [
+    "Paste CSV data into the input box.",
+    "Run the tool to convert it into TSV.",
+    "Review the tab-separated output.",
+    "Copy the result for spreadsheet or text use."
+  ],
+  "examples": [
+    {
+      "title": "Simple CSV",
+      "input": "name,email,role\nJohn,john@example.com,admin",
+      "output": "name\temail\trole\nJohn\tjohn@example.com\tadmin",
+      "explanation": "CSV fields are parsed and written back as tab-separated text."
+    },
+    {
+      "title": "Quoted CSV",
+      "input": "name,note\nJohn,\"Hello, world\"",
+      "output": "name\tnote\nJohn\tHello, world",
+      "explanation": "Quoted CSV values are parsed correctly before conversion."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Replacing commas manually instead of parsing CSV.",
+      "fix": "Use this tool so quoted fields are handled more safely."
+    },
+    {
+      "issue": "Pasting invalid CSV with broken quotes.",
+      "fix": "Check the input and make sure CSV rows are properly quoted."
+    },
+    {
+      "issue": "Expecting data type validation.",
+      "fix": "This tool converts delimiters only and does not validate numeric or date types."
+    }
+  ],
+  "useCases": [
+    "Preparing CSV content for spreadsheet pasting.",
+    "Converting exported CSV into tab-separated text.",
+    "Normalizing CSV rows for editor workflows.",
+    "Cleaning data before import or reuse."
+  ],
+  "faq": [
+    {
+      "q": "What does CSV to TSV do?",
+      "a": "It converts CSV rows into tab-separated TSV rows."
+    },
+    {
+      "q": "Does it handle quoted CSV values?",
+      "a": "Yes. It parses quoted CSV fields before generating TSV output."
+    },
+    {
+      "q": "Can I use it on multiple rows?",
+      "a": "Yes. It processes all pasted CSV lines."
+    },
+    {
+      "q": "Does it remove commas inside quoted values?",
+      "a": "No. It keeps field content and only changes the delimiter format."
+    },
+    {
+      "q": "How is it different from TSV to CSV?",
+      "a": "CSV to TSV converts commas to tabs after parsing CSV, while TSV to CSV converts tabs to CSV-safe comma-separated rows."
+    }
+  ],
+  "related": [
+    "tsv-to-csv",
+    "csv-column-extractor",
+    "query-string-parser"
+  ]
+}
+,
+{
+  "id": "gpa-calculator",
+  "name": "GPA Calculator",
+  "slug": "gpa-calculator",
+  "category": "calculators",
+  "intro": "Calculate GPA from grade points and credits quickly.",
+  "description": "Use this GPA calculator to calculate a weighted grade point average from multiple courses. Enter grade points and credits for each course to get the final GPA instantly.",
+  "keywords": [
+    "gpa calculator",
+    "calculate gpa",
+    "grade point average calculator",
+    "weighted gpa calculator"
+  ],
+  "whyUse": [
+    "Calculates weighted GPA across multiple courses.",
+    "Useful for semester planning and quick academic checks.",
+    "Lets you combine grade points and credits in one result.",
+    "Fast for browser-based study calculations."
+  ],
+  "howToUse": [
+    "Enter one course per line.",
+    "Use grade points first and credits second on each line.",
+    "Run the tool to calculate the weighted GPA.",
+    "Review the final GPA and total credits."
+  ],
+  "examples": [
+    {
+      "title": "Three courses",
+      "input": "4 3\n3.7 4\n3.3 2",
+      "output": "Courses: 3\nTotal credits: 9.00\nGPA: 3.72",
+      "explanation": "The tool multiplies each grade point by credits and calculates the weighted average."
+    },
+    {
+      "title": "Simple case",
+      "input": "4 3\n3 3",
+      "output": "Courses: 2\nTotal credits: 6.00\nGPA: 3.50",
+      "explanation": "Useful for quick semester GPA checks."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Entering only grade points without credits.",
+      "fix": "Use two numbers per line: grade points first, credits second."
+    },
+    {
+      "issue": "Using invalid grade point values.",
+      "fix": "Use numeric grade points such as 4, 3.7, or 2.5."
+    },
+    {
+      "issue": "Using zero or negative credits.",
+      "fix": "Credits must be greater than zero."
+    }
+  ],
+  "useCases": [
+    "Checking a semester GPA quickly.",
+    "Comparing different course-load scenarios.",
+    "Planning target averages for future classes.",
+    "Reviewing weighted academic performance."
+  ],
+  "faq": [
+    {
+      "q": "What does GPA Calculator do?",
+      "a": "It calculates a weighted GPA from grade points and course credits."
+    },
+    {
+      "q": "How should I enter the data?",
+      "a": "Enter one course per line with grade points first and credits second."
+    },
+    {
+      "q": "Does it calculate weighted GPA?",
+      "a": "Yes. It weights each course by its credit value."
+    },
+    {
+      "q": "Can I use decimals?",
+      "a": "Yes. Both grade points and credits can include decimals."
+    },
+    {
+      "q": "Does it convert percentage grades to GPA automatically?",
+      "a": "No. This version expects grade points directly."
+    }
+  ],
+  "related": [
+    "grade-calculator",
+    "average-calculator",
+    "percentage-calculator"
+  ]
+},
+{
+  "id": "grade-calculator",
+  "name": "Grade Calculator",
+  "slug": "grade-calculator",
+  "category": "calculators",
+  "intro": "Calculate a weighted final grade from scores and weights.",
+  "description": "Use this grade calculator to calculate a final weighted grade from assignments, quizzes, exams, or categories. Enter score and weight pairs to get the final percentage instantly.",
+  "keywords": [
+    "grade calculator",
+    "final grade calculator",
+    "weighted grade calculator",
+    "calculate final grade"
+  ],
+  "whyUse": [
+    "Calculates weighted final grades quickly.",
+    "Useful for assignments, quizzes, and exam planning.",
+    "Shows the final percentage from multiple components.",
+    "Fast for browser-based academic calculations."
+  ],
+  "howToUse": [
+    "Enter one grade item per line.",
+    "Use score first and weight second on each line.",
+    "Run the tool to calculate the weighted final grade.",
+    "Review the final percentage and letter grade."
+  ],
+  "examples": [
+    {
+      "title": "Three weighted items",
+      "input": "90 20\n80 30\n85 50",
+      "output": "Final grade: 84.50%\nLetter grade: B",
+      "explanation": "The tool multiplies each score by its weight and sums the weighted result."
+    },
+    {
+      "title": "Two items",
+      "input": "100 40\n75 60",
+      "output": "Final grade: 85.00%\nLetter grade: B",
+      "explanation": "Useful for simple course-grade estimates."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Weights do not total 100.",
+      "fix": "Use weights that sum to 100 for a standard final grade calculation."
+    },
+    {
+      "issue": "Entering only one value per line.",
+      "fix": "Use score first and weight second on each line."
+    },
+    {
+      "issue": "Using values outside the expected range.",
+      "fix": "Scores and weights should usually be between 0 and 100."
+    }
+  ],
+  "useCases": [
+    "Estimating a final course grade.",
+    "Checking whether an exam will change the final result.",
+    "Comparing different score scenarios.",
+    "Planning target scores for remaining coursework."
+  ],
+  "faq": [
+    {
+      "q": "What does Grade Calculator do?",
+      "a": "It calculates a weighted final grade from scores and weights."
+    },
+    {
+      "q": "How should I enter each item?",
+      "a": "Enter score first and weight second on each line."
+    },
+    {
+      "q": "Do weights need to equal 100?",
+      "a": "For a standard final grade result, yes."
+    },
+    {
+      "q": "Does it return a letter grade too?",
+      "a": "Yes. It returns a simple letter grade based on the final percentage."
+    },
+    {
+      "q": "Can I use decimals?",
+      "a": "Yes. Scores and weights can include decimals."
+    }
+  ],
+  "related": [
+    "gpa-calculator",
+    "average-calculator",
+    "percentage-calculator"
+  ]
+},
+{
+  "id": "margin-calculator",
+  "name": "Margin Calculator",
+  "slug": "margin-calculator",
+  "category": "calculators",
+  "intro": "Calculate profit margin from revenue and cost.",
+  "description": "Use this margin calculator to calculate gross profit margin from revenue and cost. It is useful for pricing checks, sales analysis, and quick business calculations.",
+  "keywords": [
+    "margin calculator",
+    "profit margin calculator",
+    "gross margin calculator",
+    "calculate margin"
+  ],
+  "whyUse": [
+    "Calculates profit margin quickly from two values.",
+    "Useful for pricing, sales, and product checks.",
+    "Shows profit and margin together in one result.",
+    "Fast for browser-based business calculations."
+  ],
+  "howToUse": [
+    "Enter revenue on the first line.",
+    "Enter cost on the second line.",
+    "Run the tool to calculate profit and margin.",
+    "Review the result in the output area."
+  ],
+  "examples": [
+    {
+      "title": "Basic margin",
+      "input": "1000\n700",
+      "output": "Revenue: 1000.00\nCost: 700.00\nProfit: 300.00\nMargin: 30.00%",
+      "explanation": "Margin is calculated as profit divided by revenue."
+    },
+    {
+      "title": "Small product example",
+      "input": "50\n30",
+      "output": "Revenue: 50.00\nCost: 30.00\nProfit: 20.00\nMargin: 40.00%",
+      "explanation": "Useful for quick product profitability checks."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Using cost first and revenue second.",
+      "fix": "Enter revenue first and cost second."
+    },
+    {
+      "issue": "Using zero revenue.",
+      "fix": "Revenue must be greater than zero to calculate margin."
+    },
+    {
+      "issue": "Confusing margin with markup.",
+      "fix": "Margin uses profit divided by revenue, while markup uses profit divided by cost."
+    }
+  ],
+  "useCases": [
+    "Checking gross margin on a sale.",
+    "Comparing pricing scenarios.",
+    "Reviewing product profitability.",
+    "Estimating margin before changing prices."
+  ],
+  "faq": [
+    {
+      "q": "What does Margin Calculator do?",
+      "a": "It calculates profit and profit margin from revenue and cost."
+    },
+    {
+      "q": "What is the margin formula?",
+      "a": "Margin equals profit divided by revenue times 100."
+    },
+    {
+      "q": "How is margin different from markup?",
+      "a": "Margin is based on revenue, while markup is based on cost."
+    },
+    {
+      "q": "Can I use decimals?",
+      "a": "Yes. Revenue and cost can include decimals."
+    },
+    {
+      "q": "What happens if revenue is zero?",
+      "a": "Margin cannot be calculated when revenue is zero."
+    }
+  ],
+  "related": [
+    "markup-calculator",
+    "profit-calculator",
+    "roi-calculator"
+  ]
+},
+{
+  "id": "markup-calculator",
+  "name": "Markup Calculator",
+  "slug": "markup-calculator",
+  "category": "calculators",
+  "intro": "Calculate markup percentage from cost and selling price.",
+  "description": "Use this markup calculator to calculate markup percentage from cost and selling price. It is useful for retail pricing, quote preparation, and quick pricing analysis.",
+  "keywords": [
+    "markup calculator",
+    "calculate markup",
+    "pricing markup calculator",
+    "cost to selling price markup"
+  ],
+  "whyUse": [
+    "Calculates markup percentage quickly.",
+    "Useful for retail, sales, and quoting workflows.",
+    "Shows profit and markup together in one result.",
+    "Fast for browser-based pricing checks."
+  ],
+  "howToUse": [
+    "Enter cost on the first line.",
+    "Enter selling price on the second line.",
+    "Run the tool to calculate profit and markup.",
+    "Review the result in the output area."
+  ],
+  "examples": [
+    {
+      "title": "Basic markup",
+      "input": "50\n75",
+      "output": "Cost: 50.00\nSelling price: 75.00\nProfit: 25.00\nMarkup: 50.00%",
+      "explanation": "Markup is calculated as profit divided by cost."
+    },
+    {
+      "title": "Larger example",
+      "input": "200\n260",
+      "output": "Cost: 200.00\nSelling price: 260.00\nProfit: 60.00\nMarkup: 30.00%",
+      "explanation": "Useful for checking pricing increases over cost."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Using selling price first and cost second.",
+      "fix": "Enter cost first and selling price second."
+    },
+    {
+      "issue": "Using zero cost.",
+      "fix": "Cost must be greater than zero to calculate markup."
+    },
+    {
+      "issue": "Confusing markup with margin.",
+      "fix": "Markup uses profit divided by cost, while margin uses profit divided by revenue."
+    }
+  ],
+  "useCases": [
+    "Checking product markup before quoting.",
+    "Comparing cost and selling price scenarios.",
+    "Reviewing pricing rules for products or services.",
+    "Estimating markup quickly in retail workflows."
+  ],
+  "faq": [
+    {
+      "q": "What does Markup Calculator do?",
+      "a": "It calculates profit and markup percentage from cost and selling price."
+    },
+    {
+      "q": "What is the markup formula?",
+      "a": "Markup equals profit divided by cost times 100."
+    },
+    {
+      "q": "How is markup different from margin?",
+      "a": "Markup is based on cost, while margin is based on selling price or revenue."
+    },
+    {
+      "q": "Can I use decimals?",
+      "a": "Yes. Cost and selling price can include decimals."
+    },
+    {
+      "q": "What happens if cost is zero?",
+      "a": "Markup cannot be calculated when cost is zero."
+    }
+  ],
+  "related": [
+    "margin-calculator",
+    "profit-calculator",
+    "discount-calculator"
+  ]
+},
+{
+  "id": "profit-calculator",
+  "name": "Profit Calculator",
+  "slug": "profit-calculator",
+  "category": "calculators",
+  "intro": "Calculate profit from revenue and cost instantly.",
+  "description": "Use this profit calculator to calculate profit from revenue and cost. It is useful for quick business checks, product pricing, and simple financial comparisons.",
+  "keywords": [
+    "profit calculator",
+    "calculate profit",
+    "revenue cost profit",
+    "business profit calculator"
+  ],
+  "whyUse": [
+    "Calculates profit quickly from two values.",
+    "Useful for simple pricing and business checks.",
+    "Shows revenue, cost, and final profit together.",
+    "Fast for browser-based financial calculations."
+  ],
+  "howToUse": [
+    "Enter revenue on the first line.",
+    "Enter cost on the second line.",
+    "Run the tool to calculate profit.",
+    "Review the result in the output area."
+  ],
+  "examples": [
+    {
+      "title": "Basic profit",
+      "input": "1000\n650",
+      "output": "Revenue: 1000.00\nCost: 650.00\nProfit: 350.00",
+      "explanation": "Profit is calculated as revenue minus cost."
+    },
+    {
+      "title": "Small example",
+      "input": "80\n55",
+      "output": "Revenue: 80.00\nCost: 55.00\nProfit: 25.00",
+      "explanation": "Useful for quick sale or product checks."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Using cost first and revenue second.",
+      "fix": "Enter revenue first and cost second."
+    },
+    {
+      "issue": "Expecting margin or markup too.",
+      "fix": "Use Margin Calculator or Markup Calculator if you need percentages."
+    },
+    {
+      "issue": "Using non-numeric values.",
+      "fix": "Enter valid numbers for revenue and cost."
+    }
+  ],
+  "useCases": [
+    "Checking simple business profit.",
+    "Reviewing pricing outcomes quickly.",
+    "Comparing revenue and cost scenarios.",
+    "Calculating product or service profit."
+  ],
+  "faq": [
+    {
+      "q": "What does Profit Calculator do?",
+      "a": "It calculates profit from revenue and cost."
+    },
+    {
+      "q": "What is the profit formula?",
+      "a": "Profit equals revenue minus cost."
+    },
+    {
+      "q": "Does it calculate margin too?",
+      "a": "No. This tool focuses on profit only."
+    },
+    {
+      "q": "Can I use decimals?",
+      "a": "Yes. Revenue and cost can include decimals."
+    },
+    {
+      "q": "Can profit be negative?",
+      "a": "Yes. If cost is greater than revenue, the result is a loss."
+    }
+  ],
+  "related": [
+    "margin-calculator",
+    "markup-calculator",
+    "roi-calculator"
+  ]
+}
+,
+{
+  "id": "commission-calculator",
+  "name": "Commission Calculator",
+  "slug": "commission-calculator",
+  "category": "calculators",
+  "intro": "Calculate commission amount and final payout from sales and commission rate.",
+  "description": "Use this commission calculator to calculate commission from total sales and commission rate. It is useful for sales work, affiliate income estimates, and quick payout checks.",
+  "keywords": [
+    "commission calculator",
+    "sales commission calculator",
+    "calculate commission",
+    "commission rate calculator"
+  ],
+  "whyUse": [
+    "Calculates commission quickly from sales and rate.",
+    "Useful for sales teams, affiliates, and payout estimates.",
+    "Shows both commission amount and net remainder.",
+    "Fast for browser-based income calculations."
+  ],
+  "howToUse": [
+    "Enter total sales on the first line.",
+    "Enter commission rate on the second line.",
+    "Run the tool to calculate commission.",
+    "Review the result in the output area."
+  ],
+  "examples": [
+    {
+      "title": "Basic commission",
+      "input": "5000\n10",
+      "output": "Sales: 5000.00\nCommission rate: 10.00%\nCommission amount: 500.00\nAmount after commission: 4500.00",
+      "explanation": "Useful for quick sales payout checks."
+    },
+    {
+      "title": "Smaller example",
+      "input": "1200\n7.5",
+      "output": "Sales: 1200.00\nCommission rate: 7.50%\nCommission amount: 90.00\nAmount after commission: 1110.00",
+      "explanation": "Works with decimal commission rates too."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Entering rate as a decimal like 0.1 instead of 10.",
+      "fix": "Enter percent values as whole percent numbers like 10 for 10%."
+    },
+    {
+      "issue": "Using negative sales values.",
+      "fix": "Enter a valid positive sales amount."
+    },
+    {
+      "issue": "Expecting tax or profit calculations too.",
+      "fix": "This tool only calculates commission and remaining amount."
+    }
+  ],
+  "useCases": [
+    "Checking sales commission payouts.",
+    "Estimating affiliate earnings.",
+    "Reviewing deal-based compensation.",
+    "Comparing commission scenarios quickly."
+  ],
+  "faq": [
+    {
+      "q": "What does Commission Calculator do?",
+      "a": "It calculates commission amount from sales and commission rate."
+    },
+    {
+      "q": "How do I enter the commission rate?",
+      "a": "Enter it as a percentage, such as 10 for 10%."
+    },
+    {
+      "q": "Can I use decimal rates?",
+      "a": "Yes. Rates like 7.5 are supported."
+    },
+    {
+      "q": "Does it show the remaining amount too?",
+      "a": "Yes. It shows both commission amount and amount after commission."
+    },
+    {
+      "q": "Can I use it for affiliate income?",
+      "a": "Yes. It works for any percentage-based commission."
+    }
+  ],
+  "related": [
+    "profit-calculator",
+    "sales-tax-calculator",
+    "percentage-calculator"
+  ]
+},
+{
+  "id": "sales-tax-calculator",
+  "name": "Sales Tax Calculator",
+  "slug": "sales-tax-calculator",
+  "category": "calculators",
+  "intro": "Calculate sales tax amount and total price from base price and tax rate.",
+  "description": "Use this sales tax calculator to calculate tax amount and final total from a base price and tax rate. It is useful for invoices, purchases, quotes, and quick pricing checks.",
+  "keywords": [
+    "sales tax calculator",
+    "tax calculator",
+    "calculate sales tax",
+    "price plus tax calculator"
+  ],
+  "whyUse": [
+    "Calculates sales tax and final total quickly.",
+    "Useful for shopping, invoicing, and quoting.",
+    "Shows base amount, tax amount, and total together.",
+    "Fast for browser-based price calculations."
+  ],
+  "howToUse": [
+    "Enter the base price on the first line.",
+    "Enter the tax rate on the second line.",
+    "Run the tool to calculate tax and total.",
+    "Review the result in the output area."
+  ],
+  "examples": [
+    {
+      "title": "Basic tax example",
+      "input": "100\n17",
+      "output": "Base price: 100.00\nTax rate: 17.00%\nTax amount: 17.00\nTotal price: 117.00",
+      "explanation": "Useful for adding tax to a base amount."
+    },
+    {
+      "title": "Another price",
+      "input": "250\n8.5",
+      "output": "Base price: 250.00\nTax rate: 8.50%\nTax amount: 21.25\nTotal price: 271.25",
+      "explanation": "Supports decimal tax rates."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Entering tax as a decimal like 0.17 instead of 17.",
+      "fix": "Enter tax as a percentage value like 17 for 17%."
+    },
+    {
+      "issue": "Using negative prices.",
+      "fix": "Enter a valid positive base price."
+    },
+    {
+      "issue": "Expecting pre-tax extraction from total price.",
+      "fix": "This version calculates tax from base price, not reverse tax extraction."
+    }
+  ],
+  "useCases": [
+    "Adding tax to product prices.",
+    "Checking invoice totals.",
+    "Estimating purchase costs.",
+    "Comparing tax scenarios quickly."
+  ],
+  "faq": [
+    {
+      "q": "What does Sales Tax Calculator do?",
+      "a": "It calculates tax amount and total price from a base price and tax rate."
+    },
+    {
+      "q": "How do I enter the tax rate?",
+      "a": "Enter it as a percentage, such as 17 for 17%."
+    },
+    {
+      "q": "Can I use decimal tax rates?",
+      "a": "Yes. Rates like 8.5 are supported."
+    },
+    {
+      "q": "Does it show the tax amount separately?",
+      "a": "Yes. It shows base price, tax amount, and total price."
+    },
+    {
+      "q": "Can I use it for VAT-like calculations?",
+      "a": "Yes. It works for general percentage-based tax additions."
+    }
+  ],
+  "related": [
+    "vat-calculator",
+    "tip-calculator",
+    "commission-calculator"
+  ]
+},
+{
+  "id": "tip-calculator",
+  "name": "Tip Calculator",
+  "slug": "tip-calculator",
+  "category": "calculators",
+  "intro": "Calculate tip amount and total bill from bill value and tip rate.",
+  "description": "Use this tip calculator to calculate tip amount and final bill total from the original bill and tip percentage. It is useful for restaurants, delivery, and service payments.",
+  "keywords": [
+    "tip calculator",
+    "calculate tip",
+    "bill tip calculator",
+    "restaurant tip calculator"
+  ],
+  "whyUse": [
+    "Calculates tip and final bill quickly.",
+    "Useful for restaurants, delivery, and service payments.",
+    "Shows original bill, tip amount, and total together.",
+    "Fast for browser-based payment calculations."
+  ],
+  "howToUse": [
+    "Enter the bill amount on the first line.",
+    "Enter the tip rate on the second line.",
+    "Run the tool to calculate the tip.",
+    "Review the result in the output area."
+  ],
+  "examples": [
+    {
+      "title": "Restaurant bill",
+      "input": "200\n12",
+      "output": "Bill amount: 200.00\nTip rate: 12.00%\nTip amount: 24.00\nTotal with tip: 224.00",
+      "explanation": "Useful for quick tipping decisions."
+    },
+    {
+      "title": "Small bill",
+      "input": "58\n15",
+      "output": "Bill amount: 58.00\nTip rate: 15.00%\nTip amount: 8.70\nTotal with tip: 66.70",
+      "explanation": "Works with smaller and larger totals."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Entering tip as a decimal like 0.15 instead of 15.",
+      "fix": "Enter the tip rate as a percent like 15 for 15%."
+    },
+    {
+      "issue": "Using negative bill values.",
+      "fix": "Enter a valid positive bill amount."
+    },
+    {
+      "issue": "Expecting split-bill calculation too.",
+      "fix": "This version calculates tip and total only."
+    }
+  ],
+  "useCases": [
+    "Calculating restaurant tips.",
+    "Checking delivery or service tips.",
+    "Comparing different tip percentages.",
+    "Estimating total payment before paying."
+  ],
+  "faq": [
+    {
+      "q": "What does Tip Calculator do?",
+      "a": "It calculates tip amount and total bill from a bill value and tip rate."
+    },
+    {
+      "q": "How do I enter the tip rate?",
+      "a": "Enter it as a percentage, such as 12 for 12%."
+    },
+    {
+      "q": "Can I use decimal rates?",
+      "a": "Yes. Decimal percentages are supported."
+    },
+    {
+      "q": "Does it show the tip separately?",
+      "a": "Yes. It shows bill amount, tip amount, and total with tip."
+    },
+    {
+      "q": "Can I use it for delivery tips too?",
+      "a": "Yes. It works for any percent-based tip calculation."
+    }
+  ],
+  "related": [
+    "sales-tax-calculator",
+    "percentage-calculator",
+    "profit-calculator"
+  ]
+},
+{
+  "id": "break-even-calculator",
+  "name": "Break-even Calculator",
+  "slug": "break-even-calculator",
+  "category": "calculators",
+  "intro": "Calculate break-even units from fixed cost, selling price, and variable cost.",
+  "description": "Use this break-even calculator to estimate how many units must be sold to cover fixed costs. Enter fixed cost, selling price per unit, and variable cost per unit to get the break-even point.",
+  "keywords": [
+    "break-even calculator",
+    "breakeven calculator",
+    "break even point calculator",
+    "break even units"
+  ],
+  "whyUse": [
+    "Calculates break-even units quickly.",
+    "Useful for product planning and pricing analysis.",
+    "Helps compare cost and selling scenarios.",
+    "Fast for browser-based business calculations."
+  ],
+  "howToUse": [
+    "Enter fixed cost on the first line.",
+    "Enter selling price per unit on the second line.",
+    "Enter variable cost per unit on the third line.",
+    "Run the tool to calculate break-even units."
+  ],
+  "examples": [
+    {
+      "title": "Basic break-even",
+      "input": "1000\n50\n30",
+      "output": "Fixed cost: 1000.00\nSelling price per unit: 50.00\nVariable cost per unit: 30.00\nContribution margin per unit: 20.00\nBreak-even units: 50.00",
+      "explanation": "Break-even units are fixed cost divided by contribution margin per unit."
+    },
+    {
+      "title": "Higher margin example",
+      "input": "2400\n120\n80",
+      "output": "Fixed cost: 2400.00\nSelling price per unit: 120.00\nVariable cost per unit: 80.00\nContribution margin per unit: 40.00\nBreak-even units: 60.00",
+      "explanation": "Useful for checking how price and cost affect break-even."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Using variable cost equal to or greater than selling price.",
+      "fix": "Selling price must be greater than variable cost to reach break-even."
+    },
+    {
+      "issue": "Forgetting one of the three inputs.",
+      "fix": "Enter fixed cost, selling price, and variable cost."
+    },
+    {
+      "issue": "Expecting revenue-based break-even instead of units.",
+      "fix": "This version calculates break-even in units."
+    }
+  ],
+  "useCases": [
+    "Planning product pricing.",
+    "Checking how many units must be sold.",
+    "Comparing different cost structures.",
+    "Estimating launch viability quickly."
+  ],
+  "faq": [
+    {
+      "q": "What does Break-even Calculator do?",
+      "a": "It calculates how many units must be sold to cover fixed costs."
+    },
+    {
+      "q": "What is contribution margin per unit?",
+      "a": "It is selling price per unit minus variable cost per unit."
+    },
+    {
+      "q": "Why can't break-even be calculated sometimes?",
+      "a": "If selling price is less than or equal to variable cost, break-even cannot be reached."
+    },
+    {
+      "q": "Does it return units or revenue?",
+      "a": "This version returns break-even units."
+    },
+    {
+      "q": "Can I use decimals?",
+      "a": "Yes. All three inputs can include decimals."
+    }
+  ],
+  "related": [
+    "profit-calculator",
+    "margin-calculator",
+    "markup-calculator"
+  ]
+},
+{
+  "id": "inflation-calculator",
+  "name": "Inflation Calculator",
+  "slug": "inflation-calculator",
+  "category": "calculators",
+  "intro": "Calculate future value after inflation using current value, inflation rate, and years.",
+  "description": "Use this inflation calculator to estimate how a current amount changes over time based on an annual inflation rate. It is useful for budgeting, planning, and simple purchasing power comparisons.",
+  "keywords": [
+    "inflation calculator",
+    "future value inflation calculator",
+    "calculate inflation impact",
+    "inflation value calculator"
+  ],
+  "whyUse": [
+    "Estimates future value after inflation quickly.",
+    "Useful for budgeting and long-term planning.",
+    "Helps compare present and future purchasing value.",
+    "Fast for browser-based financial calculations."
+  ],
+  "howToUse": [
+    "Enter the current amount on the first line.",
+    "Enter the annual inflation rate on the second line.",
+    "Enter the number of years on the third line.",
+    "Run the tool to calculate the inflation-adjusted value."
+  ],
+  "examples": [
+    {
+      "title": "Simple inflation",
+      "input": "1000\n3\n5",
+      "output": "Current amount: 1000.00\nAnnual inflation rate: 3.00%\nYears: 5.00\nFuture value: 1159.27",
+      "explanation": "Uses compound annual inflation."
+    },
+    {
+      "title": "Longer period",
+      "input": "500\n2.5\n10",
+      "output": "Current amount: 500.00\nAnnual inflation rate: 2.50%\nYears: 10.00\nFuture value: 640.04",
+      "explanation": "Useful for long-term planning scenarios."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Entering inflation as a decimal like 0.03 instead of 3.",
+      "fix": "Enter inflation rate as a percent like 3 for 3%."
+    },
+    {
+      "issue": "Using negative years.",
+      "fix": "Enter zero or a positive number of years."
+    },
+    {
+      "issue": "Expecting historical CPI-based lookup.",
+      "fix": "This version uses your manual inflation rate input."
+    }
+  ],
+  "useCases": [
+    "Estimating future cost impact.",
+    "Checking long-term purchasing value.",
+    "Comparing budgeting scenarios.",
+    "Planning simple inflation-adjusted targets."
+  ],
+  "faq": [
+    {
+      "q": "What does Inflation Calculator do?",
+      "a": "It estimates future value using a current amount, annual inflation rate, and number of years."
+    },
+    {
+      "q": "How do I enter the inflation rate?",
+      "a": "Enter it as a percentage, such as 3 for 3%."
+    },
+    {
+      "q": "Does it use compound inflation?",
+      "a": "Yes. It compounds the annual inflation rate over the number of years."
+    },
+    {
+      "q": "Can I use decimal years?",
+      "a": "Yes. Decimal year values are supported."
+    },
+    {
+      "q": "Does it use official country inflation data?",
+      "a": "No. This version calculates from the rate you enter manually."
+    }
+  ],
+  "related": [
+    "compound-interest-calculator",
+    "loan-calculator",
+    "profit-calculator"
+  ]
+}
+,
+{
+  "id": "currency-percentage-calculator",
+  "name": "Currency Percentage Calculator",
+  "slug": "currency-percentage-calculator",
+  "category": "calculators",
+  "intro": "Calculate percentage amount, increased total, and reduced total from a money value.",
+  "description": "Use this currency percentage calculator to calculate a percentage of a money amount and see the amount after adding or subtracting that percentage. It is useful for pricing, budgeting, discounts, and quick money-based percentage checks.",
+  "keywords": [
+    "currency percentage calculator",
+    "money percentage calculator",
+    "percentage of amount calculator",
+    "price percentage calculator"
+  ],
+  "whyUse": [
+    "Shows percentage amount and adjusted totals together.",
+    "Useful for pricing, budgeting, and money planning.",
+    "Helps check percentage-based increases or decreases quickly.",
+    "Fast for browser-based amount calculations."
+  ],
+  "howToUse": [
+    "Enter the amount on the first line.",
+    "Enter the percentage rate on the second line.",
+    "Run the tool to calculate the percentage value.",
+    "Review the percentage amount, increased total, and reduced total."
+  ],
+  "examples": [
+    {
+      "title": "Basic amount",
+      "input": "250\n12",
+      "output": "Amount: 250.00\nRate: 12.00%\nPercentage amount: 30.00\nAmount plus percentage: 280.00\nAmount minus percentage: 220.00",
+      "explanation": "Shows the percent value and both add/subtract scenarios."
+    },
+    {
+      "title": "Another amount",
+      "input": "1000\n5",
+      "output": "Amount: 1000.00\nRate: 5.00%\nPercentage amount: 50.00\nAmount plus percentage: 1050.00\nAmount minus percentage: 950.00",
+      "explanation": "Useful for quick money adjustments."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Entering the rate as 0.12 instead of 12.",
+      "fix": "Enter the percentage as 12 for 12%."
+    },
+    {
+      "issue": "Using non-numeric input.",
+      "fix": "Enter valid numbers for amount and rate."
+    },
+    {
+      "issue": "Expecting tax-specific logic.",
+      "fix": "This is a general money percentage tool, not a dedicated tax calculator."
+    }
+  ],
+  "useCases": [
+    "Checking price increases or decreases.",
+    "Calculating percentage-based adjustments on a budget.",
+    "Estimating discount-like reductions quickly.",
+    "Reviewing simple money percentage scenarios."
+  ],
+  "faq": [
+    {
+      "q": "What does Currency Percentage Calculator do?",
+      "a": "It calculates the percentage amount of a money value and shows totals after adding or subtracting that percentage."
+    },
+    {
+      "q": "How do I enter the percentage?",
+      "a": "Enter it as a percent, such as 12 for 12%."
+    },
+    {
+      "q": "Does it show both increase and decrease?",
+      "a": "Yes. It shows amount plus percentage and amount minus percentage."
+    },
+    {
+      "q": "Can I use decimals?",
+      "a": "Yes. Amount and percentage rate can include decimals."
+    },
+    {
+      "q": "How is it different from Percentage Calculator?",
+      "a": "This tool is focused on money-style percentage adjustments and shows the adjusted totals too."
+    }
+  ],
+  "related": [
+    "percentage-calculator",
+    "discount-calculator",
+    "sales-tax-calculator"
+  ]
+},
+{
+  "id": "cagr-calculator",
+  "name": "CAGR Calculator",
+  "slug": "cagr-calculator",
+  "category": "calculators",
+  "intro": "Calculate compound annual growth rate from starting value, ending value, and years.",
+  "description": "Use this CAGR calculator to calculate the compound annual growth rate between a starting value and an ending value over a number of years. It is useful for investments, business growth, and performance comparisons.",
+  "keywords": [
+    "cagr calculator",
+    "compound annual growth rate calculator",
+    "growth rate calculator",
+    "annualized return calculator"
+  ],
+  "whyUse": [
+    "Calculates annualized growth clearly.",
+    "Useful for investments, revenue, and business comparisons.",
+    "Helps compare growth over different time periods.",
+    "Fast for browser-based financial analysis."
+  ],
+  "howToUse": [
+    "Enter the starting value on the first line.",
+    "Enter the ending value on the second line.",
+    "Enter the number of years on the third line.",
+    "Run the tool to calculate CAGR."
+  ],
+  "examples": [
+    {
+      "title": "Investment growth",
+      "input": "1000\n1500\n3",
+      "output": "Starting value: 1000.00\nEnding value: 1500.00\nYears: 3.00\nCAGR: 14.47%",
+      "explanation": "Calculates the annualized compound growth rate."
+    },
+    {
+      "title": "Revenue growth",
+      "input": "50000\n80000\n5",
+      "output": "Starting value: 50000.00\nEnding value: 80000.00\nYears: 5.00\nCAGR: 9.86%",
+      "explanation": "Useful for comparing long-term business growth."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Using zero or negative start values.",
+      "fix": "Starting value must be greater than zero."
+    },
+    {
+      "issue": "Using zero years.",
+      "fix": "Years must be greater than zero."
+    },
+    {
+      "issue": "Expecting simple average growth instead of compound growth.",
+      "fix": "CAGR uses a compound annual growth formula."
+    }
+  ],
+  "useCases": [
+    "Checking annualized investment growth.",
+    "Comparing business revenue growth.",
+    "Reviewing long-term performance trends.",
+    "Estimating annualized return over time."
+  ],
+  "faq": [
+    {
+      "q": "What does CAGR Calculator do?",
+      "a": "It calculates the compound annual growth rate between a starting value and ending value over a given number of years."
+    },
+    {
+      "q": "What is CAGR?",
+      "a": "CAGR is the annualized compound growth rate across a period of time."
+    },
+    {
+      "q": "Can I use decimals?",
+      "a": "Yes. Starting value, ending value, and years can include decimals."
+    },
+    {
+      "q": "Does it work for investments and business values?",
+      "a": "Yes. It works for any positive starting and ending values."
+    },
+    {
+      "q": "How is it different from simple percentage change?",
+      "a": "CAGR annualizes growth over time using compounding, while simple percentage change compares only start and end totals."
+    }
+  ],
+  "related": [
+    "inflation-calculator",
+    "compound-interest-calculator",
+    "roi-calculator"
+  ]
+},
+{
+  "id": "savings-calculator",
+  "name": "Savings Calculator",
+  "slug": "savings-calculator",
+  "category": "calculators",
+  "intro": "Calculate future savings from starting balance, monthly contribution, rate, and years.",
+  "description": "Use this savings calculator to estimate future savings growth based on an initial amount, monthly contribution, annual interest rate, and number of years. It is useful for planning savings goals and long-term balances.",
+  "keywords": [
+    "savings calculator",
+    "future savings calculator",
+    "monthly savings calculator",
+    "savings growth calculator"
+  ],
+  "whyUse": [
+    "Estimates future savings with contributions and growth.",
+    "Useful for financial planning and goal setting.",
+    "Shows balance growth over time clearly.",
+    "Fast for browser-based savings estimates."
+  ],
+  "howToUse": [
+    "Enter starting balance on the first line.",
+    "Enter monthly contribution on the second line.",
+    "Enter annual interest rate on the third line.",
+    "Enter years on the fourth line, then run the tool."
+  ],
+  "examples": [
+    {
+      "title": "Basic savings plan",
+      "input": "1000\n200\n5\n10",
+      "output": "Starting balance: 1000.00\nMonthly contribution: 200.00\nAnnual rate: 5.00%\nYears: 10.00\nFuture savings: 32795.70",
+      "explanation": "Uses monthly compounding with monthly contributions."
+    },
+    {
+      "title": "No starting balance",
+      "input": "0\n300\n4\n5",
+      "output": "Starting balance: 0.00\nMonthly contribution: 300.00\nAnnual rate: 4.00%\nYears: 5.00\nFuture savings: 19899.83",
+      "explanation": "Useful for regular contribution planning."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Entering annual rate as 0.05 instead of 5.",
+      "fix": "Enter rate as a percent like 5 for 5%."
+    },
+    {
+      "issue": "Using negative contribution values.",
+      "fix": "Use zero or positive values for starting balance and monthly contribution."
+    },
+    {
+      "issue": "Expecting one-time lump-sum only calculation.",
+      "fix": "This tool includes monthly contributions and interest growth."
+    }
+  ],
+  "useCases": [
+    "Planning savings goals.",
+    "Comparing monthly contribution strategies.",
+    "Estimating long-term account growth.",
+    "Checking how rate changes affect future savings."
+  ],
+  "faq": [
+    {
+      "q": "What does Savings Calculator do?",
+      "a": "It estimates future savings using a starting balance, monthly contributions, interest rate, and years."
+    },
+    {
+      "q": "Does it use compounding?",
+      "a": "Yes. It uses monthly compounding with monthly contributions."
+    },
+    {
+      "q": "Can I use zero starting balance?",
+      "a": "Yes. You can start from zero and contribute monthly."
+    },
+    {
+      "q": "How do I enter the interest rate?",
+      "a": "Enter it as a percentage, such as 5 for 5%."
+    },
+    {
+      "q": "Can I use decimal years?",
+      "a": "Yes. Decimal year values are supported."
+    }
+  ],
+  "related": [
+    "compound-interest-calculator",
+    "inflation-calculator",
+    "loan-calculator"
+  ]
+},
+{
+  "id": "mortgage-calculator",
+  "name": "Mortgage Calculator",
+  "slug": "mortgage-calculator",
+  "category": "calculators",
+  "intro": "Calculate monthly mortgage payment from loan amount, interest rate, and term.",
+  "description": "Use this mortgage calculator to estimate monthly mortgage payments from a loan amount, annual interest rate, and loan term in years. It is useful for home financing and payment planning.",
+  "keywords": [
+    "mortgage calculator",
+    "monthly mortgage calculator",
+    "home loan calculator",
+    "mortgage payment calculator"
+  ],
+  "whyUse": [
+    "Estimates monthly mortgage payments quickly.",
+    "Useful for home loan planning and comparisons.",
+    "Shows total payment and total interest too.",
+    "Fast for browser-based mortgage estimates."
+  ],
+  "howToUse": [
+    "Enter loan amount on the first line.",
+    "Enter annual interest rate on the second line.",
+    "Enter loan term in years on the third line.",
+    "Run the tool to calculate the mortgage payment."
+  ],
+  "examples": [
+    {
+      "title": "Standard mortgage",
+      "input": "300000\n5\n30",
+      "output": "Loan amount: 300000.00\nAnnual rate: 5.00%\nTerm: 30.00 years\nMonthly payment: 1610.46\nTotal payment: 579767.35\nTotal interest: 279767.35",
+      "explanation": "Calculates standard amortized monthly payments."
+    },
+    {
+      "title": "Shorter term",
+      "input": "200000\n4.5\n15",
+      "output": "Loan amount: 200000.00\nAnnual rate: 4.50%\nTerm: 15.00 years\nMonthly payment: 1529.99\nTotal payment: 275397.95\nTotal interest: 75397.95",
+      "explanation": "Useful for comparing term lengths."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Entering term in months instead of years.",
+      "fix": "This version expects the loan term in years."
+    },
+    {
+      "issue": "Using zero or negative loan amount.",
+      "fix": "Loan amount must be greater than zero."
+    },
+    {
+      "issue": "Expecting taxes and insurance to be included.",
+      "fix": "This version calculates principal and interest only."
+    }
+  ],
+  "useCases": [
+    "Estimating mortgage payments before applying.",
+    "Comparing different rates and loan terms.",
+    "Checking total interest over time.",
+    "Planning home affordability scenarios."
+  ],
+  "faq": [
+    {
+      "q": "What does Mortgage Calculator do?",
+      "a": "It calculates monthly mortgage payment, total payment, and total interest from loan amount, rate, and term."
+    },
+    {
+      "q": "Does it include taxes and insurance?",
+      "a": "No. It calculates principal and interest only."
+    },
+    {
+      "q": "How do I enter the loan term?",
+      "a": "Enter the term in years, such as 30."
+    },
+    {
+      "q": "Can I use decimal interest rates?",
+      "a": "Yes. Rates like 4.5 are supported."
+    },
+    {
+      "q": "How is it different from EMI Calculator?",
+      "a": "They use a similar payment formula, but Mortgage Calculator is framed for home loans and term in years."
+    }
+  ],
+  "related": [
+    "emi-calculator",
+    "loan-calculator",
+    "savings-calculator"
+  ]
+},
+{
+  "id": "emi-calculator",
+  "name": "EMI Calculator",
+  "slug": "emi-calculator",
+  "category": "calculators",
+  "intro": "Calculate EMI from loan amount, annual interest rate, and term in months.",
+  "description": "Use this EMI calculator to calculate the equated monthly installment for a loan from principal, annual interest rate, and loan term in months. It is useful for personal loans, auto loans, and general EMI planning.",
+  "keywords": [
+    "emi calculator",
+    "loan emi calculator",
+    "monthly installment calculator",
+    "equated monthly installment calculator"
+  ],
+  "whyUse": [
+    "Calculates EMI quickly for general loans.",
+    "Useful for personal, car, and consumer loan planning.",
+    "Shows monthly payment, total payment, and total interest.",
+    "Fast for browser-based repayment estimates."
+  ],
+  "howToUse": [
+    "Enter loan amount on the first line.",
+    "Enter annual interest rate on the second line.",
+    "Enter loan term in months on the third line.",
+    "Run the tool to calculate EMI."
+  ],
+  "examples": [
+    {
+      "title": "Basic EMI",
+      "input": "100000\n10\n24",
+      "output": "Loan amount: 100000.00\nAnnual rate: 10.00%\nTerm: 24 months\nEMI: 4614.49\nTotal payment: 110747.76\nTotal interest: 10747.76",
+      "explanation": "Calculates standard monthly EMI for a general loan."
+    },
+    {
+      "title": "Longer EMI term",
+      "input": "250000\n8.5\n60",
+      "output": "Loan amount: 250000.00\nAnnual rate: 8.50%\nTerm: 60 months\nEMI: 5128.34\nTotal payment: 307700.48\nTotal interest: 57700.48",
+      "explanation": "Useful for longer consumer or vehicle loans."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Entering term in years instead of months.",
+      "fix": "This version expects the loan term in months."
+    },
+    {
+      "issue": "Using zero or negative loan values.",
+      "fix": "Loan amount and months must be greater than zero."
+    },
+    {
+      "issue": "Expecting extra fees to be included.",
+      "fix": "This version calculates EMI from principal, rate, and term only."
+    }
+  ],
+  "useCases": [
+    "Checking personal loan EMI.",
+    "Estimating auto loan repayments.",
+    "Comparing loan term choices.",
+    "Reviewing total interest before borrowing."
+  ],
+  "faq": [
+    {
+      "q": "What does EMI Calculator do?",
+      "a": "It calculates the monthly EMI, total payment, and total interest from loan amount, annual rate, and term in months."
+    },
+    {
+      "q": "How do I enter the term?",
+      "a": "Enter the loan term in months, such as 24 or 60."
+    },
+    {
+      "q": "Does it support decimal interest rates?",
+      "a": "Yes. Rates like 8.5 are supported."
+    },
+    {
+      "q": "Does it include fees or insurance?",
+      "a": "No. It calculates EMI from loan amount, rate, and term only."
+    },
+    {
+      "q": "How is it different from Mortgage Calculator?",
+      "a": "EMI Calculator is framed for general loans and uses loan term in months."
+    }
+  ],
+  "related": [
+    "mortgage-calculator",
+    "loan-calculator",
+    "compound-interest-calculator"
+  ]
+}
+,
+{
+  "id": "apr-calculator",
+  "name": "APR Calculator",
+  "slug": "apr-calculator",
+  "category": "calculators",
+  "intro": "Calculate APR from loan amount, fees, interest rate, and term.",
+  "description": "Use this APR calculator to estimate the annual percentage rate of a loan based on principal, annual interest rate, upfront fees, and loan term. It is useful for comparing loan offers more accurately than rate alone.",
+  "keywords": [
+    "apr calculator",
+    "annual percentage rate calculator",
+    "loan apr calculator",
+    "compare loan apr"
+  ],
+  "whyUse": [
+    "Helps compare loans using a broader cost view.",
+    "Useful when rates alone do not show total borrowing cost.",
+    "Includes fees in the estimated annual percentage rate.",
+    "Fast for browser-based lending comparisons."
+  ],
+  "howToUse": [
+    "Enter loan amount on the first line.",
+    "Enter annual interest rate on the second line.",
+    "Enter upfront fees on the third line.",
+    "Enter loan term in years on the fourth line, then run the tool."
+  ],
+  "examples": [
+    {
+      "title": "Loan with fees",
+      "input": "100000\n8\n2000\n5",
+      "output": "Loan amount: 100000.00\nAnnual interest rate: 8.00%\nFees: 2000.00\nTerm: 5.00 years\nEstimated APR: 8.40%",
+      "explanation": "APR is estimated by adding annualized fees to the nominal interest rate."
+    },
+    {
+      "title": "Lower fee loan",
+      "input": "50000\n6.5\n500\n3",
+      "output": "Loan amount: 50000.00\nAnnual interest rate: 6.50%\nFees: 500.00\nTerm: 3.00 years\nEstimated APR: 6.83%",
+      "explanation": "Useful for comparing similar loans with different fee structures."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Entering rate as 0.08 instead of 8.",
+      "fix": "Enter annual interest rate as a percentage like 8 for 8%."
+    },
+    {
+      "issue": "Leaving out fees when the loan has upfront costs.",
+      "fix": "Include all upfront fees to get a more realistic APR estimate."
+    },
+    {
+      "issue": "Expecting a lender-grade legal APR disclosure.",
+      "fix": "This tool gives a simplified APR estimate for comparison purposes."
+    }
+  ],
+  "useCases": [
+    "Comparing loan offers with different fee structures.",
+    "Checking the real cost of borrowing.",
+    "Reviewing loan offers before applying.",
+    "Estimating how fees affect annual borrowing cost."
+  ],
+  "faq": [
+    {
+      "q": "What does APR Calculator do?",
+      "a": "It estimates annual percentage rate by combining interest rate and annualized fees."
+    },
+    {
+      "q": "How is APR different from interest rate?",
+      "a": "APR includes more of the total borrowing cost, not just the nominal interest rate."
+    },
+    {
+      "q": "Does it use a simplified formula?",
+      "a": "Yes. This version estimates APR for comparison and planning, not formal lending disclosure."
+    },
+    {
+      "q": "How do I enter the term?",
+      "a": "Enter the loan term in years."
+    },
+    {
+      "q": "Can I use decimal rates and fees?",
+      "a": "Yes. All numeric inputs can include decimals."
+    }
+  ],
+  "related": [
+    "loan-calculator",
+    "mortgage-calculator",
+    "emi-calculator"
+  ]
+},
+{
+  "id": "hourly-to-salary-calculator",
+  "name": "Hourly to Salary Calculator",
+  "slug": "hourly-to-salary-calculator",
+  "category": "calculators",
+  "intro": "Convert hourly pay into weekly, monthly, and annual salary estimates.",
+  "description": "Use this hourly to salary calculator to convert an hourly wage into weekly, monthly, and yearly pay based on hours worked per week and weeks worked per year.",
+  "keywords": [
+    "hourly to salary calculator",
+    "hourly wage to annual salary",
+    "hourly pay calculator",
+    "convert hourly to yearly salary"
+  ],
+  "whyUse": [
+    "Shows weekly, monthly, and yearly earnings from hourly pay.",
+    "Useful for job comparisons and pay planning.",
+    "Lets you adjust hours per week and working weeks per year.",
+    "Fast for browser-based pay conversion."
+  ],
+  "howToUse": [
+    "Enter hourly rate on the first line.",
+    "Enter hours worked per week on the second line.",
+    "Enter weeks worked per year on the third line.",
+    "Run the tool to calculate salary estimates."
+  ],
+  "examples": [
+    {
+      "title": "Standard full-time example",
+      "input": "25\n40\n52",
+      "output": "Hourly rate: 25.00\nHours per week: 40.00\nWeeks per year: 52.00\nWeekly pay: 1000.00\nMonthly pay: 4333.33\nAnnual salary: 52000.00",
+      "explanation": "Converts hourly pay into weekly, monthly, and annual estimates."
+    },
+    {
+      "title": "Part-time example",
+      "input": "18\n25\n50",
+      "output": "Hourly rate: 18.00\nHours per week: 25.00\nWeeks per year: 50.00\nWeekly pay: 450.00\nMonthly pay: 1875.00\nAnnual salary: 22500.00",
+      "explanation": "Useful for comparing part-time schedules."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Using monthly hours instead of weekly hours.",
+      "fix": "Enter hours worked per week on the second line."
+    },
+    {
+      "issue": "Forgetting unpaid weeks or vacation time.",
+      "fix": "Adjust weeks worked per year to match your real schedule."
+    },
+    {
+      "issue": "Expecting tax deductions in the result.",
+      "fix": "This tool calculates gross pay estimates only."
+    }
+  ],
+  "useCases": [
+    "Comparing hourly job offers.",
+    "Estimating annual income from hourly work.",
+    "Planning work schedules and income targets.",
+    "Checking the effect of reduced or extra weekly hours."
+  ],
+  "faq": [
+    {
+      "q": "What does Hourly to Salary Calculator do?",
+      "a": "It converts hourly pay into weekly, monthly, and annual salary estimates."
+    },
+    {
+      "q": "How do I enter working time?",
+      "a": "Enter hours per week and weeks worked per year."
+    },
+    {
+      "q": "Does it include taxes?",
+      "a": "No. It calculates gross pay only."
+    },
+    {
+      "q": "Can I use part-time hours?",
+      "a": "Yes. Any valid hours-per-week value can be used."
+    },
+    {
+      "q": "How is monthly pay calculated?",
+      "a": "Monthly pay is estimated as annual salary divided by 12."
+    }
+  ],
+  "related": [
+    "salary-to-hourly-calculator",
+    "overtime-calculator",
+    "percentage-calculator"
+  ]
+},
+{
+  "id": "salary-to-hourly-calculator",
+  "name": "Salary to Hourly Calculator",
+  "slug": "salary-to-hourly-calculator",
+  "category": "calculators",
+  "intro": "Convert annual salary into hourly, weekly, and monthly pay estimates.",
+  "description": "Use this salary to hourly calculator to convert an annual salary into hourly, weekly, and monthly gross pay based on hours worked per week and weeks worked per year.",
+  "keywords": [
+    "salary to hourly calculator",
+    "annual salary to hourly wage",
+    "salary conversion calculator",
+    "convert salary to hourly"
+  ],
+  "whyUse": [
+    "Shows hourly, weekly, and monthly pay from annual salary.",
+    "Useful for comparing salaried and hourly roles.",
+    "Lets you adjust actual working schedule assumptions.",
+    "Fast for browser-based pay conversion."
+  ],
+  "howToUse": [
+    "Enter annual salary on the first line.",
+    "Enter hours worked per week on the second line.",
+    "Enter weeks worked per year on the third line.",
+    "Run the tool to calculate hourly and other pay estimates."
+  ],
+  "examples": [
+    {
+      "title": "Full-time salary",
+      "input": "60000\n40\n52",
+      "output": "Annual salary: 60000.00\nHours per week: 40.00\nWeeks per year: 52.00\nWeekly pay: 1153.85\nMonthly pay: 5000.00\nHourly rate: 28.85",
+      "explanation": "Converts annual salary into weekly, monthly, and hourly estimates."
+    },
+    {
+      "title": "Reduced schedule",
+      "input": "45000\n35\n50",
+      "output": "Annual salary: 45000.00\nHours per week: 35.00\nWeeks per year: 50.00\nWeekly pay: 900.00\nMonthly pay: 3750.00\nHourly rate: 25.71",
+      "explanation": "Useful for comparing schedules and pay structures."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Using monthly salary instead of annual salary.",
+      "fix": "Enter the yearly gross salary on the first line."
+    },
+    {
+      "issue": "Using wrong work schedule assumptions.",
+      "fix": "Adjust hours per week and weeks per year to match the real job."
+    },
+    {
+      "issue": "Expecting tax deductions or net pay.",
+      "fix": "This tool calculates gross pay estimates only."
+    }
+  ],
+  "useCases": [
+    "Comparing salaried and hourly roles.",
+    "Estimating hourly value of an annual salary.",
+    "Reviewing job offers with different schedules.",
+    "Planning income expectations from work hours."
+  ],
+  "faq": [
+    {
+      "q": "What does Salary to Hourly Calculator do?",
+      "a": "It converts annual salary into hourly, weekly, and monthly gross pay estimates."
+    },
+    {
+      "q": "How do I enter the schedule?",
+      "a": "Enter hours worked per week and weeks worked per year."
+    },
+    {
+      "q": "Does it include taxes?",
+      "a": "No. It calculates gross pay only."
+    },
+    {
+      "q": "Can I use non-standard schedules?",
+      "a": "Yes. Any valid work schedule assumptions can be entered."
+    },
+    {
+      "q": "How is hourly rate calculated?",
+      "a": "Hourly rate is annual salary divided by total hours worked per year."
+    }
+  ],
+  "related": [
+    "hourly-to-salary-calculator",
+    "overtime-calculator",
+    "commission-calculator"
+  ]
+}
 ]

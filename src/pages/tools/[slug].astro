@@ -11369,6 +11369,835 @@ if (slug === "whitespace-normalizer") {
   output.value = text.replace(/\s+/g, " ").trim();
   return;
 }
+if (slug === "markdown-cleaner") {
+  const text = input.value;
+
+  if (!text.trim()) {
+    output.value = "";
+    return;
+  }
+
+  let result = text
+    .replace(/^#{1,6}\s+/gm, "")
+    .replace(/^\s*>\s?/gm, "")
+    .replace(/^\s*[-*+]\s+/gm, "")
+    .replace(/^\s*\d+[.)]\s+/gm, "")
+    .replace(/\*\*(.*?)\*\*/g, "$1")
+    .replace(/__(.*?)__/g, "$1")
+    .replace(/\*(.*?)\*/g, "$1")
+    .replace(/_(.*?)_/g, "$1")
+    .replace(/`([^`]+)`/g, "$1")
+    .replace(/~~(.*?)~~/g, "$1")
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, "$1")
+    .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, "$1");
+
+  output.value = result.trim();
+  return;
+}
+
+if (slug === "bullet-list-cleaner") {
+  const text = input.value;
+
+  if (!text.trim()) {
+    output.value = "";
+    return;
+  }
+
+  output.value = text
+    .split(/\r?\n/)
+    .map((line: string) => line.replace(/^\s*(?:[-*•+]|(?:\d+[.)]))\s+/, "").trim())
+    .join("\n")
+    .trim();
+
+  return;
+}
+
+if (slug === "reverse-word-order") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "";
+    return;
+  }
+
+  output.value = text
+    .split(/\s+/)
+    .filter((word: string) => word.length > 0)
+    .reverse()
+    .join(" ");
+
+  return;
+}
+if (slug === "first-line-extractor") {
+  const lines = input.value
+    .split(/\r?\n/)
+    .map((line: string) => line.trim());
+
+  const first = lines.find((line: string) => line.length > 0);
+
+  output.value = first || "";
+  return;
+}
+
+if (slug === "last-line-extractor") {
+  const lines = input.value
+    .split(/\r?\n/)
+    .map((line: string) => line.trim())
+    .filter((line: string) => line.length > 0);
+
+  output.value = lines.length ? lines[lines.length - 1] : "";
+  return;
+}
+
+if (slug === "prefix-lines") {
+  const parts = input.value.split(/\r?\n\r?\n/);
+  const prefix = parts[0] ?? "";
+  const body = parts.slice(1).join("\n\n");
+
+  if (!body.trim()) {
+    output.value = "Enter prefix on the first line, then a blank line, then the text.";
+    return;
+  }
+
+  output.value = body
+    .split(/\r?\n/)
+    .map((line: string) => `${prefix}${line}`)
+    .join("\n");
+
+  return;
+}
+
+if (slug === "suffix-lines") {
+  const parts = input.value.split(/\r?\n\r?\n/);
+  const suffix = parts[0] ?? "";
+  const body = parts.slice(1).join("\n\n");
+
+  if (!body.trim()) {
+    output.value = "Enter suffix on the first line, then a blank line, then the text.";
+    return;
+  }
+
+  output.value = body
+    .split(/\r?\n/)
+    .map((line: string) => `${line}${suffix}`)
+    .join("\n");
+
+  return;
+}
+
+if (slug === "wrap-text") {
+  const parts = input.value.split(/\r?\n\r?\n/);
+  const headerLines = (parts[0] || "").split(/\r?\n/);
+  const opening = headerLines[0] ?? "";
+  const closing = headerLines[1] ?? "";
+  const body = parts.slice(1).join("\n\n");
+
+  if (!body) {
+    output.value = "Enter opening wrapper on the first line, closing wrapper on the second line, then a blank line, then the text.";
+    return;
+  }
+
+  output.value = `${opening}${body}${closing}`;
+  return;
+}
+
+if (slug === "unwrap-text") {
+  const parts = input.value.split(/\r?\n\r?\n/);
+  const headerLines = (parts[0] || "").split(/\r?\n/);
+  const opening = headerLines[0] ?? "";
+  const closing = headerLines[1] ?? "";
+  const body = parts.slice(1).join("\n\n");
+
+  if (!body) {
+    output.value = "Enter opening wrapper on the first line, closing wrapper on the second line, then a blank line, then the text.";
+    return;
+  }
+
+  let result = body;
+
+  if (opening && result.startsWith(opening)) {
+    result = result.slice(opening.length);
+  }
+
+  if (closing && result.endsWith(closing)) {
+    result = result.slice(0, result.length - closing.length);
+  }
+
+  output.value = result;
+  return;
+}
+if (slug === "csv-column-extractor") {
+  const raw = input.value.trim();
+
+  if (!raw) {
+    output.value = "Enter column name or 1-based column number on the first line, then a blank line, then the CSV data.";
+    return;
+  }
+
+  const parts = raw.split(/\r?\n\r?\n/);
+  const selector = (parts[0] || "").trim();
+  const body = parts.slice(1).join("\n\n").trim();
+
+  if (!selector || !body) {
+    output.value = "Enter column name or 1-based column number on the first line, then a blank line, then the CSV data.";
+    return;
+  }
+
+  const parseCsvLine = (line: string): string[] => {
+    const result: string[] = [];
+    let current = "";
+    let inQuotes = false;
+
+    for (let i = 0; i < line.length; i++) {
+      const char = line[i];
+      const next = line[i + 1];
+
+      if (char === '"' && inQuotes && next === '"') {
+        current += '"';
+        i++;
+      } else if (char === '"') {
+        inQuotes = !inQuotes;
+      } else if (char === "," && !inQuotes) {
+        result.push(current);
+        current = "";
+      } else {
+        current += char;
+      }
+    }
+
+    result.push(current);
+    return result;
+  };
+
+  const lines = body.split(/\r?\n/).filter((line: string) => line.trim().length > 0);
+
+  if (lines.length < 2) {
+    output.value = "CSV must include a header row and at least one data row.";
+    return;
+  }
+
+  const headers = parseCsvLine(lines[0]).map((value: string) => value.trim());
+
+  let columnIndex = -1;
+
+  if (/^\d+$/.test(selector)) {
+    columnIndex = Number(selector) - 1;
+  } else {
+    columnIndex = headers.findIndex((header: string) => header === selector);
+  }
+
+  if (columnIndex < 0 || columnIndex >= headers.length) {
+    output.value = "Column not found.";
+    return;
+  }
+
+  const values = lines.slice(1).map((line: string) => {
+    const row = parseCsvLine(line);
+    return row[columnIndex] ?? "";
+  });
+
+  output.value = values.join("\n");
+  return;
+}
+
+if (slug === "tsv-to-csv") {
+  const text = input.value;
+
+  if (!text.trim()) {
+    output.value = "";
+    return;
+  }
+
+  const escapeCsv = (value: string): string => {
+    if (/[",\n]/.test(value)) {
+      return `"${value.replace(/"/g, '""')}"`;
+    }
+    return value;
+  };
+
+  const result = text
+    .split(/\r?\n/)
+    .map((line: string) => line.split("\t").map((cell: string) => escapeCsv(cell)).join(","))
+    .join("\n");
+
+  output.value = result;
+  return;
+}
+
+if (slug === "csv-to-tsv") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "";
+    return;
+  }
+
+  const parseCsvLine = (line: string): string[] => {
+    const result: string[] = [];
+    let current = "";
+    let inQuotes = false;
+
+    for (let i = 0; i < line.length; i++) {
+      const char = line[i];
+      const next = line[i + 1];
+
+      if (char === '"' && inQuotes && next === '"') {
+        current += '"';
+        i++;
+      } else if (char === '"') {
+        inQuotes = !inQuotes;
+      } else if (char === "," && !inQuotes) {
+        result.push(current);
+        current = "";
+      } else {
+        current += char;
+      }
+    }
+
+    result.push(current);
+    return result;
+  };
+
+  const result = text
+    .split(/\r?\n/)
+    .map((line: string) => parseCsvLine(line).join("\t"))
+    .join("\n");
+
+  output.value = result;
+  return;
+}
+if (slug === "gpa-calculator") {
+  const lines = input.value
+    .split(/\r?\n/)
+    .map((line: string) => line.trim())
+    .filter((line: string) => line.length > 0);
+
+  if (!lines.length) {
+    output.value = "Enter one course per line as: grade-points credits\nExample:\n4 3\n3.7 4\n3.3 2";
+    return;
+  }
+
+  let totalQualityPoints = 0;
+  let totalCredits = 0;
+
+  for (const line of lines) {
+    const parts = line.match(/-?\d+(?:[.,]\d+)?/g)?.map((v: string) => Number(v.replace(",", "."))) || [];
+    const gradePoints = parts[0];
+    const credits = parts[1];
+
+    if (!Number.isFinite(gradePoints) || !Number.isFinite(credits) || credits <= 0) {
+      output.value = "Each line must contain grade points and credits.\nExample:\n4 3\n3.7 4";
+      return;
+    }
+
+    totalQualityPoints += gradePoints * credits;
+    totalCredits += credits;
+  }
+
+  const gpa = totalQualityPoints / totalCredits;
+
+  output.value =
+    `Courses: ${lines.length}\n` +
+    `Total credits: ${totalCredits.toFixed(2)}\n` +
+    `GPA: ${gpa.toFixed(2)}`;
+  return;
+}
+
+if (slug === "grade-calculator") {
+  const lines = input.value
+    .split(/\r?\n/)
+    .map((line: string) => line.trim())
+    .filter((line: string) => line.length > 0);
+
+  if (!lines.length) {
+    output.value = "Enter one item per line as: score weight\nExample:\n90 20\n80 30\n85 50";
+    return;
+  }
+
+  let weightedTotal = 0;
+  let totalWeight = 0;
+
+  for (const line of lines) {
+    const parts = line.match(/-?\d+(?:[.,]\d+)?/g)?.map((v: string) => Number(v.replace(",", "."))) || [];
+    const score = parts[0];
+    const weight = parts[1];
+
+    if (!Number.isFinite(score) || !Number.isFinite(weight) || weight < 0) {
+      output.value = "Each line must contain score and weight.\nExample:\n90 20\n80 30";
+      return;
+    }
+
+    weightedTotal += score * (weight / 100);
+    totalWeight += weight;
+  }
+
+  if (Math.abs(totalWeight - 100) > 0.01) {
+    output.value = `Weights must total 100. Current total: ${totalWeight.toFixed(2)}`;
+    return;
+  }
+
+  const finalGrade = weightedTotal;
+
+  let letter = "F";
+  if (finalGrade >= 90) letter = "A";
+  else if (finalGrade >= 80) letter = "B";
+  else if (finalGrade >= 70) letter = "C";
+  else if (finalGrade >= 60) letter = "D";
+
+  output.value =
+    `Final grade: ${finalGrade.toFixed(2)}%\n` +
+    `Letter grade: ${letter}`;
+  return;
+}
+
+if (slug === "margin-calculator") {
+  const numbers = input.value.match(/-?\d+(?:[.,]\d+)?/g)?.map((v: string) => Number(v.replace(",", "."))) || [];
+  const revenue = numbers[0];
+  const cost = numbers[1];
+
+  if (!Number.isFinite(revenue) || !Number.isFinite(cost) || revenue <= 0) {
+    output.value = "Enter revenue on the first line and cost on the second line.\nExample:\n1000\n700";
+    return;
+  }
+
+  const profit = revenue - cost;
+  const margin = (profit / revenue) * 100;
+
+  output.value =
+    `Revenue: ${revenue.toFixed(2)}\n` +
+    `Cost: ${cost.toFixed(2)}\n` +
+    `Profit: ${profit.toFixed(2)}\n` +
+    `Margin: ${margin.toFixed(2)}%`;
+  return;
+}
+
+if (slug === "markup-calculator") {
+  const numbers = input.value.match(/-?\d+(?:[.,]\d+)?/g)?.map((v: string) => Number(v.replace(",", "."))) || [];
+  const cost = numbers[0];
+  const sellingPrice = numbers[1];
+
+  if (!Number.isFinite(cost) || !Number.isFinite(sellingPrice) || cost <= 0) {
+    output.value = "Enter cost on the first line and selling price on the second line.\nExample:\n50\n75";
+    return;
+  }
+
+  const profit = sellingPrice - cost;
+  const markup = (profit / cost) * 100;
+
+  output.value =
+    `Cost: ${cost.toFixed(2)}\n` +
+    `Selling price: ${sellingPrice.toFixed(2)}\n` +
+    `Profit: ${profit.toFixed(2)}\n` +
+    `Markup: ${markup.toFixed(2)}%`;
+  return;
+}
+
+if (slug === "profit-calculator") {
+  const numbers = input.value.match(/-?\d+(?:[.,]\d+)?/g)?.map((v: string) => Number(v.replace(",", "."))) || [];
+  const revenue = numbers[0];
+  const cost = numbers[1];
+
+  if (!Number.isFinite(revenue) || !Number.isFinite(cost)) {
+    output.value = "Enter revenue on the first line and cost on the second line.\nExample:\n1000\n650";
+    return;
+  }
+
+  const profit = revenue - cost;
+
+  output.value =
+    `Revenue: ${revenue.toFixed(2)}\n` +
+    `Cost: ${cost.toFixed(2)}\n` +
+    `Profit: ${profit.toFixed(2)}`;
+  return;
+}
+if (slug === "commission-calculator") {
+  const numbers = input.value.match(/-?\d+(?:[.,]\d+)?/g)?.map((v: string) => Number(v.replace(",", "."))) || [];
+  const sales = numbers[0];
+  const rate = numbers[1];
+
+  if (!Number.isFinite(sales) || !Number.isFinite(rate) || sales < 0) {
+    output.value = "Enter total sales on the first line and commission rate on the second line.\nExample:\n5000\n10";
+    return;
+  }
+
+  const commissionAmount = sales * (rate / 100);
+  const afterCommission = sales - commissionAmount;
+
+  output.value =
+    `Sales: ${sales.toFixed(2)}\n` +
+    `Commission rate: ${rate.toFixed(2)}%\n` +
+    `Commission amount: ${commissionAmount.toFixed(2)}\n` +
+    `Amount after commission: ${afterCommission.toFixed(2)}`;
+  return;
+}
+
+if (slug === "sales-tax-calculator") {
+  const numbers = input.value.match(/-?\d+(?:[.,]\d+)?/g)?.map((v: string) => Number(v.replace(",", "."))) || [];
+  const basePrice = numbers[0];
+  const taxRate = numbers[1];
+
+  if (!Number.isFinite(basePrice) || !Number.isFinite(taxRate) || basePrice < 0) {
+    output.value = "Enter base price on the first line and tax rate on the second line.\nExample:\n100\n17";
+    return;
+  }
+
+  const taxAmount = basePrice * (taxRate / 100);
+  const totalPrice = basePrice + taxAmount;
+
+  output.value =
+    `Base price: ${basePrice.toFixed(2)}\n` +
+    `Tax rate: ${taxRate.toFixed(2)}%\n` +
+    `Tax amount: ${taxAmount.toFixed(2)}\n` +
+    `Total price: ${totalPrice.toFixed(2)}`;
+  return;
+}
+
+if (slug === "tip-calculator") {
+  const numbers = input.value.match(/-?\d+(?:[.,]\d+)?/g)?.map((v: string) => Number(v.replace(",", "."))) || [];
+  const billAmount = numbers[0];
+  const tipRate = numbers[1];
+
+  if (!Number.isFinite(billAmount) || !Number.isFinite(tipRate) || billAmount < 0) {
+    output.value = "Enter bill amount on the first line and tip rate on the second line.\nExample:\n200\n12";
+    return;
+  }
+
+  const tipAmount = billAmount * (tipRate / 100);
+  const totalWithTip = billAmount + tipAmount;
+
+  output.value =
+    `Bill amount: ${billAmount.toFixed(2)}\n` +
+    `Tip rate: ${tipRate.toFixed(2)}%\n` +
+    `Tip amount: ${tipAmount.toFixed(2)}\n` +
+    `Total with tip: ${totalWithTip.toFixed(2)}`;
+  return;
+}
+
+if (slug === "break-even-calculator") {
+  const numbers = input.value.match(/-?\d+(?:[.,]\d+)?/g)?.map((v: string) => Number(v.replace(",", "."))) || [];
+  const fixedCost = numbers[0];
+  const sellingPrice = numbers[1];
+  const variableCost = numbers[2];
+
+  if (
+    !Number.isFinite(fixedCost) ||
+    !Number.isFinite(sellingPrice) ||
+    !Number.isFinite(variableCost) ||
+    fixedCost < 0
+  ) {
+    output.value = "Enter fixed cost, selling price per unit, and variable cost per unit.\nExample:\n1000\n50\n30";
+    return;
+  }
+
+  const contributionMargin = sellingPrice - variableCost;
+
+  if (contributionMargin <= 0) {
+    output.value = "Selling price must be greater than variable cost.";
+    return;
+  }
+
+  const breakEvenUnits = fixedCost / contributionMargin;
+
+  output.value =
+    `Fixed cost: ${fixedCost.toFixed(2)}\n` +
+    `Selling price per unit: ${sellingPrice.toFixed(2)}\n` +
+    `Variable cost per unit: ${variableCost.toFixed(2)}\n` +
+    `Contribution margin per unit: ${contributionMargin.toFixed(2)}\n` +
+    `Break-even units: ${breakEvenUnits.toFixed(2)}`;
+  return;
+}
+
+if (slug === "inflation-calculator") {
+  const numbers = input.value.match(/-?\d+(?:[.,]\d+)?/g)?.map((v: string) => Number(v.replace(",", "."))) || [];
+  const currentAmount = numbers[0];
+  const inflationRate = numbers[1];
+  const years = numbers[2];
+
+  if (
+    !Number.isFinite(currentAmount) ||
+    !Number.isFinite(inflationRate) ||
+    !Number.isFinite(years) ||
+    currentAmount < 0 ||
+    years < 0
+  ) {
+    output.value = "Enter current amount, annual inflation rate, and years.\nExample:\n1000\n3\n5";
+    return;
+  }
+
+  const futureValue = currentAmount * Math.pow(1 + inflationRate / 100, years);
+
+  output.value =
+    `Current amount: ${currentAmount.toFixed(2)}\n` +
+    `Annual inflation rate: ${inflationRate.toFixed(2)}%\n` +
+    `Years: ${years.toFixed(2)}\n` +
+    `Future value: ${futureValue.toFixed(2)}`;
+  return;
+}
+if (slug === "currency-percentage-calculator") {
+  const numbers = input.value.match(/-?\d+(?:[.,]\d+)?/g)?.map((v: string) => Number(v.replace(",", "."))) || [];
+  const amount = numbers[0];
+  const rate = numbers[1];
+
+  if (!Number.isFinite(amount) || !Number.isFinite(rate) || amount < 0) {
+    output.value = "Enter amount on the first line and percentage rate on the second line.\nExample:\n250\n12";
+    return;
+  }
+
+  const percentageAmount = amount * (rate / 100);
+  const plusAmount = amount + percentageAmount;
+  const minusAmount = amount - percentageAmount;
+
+  output.value =
+    `Amount: ${amount.toFixed(2)}\n` +
+    `Rate: ${rate.toFixed(2)}%\n` +
+    `Percentage amount: ${percentageAmount.toFixed(2)}\n` +
+    `Amount plus percentage: ${plusAmount.toFixed(2)}\n` +
+    `Amount minus percentage: ${minusAmount.toFixed(2)}`;
+  return;
+}
+
+if (slug === "cagr-calculator") {
+  const numbers = input.value.match(/-?\d+(?:[.,]\d+)?/g)?.map((v: string) => Number(v.replace(",", "."))) || [];
+  const startingValue = numbers[0];
+  const endingValue = numbers[1];
+  const years = numbers[2];
+
+  if (
+    !Number.isFinite(startingValue) ||
+    !Number.isFinite(endingValue) ||
+    !Number.isFinite(years) ||
+    startingValue <= 0 ||
+    endingValue <= 0 ||
+    years <= 0
+  ) {
+    output.value = "Enter starting value, ending value, and years.\nExample:\n1000\n1500\n3";
+    return;
+  }
+
+  const cagr = (Math.pow(endingValue / startingValue, 1 / years) - 1) * 100;
+
+  output.value =
+    `Starting value: ${startingValue.toFixed(2)}\n` +
+    `Ending value: ${endingValue.toFixed(2)}\n` +
+    `Years: ${years.toFixed(2)}\n` +
+    `CAGR: ${cagr.toFixed(2)}%`;
+  return;
+}
+
+if (slug === "savings-calculator") {
+  const numbers = input.value.match(/-?\d+(?:[.,]\d+)?/g)?.map((v: string) => Number(v.replace(",", "."))) || [];
+  const startingBalance = numbers[0];
+  const monthlyContribution = numbers[1];
+  const annualRate = numbers[2];
+  const years = numbers[3];
+
+  if (
+    !Number.isFinite(startingBalance) ||
+    !Number.isFinite(monthlyContribution) ||
+    !Number.isFinite(annualRate) ||
+    !Number.isFinite(years) ||
+    startingBalance < 0 ||
+    monthlyContribution < 0 ||
+    years < 0
+  ) {
+    output.value = "Enter starting balance, monthly contribution, annual rate, and years.\nExample:\n1000\n200\n5\n10";
+    return;
+  }
+
+  const monthlyRate = annualRate / 100 / 12;
+  const months = Math.round(years * 12);
+
+  let balance = startingBalance;
+
+  for (let i = 0; i < months; i++) {
+    balance = balance * (1 + monthlyRate) + monthlyContribution;
+  }
+
+  output.value =
+    `Starting balance: ${startingBalance.toFixed(2)}\n` +
+    `Monthly contribution: ${monthlyContribution.toFixed(2)}\n` +
+    `Annual rate: ${annualRate.toFixed(2)}%\n` +
+    `Years: ${years.toFixed(2)}\n` +
+    `Future savings: ${balance.toFixed(2)}`;
+  return;
+}
+
+if (slug === "mortgage-calculator") {
+  const numbers = input.value.match(/-?\d+(?:[.,]\d+)?/g)?.map((v: string) => Number(v.replace(",", "."))) || [];
+  const principal = numbers[0];
+  const annualRate = numbers[1];
+  const years = numbers[2];
+
+  if (
+    !Number.isFinite(principal) ||
+    !Number.isFinite(annualRate) ||
+    !Number.isFinite(years) ||
+    principal <= 0 ||
+    years <= 0
+  ) {
+    output.value = "Enter loan amount, annual interest rate, and term in years.\nExample:\n300000\n5\n30";
+    return;
+  }
+
+  const months = years * 12;
+  let monthlyPayment = 0;
+
+  if (annualRate === 0) {
+    monthlyPayment = principal / months;
+  } else {
+    const monthlyRate = annualRate / 100 / 12;
+    monthlyPayment =
+      (principal * monthlyRate * Math.pow(1 + monthlyRate, months)) /
+      (Math.pow(1 + monthlyRate, months) - 1);
+  }
+
+  const totalPayment = monthlyPayment * months;
+  const totalInterest = totalPayment - principal;
+
+  output.value =
+    `Loan amount: ${principal.toFixed(2)}\n` +
+    `Annual rate: ${annualRate.toFixed(2)}%\n` +
+    `Term: ${years.toFixed(2)} years\n` +
+    `Monthly payment: ${monthlyPayment.toFixed(2)}\n` +
+    `Total payment: ${totalPayment.toFixed(2)}\n` +
+    `Total interest: ${totalInterest.toFixed(2)}`;
+  return;
+}
+
+if (slug === "emi-calculator") {
+  const numbers = input.value.match(/-?\d+(?:[.,]\d+)?/g)?.map((v: string) => Number(v.replace(",", "."))) || [];
+  const principal = numbers[0];
+  const annualRate = numbers[1];
+  const months = numbers[2];
+
+  if (
+    !Number.isFinite(principal) ||
+    !Number.isFinite(annualRate) ||
+    !Number.isFinite(months) ||
+    principal <= 0 ||
+    months <= 0
+  ) {
+    output.value = "Enter loan amount, annual interest rate, and term in months.\nExample:\n100000\n10\n24";
+    return;
+  }
+
+  let emi = 0;
+
+  if (annualRate === 0) {
+    emi = principal / months;
+  } else {
+    const monthlyRate = annualRate / 100 / 12;
+    emi =
+      (principal * monthlyRate * Math.pow(1 + monthlyRate, months)) /
+      (Math.pow(1 + monthlyRate, months) - 1);
+  }
+
+  const totalPayment = emi * months;
+  const totalInterest = totalPayment - principal;
+
+  output.value =
+    `Loan amount: ${principal.toFixed(2)}\n` +
+    `Annual rate: ${annualRate.toFixed(2)}%\n` +
+    `Term: ${months} months\n` +
+    `EMI: ${emi.toFixed(2)}\n` +
+    `Total payment: ${totalPayment.toFixed(2)}\n` +
+    `Total interest: ${totalInterest.toFixed(2)}`;
+  return;
+}
+if (slug === "apr-calculator") {
+  const numbers = input.value.match(/-?\d+(?:[.,]\d+)?/g)?.map((v: string) => Number(v.replace(",", "."))) || [];
+  const loanAmount = numbers[0];
+  const annualRate = numbers[1];
+  const fees = numbers[2];
+  const years = numbers[3];
+
+  if (
+    !Number.isFinite(loanAmount) ||
+    !Number.isFinite(annualRate) ||
+    !Number.isFinite(fees) ||
+    !Number.isFinite(years) ||
+    loanAmount <= 0 ||
+    years <= 0 ||
+    fees < 0
+  ) {
+    output.value = "Enter loan amount, annual interest rate, upfront fees, and term in years.\nExample:\n100000\n8\n2000\n5";
+    return;
+  }
+
+  const estimatedApr = annualRate + ((fees / loanAmount) / years) * 100;
+
+  output.value =
+    `Loan amount: ${loanAmount.toFixed(2)}\n` +
+    `Annual interest rate: ${annualRate.toFixed(2)}%\n` +
+    `Fees: ${fees.toFixed(2)}\n` +
+    `Term: ${years.toFixed(2)} years\n` +
+    `Estimated APR: ${estimatedApr.toFixed(2)}%`;
+  return;
+}
+
+if (slug === "hourly-to-salary-calculator") {
+  const numbers = input.value.match(/-?\d+(?:[.,]\d+)?/g)?.map((v: string) => Number(v.replace(",", "."))) || [];
+  const hourlyRate = numbers[0];
+  const hoursPerWeek = numbers[1];
+  const weeksPerYear = numbers[2];
+
+  if (
+    !Number.isFinite(hourlyRate) ||
+    !Number.isFinite(hoursPerWeek) ||
+    !Number.isFinite(weeksPerYear) ||
+    hourlyRate < 0 ||
+    hoursPerWeek <= 0 ||
+    weeksPerYear <= 0
+  ) {
+    output.value = "Enter hourly rate, hours per week, and weeks worked per year.\nExample:\n25\n40\n52";
+    return;
+  }
+
+  const weeklyPay = hourlyRate * hoursPerWeek;
+  const annualSalary = weeklyPay * weeksPerYear;
+  const monthlyPay = annualSalary / 12;
+
+  output.value =
+    `Hourly rate: ${hourlyRate.toFixed(2)}\n` +
+    `Hours per week: ${hoursPerWeek.toFixed(2)}\n` +
+    `Weeks per year: ${weeksPerYear.toFixed(2)}\n` +
+    `Weekly pay: ${weeklyPay.toFixed(2)}\n` +
+    `Monthly pay: ${monthlyPay.toFixed(2)}\n` +
+    `Annual salary: ${annualSalary.toFixed(2)}`;
+  return;
+}
+
+if (slug === "salary-to-hourly-calculator") {
+  const numbers = input.value.match(/-?\d+(?:[.,]\d+)?/g)?.map((v: string) => Number(v.replace(",", "."))) || [];
+  const annualSalary = numbers[0];
+  const hoursPerWeek = numbers[1];
+  const weeksPerYear = numbers[2];
+
+  if (
+    !Number.isFinite(annualSalary) ||
+    !Number.isFinite(hoursPerWeek) ||
+    !Number.isFinite(weeksPerYear) ||
+    annualSalary < 0 ||
+    hoursPerWeek <= 0 ||
+    weeksPerYear <= 0
+  ) {
+    output.value = "Enter annual salary, hours per week, and weeks worked per year.\nExample:\n60000\n40\n52";
+    return;
+  }
+
+  const weeklyPay = annualSalary / weeksPerYear;
+  const monthlyPay = annualSalary / 12;
+  const hourlyRate = annualSalary / (hoursPerWeek * weeksPerYear);
+
+  output.value =
+    `Annual salary: ${annualSalary.toFixed(2)}\n` +
+    `Hours per week: ${hoursPerWeek.toFixed(2)}\n` +
+    `Weeks per year: ${weeksPerYear.toFixed(2)}\n` +
+    `Weekly pay: ${weeklyPay.toFixed(2)}\n` +
+    `Monthly pay: ${monthlyPay.toFixed(2)}\n` +
+    `Hourly rate: ${hourlyRate.toFixed(2)}`;
+  return;
+}
 
       output.value = "This tool logic is not connected yet.";
     });
