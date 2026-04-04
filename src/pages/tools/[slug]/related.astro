@@ -1,0 +1,231 @@
+---
+import ToolLayout from "../../../layouts/ToolLayout.astro";
+import ToolClusterNav from "../../../components/ToolClusterNav.astro";
+import {
+  allTools,
+  getRelatedTools,
+  buildToolPageDescription,
+  buildToolPageHeading,
+  buildToolPageLead,
+  buildToolPageTitle,
+  formatCategoryLabel,
+  type ToolItem
+} from "../../../lib/tools";
+
+export async function getStaticPaths() {
+  return allTools.map((tool) => ({
+    params: { slug: tool.slug },
+    props: { tool }
+  }));
+}
+
+const { tool } = Astro.props as { tool: ToolItem };
+
+const pageTitle = buildToolPageTitle(tool, "related");
+const pageDescription = buildToolPageDescription(tool, "related");
+const pageHeading = buildToolPageHeading(tool, "related");
+const pageLead = buildToolPageLead(tool, "related");
+
+const relatedTools = getRelatedTools(tool);
+const mainToolUrl = `/tools/${tool.slug}/`;
+
+function explainRelationship(currentTool: ToolItem, relatedTool: ToolItem): string {
+  if (currentTool.category === relatedTool.category) {
+    return `Both tools belong to ${formatCategoryLabel(currentTool.category).toLowerCase()} and usually solve closely related tasks.`;
+  }
+
+  if (currentTool.slug.includes("encode") && relatedTool.slug.includes("decode")) {
+    return `This is useful when you need the reverse action after working with ${currentTool.name}.`;
+  }
+
+  if (currentTool.slug.includes("decode") && relatedTool.slug.includes("encode")) {
+    return `This is useful when you need the forward action before or after using ${currentTool.name}.`;
+  }
+
+  if (currentTool.slug.includes("to-") || relatedTool.slug.includes("to-")) {
+    return `These tools are often used together when people need adjacent conversions or reverse conversions.`;
+  }
+
+  return `People often open this after ${currentTool.name} when they need a supporting step, a validation step, or a nearby alternative.`;
+}
+---
+
+<ToolLayout title={pageTitle} description={pageDescription}>
+  <section class="card tool-hero">
+    <p class="category-pill">{formatCategoryLabel(tool.category)}</p>
+    <h1>{pageHeading}</h1>
+    <p class="lead">{pageLead}</p>
+  </section>
+
+  <section class="card">
+    <ToolClusterNav slug={tool.slug} current="related" />
+
+    <h2>How related tools help</h2>
+    <p>{tool.description}</p>
+    <p>
+      Related pages are useful when {tool.name} is only one step in a bigger workflow.
+      Sometimes you need a reverse action, a cleanup step, a validator, a supporting converter, or a nearby tool in the same category.
+    </p>
+  </section>
+
+  <section class="card">
+    <h2>Tools related to {tool.name}</h2>
+
+    {relatedTools.length > 0 ? (
+      <div class="related-grid">
+        {relatedTools.map((item) => (
+          <article class="related-card">
+            <h3><a href={`/tools/${item.slug}/`}>{item.name}</a></h3>
+            <p>{item.intro}</p>
+            <p class="relationship-note">{explainRelationship(tool, item)}</p>
+            <p class="related-links">
+              <a href={`/tools/${item.slug}/`}>Tool</a>
+              <span>·</span>
+              <a href={`/tools/${item.slug}/guide/`}>Guide</a>
+              <span>·</span>
+              <a href={`/tools/${item.slug}/faq/`}>FAQ</a>
+            </p>
+          </article>
+        ))}
+      </div>
+    ) : (
+      <p>No related tools were added for this page yet.</p>
+    )}
+  </section>
+
+  <section class="card">
+    <h2>When to stay on this page vs switch tools</h2>
+    <ul>
+      <li>Stay with {tool.name} when this exact action matches your current task.</li>
+      <li>Open a related tool when you need a reverse operation, a supporting check, or a follow-up step.</li>
+      <li>Use the short descriptions and notes above to decide which next page fits your workflow better.</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>Explore the cluster</h2>
+    <ul>
+      <li><a href={mainToolUrl}>Use the main {tool.name} tool</a></li>
+      <li><a href={`/tools/${tool.slug}/guide/`}>Read the guide</a></li>
+      <li><a href={`/tools/${tool.slug}/faq/`}>Read the FAQ</a></li>
+      <li><a href={`/tools/${tool.slug}/examples/`}>View examples</a></li>
+    </ul>
+  </section>
+
+  <section class="card callout-card">
+    <h2>Go back to the main tool</h2>
+    <p>
+      Return to the main {tool.name} page to run the tool directly.
+    </p>
+    <p class="cta-row">
+      <a href={mainToolUrl} class="primary-link">Open {tool.name}</a>
+    </p>
+  </section>
+</ToolLayout>
+
+<style>
+  .tool-hero h1 {
+    margin-bottom: 12px;
+  }
+
+  .category-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: rgba(110, 168, 254, 0.14);
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  .lead {
+    color: var(--muted);
+    font-size: 18px;
+    max-width: 760px;
+    margin-bottom: 0;
+  }
+
+  .related-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+  }
+
+  .related-card {
+    padding: 18px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: #0d1528;
+  }
+
+  .related-card h3 {
+    margin-bottom: 10px;
+  }
+
+  .related-card h3 a {
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .related-card h3 a:hover {
+    color: var(--accent);
+  }
+
+  .related-card p {
+    margin-bottom: 12px;
+  }
+
+  .relationship-note {
+    color: var(--muted);
+  }
+
+  .related-links {
+    margin-bottom: 0;
+    color: var(--muted);
+  }
+
+  .related-links a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 700;
+  }
+
+  .callout-card {
+    background: linear-gradient(180deg, rgba(110, 168, 254, 0.08), rgba(13, 21, 40, 0.9));
+  }
+
+  .cta-row {
+    margin-top: 16px;
+    margin-bottom: 0;
+  }
+
+  .primary-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    background: var(--accent);
+    color: #081120;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 700;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+  }
+
+  .primary-link:hover {
+    transform: translateY(-1px);
+    opacity: 0.95;
+  }
+
+  @media (max-width: 900px) {
+    .lead {
+      font-size: 16px;
+    }
+  }
+</style>

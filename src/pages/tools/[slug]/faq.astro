@@ -1,0 +1,224 @@
+---
+import ToolLayout from "../../../layouts/ToolLayout.astro";
+import ToolClusterNav from "../../../components/ToolClusterNav.astro";
+import {
+  allTools,
+  getSafeCommonErrors,
+  getSafeFaq,
+  buildToolPageDescription,
+  buildToolPageHeading,
+  buildToolPageLead,
+  buildToolPageTitle,
+  formatCategoryLabel,
+  type ToolItem
+} from "../../../lib/tools";
+
+export async function getStaticPaths() {
+  return allTools.map((tool) => ({
+    params: { slug: tool.slug },
+    props: { tool }
+  }));
+}
+
+const { tool } = Astro.props as { tool: ToolItem };
+
+const pageTitle = buildToolPageTitle(tool, "faq");
+const pageDescription = buildToolPageDescription(tool, "faq");
+const pageHeading = buildToolPageHeading(tool, "faq");
+const pageLead = buildToolPageLead(tool, "faq");
+
+const faqItems = getSafeFaq(tool);
+const commonErrors = getSafeCommonErrors(tool);
+
+const mainToolUrl = `/tools/${tool.slug}/`;
+
+const isCalculator = tool.category === "calculators";
+const isConverter = tool.category === "converters";
+const isTextTool = tool.category === "text-tools";
+const isNetworkTool = tool.category === "network-tools";
+const isDeveloperTool = tool.category === "developer-tools";
+
+let introText =
+  `${tool.name} is designed for quick browser-based work when you need a result without opening another app or writing a script.`;
+
+if (isCalculator) {
+  introText =
+    `${tool.name} helps you work through common numeric scenarios faster, especially when you need a quick answer without opening a spreadsheet.`;
+} else if (isConverter) {
+  introText =
+    `${tool.name} is useful when you need to switch a value from one format or unit into another and verify the result quickly.`;
+} else if (isTextTool) {
+  introText =
+    `${tool.name} helps clean, transform, or inspect text directly in the browser, which is useful for writing, editing, SEO, and content workflows.`;
+} else if (isNetworkTool) {
+  introText =
+    `${tool.name} is useful for quick network checks, validation, and troubleshooting when you want a simple browser-based result.`;
+} else if (isDeveloperTool) {
+  introText =
+    `${tool.name} is built for development, debugging, formatting, and quick technical checks directly in the browser.`;
+}
+
+const extraQuestions = [
+  {
+    q: `When should I use ${tool.name}?`,
+    a: introText
+  },
+  {
+    q: `What should I check if ${tool.name.toLowerCase()} gives an unexpected result?`,
+    a: "Start by checking the input format, removing accidental spaces or unsupported characters, and comparing your input against the example pattern on the page."
+  }
+];
+---
+
+<ToolLayout title={pageTitle} description={pageDescription}>
+  <section class="card tool-hero">
+    <p class="category-pill">{formatCategoryLabel(tool.category)}</p>
+    <h1>{pageHeading}</h1>
+    <p class="lead">{pageLead}</p>
+  </section>
+
+  <section class="card">
+    <ToolClusterNav slug={tool.slug} current="faq" />
+
+    <h2>About this FAQ</h2>
+    <p>{tool.description}</p>
+    <p>{introText}</p>
+  </section>
+
+  <section class="card">
+    <h2>Frequently asked questions</h2>
+
+    {faqItems.map((item) => (
+      <div class="faq-item">
+        <h3>{item.q}</h3>
+        <p>{item.a}</p>
+      </div>
+    ))}
+
+    {extraQuestions.map((item) => (
+      <div class="faq-item">
+        <h3>{item.q}</h3>
+        <p>{item.a}</p>
+      </div>
+    ))}
+  </section>
+
+  <section class="card">
+    <h2>Common issues people run into</h2>
+    <div class="errors-list">
+      {commonErrors.map((item) => (
+        <div class="error-item">
+          <h3>{item.issue}</h3>
+          <p><strong>Fix:</strong> {item.fix}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Need more than answers?</h2>
+    <p>
+      If you want to see realistic input and output patterns, open the examples page.
+      If you want step-by-step usage guidance, open the guide page.
+    </p>
+    <ul>
+      <li><a href={`/tools/${tool.slug}/guide/`}>Open the {tool.name} guide</a></li>
+      <li><a href={`/tools/${tool.slug}/examples/`}>Open {tool.name} examples</a></li>
+      <li><a href={`/tools/${tool.slug}/related/`}>See related tools</a></li>
+    </ul>
+  </section>
+
+  <section class="card callout-card">
+    <h2>Try the tool</h2>
+    <p>
+      Open the main {tool.name} page to test your own input and generate a live result.
+    </p>
+    <p class="cta-row">
+      <a href={mainToolUrl} class="primary-link">Open {tool.name}</a>
+    </p>
+  </section>
+</ToolLayout>
+
+<style>
+  .tool-hero h1 {
+    margin-bottom: 12px;
+  }
+
+  .category-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: rgba(110, 168, 254, 0.14);
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  .lead {
+    color: var(--muted);
+    font-size: 18px;
+    max-width: 760px;
+    margin-bottom: 0;
+  }
+
+  .faq-item + .faq-item {
+    margin-top: 22px;
+    padding-top: 22px;
+    border-top: 1px solid var(--border);
+  }
+
+  .errors-list {
+    display: grid;
+    gap: 14px;
+  }
+
+  .error-item {
+    padding: 16px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: #0d1528;
+  }
+
+  .error-item h3 {
+    margin-bottom: 10px;
+  }
+
+  .callout-card {
+    background: linear-gradient(180deg, rgba(110, 168, 254, 0.08), rgba(13, 21, 40, 0.9));
+  }
+
+  .cta-row {
+    margin-top: 16px;
+    margin-bottom: 0;
+  }
+
+  .primary-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    background: var(--accent);
+    color: #081120;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 700;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+  }
+
+  .primary-link:hover {
+    transform: translateY(-1px);
+    opacity: 0.95;
+  }
+
+  @media (max-width: 900px) {
+    .lead {
+      font-size: 16px;
+    }
+  }
+</style>

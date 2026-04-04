@@ -1,0 +1,237 @@
+---
+import ToolLayout from "../../../layouts/ToolLayout.astro";
+import ToolClusterNav from "../../../components/ToolClusterNav.astro";
+import {
+  allTools,
+  getSafeCommonErrors,
+  getSafeExamples,
+  getSafeHowToUse,
+  buildToolPageDescription,
+  buildToolPageHeading,
+  buildToolPageLead,
+  buildToolPageTitle,
+  formatCategoryLabel,
+  type ToolItem
+} from "../../../lib/tools";
+
+export async function getStaticPaths() {
+  return allTools.map((tool) => ({
+    params: { slug: tool.slug },
+    props: { tool }
+  }));
+}
+
+const { tool } = Astro.props as { tool: ToolItem };
+
+const pageTitle = buildToolPageTitle(tool, "examples");
+const pageDescription = buildToolPageDescription(tool, "examples");
+const pageHeading = buildToolPageHeading(tool, "examples");
+const pageLead = buildToolPageLead(tool, "examples");
+
+const examples = getSafeExamples(tool);
+const howToUse = getSafeHowToUse(tool);
+const commonErrors = getSafeCommonErrors(tool);
+
+const mainToolUrl = `/tools/${tool.slug}/`;
+
+const categoryLabel = formatCategoryLabel(tool.category).toLowerCase();
+
+const tips = [
+  `Compare your own input with the ${tool.name} examples below before running the tool.`,
+  "Keep the input format as close as possible to the example pattern when you test a new case.",
+  "If your output looks wrong, check spacing, separators, symbols, or the exact value type first."
+];
+---
+
+<ToolLayout title={pageTitle} description={pageDescription}>
+  <section class="card tool-hero">
+    <p class="category-pill">{formatCategoryLabel(tool.category)}</p>
+    <h1>{pageHeading}</h1>
+    <p class="lead">{pageLead}</p>
+  </section>
+
+  <section class="card">
+    <ToolClusterNav slug={tool.slug} current="examples" />
+
+    <h2>Why examples matter for {tool.name}</h2>
+    <p>{tool.description}</p>
+    <p>
+      Example pages are especially useful for {categoryLabel} because they show
+      what good input looks like, what kind of output to expect, and how the tool behaves in common scenarios.
+    </p>
+  </section>
+
+  <section class="card">
+    <h2>{tool.name} examples</h2>
+    <div class="examples-grid">
+      {examples.map((example, index) => (
+        <article class="example-card">
+          <h3>{example.title || `${tool.name} example ${index + 1}`}</h3>
+          <p><strong>Input</strong></p>
+          <pre>{example.input}</pre>
+          <p><strong>Output</strong></p>
+          <pre>{example.output}</pre>
+          {example.explanation && <p class="example-note">{example.explanation}</p>}
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>How to use these examples</h2>
+    <ol class="steps-list">
+      {howToUse.map((item) => (
+        <li>{item}</li>
+      ))}
+    </ol>
+    <ul class="tips-list">
+      {tips.map((tip) => (
+        <li>{tip}</li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>Common mistakes in sample input</h2>
+    <div class="errors-list">
+      {commonErrors.map((item) => (
+        <div class="error-item">
+          <h3>{item.issue}</h3>
+          <p><strong>Fix:</strong> {item.fix}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Next steps</h2>
+    <p>
+      After reviewing these examples, run the live tool with your own input.
+      If your task involves a follow-up step, the related page can help you move to the next tool in the workflow.
+    </p>
+    <ul>
+      <li><a href={mainToolUrl}>Open the main {tool.name} tool</a></li>
+      <li><a href={`/tools/${tool.slug}/faq/`}>Read the FAQ</a></li>
+      <li><a href={`/tools/${tool.slug}/related/`}>See related tools</a></li>
+    </ul>
+  </section>
+
+  <section class="card callout-card">
+    <h2>Run the main tool</h2>
+    <p>
+      Open the main {tool.name} page and test your own real input.
+    </p>
+    <p class="cta-row">
+      <a href={mainToolUrl} class="primary-link">Open {tool.name}</a>
+    </p>
+  </section>
+</ToolLayout>
+
+<style>
+  .tool-hero h1 {
+    margin-bottom: 12px;
+  }
+
+  .category-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: rgba(110, 168, 254, 0.14);
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  .lead {
+    color: var(--muted);
+    font-size: 18px;
+    max-width: 760px;
+    margin-bottom: 0;
+  }
+
+  .steps-list li + li,
+  .tips-list li + li {
+    margin-top: 10px;
+  }
+
+  .examples-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+  }
+
+  .example-card,
+  .error-item {
+    padding: 16px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: #0d1528;
+  }
+
+  .example-card h3,
+  .error-item h3 {
+    margin-bottom: 10px;
+  }
+
+  .example-card pre {
+    margin: 8px 0 14px;
+    padding: 12px;
+    border-radius: 12px;
+    background: #081120;
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  .example-note {
+    color: var(--muted);
+    margin-bottom: 0;
+  }
+
+  .errors-list {
+    display: grid;
+    gap: 14px;
+  }
+
+  .callout-card {
+    background: linear-gradient(180deg, rgba(110, 168, 254, 0.08), rgba(13, 21, 40, 0.9));
+  }
+
+  .cta-row {
+    margin-top: 16px;
+    margin-bottom: 0;
+  }
+
+  .primary-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    background: var(--accent);
+    color: #081120;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 700;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+  }
+
+  .primary-link:hover {
+    transform: translateY(-1px);
+    opacity: 0.95;
+  }
+
+  @media (max-width: 900px) {
+    .lead {
+      font-size: 16px;
+    }
+  }
+</style>

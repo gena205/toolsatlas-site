@@ -1,0 +1,97 @@
+---
+type Props = {
+  slug: string;
+  current?: "main" | "guide" | "faq" | "examples" | "related";
+};
+
+const { slug, current = "main" } = Astro.props as Props;
+
+const items = [
+  {
+    key: "main",
+    label: "Tool",
+    href: `/tools/${slug}/`
+  },
+  {
+    key: "guide",
+    label: "Guide",
+    href: `/tools/${slug}/guide/`
+  },
+  {
+    key: "faq",
+    label: "FAQ",
+    href: `/tools/${slug}/faq/`
+  },
+  {
+    key: "examples",
+    label: "Examples",
+    href: `/tools/${slug}/examples/`
+  },
+  {
+    key: "related",
+    label: "Related",
+    href: `/tools/${slug}/related/`
+  }
+];
+---
+
+<nav class="tool-cluster-nav" aria-label="Tool page navigation">
+  <ul class="tool-cluster-list">
+    {items.map((item) => (
+      <li>
+        <a
+          href={item.href}
+          class:list={[
+            "tool-cluster-link",
+            current === item.key && "is-active"
+          ]}
+          aria-current={current === item.key ? "page" : undefined}
+        >
+          {item.label}
+        </a>
+      </li>
+    ))}
+  </ul>
+</nav>
+
+<style>
+  .tool-cluster-nav {
+    margin: 0 0 24px;
+  }
+
+  .tool-cluster-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .tool-cluster-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 40px;
+    padding: 10px 14px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: #0d1528;
+    color: var(--text);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 700;
+    transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+  }
+
+  .tool-cluster-link:hover {
+    transform: translateY(-1px);
+    border-color: var(--accent);
+  }
+
+  .tool-cluster-link.is-active {
+    background: rgba(110, 168, 254, 0.14);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+</style>

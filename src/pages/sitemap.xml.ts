@@ -38,6 +38,10 @@ export async function GET() {
 
   for (const tool of allTools) {
     urls.push(buildUrl(`${base}/tools/${tool.slug}/`, today));
+    urls.push(buildUrl(`${base}/tools/${tool.slug}/guide/`, today));
+    urls.push(buildUrl(`${base}/tools/${tool.slug}/faq/`, today));
+    urls.push(buildUrl(`${base}/tools/${tool.slug}/examples/`, today));
+    urls.push(buildUrl(`${base}/tools/${tool.slug}/related/`, today));
   }
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>

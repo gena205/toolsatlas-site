@@ -1,6 +1,7 @@
 ---
 import ToolLayout from "../../layouts/ToolLayout.astro";
 import tools from "../../data/tools.json";
+import ToolClusterNav from "../../components/ToolClusterNav.astro";
 
 type ToolFaqItem = {
   q: string;
@@ -63,6 +64,7 @@ function formatCategoryLabel(category: string): string {
   </section>
 
   <section class="card tool-panel">
+    <ToolClusterNav slug={tool.slug} current="main" />
     <div class="tool-panel-header">
       <div>
         <h2>Tool</h2>
@@ -124,6 +126,31 @@ function formatCategoryLabel(category: string): string {
     <p>{tool.description}</p>
     <p>Use {tool.name.toLowerCase()} when you need a fast browser-based result without extra setup. It works well for quick checks, one-off tasks, and routine formatting or calculation work.</p>
   </section>
+
+  <section class="card">
+  <h2>Learn more</h2>
+  <div class="cluster-grid">
+    <a href={`/tools/${tool.slug}/guide/`} class="cluster-card">
+      <h3>{tool.name} Guide</h3>
+      <p>Read step-by-step usage guidance, best practices, and common mistakes.</p>
+    </a>
+
+    <a href={`/tools/${tool.slug}/faq/`} class="cluster-card">
+      <h3>{tool.name} FAQ</h3>
+      <p>See common questions and answers about input, output, and tool usage.</p>
+    </a>
+
+    <a href={`/tools/${tool.slug}/examples/`} class="cluster-card">
+      <h3>{tool.name} Examples</h3>
+      <p>Review practical input and output examples before running the tool.</p>
+    </a>
+
+    <a href={`/tools/${tool.slug}/related/`} class="cluster-card">
+      <h3>Related Tools</h3>
+      <p>Find similar and supporting tools for adjacent actions and follow-up tasks.</p>
+    </a>
+  </div>
+</section>
 
   {tool.whyUse && tool.whyUse.length > 0 && (
     <section class="card">
@@ -397,6 +424,36 @@ function formatCategoryLabel(category: string): string {
       min-height: 220px;
     }
   }
+  .cluster-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.cluster-card {
+  display: block;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: #0d1528;
+  text-decoration: none;
+  color: var(--text);
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.cluster-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+}
+
+.cluster-card h3 {
+  margin-bottom: 10px;
+}
+
+.cluster-card p {
+  margin-bottom: 0;
+  color: var(--muted);
+}
 </style>
 
 <script>
