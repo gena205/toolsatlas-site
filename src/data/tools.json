@@ -16230,6 +16230,165 @@
       }
     ]
   },
+{
+  "id": "base64-decode",
+  "name": "Base64 Decoder",
+  "slug": "base64-decode",
+  "category": "developer-tools",
+  "intro": "Decode Base64 instantly to recover readable text from API data, tokens, headers, and test payloads.",
+  "description": "Use this free Base64 Decoder to convert Base64-encoded text back into readable plain text instantly. It is useful when inspecting API payloads, debugging encoded headers, checking copied tokens, reading encoded JSON strings, and verifying transmitted text during development or testing. Paste a Base64 value to decode it quickly and confirm what the encoded data actually contains.",
+  "keywords": [
+    "base64 decode",
+    "base64 decoder",
+    "decode base64",
+    "base64 decode online",
+    "base64 to text",
+    "decode base64 string",
+    "base64 converter"
+  ],
+  "whyUse": [
+    "Turn encoded Base64 strings back into readable plain text quickly",
+    "Inspect encoded payloads from APIs, logs, scripts, and test data",
+    "Check what a copied Base64 value actually contains before using it",
+    "Verify round-trip encoding and decoding during debugging",
+    "Decode Base64 directly in the browser without writing code"
+  ],
+  "howToUse": [
+    "Paste the Base64 string into the input box",
+    "Click Run Tool to decode the value",
+    "Review the decoded text in the output area",
+    "If decoding fails, check for invalid characters, truncation, or the wrong Base64 variant",
+    "Copy the decoded result or compare it with the original expected text"
+  ],
+  "examples": [
+    {
+      "title": "Decode a simple word",
+      "input": "SGVsbG8=",
+      "output": "Hello",
+      "explanation": "A standard Base64 value decodes back into plain text."
+    },
+    {
+      "title": "Decode a sentence with spaces",
+      "input": "aGVsbG8gd29ybGQ=",
+      "output": "hello world",
+      "explanation": "Useful when checking encoded strings copied from scripts or tools."
+    },
+    {
+      "title": "Decode JSON text",
+      "input": "eyJuYW1lIjoiSm9obiIsInJvbGUiOiJhZG1pbiJ9",
+      "output": "{\"name\":\"John\",\"role\":\"admin\"}",
+      "explanation": "Helpful when a system stores or transfers JSON as Base64 text."
+    },
+    {
+      "title": "Decode credentials-like text",
+      "input": "dXNlcjpwYXNzd29yZDEyMw==",
+      "output": "user:password123",
+      "explanation": "Useful for understanding what was encoded before it was placed into a header or test value."
+    },
+    {
+      "title": "Decode a URL string stored as Base64",
+      "input": "aHR0cHM6Ly9leGFtcGxlLmNvbT9hPTEmYj0y",
+      "output": "https://example.com?a=1&b=2",
+      "explanation": "Helpful when debugging encoded links or stored URL strings."
+    },
+    {
+      "title": "Decode multiline text",
+      "input": "bGluZSBvbmUKbGluZSB0d28=",
+      "output": "line one\nline two",
+      "explanation": "Line breaks are preserved when the value is decoded."
+    },
+    {
+      "title": "Decode Unicode text",
+      "input": "0J/RgNC40LLQtdGC",
+      "output": "Привет",
+      "explanation": "Useful for verifying non-English or Unicode strings inside encoded payloads."
+    },
+    {
+      "title": "Invalid Base64 input",
+      "input": "SGVsbG8***",
+      "output": "Invalid Base64 input",
+      "explanation": "Decoding fails when the pasted value contains invalid characters or broken formatting."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Pasting a value that is not valid Base64",
+      "fix": "Check for invalid characters, broken padding, or copied text that is not actually Base64."
+    },
+    {
+      "issue": "Trying to decode Base64 URL with the standard decoder",
+      "fix": "Use the Base64 URL decoder if the value uses URL-safe characters like - and _."
+    },
+    {
+      "issue": "The string was truncated when copied",
+      "fix": "Copy the full encoded value, including any trailing padding characters if present."
+    },
+    {
+      "issue": "Hidden spaces or line breaks were added to the input",
+      "fix": "Trim the input and remove accidental whitespace before decoding."
+    },
+    {
+      "issue": "Assuming decoded output will always be readable text",
+      "fix": "Some Base64 values represent binary or structured data, so the result may not be human-readable text."
+    }
+  ],
+  "useCases": [
+    "Reading encoded API payloads during debugging",
+    "Checking what a Base64 header or token fragment contains",
+    "Verifying encoded JSON or config strings before use",
+    "Testing round-trip conversions with the Base64 Encoder",
+    "Inspecting copied Base64 values from logs, scripts, or documentation"
+  ],
+  "faq": [
+    {
+      "q": "What does a Base64 decoder do?",
+      "a": "A Base64 decoder converts Base64-encoded text back into its original plain text or readable string form."
+    },
+    {
+      "q": "What is the difference between Base64 Decoder and Base64 Encoder?",
+      "a": "Base64 Decoder turns encoded text back into readable text, while Base64 Encoder converts readable text into Base64."
+    },
+    {
+      "q": "Why does decoding fail?",
+      "a": "The most common reasons are invalid characters, missing padding, truncated input, hidden whitespace, or using the wrong Base64 variant."
+    },
+    {
+      "q": "Can I decode JSON with this tool?",
+      "a": "Yes. If a JSON string was encoded as Base64, this tool can decode it back into readable JSON text."
+    },
+    {
+      "q": "Can I decode Unicode or non-English text?",
+      "a": "Yes. This is useful when checking encoded international text, symbols, or non-Latin strings."
+    },
+    {
+      "q": "What is the difference between standard Base64 and Base64 URL?",
+      "a": "Standard Base64 uses characters like + and /, while Base64 URL uses URL-safe replacements such as - and _. They are similar but not always interchangeable."
+    },
+    {
+      "q": "Why does my decoded result look strange?",
+      "a": "The encoded value may represent binary data, compressed data, or structured content instead of normal plain text."
+    },
+    {
+      "q": "Can I use this tool to inspect API payloads and headers?",
+      "a": "Yes. That is one of the most practical uses for a Base64 decoder during development and debugging."
+    },
+    {
+      "q": "Should I decode a JWT with this page?",
+      "a": "Not usually. JWT payloads use Base64 URL rather than standard Base64, so a JWT-specific tool is usually better."
+    },
+    {
+      "q": "When should I use Base64 Encoder after decoding?",
+      "a": "Use the encoder when you want to confirm a round-trip conversion or recreate a valid Base64 value from readable text."
+    }
+  ],
+  "related": [
+    "base64-encode",
+    "url-decode",
+    "json-validator",
+    "jwt-decoder"
+  ]
+},
+
   {
     "id": "url-safe-base64-decoder",
     "name": "URL-safe Base64 Decoder",
