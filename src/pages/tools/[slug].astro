@@ -127,6 +127,1287 @@ function formatCategoryLabel(category: string): string {
     <p>Use {tool.name.toLowerCase()} when you need a fast browser-based result without extra setup. It works well for quick checks, one-off tasks, and routine formatting or calculation work.</p>
   </section>
 
+  {tool.slug === "text-diff-checker" && (
+  <section class="card">
+    <h2>When to use Text Diff Checker</h2>
+    <ul>
+      <li>When you need to compare two drafts before publishing or submitting</li>
+      <li>When checking whether copied text changed during editing or transfer</li>
+      <li>When reviewing code, config, or notes for small differences</li>
+      <li>When comparing titles, descriptions, or short content variations</li>
+      <li>When you want to confirm that two text blocks are exactly the same</li>
+    </ul>
+  </section>
+)}
+
+{tool.slug === "text-diff-checker" && (
+  <section class="card">
+    <h2>Text Diff Checker vs related tools</h2>
+
+    <h3>Text Diff Checker vs Word Counter</h3>
+    <p>
+      Text Diff Checker compares two versions of text to find differences.
+      Word Counter measures length.
+      If your main question is whether two texts changed, the diff tool is the better fit.
+    </p>
+
+    <h3>Text Diff Checker vs Remove Extra Spaces</h3>
+    <p>
+      Text Diff Checker shows whether two texts differ.
+      Remove Extra Spaces helps normalize spacing before or after comparison.
+      If spacing noise is the main issue, clean the text first and then compare again.
+    </p>
+  </section>
+)}
+
+{tool.slug === "text-diff-checker" && (
+  <section class="card">
+    <h2>Helpful next steps</h2>
+    <p>
+      If formatting noise is affecting the comparison, use
+      <a href="/tools/remove-extra-spaces/"> Remove Extra Spaces</a>.
+      If you want to measure the length of one version after comparing, open
+      <a href="/tools/word-counter/"> Word Counter</a>
+      or
+      <a href="/tools/character-counter/"> Character Counter</a>.
+      If repeated lines are making the comparison messy, try
+      <a href="/tools/duplicate-line-remover/"> Duplicate Line Remover</a>.
+    </p>
+  </section>
+)}
+
+  {tool.slug === "slug-generator" && (
+  <section class="card">
+    <h2>When to use Slug Generator</h2>
+    <ul>
+      <li>When publishing blog posts, guides, or landing pages in a CMS</li>
+      <li>When turning product or category titles into cleaner URLs</li>
+      <li>When standardizing URL structure across a content site</li>
+      <li>When removing punctuation and extra spaces from page paths</li>
+      <li>When you want a fast SEO-friendly slug before publishing a page</li>
+    </ul>
+  </section>
+)}
+
+{tool.slug === "slug-generator" && (
+  <section class="card">
+    <h2>Slug Generator vs related tools</h2>
+
+    <h3>Slug Generator vs Text Case Converter</h3>
+    <p>
+      Slug Generator is for URL-friendly output with lowercase words and hyphens.
+      Text Case Converter changes capitalization but does not usually prepare a clean page slug.
+      If the goal is a publishable URL path, Slug Generator is the better fit.
+    </p>
+
+    <h3>Slug Generator vs Text Trimmer</h3>
+    <p>
+      Text Trimmer only removes leading and trailing spaces.
+      Slug Generator goes further by normalizing spacing, removing punctuation, and converting the text into a URL-safe structure.
+      If you need a real page slug rather than simple cleanup, use the slug tool.
+    </p>
+  </section>
+)}
+
+{tool.slug === "slug-generator" && (
+  <section class="card">
+    <h2>Helpful next steps</h2>
+    <p>
+      If you want to clean the source text before generating a slug, use
+      <a href="/tools/text-trimmer/"> Text Trimmer</a>
+      or
+      <a href="/tools/remove-extra-spaces/"> Remove Extra Spaces</a>.
+      If you want to check title length before publishing, open
+      <a href="/tools/word-counter/"> Word Counter</a>
+      or
+      <a href="/tools/character-counter/"> Character Counter</a>.
+    </p>
+  </section>
+)}
+
+{tool.slug === "text-diff-checker" && (
+  <section class="card">
+    <h2>Common text comparison mistakes</h2>
+    <ul>
+      <li>Comparing only one text block instead of two complete versions</li>
+      <li>Ignoring line breaks and spacing when they actually affect the result</li>
+      <li>Expecting the tool to merge changes automatically</li>
+      <li>Comparing raw text before cleaning obvious formatting noise</li>
+      <li>Assuming similar meaning means identical wording</li>
+    </ul>
+  </section>
+)}
+
+  {tool.slug === "character-counter" && (
+  <section class="card">
+    <h2>When to use Character Counter</h2>
+    <ul>
+      <li>When a field, caption, or title has a strict character limit</li>
+      <li>When you need exact text length rather than a word estimate</li>
+      <li>When comparing versions of short-form copy during editing</li>
+      <li>When checking whether spaces and line breaks are pushing text over the limit</li>
+      <li>When preparing SEO, UI, form, or social text that must stay compact</li>
+    </ul>
+  </section>
+)}
+
+{tool.slug === "duplicate-line-remover" && (
+  <section class="card">
+    <h2>When to use Duplicate Line Remover</h2>
+    <ul>
+      <li>When a pasted list contains repeated keywords, URLs, emails, or IDs</li>
+      <li>When exports or logs become noisy because the same lines appear many times</li>
+      <li>When you want to prepare unique entries before importing data elsewhere</li>
+      <li>When cleaning line-based text before analysis, clustering, or review</li>
+      <li>When repeated items make a list harder to scan or compare manually</li>
+    </ul>
+  </section>
+)}
+
+{tool.slug === "duplicate-line-remover" && (
+  <section class="card">
+    <h2>Duplicate Line Remover vs related tools</h2>
+
+    <h3>Duplicate Line Remover vs Text Sorter</h3>
+    <p>
+      Duplicate Line Remover removes repeated lines while preserving a unique set of entries.
+      Text Sorter changes the order of lines.
+      If your main problem is repetition, remove duplicates first and sort afterward only if you need a new order.
+    </p>
+
+    <h3>Duplicate Line Remover vs Remove Extra Spaces</h3>
+    <p>
+      Duplicate Line Remover works at the whole-line level.
+      Remove Extra Spaces helps normalize spacing inside the text.
+      If near-duplicate lines differ only because of extra spaces, clean spacing first and then remove duplicates.
+    </p>
+  </section>
+)}
+
+{tool.slug === "duplicate-line-remover" && (
+  <section class="card">
+    <h2>Helpful next steps</h2>
+    <p>
+      If you want the cleaned result in alphabetical order, use
+      <a href="/tools/text-sorter/"> Text Sorter</a>.
+      If spacing differences are preventing good deduplication, try
+      <a href="/tools/remove-extra-spaces/"> Remove Extra Spaces</a>.
+      If you want a broader text-size summary after cleaning, open
+      <a href="/tools/word-counter/"> Word Counter</a>.
+    </p>
+  </section>
+)}
+
+{tool.slug === "slug-generator" && (
+  <section class="card">
+    <h2>Common slug mistakes</h2>
+    <ul>
+      <li>Keeping slugs much longer than they need to be</li>
+      <li>Leaving punctuation or unnecessary symbols in the URL path</li>
+      <li>Using the slug as if it were the full page title</li>
+      <li>Keeping messy spacing in the source text before generating the slug</li>
+      <li>Forgetting that a clean URL should still reflect the page intent clearly</li>
+    </ul>
+  </section>
+)}
+
+{tool.slug === "character-counter" && (
+  <section class="card">
+    <h2>Character Counter vs related tools</h2>
+
+    <h3>Character Counter vs Word Counter</h3>
+    <p>
+      Character Counter is best when the real limit is based on exact text length.
+      Word Counter is better when you need a broader summary that includes words, characters, and lines.
+      If your target is a fixed character cap, Character Counter is usually the better fit.
+    </p>
+
+    <h3>Character Counter vs Line Counter</h3>
+    <p>
+      Character Counter focuses on total text length.
+      Line Counter focuses on how many separate lines the input contains.
+      If spacing and overall length matter more than structure, Character Counter is the stronger option.
+    </p>
+  </section>
+)}
+
+{tool.slug === "character-counter" && (
+  <section class="card">
+    <h2>Helpful next steps</h2>
+    <p>
+      If you need a broader writing summary, use
+      <a href="/tools/word-counter/"> Word Counter</a>.
+      If you want to measure structure by lines, open
+      <a href="/tools/line-counter/"> Line Counter</a>.
+      If extra repeated lines are making the text longer than needed, try
+      <a href="/tools/duplicate-line-remover/"> Duplicate Line Remover</a>.
+    </p>
+  </section>
+)}
+
+{tool.slug === "duplicate-line-remover" && (
+  <section class="card">
+    <h2>Common duplicate cleanup mistakes</h2>
+    <ul>
+      <li>Assuming lines with trailing spaces are exact duplicates</li>
+      <li>Removing repeated lines when those repeats actually carry meaning</li>
+      <li>Expecting the tool to sort items while deduplicating them</li>
+      <li>Pasting comma-separated values instead of one item per line</li>
+      <li>Cleaning duplicates before normalizing spacing or formatting differences</li>
+    </ul>
+  </section>
+)}
+
+  {tool.slug === "word-counter" && (
+  <section class="card">
+    <h2>When to use Word Counter</h2>
+    <ul>
+      <li>When an essay, article, or form has a word or character limit</li>
+      <li>When checking whether a caption, description, or short draft fits a target length</li>
+      <li>When comparing versions of a text during editing or rewriting</li>
+      <li>When reviewing structured notes or pasted content with multiple lines</li>
+      <li>When you need a quick length summary before publishing or submitting text</li>
+    </ul>
+  </section>
+)}
+
+{tool.slug === "word-counter" && (
+  <section class="card">
+    <h2>Word Counter vs related tools</h2>
+
+    <h3>Word Counter vs Character Counter</h3>
+    <p>
+      Word Counter gives a broader overview of text length by showing words, characters, characters without spaces, and lines.
+      Character Counter is more focused on exact character totals.
+      If you need a full text summary, Word Counter is usually the better starting point.
+    </p>
+
+    <h3>Word Counter vs Line Counter</h3>
+    <p>
+      Word Counter is useful when text length matters overall.
+      Line Counter is more specific and focuses on how many lines the input contains.
+      If your text must fit a word-based or character-based target, Word Counter is the stronger fit.
+    </p>
+  </section>
+)}
+
+{tool.slug === "word-counter" && (
+  <section class="card">
+    <h2>Helpful next steps</h2>
+    <p>
+      If your main limit is based on exact character length, use
+      <a href="/tools/character-counter/"> Character Counter</a>.
+      If you need to count only lines in a structured block of text, open
+      <a href="/tools/line-counter/"> Line Counter</a>.
+      If you want to clean repeated lines before counting again, try
+      <a href="/tools/duplicate-line-remover/"> Duplicate Line Remover</a>.
+    </p>
+  </section>
+)}
+
+{tool.slug === "character-counter" && (
+  <section class="card">
+    <h2>Common character count mistakes</h2>
+    <ul>
+      <li>Checking only one total when the task cares about spaces differently</li>
+      <li>Ignoring line breaks, tabs, or repeated spaces in pasted text</li>
+      <li>Using character count for a requirement that is actually word-based</li>
+      <li>Assuming short text is always under platform or UI limits</li>
+      <li>Comparing text versions without keeping formatting consistent</li>
+    </ul>
+  </section>
+)}
+
+  {tool.slug === "mx-record-lookup" && (
+  <section class="card">
+    <h2>When to use MX Record Lookup</h2>
+    <ul>
+      <li>When email is not being delivered to a domain as expected</li>
+      <li>When checking whether a domain points to the correct mail provider</li>
+      <li>When verifying MX changes after migrating email services</li>
+      <li>When you need to inspect priority order for primary and backup mail servers</li>
+      <li>When troubleshooting mail routing before deeper SPF, DKIM, or mailbox checks</li>
+    </ul>
+  </section>
+)}
+
+{tool.slug === "mx-record-lookup" && (
+  <section class="card">
+    <h2>MX Record Lookup vs related tools</h2>
+
+    <h3>MX Record Lookup vs DNS Lookup</h3>
+    <p>
+      MX Record Lookup focuses only on mail exchange records and their priorities.
+      DNS Lookup gives a broader view of multiple record types such as A, MX, TXT, NS, and CNAME.
+      If your question is specifically about incoming email routing, the MX tool is the more direct option.
+    </p>
+
+    <h3>MX Record Lookup vs WHOIS Lookup</h3>
+    <p>
+      MX Record Lookup shows how mail is routed for a domain.
+      WHOIS Lookup shows registration and registrar-related information.
+      If the issue is email delivery, MX records are usually much more useful than WHOIS data.
+    </p>
+  </section>
+)}
+
+{tool.slug === "mx-record-lookup" && (
+  <section class="card">
+    <h2>Helpful next steps</h2>
+    <p>
+      If you need a broader DNS overview around the same domain, use
+      <a href="/tools/dns-lookup/"> DNS Lookup</a>.
+      If you want to confirm nameserver delegation before mail troubleshooting, open
+      <a href="/tools/ns-record-lookup/"> NS Record Lookup</a>.
+      If you need registrar and expiration context as well, use
+      <a href="/tools/whois-lookup/"> WHOIS Lookup</a>.
+    </p>
+  </section>
+)}
+
+{tool.slug === "word-counter" && (
+  <section class="card">
+    <h2>Common word count mistakes</h2>
+    <ul>
+      <li>Checking only words when the real limit is based on characters</li>
+      <li>Ignoring spaces and line breaks when comparing text versions</li>
+      <li>Assuming cleaned text and pasted raw text will produce the same counts</li>
+      <li>Using word count alone for SEO fields that are usually character-based</li>
+      <li>Forgetting that formatting changes can affect counts even when meaning stays the same</li>
+    </ul>
+  </section>
+)}
+
+  {tool.slug === "ns-record-lookup" && (
+  <section class="card">
+    <h2>When to use NS Record Lookup</h2>
+    <ul>
+      <li>When you need to confirm which nameservers are actively delegated for a domain</li>
+      <li>When checking whether registrar-side nameserver changes took effect</li>
+      <li>When comparing the live DNS provider with the one you expected</li>
+      <li>When troubleshooting delegation issues before checking deeper DNS records</li>
+      <li>When a domain seems to still point to an old provider after migration</li>
+    </ul>
+  </section>
+)}
+
+{tool.slug === "ns-record-lookup" && (
+  <section class="card">
+    <h2>NS Record Lookup vs related tools</h2>
+
+    <h3>NS Record Lookup vs DNS Lookup</h3>
+    <p>
+      NS Record Lookup focuses only on delegated nameservers.
+      DNS Lookup gives a broader overview of multiple record types such as A, MX, TXT, NS, and CNAME.
+      If the main question is "which nameservers are active right now?", the NS tool is the better fit.
+    </p>
+
+    <h3>NS Record Lookup vs WHOIS Lookup</h3>
+    <p>
+      NS Record Lookup is better for checking live delegated nameservers.
+      WHOIS Lookup is better for registration context such as registrar and expiration details.
+      If you are troubleshooting delegation, the NS tool is usually more directly useful than WHOIS.
+    </p>
+  </section>
+)}
+
+{tool.slug === "ns-record-lookup" && (
+  <section class="card">
+    <h2>Helpful next steps</h2>
+    <p>
+      After confirming delegation, use
+      <a href="/tools/dns-lookup/"> DNS Lookup</a>
+      to inspect live A, MX, TXT, and other records.
+      If you need registrar and expiration context as well, open
+      <a href="/tools/whois-lookup/"> WHOIS Lookup</a>.
+      If the issue is specifically email-related, the next useful step may be
+      <a href="/tools/mx-record-lookup/"> MX Record Lookup</a>.
+    </p>
+  </section>
+)}
+
+{tool.slug === "mx-record-lookup" && (
+  <section class="card">
+    <h2>Common MX lookup mistakes</h2>
+    <ul>
+      <li>Assuming correct MX records automatically guarantee working email delivery</li>
+      <li>Ignoring MX priority values when comparing multiple mail servers</li>
+      <li>Expecting DNS mail changes to appear instantly everywhere</li>
+      <li>Confusing website DNS problems with mail routing problems</li>
+      <li>Stopping at MX records when SPF, DKIM, DMARC, or mailbox setup may be the real issue</li>
+    </ul>
+  </section>
+)}
+
+  {tool.slug === "jwt-parser" && (
+  <section class="card">
+    <h2>When to use JWT Parser</h2>
+    <ul>
+      <li>When you need to understand the full structure of a JWT instead of just glancing at the decoded payload</li>
+      <li>When comparing token claims between environments, users, or login attempts</li>
+      <li>When debugging role, scope, audience, or issuer mismatches</li>
+      <li>When reading custom claims added by your backend or identity provider</li>
+      <li>When you want a cleaner structural view of an auth token during troubleshooting</li>
+    </ul>
+  </section>
+)}
+
+{tool.slug === "dns-lookup" && (
+  <section class="card">
+    <h2>When to use DNS Lookup</h2>
+    <ul>
+      <li>When a domain is not resolving the way you expect</li>
+      <li>When checking DNS after moving hosting, CDN, or nameservers</li>
+      <li>When you need a quick overview before deeper MX or NS troubleshooting</li>
+      <li>When verifying TXT, mail, or general resolver-related changes</li>
+      <li>When comparing live DNS results with what you expected to publish</li>
+    </ul>
+  </section>
+)}
+
+{tool.slug === "dns-lookup" && (
+  <section class="card">
+    <h2>DNS Lookup vs related tools</h2>
+
+    <h3>DNS Lookup vs WHOIS Lookup</h3>
+    <p>
+      DNS Lookup is for live technical DNS records.
+      WHOIS Lookup is for registrar and registration-related information.
+      If you need to know how a domain resolves right now, DNS Lookup is the better starting point.
+    </p>
+
+    <h3>DNS Lookup vs NS Record Lookup</h3>
+    <p>
+      DNS Lookup gives you a broader view of multiple record types.
+      NS Record Lookup is narrower and focuses on delegated nameserver records.
+      If you want a general overview first, use DNS Lookup.
+      If your question is only about nameservers, the NS tool is more direct.
+    </p>
+  </section>
+)}
+
+{tool.slug === "dns-lookup" && (
+  <section class="card">
+    <h2>Helpful next steps</h2>
+    <p>
+      If you need to inspect delegated nameservers specifically, use
+      <a href="/tools/ns-record-lookup/"> NS Record Lookup</a>.
+      If the issue is clearly related to mail delivery, open
+      <a href="/tools/mx-record-lookup/"> MX Record Lookup</a>.
+      If you need registrar and expiration context as well, use
+      <a href="/tools/whois-lookup/"> WHOIS Lookup</a>.
+    </p>
+  </section>
+)}
+
+{tool.slug === "ns-record-lookup" && (
+  <section class="card">
+    <h2>Common nameserver lookup mistakes</h2>
+    <ul>
+      <li>Assuming the correct nameservers automatically mean the rest of DNS is correct</li>
+      <li>Comparing registrar settings without checking the live delegated result</li>
+      <li>Expecting nameserver changes to be visible instantly everywhere</li>
+      <li>Using WHOIS alone instead of checking active NS records directly</li>
+      <li>Investigating A or MX records before confirming delegation is correct</li>
+    </ul>
+  </section>
+)}
+
+{tool.slug === "whois-lookup" && (
+  <section class="card">
+    <h2>When to use WHOIS Lookup</h2>
+    <ul>
+      <li>When you need to check which registrar manages a domain</li>
+      <li>When reviewing domain renewal, expiration, or update timing</li>
+      <li>When researching nameserver and registration context before DNS changes</li>
+      <li>When trying to identify the right provider to contact for domain issues</li>
+      <li>When investigating whether a domain is active, privacy-protected, or close to expiration</li>
+    </ul>
+  </section>
+)}
+
+{tool.slug === "whois-lookup" && (
+  <section class="card">
+    <h2>WHOIS Lookup vs related tools</h2>
+
+    <h3>WHOIS Lookup vs DNS Lookup</h3>
+    <p>
+      WHOIS Lookup is for registration and registrar-related information.
+      DNS Lookup is for technical DNS records such as A, AAAA, MX, TXT, and CNAME.
+      If you need ownership and registration context, start with WHOIS.
+      If you need resolution data, DNS tools are the better fit.
+    </p>
+
+    <h3>WHOIS Lookup vs NS Record Lookup</h3>
+    <p>
+      WHOIS may show nameserver information as part of the registration record.
+      NS Record Lookup is more focused on the active nameserver records returned through DNS.
+      If you need registrar-side context, use WHOIS.
+      If you need the active delegated NS records, use the NS tool.
+    </p>
+  </section>
+)}
+
+{tool.slug === "whois-lookup" && (
+  <section class="card">
+    <h2>Helpful next steps</h2>
+    <p>
+      If you need technical DNS records after reviewing registration details, use
+      <a href="/tools/dns-lookup/"> DNS Lookup</a>.
+      If you want to inspect the current delegated nameservers, open
+      <a href="/tools/ns-record-lookup/"> NS Record Lookup</a>.
+      If the next step is checking mail routing for the domain, use
+      <a href="/tools/mx-record-lookup/"> MX Record Lookup</a>.
+    </p>
+  </section>
+)}
+
+{tool.slug === "dns-lookup" && (
+  <section class="card">
+    <h2>Common DNS lookup mistakes</h2>
+    <ul>
+      <li>Expecting DNS results to update instantly everywhere</li>
+      <li>Confusing WHOIS data with live DNS resolver data</li>
+      <li>Assuming a domain is broken just because one record type is missing</li>
+      <li>Using a general lookup when the problem is clearly only NS or MX related</li>
+      <li>Ignoring caching and propagation when comparing old and new results</li>
+    </ul>
+  </section>
+)}
+
+{tool.slug === "my-ip-address" && (
+  <section class="card">
+    <h2>When to use My IP Address</h2>
+    <ul>
+      <li>When a support team asks for the public IP currently visible from your connection</li>
+      <li>When checking whether a VPN, proxy, or hotspot changed your external IP</li>
+      <li>When adding your current address to a firewall, allowlist, or remote access rule</li>
+      <li>When comparing home, office, and mobile network egress IPs</li>
+      <li>When troubleshooting whether your internet-facing address changed after reconnecting</li>
+    </ul>
+  </section>
+)}
+
+{tool.slug === "my-ip-address" && (
+  <section class="card">
+    <h2>My IP Address vs related tools</h2>
+
+    <h3>My IP Address vs IP Range Calculator</h3>
+    <p>
+      My IP Address shows the current public IP visible to the internet.
+      IP Range Calculator is for subnet planning, network boundaries, and usable host ranges.
+      If you need your current external address, this page is the right tool.
+      If you need subnet math, use the range calculator instead.
+    </p>
+
+    <h3>My IP Address vs WHOIS Lookup</h3>
+    <p>
+      My IP Address tells you what your current public IP is.
+      WHOIS Lookup is better when you want registration or ownership-related information about a domain or IP block.
+      If your first question is simply "what IP am I using right now?", start here.
+    </p>
+  </section>
+)}
+
+{tool.slug === "my-ip-address" && (
+  <section class="card">
+    <h2>Helpful next steps</h2>
+    <p>
+      If you need to understand subnet boundaries or host ranges, use
+      <a href="/tools/ip-range-calculator/"> IP Range Calculator</a>.
+      If you want to investigate registration details related to an address or domain, open
+      <a href="/tools/whois-lookup/"> WHOIS Lookup</a>.
+      If the next step is checking how a domain resolves on the network side, you may also want
+      <a href="/tools/dns-lookup/"> DNS Lookup</a>.
+    </p>
+  </section>
+)}
+
+{tool.slug === "whois-lookup" && (
+  <section class="card">
+    <h2>Common WHOIS lookup mistakes</h2>
+    <ul>
+      <li>Expecting WHOIS to reveal full owner identity for every domain</li>
+      <li>Confusing domain registrar information with DNS hosting or web hosting</li>
+      <li>Assuming limited WHOIS output means the domain is not active</li>
+      <li>Using WHOIS alone when the actual issue is DNS or MX configuration</li>
+      <li>Checking a malformed domain input instead of a clean domain name</li>
+    </ul>
+  </section>
+)}
+
+{tool.slug === "ip-range-calculator" && (
+  <section class="card">
+    <h2>When to use IP Range Calculator</h2>
+    <ul>
+      <li>When planning a subnet and you need the exact host range quickly</li>
+      <li>When checking network and broadcast boundaries before assigning static IPs</li>
+      <li>When writing firewall rules, ACLs, or routes for a specific subnet</li>
+      <li>When verifying whether two hosts belong to the same network</li>
+      <li>When practicing subnetting for exams, labs, or day-to-day network work</li>
+    </ul>
+  </section>
+)}
+
+{tool.slug === "ip-range-calculator" && (
+  <section class="card">
+    <h2>IP Range Calculator vs related tools</h2>
+
+    <h3>IP Range Calculator vs My IP Address</h3>
+    <p>
+      IP Range Calculator is for subnet math and range planning.
+      My IP Address is for identifying the current public IP that a device or connection is using.
+      If your question is "what subnet does this belong to?", use the range calculator.
+      If your question is "what is my current public IP?", use the IP address tool.
+    </p>
+
+    <h3>IP Range Calculator vs IPv4 Validator</h3>
+    <p>
+      IP Range Calculator tells you the subnet boundaries and usable hosts.
+      IPv4 Validator only checks whether an IPv4 address is syntactically valid.
+      If you need planning and subnet details, the calculator is the better fit.
+    </p>
+  </section>
+)}
+
+{tool.slug === "ip-range-calculator" && (
+  <section class="card">
+    <h2>Helpful next steps</h2>
+    <p>
+      If you need to confirm the format of an address first, use
+      <a href="/tools/ipv4-validator/"> IPv4 Validator</a>.
+      If you want to check the public IP currently visible to the internet, open
+      <a href="/tools/my-ip-address/"> My IP Address</a>.
+      If you are troubleshooting a domain or server after subnet planning, you may also want
+      <a href="/tools/dns-lookup/"> DNS Lookup</a>
+      or
+      <a href="/tools/whois-lookup/"> WHOIS Lookup</a>.
+    </p>
+  </section>
+)}
+
+{tool.slug === "my-ip-address" && (
+  <section class="card">
+    <h2>Common mistakes when checking your IP</h2>
+    <ul>
+      <li>Confusing a public internet IP with a private LAN address</li>
+      <li>Assuming the same public IP belongs to only one device on the network</li>
+      <li>Thinking the IP is permanent even when the ISP uses dynamic assignment</li>
+      <li>Checking the IP once and assuming a VPN or hotspot is definitely active</li>
+      <li>Using the current IP in allowlists without planning for later changes</li>
+    </ul>
+  </section>
+)}
+
+{tool.slug === "url-decode" && (
+  <section class="card">
+    <h2>When to use URL Decoder</h2>
+    <ul>
+      <li>When a query parameter or redirect target contains percent-encoded characters</li>
+      <li>When debugging links copied from browsers, APIs, logs, or tracking systems</li>
+      <li>When you need to read an embedded URL that was encoded inside another URL</li>
+      <li>When inspecting JSON, Unicode text, or symbols passed through a query value</li>
+      <li>When you want to see the original readable text behind an encoded string</li>
+    </ul>
+  </section>
+)}
+
+{tool.slug === "url-decode" && (
+  <section class="card">
+    <h2>URL Decoder vs related tools</h2>
+
+    <h3>URL Decoder vs URL Encoder</h3>
+    <p>
+      URL Decoder turns percent-encoded text back into readable form.
+      URL Encoder does the reverse and creates percent-encoded output from raw text.
+      If your input already contains sequences like %20 or %3D, decoding is usually the right first step.
+    </p>
+
+    <h3>URL Decoder vs Base64 Decoder</h3>
+    <p>
+      URL Decoder is for percent-encoded text used in URLs and query strings.
+      Base64 Decoder is for Base64-encoded data.
+      If your input contains percent sequences, use URL decoding. If it looks like an encoded block of letters and equals signs, it may belong to Base64 instead.
+    </p>
+  </section>
+)}
+
+{tool.slug === "url-decode" && (
+  <section class="card">
+    <h2>Helpful next steps</h2>
+    <p>
+      If you need to encode the readable result again, use
+      <a href="/tools/url-encode/"> URL Encoder</a>.
+      If you want to inspect the structure of a decoded link, open
+      <a href="/tools/url-parser/"> URL Parser</a>.
+      If the decoded value turns out to be JSON text, you may also want
+      <a href="/tools/json-formatter/"> JSON Formatter</a>.
+    </p>
+  </section>
+)}
+
+{tool.slug === "ip-range-calculator" && (
+  <section class="card">
+    <h2>Common subnetting mistakes</h2>
+    <ul>
+      <li>Assigning the network address to a host by mistake</li>
+      <li>Using the broadcast address as if it were a normal device IP</li>
+      <li>Forgetting that smaller prefixes like /30 or /29 have very limited host space</li>
+      <li>Comparing two IPs without checking the actual subnet mask or CIDR</li>
+      <li>Planning hosts on paper without verifying the real usable range first</li>
+    </ul>
+  </section>
+)}
+
+{tool.slug === "url-encode" && (
+  <section class="card">
+    <h2>When to use URL Encoder</h2>
+    <ul>
+      <li>When a query parameter contains spaces, symbols, JSON, or another URL</li>
+      <li>When building redirect links that embed a destination URL inside another URL</li>
+      <li>When preparing request values for APIs, tracking links, or browser tests</li>
+      <li>When debugging broken links caused by unsafe special characters</li>
+      <li>When you want to see exactly how raw text will look after percent-encoding</li>
+    </ul>
+  </section>
+)}
+
+{tool.slug === "url-encode" && (
+  <section class="card">
+    <h2>URL Encoder vs related tools</h2>
+
+    <h3>URL Encoder vs URL Decoder</h3>
+    <p>
+      URL Encoder converts readable text into percent-encoded output.
+      URL Decoder does the reverse and turns encoded text back into readable form.
+      If you are starting with raw text, encode it. If you are starting with encoded text, decode it.
+    </p>
+
+    <h3>URL Encoder vs Base64 Encoder</h3>
+    <p>
+      URL Encoder is for making text safe inside URLs and query parameters.
+      Base64 Encoder converts text into a different transport format and is not a substitute for normal URL escaping.
+      If the destination expects a URL-safe value, URL encoding is usually the correct choice.
+    </p>
+  </section>
+)}
+
+{tool.slug === "url-encode" && (
+  <section class="card">
+    <h2>Helpful next steps</h2>
+    <p>
+      If you need to reverse an encoded result, use
+      <a href="/tools/url-decode/"> URL Decoder</a>.
+      If you want to inspect the structure of a full link, open
+      <a href="/tools/url-parser/"> URL Parser</a>.
+      If your encoded value contains JSON text, you may also want
+      <a href="/tools/json-formatter/"> JSON Formatter</a>.
+    </p>
+  </section>
+)}
+
+{tool.slug === "url-decode" && (
+  <section class="card">
+    <h2>Common mistakes when decoding URLs</h2>
+    <ul>
+      <li>Decoding a value twice and breaking the original structure</li>
+      <li>Using URL decoding on Base64, JWT, or another non-URL format</li>
+      <li>Decoding only part of a value and misreading the result</li>
+      <li>Assuming a full URL and a single parameter value should be handled the same way</li>
+      <li>Ignoring whether the decoded result is itself another structured format like JSON or a nested URL</li>
+    </ul>
+  </section>
+)}
+
+{tool.slug === "jwt-expiry-checker" && (
+  <section class="card">
+    <h2>When to use JWT Expiry Checker</h2>
+    <ul>
+      <li>When users suddenly start getting unauthorized errors after some time</li>
+      <li>When you need to confirm whether a token expired before investigating deeper auth issues</li>
+      <li>When testing refresh-token or silent re-authentication flows</li>
+      <li>When checking whether a token lifetime is too short for your application workflow</li>
+      <li>When you want to inspect exp and iat claims without manually decoding timestamps</li>
+    </ul>
+  </section>
+)}
+
+{tool.slug === "jwt-expiry-checker" && (
+  <section class="card">
+    <h2>JWT Expiry Checker vs related tools</h2>
+
+    <h3>JWT Expiry Checker vs JWT Decoder</h3>
+    <p>
+      JWT Expiry Checker is focused on one question: is the token expired, still valid, or close to expiring?
+      JWT Decoder is broader and helps you inspect the whole token content.
+      Use the expiry checker when timing is your main concern and the decoder when you need the full picture.
+    </p>
+
+    <h3>JWT Expiry Checker vs JWT Parser</h3>
+    <p>
+      JWT Expiry Checker is best for token lifetime troubleshooting.
+      JWT Parser is better when you want to inspect structure, claims, roles, issuer, audience, and other payload details in a more general way.
+      If you are debugging session timing, expiry checking is usually the faster first step.
+    </p>
+  </section>
+)}
+
+{tool.slug === "jwt-expiry-checker" && (
+  <section class="card">
+    <h2>Helpful next steps</h2>
+    <p>
+      If you need to inspect the full token content, open
+      <a href="/tools/jwt-decoder/"> JWT Decoder</a>
+      or
+      <a href="/tools/jwt-parser/"> JWT Parser</a>.
+      If a token claim contains encoded text or nested JSON, you may also want
+      <a href="/tools/base64-decode/"> Base64 Decoder</a>
+      and
+      <a href="/tools/json-formatter/"> JSON Formatter</a>.
+    </p>
+  </section>
+)}
+
+{tool.slug === "url-encode" && (
+  <section class="card">
+    <h2>Common mistakes when encoding URLs</h2>
+    <ul>
+      <li>Encoding an entire URL when only one parameter value should be encoded</li>
+      <li>Encoding the same value twice and creating broken query strings</li>
+      <li>Using URL encoding where Base64 or another format is actually required</li>
+      <li>Ignoring spaces, line breaks, or hidden characters in the source text</li>
+      <li>Assuming all punctuation should remain unencoded in every URL context</li>
+    </ul>
+  </section>
+)}
+
+{tool.slug === "jwt-parser" && (
+  <section class="card">
+    <h2>JWT Parser vs related tools</h2>
+
+    <h3>JWT Parser vs JWT Decoder</h3>
+    <p>
+      JWT Parser is useful when you want a more structured view of the token and its claims.
+      JWT Decoder is better for a fast read of the header and payload.
+      If your goal is deeper inspection and comparison, the parser is the stronger fit.
+    </p>
+
+    <h3>JWT Parser vs JWT Expiry Checker</h3>
+    <p>
+      JWT Parser helps you inspect the whole token structure and claims.
+      JWT Expiry Checker is more focused on one question: whether the token is expired or close to expiring.
+      Use the parser when you need broader context around the token, not just timing.
+    </p>
+  </section>
+)}
+
+{tool.slug === "jwt-parser" && (
+  <section class="card">
+    <h2>Helpful next steps</h2>
+    <p>
+      If you want a faster read of the same token, open
+      <a href="/tools/jwt-decoder/"> JWT Decoder</a>.
+      If your main question is whether the token is expired, use
+      <a href="/tools/jwt-expiry-checker/"> JWT Expiry Checker</a>.
+      If a parsed claim contains encoded text or JSON, you may also want
+      <a href="/tools/base64-decode/"> Base64 Decoder</a>
+      or
+      <a href="/tools/json-formatter/"> JSON Formatter</a>.
+    </p>
+  </section>
+)}
+
+{tool.slug === "jwt-expiry-checker" && (
+  <section class="card">
+    <h2>Common mistakes when checking JWT expiry</h2>
+    <ul>
+      <li>Assuming a decoded token is still usable without checking exp</li>
+      <li>Mixing up iat and exp when reading timing claims</li>
+      <li>Ignoring local or server clock differences during troubleshooting</li>
+      <li>Thinking expiry status also proves the signature is valid</li>
+      <li>Investigating permissions first when the real problem is token lifetime</li>
+    </ul>
+  </section>
+)}
+
+  {tool.slug === "base64-encode" && (
+  <section class="card">
+    <h2>When to use Base64 Encoder</h2>
+    <ul>
+      <li>When an API or config field expects Base64 instead of raw text</li>
+      <li>When creating encoded test strings for headers, payloads, or fixtures</li>
+      <li>When you want to quickly convert JSON, credentials-like text, or multiline content into Base64</li>
+      <li>When checking how Unicode or special characters behave after encoding</li>
+      <li>When debugging a workflow that passes encoded text between systems</li>
+    </ul>
+  </section>
+)}
+
+{tool.slug === "jwt-decoder" && (
+  <section class="card">
+    <h2>When to use JWT Decoder</h2>
+    <ul>
+      <li>When a login flow works inconsistently and you need to inspect the token claims</li>
+      <li>When checking whether a token contains the expected user, issuer, audience, or roles</li>
+      <li>When debugging expired access tokens or unexpected authorization failures</li>
+      <li>When reading custom claims added by your identity provider or backend</li>
+      <li>When you want to inspect a JWT quickly without writing parsing code</li>
+    </ul>
+  </section>
+)}
+
+{tool.slug === "jwt-decoder" && (
+  <section class="card">
+    <h2>JWT Decoder vs related tools</h2>
+
+    <h3>JWT Decoder vs Base64 Decoder</h3>
+    <p>
+      JWT Decoder is built for full JWT tokens with dot-separated Base64 URL parts.
+      Base64 Decoder is better for ordinary Base64 strings.
+      If you are looking at an auth token rather than a plain encoded string, the JWT tool is the better fit.
+    </p>
+
+    <h3>JWT Decoder vs JWT Expiry Checker</h3>
+    <p>
+      JWT Decoder helps you inspect the full token content, including header and payload.
+      JWT Expiry Checker is more focused on whether the token is expired or close to expiring.
+      Use the decoder when you need full context, and the expiry checker when time-based validation is the main question.
+    </p>
+  </section>
+)}
+
+{tool.slug === "jwt-decoder" && (
+  <section class="card">
+    <h2>Helpful next steps</h2>
+    <p>
+      If you mainly want to check whether a token is expired, open
+      <a href="/tools/jwt-expiry-checker/"> JWT Expiry Checker</a>.
+      If you want to inspect the token in a more parser-focused way, use
+      <a href="/tools/jwt-parser/"> JWT Parser</a>.
+      If you decode a claim that contains JSON or encoded text, you may also want
+      <a href="/tools/json-formatter/"> JSON Formatter</a>
+      or
+      <a href="/tools/base64-decode/"> Base64 Decoder</a>.
+    </p>
+  </section>
+)}
+
+{tool.slug === "jwt-parser" && (
+  <section class="card">
+    <h2>Common mistakes when parsing JWTs</h2>
+    <ul>
+      <li>Assuming the token is trustworthy just because the claims are readable</li>
+      <li>Ignoring issuer and audience while focusing only on user-related claims</li>
+      <li>Reading exp and iat without checking their actual timestamp meaning</li>
+      <li>Using the parser for signature validation instead of content inspection</li>
+      <li>Comparing raw token strings instead of comparing parsed claims</li>
+    </ul>
+  </section>
+)}
+
+{tool.slug === "base64-decode" && (
+  <section class="card">
+    <h2>When to use Base64 Decoder</h2>
+    <ul>
+      <li>When you receive an encoded string from an API, log, script, or config and want to inspect its contents</li>
+      <li>When debugging encoded headers, tokens, or copied payload fragments</li>
+      <li>When checking whether a Base64 value contains JSON, credentials-like text, or a readable message</li>
+      <li>When verifying that encoded test data decodes back to the expected original text</li>
+      <li>When troubleshooting why an encoded value is not behaving as expected in another system</li>
+    </ul>
+  </section>
+)}
+
+{tool.slug === "base64-decode" && (
+  <section class="card">
+    <h2>Base64 Decoder vs related tools</h2>
+
+    <h3>Base64 Decoder vs Base64 Encoder</h3>
+    <p>
+      Base64 Decoder turns encoded text back into readable text.
+      Base64 Encoder does the reverse and creates Base64 from plain text.
+      If your input already looks encoded, decode it first before trying anything else.
+    </p>
+
+    <h3>Base64 Decoder vs JWT Decoder</h3>
+    <p>
+      Base64 Decoder is for standard Base64 strings.
+      JWT Decoder is better for JWT tokens because JWT parts use Base64 URL and have a specific token structure.
+      If your value contains dot-separated token parts, the JWT tool is usually the right place to inspect it.
+    </p>
+  </section>
+)}
+
+{tool.slug === "base64-decode" && (
+  <section class="card">
+    <h2>Helpful next steps</h2>
+    <p>
+      If you want to convert readable text back into Base64, use
+      <a href="/tools/base64-encode/"> Base64 Encoder</a>.
+      If your value is URL-encoded rather than Base64, try
+      <a href="/tools/url-decode/"> URL Decoder</a>.
+      If the decoded result is JSON text, you may want to inspect it with
+      <a href="/tools/json-validator/"> JSON Validator</a>
+      or
+      <a href="/tools/json-formatter/"> JSON Formatter</a>.
+    </p>
+  </section>
+)}
+
+{tool.slug === "jwt-decoder" && (
+  <section class="card">
+    <h2>Common mistakes when reading JWT tokens</h2>
+    <ul>
+      <li>Assuming a decoded token is automatically valid and trusted</li>
+      <li>Ignoring the difference between decoding and signature verification</li>
+      <li>Reading exp without understanding that it is usually a Unix timestamp</li>
+      <li>Checking payload claims without confirming issuer and audience expectations</li>
+      <li>Using a plain Base64 tool on a JWT instead of a JWT-aware decoder</li>
+    </ul>
+  </section>
+)}
+
+{tool.slug === "base64-encode" && (
+  <section class="card">
+    <h2>Base64 Encoder vs related tools</h2>
+
+    <h3>Base64 Encoder vs Base64 Decoder</h3>
+    <p>
+      Base64 Encoder converts readable text into Base64 output.
+      Base64 Decoder does the reverse and converts a Base64 string back into readable text.
+      If you start with normal text, encode it. If you start with an encoded string, decode it.
+    </p>
+
+    <h3>Base64 Encoder vs URL Encoder</h3>
+    <p>
+      Base64 Encoder turns text into Base64 data.
+      URL Encoder escapes characters so they are safe inside URLs and query strings.
+      If your goal is a link-safe value, URL encoding is usually the right choice.
+      If your system explicitly expects Base64, use Base64 encoding instead.
+    </p>
+  </section>
+)}
+
+{tool.slug === "base64-encode" && (
+  <section class="card">
+    <h2>Helpful next steps</h2>
+    <p>
+      After generating an encoded value, you can verify it with
+      <a href="/tools/base64-decode/"> Base64 Decoder</a>.
+      If your task is URL-safe escaping rather than Base64 conversion, use
+      <a href="/tools/url-encode/"> URL Encoder</a>.
+      If you are encoding JSON text before testing a payload, you may also want
+      <a href="/tools/json-formatter/"> JSON Formatter</a>.
+    </p>
+  </section>
+)}
+
+{tool.slug === "base64-decode" && (
+  <section class="card">
+    <h2>Common mistakes when decoding Base64</h2>
+    <ul>
+      <li>Trying to decode a value that is not Base64 at all</li>
+      <li>Using the standard decoder for a Base64 URL or JWT-style value</li>
+      <li>Copying only part of the encoded string from a log or request</li>
+      <li>Leaving hidden spaces or broken line wraps in the input</li>
+      <li>Expecting every decoded result to be simple readable text instead of structured or binary data</li>
+    </ul>
+  </section>
+)}
+
+  {tool.slug === "json-validator" && (
+  <section class="card">
+    <h2>When to use JSON Validator</h2>
+    <ul>
+      <li>When an API request keeps failing and you want to rule out broken JSON first</li>
+      <li>When you copied a payload from logs, docs, or browser dev tools and are not sure it is complete</li>
+      <li>When editing a JSON config file before deployment</li>
+      <li>When testing webhook bodies from payment, email, or automation services</li>
+      <li>When a formatter, parser, or import tool rejects your input and you need to find the basic syntax issue</li>
+    </ul>
+  </section>
+)}
+
+{tool.slug === "json-minifier" && (
+  <section class="card">
+    <h2>When to use JSON Minifier</h2>
+    <ul>
+      <li>When you need a smaller JSON payload for transport or storage</li>
+      <li>When a system expects compact one-line JSON instead of formatted output</li>
+      <li>When embedding JSON into scripts, examples, fixtures, or config values</li>
+      <li>When cleaning readable JSON after debugging and inspection</li>
+      <li>When you want to remove visual clutter without changing the actual data</li>
+    </ul>
+  </section>
+)}
+
+{tool.slug === "json-minifier" && (
+  <section class="card">
+    <h2>JSON Minifier vs related tools</h2>
+
+    <h3>JSON Minifier vs JSON Formatter</h3>
+    <p>
+      JSON Minifier removes whitespace to produce compact output.
+      JSON Formatter does the opposite and adds whitespace to improve readability.
+      Use the formatter for debugging and inspection, then minify the same payload when you need a smaller result.
+    </p>
+
+    <h3>JSON Minifier vs JSON Validator</h3>
+    <p>
+      JSON Minifier assumes the payload is valid and then compresses it.
+      JSON Validator is better when your first question is whether the JSON syntax is correct at all.
+      If minification fails, validation is usually the next step.
+    </p>
+  </section>
+)}
+
+{tool.slug === "json-minifier" && (
+  <section class="card">
+    <h2>Helpful next steps</h2>
+    <p>
+      If your input fails to minify, check it first with
+      <a href="/tools/json-validator/"> JSON Validator</a>.
+      If you want to inspect the same payload in a readable layout, open
+      <a href="/tools/json-formatter/"> JSON Formatter</a>.
+      If the next step is tabular export, use
+      <a href="/tools/json-to-csv/"> JSON to CSV</a>.
+    </p>
+  </section>
+)}
+
+{tool.slug === "base64-encode" && (
+  <section class="card">
+    <h2>Common mistakes when encoding to Base64</h2>
+    <ul>
+      <li>Using Base64 instead of URL encoding for ordinary query strings</li>
+      <li>Assuming Base64 makes sensitive data secure</li>
+      <li>Re-encoding a value that is already Base64 by mistake</li>
+      <li>Ignoring hidden spaces or line breaks that change the final output</li>
+      <li>Confusing standard Base64 with Base64 URL format</li>
+    </ul>
+  </section>
+)}
+
+{tool.slug === "json-minifier" && (
+  <section class="card">
+    <h2>Common mistakes when minifying JSON</h2>
+    <ul>
+      <li>Trying to minify JavaScript object syntax instead of strict JSON</li>
+      <li>Assuming single quotes are valid in JSON</li>
+      <li>Leaving trailing commas in arrays or objects</li>
+      <li>Pasting incomplete payloads copied from logs or docs</li>
+      <li>Expecting minification to change field names, values, or ordering logic</li>
+    </ul>
+  </section>
+)}
+
+{tool.slug === "json-validator" && (
+  <section class="card">
+    <h2>JSON Validator vs related tools</h2>
+
+    <h3>JSON Validator vs JSON Formatter</h3>
+    <p>
+      JSON Validator answers one main question: is this payload valid or not?
+      JSON Formatter is for readability. If your first problem is an error message or a failed parse,
+      validate first. If the payload is valid but messy, format it next.
+    </p>
+
+    <h3>JSON Validator vs JSON Minifier</h3>
+    <p>
+      JSON Validator checks syntax correctness.
+      JSON Minifier removes whitespace from valid JSON.
+      If your JSON is broken, minifying will not help. Validate it first, then minify it if you need compact output.
+    </p>
+  </section>
+)}
+
+{tool.slug === "json-validator" && (
+  <section class="card">
+    <h2>Helpful next steps</h2>
+    <p>
+      Once your JSON passes validation, you may want to make it easier to inspect with
+      <a href="/tools/json-formatter/"> JSON Formatter</a>.
+      If you need a smaller payload for transport or embedding, use
+      <a href="/tools/json-minifier/"> JSON Minifier</a>.
+      If your next step is tabular data, try
+      <a href="/tools/json-to-csv/"> JSON to CSV</a>.
+    </p>
+  </section>
+)}
+
+  {tool.slug === "json-formatter" && (
+  <section class="card">
+    <h2>When to use JSON Formatter</h2>
+    <ul>
+      <li>When an API returns minified JSON that is hard to read</li>
+      <li>When you need to inspect nested objects or long arrays quickly</li>
+      <li>When debugging webhook payloads, app logs, or configuration files</li>
+      <li>When validating copied JSON before sending it to another tool or service</li>
+      <li>When preparing readable JSON for documentation, tickets, or team discussions</li>
+    </ul>
+  </section>
+)}
+
+{tool.slug === "json-formatter" && (
+  <section class="card">
+    <h2>JSON Formatter vs related tools</h2>
+
+    <h3>JSON Formatter vs JSON Validator</h3>
+    <p>
+      JSON Formatter is best when you want readable structured output.
+      JSON Validator is better when you only need a quick valid or invalid result.
+      If you need both readability and syntax checking, the formatter is a strong starting point.
+    </p>
+
+    <h3>JSON Formatter vs JSON Minifier</h3>
+    <p>
+      JSON Formatter expands JSON with indentation and line breaks.
+      JSON Minifier does the opposite by removing unnecessary whitespace to reduce size.
+      Use the formatter for debugging and the minifier for compact output.
+    </p>
+  </section>
+)}
+
+{tool.slug === "json-formatter" && (
+  <section class="card">
+    <h2>Helpful next steps</h2>
+    <p>
+      After formatting your payload, you may also want to check it with
+      <a href="/tools/json-validator/"> JSON Validator</a>
+      {" "}or compress it for transport with
+      <a href="/tools/json-minifier/"> JSON Minifier</a>.
+      If your JSON needs to be turned into tabular data, try
+      <a href="/tools/json-to-csv/"> JSON to CSV</a>.
+    </p>
+  </section>
+)}
+
+{tool.slug === "json-validator" && (
+  <section class="card">
+    <h2>Common mistakes that make JSON invalid</h2>
+    <ul>
+      <li>Using JavaScript object syntax instead of strict JSON syntax</li>
+      <li>Leaving a trailing comma after the last property or array item</li>
+      <li>Writing keys without double quotes</li>
+      <li>Using single quotes for strings</li>
+      <li>Pasting only part of a payload from a log line or browser panel</li>
+    </ul>
+  </section>
+)}
+
+{tool.slug === "json-formatter" && (
+  <section class="card">
+    <h2>Common mistakes when formatting JSON</h2>
+    <ul>
+      <li>Pasting JavaScript objects instead of valid JSON</li>
+      <li>Leaving trailing commas in objects or arrays</li>
+      <li>Using single quotes instead of double quotes</li>
+      <li>Copying only part of a payload from logs or dev tools</li>
+      <li>Assuming formatted JSON is always valid without checking syntax errors</li>
+    </ul>
+  </section>
+)}
+
   <section class="card">
   <h2>Learn more</h2>
   <div class="cluster-grid">
@@ -12255,7 +13536,180 @@ if (slug === "salary-to-hourly-calculator") {
     `Hourly rate: ${hourlyRate.toFixed(2)}`;
   return;
 }
+if (slug === "sql-formatter") {
+  const text = input.value.trim();
 
+  if (!text) {
+    output.value = "Enter SQL to format.";
+    return;
+  }
+
+  let formatted = text.replace(/\s+/g, " ").trim();
+
+  const keywordPatterns: Array<[RegExp, string]> = [
+    [/\bselect\b/gi, "SELECT"],
+    [/\bfrom\b/gi, "\nFROM"],
+    [/\bwhere\b/gi, "\nWHERE"],
+    [/\border by\b/gi, "\nORDER BY"],
+    [/\bgroup by\b/gi, "\nGROUP BY"],
+    [/\bhaving\b/gi, "\nHAVING"],
+    [/\blimit\b/gi, "\nLIMIT"],
+    [/\boffset\b/gi, "\nOFFSET"],
+    [/\binner join\b/gi, "\nINNER JOIN"],
+    [/\bleft join\b/gi, "\nLEFT JOIN"],
+    [/\bright join\b/gi, "\nRIGHT JOIN"],
+    [/\bfull join\b/gi, "\nFULL JOIN"],
+    [/\bjoin\b/gi, "\nJOIN"],
+    [/\bon\b/gi, "\nON"],
+    [/\binsert into\b/gi, "INSERT INTO"],
+    [/\bvalues\b/gi, "\nVALUES"],
+    [/\bupdate\b/gi, "UPDATE"],
+    [/\bset\b/gi, "\nSET"],
+    [/\bdelete from\b/gi, "DELETE FROM"]
+  ];
+
+  for (const [pattern, replacement] of keywordPatterns) {
+    formatted = formatted.replace(pattern, replacement);
+  }
+
+  formatted = formatted
+    .replace(/\s*,\s*/g, ", ")
+    .replace(/\s*=\s*/g, " = ")
+    .replace(/\(\s+/g, "(")
+    .replace(/\s+\)/g, ")")
+    .replace(/\n\s+/g, "\n")
+    .replace(/\n{2,}/g, "\n")
+    .trim();
+
+  output.value = formatted;
+  return;
+}
+if (slug === "sql-beautifier") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter SQL to beautify.";
+    return;
+  }
+
+  let formatted = text.replace(/\s+/g, " ").trim();
+
+  const keywordPatterns: Array<[RegExp, string]> = [
+    [/\bselect\b/gi, "SELECT"],
+    [/\bfrom\b/gi, "\nFROM"],
+    [/\bwhere\b/gi, "\nWHERE"],
+    [/\border by\b/gi, "\nORDER BY"],
+    [/\bgroup by\b/gi, "\nGROUP BY"],
+    [/\bhaving\b/gi, "\nHAVING"],
+    [/\blimit\b/gi, "\nLIMIT"],
+    [/\boffset\b/gi, "\nOFFSET"],
+    [/\binner join\b/gi, "\nINNER JOIN"],
+    [/\bleft join\b/gi, "\nLEFT JOIN"],
+    [/\bright join\b/gi, "\nRIGHT JOIN"],
+    [/\bfull join\b/gi, "\nFULL JOIN"],
+    [/\bjoin\b/gi, "\nJOIN"],
+    [/\bon\b/gi, "\nON"],
+    [/\band\b/gi, "\n  AND"],
+    [/\bor\b/gi, "\n  OR"],
+    [/\binsert into\b/gi, "INSERT INTO"],
+    [/\bvalues\b/gi, "\nVALUES"],
+    [/\bupdate\b/gi, "UPDATE"],
+    [/\bset\b/gi, "\nSET"],
+    [/\bdelete from\b/gi, "DELETE FROM"]
+  ];
+
+  for (const [pattern, replacement] of keywordPatterns) {
+    formatted = formatted.replace(pattern, replacement);
+  }
+
+  formatted = formatted
+    .replace(/\s*,\s*/g, ", ")
+    .replace(/\s*=\s*/g, " = ")
+    .replace(/\s*>\s*/g, " > ")
+    .replace(/\s*<\s*/g, " < ")
+    .replace(/\(\s+/g, "(")
+    .replace(/\s+\)/g, ")")
+    .replace(/\n\s+/g, "\n")
+    .replace(/\n{2,}/g, "\n")
+    .trim();
+
+  output.value = formatted;
+  return;
+}
+if (slug === "ip-range-calculator") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter IPv4 CIDR like: 192.168.1.10/24";
+    return;
+  }
+
+  const match = text.match(/^(\d{1,3}(?:\.\d{1,3}){3})\/(\d{1,2})$/);
+
+  if (!match) {
+    output.value = "Invalid format. Use IPv4 CIDR like: 192.168.1.10/24";
+    return;
+  }
+
+  const ip = match[1];
+  const prefix = Number(match[2]);
+  const octets = ip.split(".").map((part) => Number(part));
+
+  if (
+    octets.length !== 4 ||
+    octets.some((n) => !Number.isInteger(n) || n < 0 || n > 255) ||
+    !Number.isInteger(prefix) ||
+    prefix < 0 ||
+    prefix > 32
+  ) {
+    output.value = "Invalid IPv4 or CIDR prefix. Use octets 0-255 and prefix 0-32.";
+    return;
+  }
+
+  const ipToInt = (parts: number[]): number =>
+    (((parts[0] << 24) >>> 0) +
+      ((parts[1] << 16) >>> 0) +
+      ((parts[2] << 8) >>> 0) +
+      (parts[3] >>> 0)) >>> 0;
+
+  const intToIp = (num: number): string =>
+    [
+      (num >>> 24) & 255,
+      (num >>> 16) & 255,
+      (num >>> 8) & 255,
+      num & 255
+    ].join(".");
+
+  const ipInt = ipToInt(octets);
+  const mask = prefix === 0 ? 0 : ((0xffffffff << (32 - prefix)) >>> 0);
+  const network = (ipInt & mask) >>> 0;
+  const broadcast = (network | (~mask >>> 0)) >>> 0;
+  const totalAddresses = Math.pow(2, 32 - prefix);
+
+  let firstUsable = network;
+  let lastUsable = broadcast;
+  let usableHosts = totalAddresses;
+
+  if (prefix <= 30) {
+    firstUsable = network + 1;
+    lastUsable = broadcast - 1;
+    usableHosts = totalAddresses - 2;
+  } else if (prefix === 31) {
+    usableHosts = 2;
+  } else if (prefix === 32) {
+    usableHosts = 1;
+  }
+
+  output.value =
+    `Network: ${intToIp(network)}\n` +
+    `First Usable: ${intToIp(firstUsable >>> 0)}\n` +
+    `Last Usable: ${intToIp(lastUsable >>> 0)}\n` +
+    `Broadcast: ${intToIp(broadcast)}\n` +
+    `Total Addresses: ${totalAddresses}\n` +
+    `Usable Hosts: ${usableHosts}`;
+
+  return;
+}
       output.value = "This tool logic is not connected yet.";
     });
 
