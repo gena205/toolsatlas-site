@@ -140,6 +140,54 @@ function formatCategoryLabel(category: string): string {
   </section>
 )}
 
+{tool.slug === "website-security-scanner" && (
+  <section class="card">
+    <h2>When to use Website Security Scanner</h2>
+    <ul>
+      <li>When reviewing a website before launch or handoff</li>
+      <li>When checking whether HTTPS and redirects are configured correctly</li>
+      <li>When running a quick client audit before deeper investigation</li>
+      <li>When checking visible security signals and technical website basics in one place</li>
+      <li>When you want a fast first-pass scan before using more advanced tools</li>
+    </ul>
+  </section>
+)}
+
+{tool.slug === "website-security-scanner" && (
+  <section class="card">
+    <h2>Website Security Scanner vs related tools</h2>
+
+    <h3>Website Security Scanner vs Header Checker</h3>
+    <p>
+      A header checker focuses mainly on HTTP response headers.
+      Website Security Scanner gives a broader first-pass view by combining HTTPS, redirects, headers, robots.txt, and sitemap checks.
+      If you want a wider launch or audit snapshot, the scanner is the better first step.
+    </p>
+
+    <h3>Website Security Scanner vs SSL Checker</h3>
+    <p>
+      SSL Checker is more focused on certificate and HTTPS details.
+      Website Security Scanner looks at broader visible website signals around security and technical setup.
+      If your question is specifically about certificate quality, use the SSL tool.
+      If you want a wider website-level overview, start with this scanner.
+    </p>
+  </section>
+)}
+
+{tool.slug === "website-security-scanner" && (
+  <section class="card">
+    <h2>Helpful next steps</h2>
+    <p>
+      If the issue looks certificate-related, continue with
+      <a href="/tools/ssl-checker/"> SSL Checker</a>.
+      If the problem is mainly redirect behavior, use
+      <a href="/tools/redirect-checker/"> Redirect Checker</a>.
+      If you want to inspect header coverage more closely, open
+      <a href="/tools/http-header-checker/"> HTTP Header Checker</a>.
+    </p>
+  </section>
+)}
+
 {tool.slug === "text-diff-checker" && (
   <section class="card">
     <h2>Text Diff Checker vs related tools</h2>
@@ -173,6 +221,19 @@ function formatCategoryLabel(category: string): string {
       If repeated lines are making the comparison messy, try
       <a href="/tools/duplicate-line-remover/"> Duplicate Line Remover</a>.
     </p>
+  </section>
+)}
+
+{tool.slug === "website-security-scanner" && (
+  <section class="card">
+    <h2>Common website audit mistakes</h2>
+    <ul>
+      <li>Assuming HTTPS alone means the whole setup is strong</li>
+      <li>Checking redirects without confirming the preferred canonical version</li>
+      <li>Looking only at headers and ignoring robots.txt or sitemap visibility</li>
+      <li>Stopping at a basic scan when the issue clearly needs deeper investigation</li>
+      <li>Testing the wrong version of the site, such as HTTP instead of HTTPS</li>
+    </ul>
   </section>
 )}
 
@@ -3186,6 +3247,60 @@ if (slug === "csv-to-json") {
   return;
 }
 
+if (slug === "ssl-checker") {
+  const raw = input.value.trim();
+
+  if (!raw) {
+    output.value = "Enter a website URL.";
+    return;
+  }
+
+  let target = raw;
+  if (!/^https?:\/\//i.test(target)) {
+    target = `https://${target}`;
+  }
+
+  output.value = "Checking HTTPS...";
+
+  fetch(`/api/site-check.json?target=${encodeURIComponent(target)}`)
+    .then((res) => res.json())
+    .then((data) => {
+      output.value = `HTTPS: ${data.https}`;
+    })
+    .catch(() => {
+      output.value = "Unable to check SSL.";
+    });
+
+  return;
+}
+
+if (slug === "http-header-checker") {
+  const raw = input.value.trim();
+
+  if (!raw) {
+    output.value = "Enter a website URL.";
+    return;
+  }
+
+  let target = raw;
+  if (!/^https?:\/\//i.test(target)) {
+    target = `https://${target}`;
+  }
+
+  output.value = "Checking headers...";
+
+  fetch(`/api/site-check.json?target=${encodeURIComponent(target)}`)
+    .then((res) => res.json())
+    .then((data) => {
+      output.value = `Headers: ${data.headers}`;
+    })
+    .catch(() => {
+      output.value = "Unable to check headers.";
+    });
+
+  return;
+}
+
 if (slug === "text-to-ascii") {
   const text = input.value;
 
@@ -4337,7 +4452,7 @@ if (slug === "yaml-to-json") {
   return;
 }
 
-if (slug === "xml-formatter") {
+if (slug === "xml-formatter" || slug === "xml-beautifier") {
   const text = input.value.trim();
 
   if (!text) {
@@ -4804,34 +4919,6 @@ if (slug === "subnet-calculator") {
   return;
 }
 
-if (slug === "cidr-calculator") {
-  const raw = input.value.trim().replace("/", "");
-  const prefix = Number(raw);
-
-  if (!Number.isInteger(prefix) || prefix < 0 || prefix > 32) {
-    output.value = "Enter a CIDR prefix like /24 or 24";
-    return;
-  }
-
-  const mask = prefix === 0 ? 0 : ((0xffffffff << (32 - prefix)) >>> 0);
-  const wildcard = (~mask) >>> 0;
-
-  const toIp = (num: number): string =>
-    [(num >>> 24) & 255, (num >>> 16) & 255, (num >>> 8) & 255, num & 255].join(".");
-
-  const total = Math.pow(2, 32 - prefix);
-  const usable = prefix >= 31 ? total : total - 2;
-
-  output.value =
-    `CIDR prefix: /${prefix}\n` +
-    `Subnet mask: ${toIp(mask)}\n` +
-    `Wildcard mask: ${toIp(wildcard)}\n` +
-    `Total addresses: ${total}\n` +
-    `Usable hosts: ${usable}`;
-  return;
-}
-
-
 if (slug === "mx-record-lookup") {
   const domain = input.value.trim().toLowerCase();
 
@@ -4867,6 +4954,72 @@ if (slug === "mx-record-lookup") {
 
   return;
 }
+
+if (slug === "website-security-scanner") {
+  const raw = input.value.trim();
+
+  if (!raw) {
+    output.value = "Enter a website URL like:\nhttps://example.com";
+    return;
+  }
+
+  let target = raw;
+
+  if (!/^https?:\/\//i.test(target)) {
+    target = `https://${target}`;
+  }
+
+  try {
+    new URL(target);
+  } catch {
+    output.value = "Enter a valid website URL like:\nhttps://example.com";
+    return;
+  }
+
+  output.value = "Scanning website security signals...";
+
+  fetch(`/api/site-check.json?target=${encodeURIComponent(target)}`)
+    .then((res: Response) => {
+      if (!res.ok) {
+        throw new Error("Request failed");
+      }
+      return res.json();
+    })
+    .then((data: {
+      https?: string;
+      redirect?: string;
+      headers?: string;
+      robots?: string;
+      sitemap?: string;
+    }) => {
+      const https = data.https || "Unknown";
+      const redirect = data.redirect || "Unknown";
+      const headers = data.headers || "Unknown";
+      const robots = data.robots || "Unknown";
+      const sitemap = data.sitemap || "Unknown";
+
+      output.value =
+        `Website: ${target}\n\n` +
+        `HTTPS: ${https}\n` +
+        `Redirect: ${redirect}\n` +
+        `Headers: ${headers}\n` +
+        `Robots.txt: ${robots}\n` +
+        `Sitemap.xml: ${sitemap}\n\n` +
+        `Tip: Review weak or missing items first, then run the scan again after changes.`;
+    })
+    .catch(() => {
+      output.value =
+        "Unable to scan website.\n\n" +
+        "Possible reasons:\n" +
+        "- invalid URL\n" +
+        "- website is unreachable\n" +
+        "- request blocked\n" +
+        "- temporary endpoint issue";
+    });
+
+  return;
+}
+
 
 if (slug === "ns-record-lookup") {
   const domain = input.value.trim().toLowerCase();
@@ -13708,6 +13861,1952 @@ if (slug === "ip-range-calculator") {
     `Total Addresses: ${totalAddresses}\n` +
     `Usable Hosts: ${usableHosts}`;
 
+  return;
+}
+if (slug === "json-to-yaml") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = 'Enter valid JSON.\nExample:\n{"name":"John","age":30}';
+    return;
+  }
+
+  const isPlainObject = (value: unknown): value is Record<string, unknown> =>
+    typeof value === "object" && value !== null && !Array.isArray(value);
+
+  const formatScalar = (value: unknown): string => {
+    if (value === null) return "null";
+    if (typeof value === "string") {
+      if (value === "" || /[:#\-\n\r\t]/.test(value) || /^\s|\s$/.test(value)) {
+        return JSON.stringify(value);
+      }
+      return value;
+    }
+    if (typeof value === "number" || typeof value === "boolean") {
+      return String(value);
+    }
+    return JSON.stringify(value);
+  };
+
+  const toYaml = (value: unknown, indent = 0): string => {
+    const space = "  ".repeat(indent);
+
+    if (Array.isArray(value)) {
+      if (value.length === 0) {
+        return `${space}[]`;
+      }
+
+      return value
+        .map((item: unknown) => {
+          if (Array.isArray(item) || isPlainObject(item)) {
+            const nested = toYaml(item, indent + 1);
+            const nestedLines = nested.split("\n");
+            return `${space}- ${nestedLines[0].trimStart()}\n${nestedLines.slice(1).join("\n")}`;
+          }
+          return `${space}- ${formatScalar(item)}`;
+        })
+        .join("\n");
+    }
+
+    if (isPlainObject(value)) {
+      const entries = Object.entries(value);
+
+      if (entries.length === 0) {
+        return `${space}{}`;
+      }
+
+      return entries
+        .map(([key, val]) => {
+          if (Array.isArray(val) || isPlainObject(val)) {
+            return `${space}${key}:\n${toYaml(val, indent + 1)}`;
+          }
+          return `${space}${key}: ${formatScalar(val)}`;
+        })
+        .join("\n");
+    }
+
+    return `${space}${formatScalar(value)}`;
+  };
+
+  try {
+    const data = JSON.parse(text);
+    output.value = toYaml(data);
+  } catch {
+    output.value = "Invalid JSON. Please paste valid JSON input.";
+  }
+
+  return;
+}
+
+if (slug === "yaml-to-json") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter simple YAML.\nExample:\nname: John\nage: 30";
+    return;
+  }
+
+  const countIndent = (line: string): number => {
+    const match = line.match(/^ */);
+    return match ? match[0].length : 0;
+  };
+
+  const parseScalar = (value: string): unknown => {
+    const trimmed = value.trim();
+
+    if (trimmed === "null") return null;
+    if (trimmed === "true") return true;
+    if (trimmed === "false") return false;
+    if (/^-?\d+(?:\.\d+)?$/.test(trimmed)) return Number(trimmed);
+
+    if (
+      (trimmed.startsWith('"') && trimmed.endsWith('"')) ||
+      (trimmed.startsWith("'") && trimmed.endsWith("'"))
+    ) {
+      return trimmed.slice(1, -1);
+    }
+
+    return trimmed;
+  };
+
+  try {
+    const lines = text
+      .split(/\r?\n/)
+      .filter((line: string) => line.trim().length > 0 && !line.trim().startsWith("#"));
+
+    if (lines.length === 0) {
+      output.value = "Enter simple YAML content.";
+      return;
+    }
+
+    const parseBlock = (startIndex: number, baseIndent: number): { value: unknown; nextIndex: number } => {
+      const firstLine = lines[startIndex];
+      const isArray = firstLine.trim().startsWith("- ");
+      const result: unknown = isArray ? [] : {};
+
+      let i = startIndex;
+
+      while (i < lines.length) {
+        const line = lines[i];
+        const indent = countIndent(line);
+
+        if (indent < baseIndent) break;
+        if (indent > baseIndent) {
+          throw new Error("Invalid indentation");
+        }
+
+        const trimmed = line.trim();
+
+        if (isArray) {
+          if (!trimmed.startsWith("- ")) break;
+
+          const itemText = trimmed.slice(2).trim();
+
+          if (!Array.isArray(result)) {
+            throw new Error("Mixed YAML structures are not supported");
+          }
+
+          if (!itemText) {
+            const nested = parseBlock(i + 1, baseIndent + 2);
+            result.push(nested.value);
+            i = nested.nextIndex;
+            continue;
+          }
+
+          if (itemText.includes(":")) {
+            const colonIndex = itemText.indexOf(":");
+            const key = itemText.slice(0, colonIndex).trim();
+            const rest = itemText.slice(colonIndex + 1).trim();
+            const obj: Record<string, unknown> = {};
+
+            if (rest) {
+              obj[key] = parseScalar(rest);
+              result.push(obj);
+              i++;
+              continue;
+            }
+
+            const nested = parseBlock(i + 1, baseIndent + 2);
+            obj[key] = nested.value;
+            result.push(obj);
+            i = nested.nextIndex;
+            continue;
+          }
+
+          result.push(parseScalar(itemText));
+          i++;
+          continue;
+        }
+
+        if (!isArray) {
+          const colonIndex = trimmed.indexOf(":");
+
+          if (colonIndex === -1) {
+            throw new Error("Invalid YAML line");
+          }
+
+          const key = trimmed.slice(0, colonIndex).trim();
+          const rest = trimmed.slice(colonIndex + 1).trim();
+
+          if (Array.isArray(result)) {
+            throw new Error("Mixed YAML structures are not supported");
+          }
+
+          if (rest) {
+            (result as Record<string, unknown>)[key] = parseScalar(rest);
+            i++;
+            continue;
+          }
+
+          const nested = parseBlock(i + 1, baseIndent + 2);
+          (result as Record<string, unknown>)[key] = nested.value;
+          i = nested.nextIndex;
+          continue;
+        }
+      }
+
+      return { value: result, nextIndex: i };
+    };
+
+    const parsed = parseBlock(0, countIndent(lines[0]));
+    output.value = JSON.stringify(parsed.value, null, 2);
+  } catch {
+    output.value = "Unable to convert YAML. Use simple YAML with clean indentation, key-value pairs, and standard lists.";
+  }
+
+  return;
+}
+
+if (slug === "json-key-extractor") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = 'Enter valid JSON.\nExample:\n{"user":{"id":1,"name":"John"},"roles":["admin"]}';
+    return;
+  }
+
+  const keys = new Set<string>();
+
+  const walk = (value: unknown, prefix = ""): void => {
+    if (Array.isArray(value)) {
+      value.forEach((item: unknown) => walk(item, prefix));
+      return;
+    }
+
+    if (typeof value === "object" && value !== null) {
+      Object.entries(value as Record<string, unknown>).forEach(([key, val]) => {
+        const path = prefix ? `${prefix}.${key}` : key;
+        keys.add(path);
+        walk(val, path);
+      });
+    }
+  };
+
+  try {
+    const data = JSON.parse(text);
+    walk(data);
+
+    const result = Array.from(keys).sort((a, b) => a.localeCompare(b));
+
+    output.value = result.length > 0
+      ? result.join("\n")
+      : "No keys found in the JSON input.";
+  } catch {
+    output.value = "Invalid JSON. Please paste valid JSON input.";
+  }
+
+  return;
+}
+if (slug === "xml-minifier") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter XML to minify.";
+    return;
+  }
+
+  try {
+    const parser = new DOMParser();
+    const xml = parser.parseFromString(text, "application/xml");
+    const parserError = xml.querySelector("parsererror");
+
+    if (parserError) {
+      output.value = "Invalid XML.";
+      return;
+    }
+
+    const raw = new XMLSerializer().serializeToString(xml);
+    const minified = raw.replace(/>\s+</g, "><").trim();
+
+    output.value = minified;
+  } catch {
+    output.value = "Invalid XML.";
+  }
+
+  return;
+}
+if (slug === "yaml-minifier") {
+  const text = input.value.replace(/\r\n/g, "\n").trim();
+
+  if (!text) {
+    output.value = "Enter YAML to minify.";
+    return;
+  }
+
+  const stripComments = (line: string): string => {
+    let result = "";
+    let quote: string | null = null;
+    let escaped = false;
+
+    for (const char of line) {
+      if (quote) {
+        result += char;
+
+        if (char === "\\" && !escaped) {
+          escaped = true;
+          continue;
+        }
+
+        if (char === quote && !escaped) {
+          quote = null;
+        }
+
+        escaped = false;
+        continue;
+      }
+
+      if (char === '"' || char === "'") {
+        quote = char;
+        result += char;
+        continue;
+      }
+
+      if (char === "#") {
+        break;
+      }
+
+      result += char;
+    }
+
+    return result.replace(/\t/g, "  ").replace(/\s+$/g, "");
+  };
+
+  const lines = text
+    .split("\n")
+    .map((line: string) => stripComments(line))
+    .filter((line: string) => line.trim() !== "");
+
+  if (lines.length === 0) {
+    output.value = "No YAML content found.";
+    return;
+  }
+
+  output.value = lines.join("\n");
+  return;
+}
+const parseTomlLite = (source: string): Record<string, unknown> => {
+  const text = source.replace(/\r\n/g, "\n").trim();
+
+  const root: Record<string, unknown> = {};
+  let currentContext: Record<string, unknown> = root;
+
+  const stripComments = (line: string): string => {
+    let result = "";
+    let quote: string | null = null;
+    let escaped = false;
+
+    for (const char of line) {
+      if (quote) {
+        result += char;
+
+        if (char === "\\" && !escaped) {
+          escaped = true;
+          continue;
+        }
+
+        if (char === quote && !escaped) {
+          quote = null;
+        }
+
+        escaped = false;
+        continue;
+      }
+
+      if (char === '"' || char === "'") {
+        quote = char;
+        result += char;
+        continue;
+      }
+
+      if (char === "#") {
+        break;
+      }
+
+      result += char;
+    }
+
+    return result.trim();
+  };
+
+  const splitTopLevel = (value: string): string[] => {
+    const parts: string[] = [];
+    let current = "";
+    let quote: string | null = null;
+    let depth = 0;
+    let escaped = false;
+
+    for (const char of value) {
+      if (quote) {
+        current += char;
+
+        if (char === "\\" && !escaped) {
+          escaped = true;
+          continue;
+        }
+
+        if (char === quote && !escaped) {
+          quote = null;
+        }
+
+        escaped = false;
+        continue;
+      }
+
+      if (char === '"' || char === "'") {
+        quote = char;
+        current += char;
+        continue;
+      }
+
+      if (char === "[") {
+        depth++;
+        current += char;
+        continue;
+      }
+
+      if (char === "]") {
+        depth--;
+        current += char;
+        continue;
+      }
+
+      if (char === "," && depth === 0) {
+        parts.push(current.trim());
+        current = "";
+        continue;
+      }
+
+      current += char;
+    }
+
+    if (current.trim()) {
+      parts.push(current.trim());
+    }
+
+    return parts;
+  };
+
+  const parseValue = (value: string): unknown => {
+    const trimmed = value.trim();
+
+    if (!trimmed) {
+      throw new Error("Invalid TOML.");
+    }
+
+    if (
+      (trimmed.startsWith('"') && trimmed.endsWith('"')) ||
+      (trimmed.startsWith("'") && trimmed.endsWith("'"))
+    ) {
+      return trimmed.slice(1, -1)
+        .replace(/\\"/g, '"')
+        .replace(/\\\\/g, "\\");
+    }
+
+    if (trimmed === "true") return true;
+    if (trimmed === "false") return false;
+
+    if (/^[+-]?\d+$/.test(trimmed)) {
+      return Number(trimmed);
+    }
+
+    if (/^[+-]?\d+\.\d+$/.test(trimmed)) {
+      return Number(trimmed);
+    }
+
+    if (trimmed.startsWith("[") && trimmed.endsWith("]")) {
+      const inner = trimmed.slice(1, -1).trim();
+
+      if (!inner) return [];
+
+      return splitTopLevel(inner).map((part: string) => parseValue(part));
+    }
+
+    return trimmed;
+  };
+
+  const setPath = (target: Record<string, unknown>, path: string[]): Record<string, unknown> => {
+    let context = target;
+
+    path.forEach((segment: string) => {
+      if (!segment) {
+        throw new Error("Invalid TOML section.");
+      }
+
+      if (
+        typeof context[segment] !== "object" ||
+        context[segment] === null ||
+        Array.isArray(context[segment])
+      ) {
+        context[segment] = {};
+      }
+
+      context = context[segment] as Record<string, unknown>;
+    });
+
+    return context;
+  };
+
+  const lines = text.split("\n");
+
+  for (const line of lines) {
+    const cleaned = stripComments(line);
+
+    if (!cleaned) continue;
+
+    if (cleaned.startsWith("[") && cleaned.endsWith("]")) {
+      const sectionName = cleaned.slice(1, -1).trim();
+
+      if (!sectionName) {
+        throw new Error("Invalid TOML.");
+      }
+
+      currentContext = setPath(root, sectionName.split(".").map((part: string) => part.trim()));
+      continue;
+    }
+
+    const eqIndex = cleaned.indexOf("=");
+
+    if (eqIndex === -1) {
+      throw new Error("Invalid TOML.");
+    }
+
+    const key = cleaned.slice(0, eqIndex).trim();
+    const rawValue = cleaned.slice(eqIndex + 1).trim();
+
+    if (!key || !rawValue) {
+      throw new Error("Invalid TOML.");
+    }
+
+    currentContext[key] = parseValue(rawValue);
+  }
+
+  return root;
+};
+
+const stringifyTomlValue = (value: unknown): string => {
+  if (Array.isArray(value)) {
+    return `[${value.map((item: unknown) => stringifyTomlValue(item)).join(", ")}]`;
+  }
+
+  if (typeof value === "string") {
+    return `"${value.replace(/\\/g, "\\\\").replace(/"/g, '\\"')}"`;
+  }
+
+  if (typeof value === "boolean" || typeof value === "number") {
+    return String(value);
+  }
+
+  return `"${String(value)}"`;
+};
+
+const formatTomlLite = (data: Record<string, unknown>): string => {
+  const lines: string[] = [];
+
+  const writeSection = (obj: Record<string, unknown>, path: string[] = []) => {
+    const scalarEntries = Object.entries(obj).filter(([, value]) =>
+      value === null ||
+      typeof value !== "object" ||
+      Array.isArray(value)
+    );
+
+    const objectEntries = Object.entries(obj).filter(([, value]) =>
+      typeof value === "object" &&
+      value !== null &&
+      !Array.isArray(value)
+    );
+
+    if (path.length > 0) {
+      lines.push(`[${path.join(".")}]`);
+    }
+
+    scalarEntries.forEach(([key, value]) => {
+      lines.push(`${key} = ${stringifyTomlValue(value)}`);
+    });
+
+    if (scalarEntries.length > 0 && objectEntries.length > 0) {
+      lines.push("");
+    }
+
+    objectEntries.forEach(([key, value], index: number) => {
+      writeSection(value as Record<string, unknown>, [...path, key]);
+
+      if (index !== objectEntries.length - 1) {
+        lines.push("");
+      }
+    });
+  };
+
+  writeSection(data);
+
+  return lines.join("\n").replace(/\n{3,}/g, "\n\n").trim();
+};
+
+if (slug === "toml-formatter") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter TOML to format.";
+    return;
+  }
+
+  try {
+    const parsed = parseTomlLite(text);
+    output.value = formatTomlLite(parsed);
+  } catch {
+    output.value = "Invalid TOML.";
+  }
+
+  return;
+}
+if (slug === "toml-validator") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter TOML to validate.";
+    return;
+  }
+
+  try {
+    parseTomlLite(text);
+    output.value = "Valid TOML.";
+  } catch {
+    output.value = "Invalid TOML.";
+  }
+
+  return;
+}
+if (slug === "cron-expression-parser") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter a 5-field cron expression.";
+    return;
+  }
+
+  const parts = text.split(/\s+/);
+
+  if (parts.length !== 5) {
+    output.value = "Enter exactly 5 cron fields: minute hour day-of-month month day-of-week.";
+    return;
+  }
+
+  const describeCronField = (value: string, field: string): string => {
+    if (value === "*") {
+      if (field === "minute") return "every minute";
+      if (field === "hour") return "every hour";
+      if (field === "dayOfMonth") return "every day";
+      if (field === "month") return "every month";
+      return "every day";
+    }
+
+    if (/^\*\/\d+$/.test(value)) {
+      const step = value.split("/")[1];
+      if (field === "minute") return `every ${step} minutes`;
+      if (field === "hour") return `every ${step} hours`;
+      if (field === "dayOfMonth") return `every ${step} days`;
+      if (field === "month") return `every ${step} months`;
+      return `every ${step} weekdays`;
+    }
+
+    if (/^\d+$/.test(value)) {
+      return value;
+    }
+
+    if (/^\d+-\d+$/.test(value)) {
+      const [start, end] = value.split("-");
+      return `from ${start} to ${end}`;
+    }
+
+    if (/^\d+(,\d+)+$/.test(value)) {
+      return value.split(",").join(", ");
+    }
+
+    return value;
+  };
+
+  const [minute, hour, dayOfMonth, month, dayOfWeek] = parts;
+
+  let summary = "Custom cron schedule.";
+
+  if (minute === "*" && hour === "*" && dayOfMonth === "*" && month === "*" && dayOfWeek === "*") {
+    summary = "Every minute.";
+  } else if (/^\*\/\d+$/.test(minute) && hour === "*" && dayOfMonth === "*" && month === "*" && dayOfWeek === "*") {
+    summary = `Every ${minute.split("/")[1]} minutes.`;
+  } else if (/^\d+$/.test(minute) && /^\d+$/.test(hour) && dayOfMonth === "*" && month === "*" && dayOfWeek === "*") {
+    summary = `At ${hour.padStart(2, "0")}:${minute.padStart(2, "0")} every day.`;
+  }
+
+  output.value =
+    `Minute: ${describeCronField(minute, "minute")}\n` +
+    `Hour: ${describeCronField(hour, "hour")}\n` +
+    `Day of month: ${describeCronField(dayOfMonth, "dayOfMonth")}\n` +
+    `Month: ${describeCronField(month, "month")}\n` +
+    `Day of week: ${describeCronField(dayOfWeek, "dayOfWeek")}\n` +
+    `Summary: ${summary}`;
+
+  return;
+}
+
+if (slug === "cron-expression-builder") {
+  const text = input.value.replace(/\r\n/g, "\n").trim();
+
+  if (!text) {
+    output.value = "Enter 5 lines: minute, hour, day-of-month, month, day-of-week.";
+    return;
+  }
+
+  const lines = text
+    .split("\n")
+    .map((line: string) => line.trim())
+    .filter((line: string) => line !== "");
+
+  if (lines.length !== 5) {
+    output.value = "Enter exactly 5 non-empty lines: minute, hour, day-of-month, month, day-of-week.";
+    return;
+  }
+
+  const isValidCronPart = (value: string): boolean => {
+    return /^(\*|\*\/\d+|\d+|\d+-\d+|\d+(,\d+)+)$/.test(value);
+  };
+
+  if (!lines.every((line: string) => isValidCronPart(line))) {
+    output.value = "Use cron values like *, 0, */15, 1-5, or comma-separated numbers.";
+    return;
+  }
+
+  output.value = lines.join(" ");
+  return;
+}
+
+if (slug === "cidr-calculator") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter an IPv4 CIDR like 192.168.1.0/24.";
+    return;
+  }
+
+  const match = text.match(/^(\d{1,3}(?:\.\d{1,3}){3})\/(\d{1,2})$/);
+
+  if (!match) {
+    output.value = "Enter a valid IPv4 CIDR like 192.168.1.0/24.";
+    return;
+  }
+
+  const ip = match[1];
+  const prefix = Number(match[2]);
+
+  if (!Number.isInteger(prefix) || prefix < 0 || prefix > 32) {
+    output.value = "CIDR prefix must be between /0 and /32.";
+    return;
+  }
+
+  const octets = ip.split(".").map((part: string) => Number(part));
+
+  if (octets.some((part: number) => !Number.isInteger(part) || part < 0 || part > 255)) {
+    output.value = "Invalid IPv4 address.";
+    return;
+  }
+
+  const ipToInt = (parts: number[]): number =>
+    (((parts[0] << 24) >>> 0) + ((parts[1] << 16) >>> 0) + ((parts[2] << 8) >>> 0) + (parts[3] >>> 0)) >>> 0;
+
+  const intToIp = (value: number): string =>
+    [
+      (value >>> 24) & 255,
+      (value >>> 16) & 255,
+      (value >>> 8) & 255,
+      value & 255
+    ].join(".");
+
+  const ipInt = ipToInt(octets);
+  const maskInt = prefix === 0 ? 0 : (0xffffffff << (32 - prefix)) >>> 0;
+  const networkInt = ipInt & maskInt;
+  const broadcastInt = (networkInt | (~maskInt >>> 0)) >>> 0;
+  const totalAddresses = 2 ** (32 - prefix);
+
+  let usableHosts = 0;
+  let firstUsable = networkInt;
+  let lastUsable = broadcastInt;
+
+  if (prefix < 31) {
+    usableHosts = Math.max(totalAddresses - 2, 0);
+    firstUsable = networkInt + 1;
+    lastUsable = broadcastInt - 1;
+  } else if (prefix === 31) {
+    usableHosts = 2;
+    firstUsable = networkInt;
+    lastUsable = broadcastInt;
+  } else {
+    usableHosts = 1;
+    firstUsable = networkInt;
+    lastUsable = networkInt;
+  }
+
+  output.value =
+    `CIDR: ${text}\n` +
+    `Subnet mask: ${intToIp(maskInt)}\n` +
+    `Network address: ${intToIp(networkInt)}\n` +
+    `Broadcast address: ${intToIp(broadcastInt)}\n` +
+    `First usable IP: ${intToIp(firstUsable)}\n` +
+    `Last usable IP: ${intToIp(lastUsable)}\n` +
+    `Total addresses: ${totalAddresses}\n` +
+    `Usable hosts: ${usableHosts}`;
+
+  return;
+}
+if (slug === "json-key-extractor") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter valid JSON.";
+    return;
+  }
+
+  try {
+    const data = JSON.parse(text);
+    const keys = new Set<string>();
+
+    const walk = (value: unknown, path = ""): void => {
+      if (Array.isArray(value)) {
+        value.forEach((item) => {
+          walk(item, path);
+        });
+        return;
+      }
+
+      if (value && typeof value === "object") {
+        Object.entries(value as Record<string, unknown>).forEach(([key, child]) => {
+          const nextPath = path ? `${path}.${key}` : key;
+          keys.add(nextPath);
+          walk(child, nextPath);
+        });
+      }
+    };
+
+    walk(data);
+
+    const result = Array.from(keys);
+
+    output.value = result.length > 0 ? result.join("\n") : "No keys found.";
+  } catch {
+    output.value = "Invalid JSON.";
+  }
+
+  return;
+}
+
+if (slug === "json-value-extractor") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter valid JSON.";
+    return;
+  }
+
+  try {
+    const data = JSON.parse(text);
+    const values: string[] = [];
+
+    const formatScalar = (value: unknown): string => {
+      if (typeof value === "string") return value;
+      if (typeof value === "number" || typeof value === "boolean") return String(value);
+      if (value === null) return "null";
+      return JSON.stringify(value);
+    };
+
+    const walk = (value: unknown, path = ""): void => {
+      if (Array.isArray(value)) {
+        value.forEach((item, index) => {
+          const nextPath = `${path}[${index}]`;
+          if (
+            item === null ||
+            typeof item === "string" ||
+            typeof item === "number" ||
+            typeof item === "boolean"
+          ) {
+            values.push(`${nextPath}: ${formatScalar(item)}`);
+          } else {
+            walk(item, nextPath);
+          }
+        });
+        return;
+      }
+
+      if (value && typeof value === "object") {
+        Object.entries(value as Record<string, unknown>).forEach(([key, child]) => {
+          const nextPath = path ? `${path}.${key}` : key;
+
+          if (
+            child === null ||
+            typeof child === "string" ||
+            typeof child === "number" ||
+            typeof child === "boolean"
+          ) {
+            values.push(`${nextPath}: ${formatScalar(child)}`);
+          } else {
+            walk(child, nextPath);
+          }
+        });
+      }
+    };
+
+    walk(data);
+
+    output.value = values.length > 0 ? values.join("\n") : "No scalar values found.";
+  } catch {
+    output.value = "Invalid JSON.";
+  }
+
+  return;
+}
+if (slug === "json-schema-validator") {
+  const text = input.value.trim();
+
+  if (!text.includes("---")) {
+    output.value = "Use format: JSON --- SCHEMA";
+    return;
+  }
+
+  const [jsonStr, schemaStr] = text.split("---").map((s: string) => s.trim());
+
+  try {
+    const data = JSON.parse(jsonStr);
+    const schema = JSON.parse(schemaStr);
+
+    const validate = (value: unknown, rule: any): boolean => {
+      if (!rule || typeof rule !== "object") {
+        return true;
+      }
+
+      if (rule.type === "string") {
+        return typeof value === "string";
+      }
+
+      if (rule.type === "number") {
+        return typeof value === "number" && Number.isFinite(value);
+      }
+
+      if (rule.type === "boolean") {
+        return typeof value === "boolean";
+      }
+
+      if (rule.type === "null") {
+        return value === null;
+      }
+
+      if (rule.type === "array") {
+        if (!Array.isArray(value)) return false;
+
+        if (rule.items) {
+          return value.every((item: unknown) => validate(item, rule.items));
+        }
+
+        return true;
+      }
+
+      if (rule.type === "object") {
+        if (!value || typeof value !== "object" || Array.isArray(value)) {
+          return false;
+        }
+
+        const obj = value as Record<string, unknown>;
+
+        if (rule.required && Array.isArray(rule.required)) {
+          for (const key of rule.required) {
+            if (!(key in obj)) {
+              return false;
+            }
+          }
+        }
+
+        if (rule.properties && typeof rule.properties === "object") {
+          for (const [key, childRule] of Object.entries(rule.properties)) {
+            if (key in obj) {
+              if (!validate(obj[key], childRule)) {
+                return false;
+              }
+            }
+          }
+        }
+
+        return true;
+      }
+
+      return true;
+    };
+
+    output.value = validate(data, schema)
+      ? "Valid JSON schema."
+      : "Invalid JSON or schema.";
+  } catch {
+    output.value = "Invalid JSON or schema.";
+  }
+
+  return;
+}
+
+if (slug === "json-schema-generator") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter JSON.";
+    return;
+  }
+
+  try {
+    const data = JSON.parse(text);
+
+    const generate = (obj: any): any => {
+      if (Array.isArray(obj)) {
+        return { type: "array", items: generate(obj[0]) };
+      }
+
+      if (obj === null) return { type: "null" };
+
+      if (typeof obj === "object") {
+        const props: any = {};
+        Object.keys(obj).forEach(k => {
+          props[k] = generate(obj[k]);
+        });
+        return { type: "object", properties: props };
+      }
+
+      return { type: typeof obj };
+    };
+
+    output.value = JSON.stringify(generate(data), null, 2);
+  } catch {
+    output.value = "Invalid JSON.";
+  }
+
+  return;
+}
+
+if (slug === "json-key-sorter") {
+  const text = input.value.trim();
+
+  try {
+    const data = JSON.parse(text);
+
+    const sortObj = (obj: any): any => {
+      if (Array.isArray(obj)) return obj.map(sortObj);
+
+      if (obj && typeof obj === "object") {
+        return Object.keys(obj)
+          .sort()
+          .reduce((res: any, key) => {
+            res[key] = sortObj(obj[key]);
+            return res;
+          }, {});
+      }
+
+      return obj;
+    };
+
+    output.value = JSON.stringify(sortObj(data), null, 2);
+  } catch {
+    output.value = "Invalid JSON.";
+  }
+
+  return;
+}
+
+if (slug === "json-path-extractor") {
+  const text = input.value.trim();
+
+  if (!text.includes("---")) {
+    output.value = "Use format: JSON --- PATH";
+    return;
+  }
+
+  const [jsonStr, path] = text.split("---").map(s => s.trim());
+
+  try {
+    let data = JSON.parse(jsonStr);
+    const parts = path.split(".");
+
+    for (const part of parts) {
+      if (data[part] === undefined) {
+        output.value = "Path not found.";
+        return;
+      }
+      data = data[part];
+    }
+
+    output.value = typeof data === "object"
+      ? JSON.stringify(data, null, 2)
+      : String(data);
+  } catch {
+    output.value = "Invalid JSON.";
+  }
+
+  return;
+}
+if (slug === "json-key-remover") {
+  const text = input.value.trim();
+
+  if (!text.includes("---")) {
+    output.value = "Use format: JSON --- KEY_PATHS";
+    return;
+  }
+
+  const [jsonStr, keysStr] = text.split("---").map((s: string) => s.trim());
+
+  try {
+    const data = JSON.parse(jsonStr);
+    const keyPaths = keysStr
+      .split("\n")
+      .map((line: string) => line.trim())
+      .filter(Boolean);
+
+    const removePath = (obj: unknown, path: string[]): void => {
+      if (!obj || typeof obj !== "object" || path.length === 0) return;
+
+      const [head, ...rest] = path;
+      const record = obj as Record<string, unknown>;
+
+      if (rest.length === 0) {
+        delete record[head];
+        return;
+      }
+
+      if (head in record) {
+        removePath(record[head], rest);
+      }
+    };
+
+    keyPaths.forEach((path: string) => {
+      removePath(data, path.split("."));
+    });
+
+    output.value = JSON.stringify(data, null, 2);
+  } catch {
+    output.value = "Invalid JSON.";
+  }
+
+  return;
+}
+
+if (slug === "json-array-flattener") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter a JSON array.";
+    return;
+  }
+
+  try {
+    const data = JSON.parse(text);
+
+    if (!Array.isArray(data)) {
+      output.value = "Enter a top-level JSON array.";
+      return;
+    }
+
+    const flatten = (arr: unknown[]): unknown[] => {
+      const result: unknown[] = [];
+
+      arr.forEach((item: unknown) => {
+        if (Array.isArray(item)) {
+          result.push(...flatten(item));
+        } else {
+          result.push(item);
+        }
+      });
+
+      return result;
+    };
+
+    output.value = JSON.stringify(flatten(data), null, 2);
+  } catch {
+    output.value = "Invalid JSON.";
+  }
+
+  return;
+}
+
+if (slug === "json-merge-tool") {
+  const text = input.value.trim();
+
+  if (!text.includes("---")) {
+    output.value = "Use format: OBJECT --- OBJECT";
+    return;
+  }
+
+  try {
+    const parts = text
+      .split("---")
+      .map((block: string) => block.trim())
+      .filter(Boolean)
+      .map((block: string) => JSON.parse(block));
+
+    if (parts.some((part: unknown) => !part || typeof part !== "object" || Array.isArray(part))) {
+      output.value = "Use JSON objects only.";
+      return;
+    }
+
+    const merged = parts.reduce((acc: Record<string, unknown>, current: unknown) => {
+      return { ...acc, ...(current as Record<string, unknown>) };
+    }, {});
+
+    output.value = JSON.stringify(merged, null, 2);
+  } catch {
+    output.value = "Invalid JSON.";
+  }
+
+  return;
+}
+
+if (slug === "json-split-tool") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter JSON.";
+    return;
+  }
+
+  try {
+    const data = JSON.parse(text);
+
+    if (Array.isArray(data)) {
+      const result = data
+        .map((item: unknown, index: number) => `Part ${index + 1}:\n${JSON.stringify(item, null, 2)}`)
+        .join("\n\n---\n\n");
+
+      output.value = result || "No parts found.";
+      return;
+    }
+
+    if (data && typeof data === "object") {
+      const result = Object.entries(data as Record<string, unknown>)
+        .map(([key, value]: [string, unknown]) => `Key: ${key}\n${JSON.stringify(value, null, 2)}`)
+        .join("\n\n---\n\n");
+
+      output.value = result || "No parts found.";
+      return;
+    }
+
+    output.value = "Use a JSON array or object.";
+  } catch {
+    output.value = "Invalid JSON.";
+  }
+
+  return;
+}
+if (slug === "json-size-calculator") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter JSON.";
+    return;
+  }
+
+  try {
+    const data = JSON.parse(text);
+    const minified = JSON.stringify(data);
+    const utf8Bytes = new TextEncoder().encode(text).length;
+    const lineCount = text.replace(/\r\n/g, "\n").split("\n").length;
+
+    output.value =
+      `Characters: ${text.length}\n` +
+      `Bytes (UTF-8): ${utf8Bytes}\n` +
+      `Lines: ${lineCount}\n` +
+      `Minified characters: ${minified.length}`;
+  } catch {
+    output.value = "Invalid JSON.";
+  }
+
+  return;
+}
+
+if (slug === "xml-minifier") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter XML to minify.";
+    return;
+  }
+
+  try {
+    const parser = new DOMParser();
+    const xml = parser.parseFromString(text, "application/xml");
+    const parserError = xml.querySelector("parsererror");
+
+    if (parserError) {
+      output.value = "Invalid XML.";
+      return;
+    }
+
+    const raw = new XMLSerializer().serializeToString(xml);
+    const minified = raw.replace(/>\s+</g, "><").trim();
+
+    output.value = minified;
+  } catch {
+    output.value = "Invalid XML.";
+  }
+
+  return;
+}
+if (slug === "xml-to-csv") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter XML.";
+    return;
+  }
+
+  try {
+    const parser = new DOMParser();
+    const xml = parser.parseFromString(text, "application/xml");
+    const parserError = xml.querySelector("parsererror");
+
+    if (parserError) {
+      output.value = "Invalid XML.";
+      return;
+    }
+
+    const root = xml.documentElement;
+    const records = Array.from(root.children);
+
+    if (records.length === 0) {
+      output.value = "No record elements found.";
+      return;
+    }
+
+    const headers = Array.from(
+      new Set(
+        records.flatMap((record: Element) =>
+          Array.from(record.children).map((child: Element) => child.tagName)
+        )
+      )
+    );
+
+    if (headers.length === 0) {
+      output.value = "No child fields found.";
+      return;
+    }
+
+    const escapeCsv = (value: string): string => {
+      if (/[",\n]/.test(value)) {
+        return `"${value.replace(/"/g, '""')}"`;
+      }
+      return value;
+    };
+
+    const rows = records.map((record: Element) =>
+      headers.map((header: string) => {
+        const found = Array.from(record.children).find((child: Element) => child.tagName === header);
+        return escapeCsv(found?.textContent?.trim() ?? "");
+      }).join(",")
+    );
+
+    output.value = `${headers.join(",")}\n${rows.join("\n")}`;
+  } catch {
+    output.value = "Invalid XML.";
+  }
+
+  return;
+}
+
+if (slug === "csv-to-xml") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter CSV.";
+    return;
+  }
+
+  const lines = text.replace(/\r\n/g, "\n").split("\n").filter((line: string) => line.trim() !== "");
+
+  if (lines.length < 2) {
+    output.value = "Enter CSV with a header row and at least one data row.";
+    return;
+  }
+
+  const parseCsvLine = (line: string): string[] => {
+    const result: string[] = [];
+    let current = "";
+    let inQuotes = false;
+
+    for (let i = 0; i < line.length; i++) {
+      const char = line[i];
+      const next = line[i + 1];
+
+      if (char === '"' && inQuotes && next === '"') {
+        current += '"';
+        i++;
+        continue;
+      }
+
+      if (char === '"') {
+        inQuotes = !inQuotes;
+        continue;
+      }
+
+      if (char === "," && !inQuotes) {
+        result.push(current);
+        current = "";
+        continue;
+      }
+
+      current += char;
+    }
+
+    result.push(current);
+    return result.map((item: string) => item.trim());
+  };
+
+  const headers = parseCsvLine(lines[0]);
+
+  if (headers.some((header: string) => !header)) {
+    output.value = "Invalid CSV header.";
+    return;
+  }
+
+  const escapeXml = (value: string): string =>
+    value
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&apos;");
+
+  const items = lines.slice(1).map((line: string) => {
+    const cols = parseCsvLine(line);
+
+    if (cols.length !== headers.length) {
+      throw new Error("Invalid CSV row.");
+    }
+
+    const fields = headers.map((header: string, index: number) =>
+      `<${header}>${escapeXml(cols[index] ?? "")}</${header}>`
+    ).join("");
+
+    return `<item>${fields}</item>`;
+  }).join("");
+
+  try {
+    output.value = `<items>${items}</items>`;
+  } catch {
+    output.value = "Invalid CSV.";
+  }
+
+  return;
+}
+if (slug === "xml-path-extractor") {
+  const text = input.value.trim();
+
+  if (!text.includes("---")) {
+    output.value = "Use format: XML --- PATH";
+    return;
+  }
+
+  const [xmlStr, path] = text.split("---").map((s: string) => s.trim());
+
+  if (!xmlStr) {
+    output.value = "Enter XML.";
+    return;
+  }
+
+  if (!path) {
+    output.value = "Enter a path like user.profile.city";
+    return;
+  }
+
+  try {
+    const parser = new DOMParser();
+    const xml = parser.parseFromString(xmlStr, "application/xml");
+    const parserError = xml.querySelector("parsererror");
+
+    if (parserError) {
+      output.value = "Invalid XML.";
+      return;
+    }
+
+    const parts = path
+      .split(".")
+      .map((part: string) => part.trim())
+      .filter(Boolean);
+
+    const root = xml.documentElement;
+
+    if (!root) {
+      output.value = "Path not found.";
+      return;
+    }
+
+    let current: Element = root;
+
+    if (parts[0] === current.tagName) {
+      parts.shift();
+    }
+
+    for (const part of parts) {
+      const nextElement = Array.from(current.children).find(
+        (child: Element) => child.tagName === part
+      );
+
+      if (!nextElement) {
+        output.value = "Path not found.";
+        return;
+      }
+
+      current = nextElement;
+    }
+
+    output.value = current.textContent?.trim() ?? "";
+  } catch {
+    output.value = "Invalid XML.";
+  }
+
+  return;
+}
+if (slug === "xml-attribute-extractor") {
+  const text = input.value.trim();
+
+  if (!text.includes("---")) {
+    output.value = "Use format: XML --- ATTRIBUTE_NAME";
+    return;
+  }
+
+  const [xmlStr, attrName] = text.split("---").map((s: string) => s.trim());
+
+  if (!xmlStr) {
+    output.value = "Enter XML.";
+    return;
+  }
+
+  if (!attrName) {
+    output.value = "Enter an attribute name.";
+    return;
+  }
+
+  try {
+    const parser = new DOMParser();
+    const xml = parser.parseFromString(xmlStr, "application/xml");
+    const parserError = xml.querySelector("parsererror");
+
+    if (parserError) {
+      output.value = "Invalid XML.";
+      return;
+    }
+
+    const values: string[] = [];
+    const elements = Array.from(xml.getElementsByTagName("*"));
+
+    elements.forEach((el: Element) => {
+      if (el.hasAttribute(attrName)) {
+        values.push(el.getAttribute(attrName) ?? "");
+      }
+    });
+
+    output.value = values.length > 0 ? values.join("\n") : "No matching attributes found.";
+  } catch {
+    output.value = "Invalid XML.";
+  }
+
+  return;
+}
+
+if (slug === "xml-namespace-extractor") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter XML.";
+    return;
+  }
+
+  try {
+    const parser = new DOMParser();
+    const xml = parser.parseFromString(text, "application/xml");
+    const parserError = xml.querySelector("parsererror");
+
+    if (parserError) {
+      output.value = "Invalid XML.";
+      return;
+    }
+
+    const root = xml.documentElement;
+    const namespaces: string[] = [];
+
+    Array.from(root.attributes).forEach((attr: Attr) => {
+      if (attr.name === "xmlns") {
+        namespaces.push(`default: ${attr.value}`);
+      } else if (attr.name.startsWith("xmlns:")) {
+        namespaces.push(`${attr.name.replace("xmlns:", "")}: ${attr.value}`);
+      }
+    });
+
+    output.value = namespaces.length > 0 ? namespaces.join("\n") : "No namespaces found.";
+  } catch {
+    output.value = "Invalid XML.";
+  }
+
+  return;
+}
+
+if (slug === "url-builder") {
+  const text = input.value.trim();
+
+  if (!text.includes("---")) {
+    output.value = "Use format: BASE_URL --- PARAMS";
+    return;
+  }
+
+  const [baseUrl, paramsStr] = text.split("---").map((s: string) => s.trim());
+
+  if (!baseUrl) {
+    output.value = "Enter a base URL.";
+    return;
+  }
+
+  try {
+    const url = new URL(baseUrl);
+    const lines = paramsStr
+      .split("\n")
+      .map((line: string) => line.trim())
+      .filter(Boolean);
+
+    lines.forEach((line: string) => {
+      const eqIndex = line.indexOf("=");
+
+      if (eqIndex === -1) return;
+
+      const key = line.slice(0, eqIndex).trim();
+      const value = line.slice(eqIndex + 1).trim();
+
+      if (key) {
+        url.searchParams.append(key, value);
+      }
+    });
+
+    output.value = url.toString();
+  } catch {
+    output.value = "Invalid URL.";
+  }
+
+  return;
+}
+
+if (slug === "url-splitter") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter a full URL.";
+    return;
+  }
+
+  try {
+    const url = new URL(text);
+
+    output.value =
+      `Protocol: ${url.protocol}\n` +
+      `Host: ${url.host}\n` +
+      `Path: ${url.pathname}\n` +
+      `Query: ${url.search}\n` +
+      `Fragment: ${url.hash}`;
+  } catch {
+    output.value = "Invalid URL.";
+  }
+
+  return;
+}
+if (slug === "url-query-cleaner") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter a full URL.";
+    return;
+  }
+
+  try {
+    const url = new URL(text);
+    const rawQuery = url.search.replace(/^\?/, "");
+
+    if (!rawQuery) {
+      output.value = url.toString();
+      return;
+    }
+
+    const cleanedParts = rawQuery
+      .split("&")
+      .map((part: string) => part.trim())
+      .filter((part: string) => part !== "" && !/^[^=]+=$/.test(part));
+
+    url.search = cleanedParts.length > 0 ? `?${cleanedParts.join("&")}` : "";
+
+    output.value = url.toString();
+  } catch {
+    output.value = "Invalid URL.";
+  }
+
+  return;
+}
+
+if (slug === "url-parameter-remover") {
+  const text = input.value.trim();
+
+  if (!text.includes("---")) {
+    output.value = "Use format: URL --- PARAMS";
+    return;
+  }
+
+  const [urlStr, paramsStr] = text.split("---").map((s: string) => s.trim());
+
+  if (!urlStr) {
+    output.value = "Enter a full URL.";
+    return;
+  }
+
+  try {
+    const url = new URL(urlStr);
+    const params = paramsStr
+      .split("\n")
+      .map((line: string) => line.trim())
+      .filter(Boolean);
+
+    params.forEach((param: string) => {
+      url.searchParams.delete(param);
+    });
+
+    output.value = url.toString();
+  } catch {
+    output.value = "Invalid URL.";
+  }
+
+  return;
+}
+
+if (slug === "url-parameter-sorter") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter a full URL.";
+    return;
+  }
+
+  try {
+    const url = new URL(text);
+    const entries = Array.from(url.searchParams.entries()).sort(
+      (a: [string, string], b: [string, string]) => a[0].localeCompare(b[0])
+    );
+
+    url.search = "";
+    entries.forEach(([key, value]: [string, string]) => {
+      url.searchParams.append(key, value);
+    });
+
+    output.value = url.toString();
+  } catch {
+    output.value = "Invalid URL.";
+  }
+
+  return;
+}
+
+if (slug === "url-parameter-decoder") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter a parameter value.";
+    return;
+  }
+
+  try {
+    output.value = decodeURIComponent(text);
+  } catch {
+    output.value = "Invalid encoded parameter.";
+  }
+
+  return;
+}
+
+if (slug === "url-parameter-encoder") {
+  const text = input.value;
+
+  if (!text.trim()) {
+    output.value = "Enter a parameter value.";
+    return;
+  }
+
+  output.value = encodeURIComponent(text.trim());
+  return;
+}
+if (slug === "url-domain-extractor") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter a full URL.";
+    return;
+  }
+
+  try {
+    const url = new URL(text);
+    output.value = url.host;
+  } catch {
+    output.value = "Invalid URL.";
+  }
+
+  return;
+}
+
+if (slug === "url-path-extractor") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter a full URL.";
+    return;
+  }
+
+  try {
+    const url = new URL(text);
+    output.value = url.pathname;
+  } catch {
+    output.value = "Invalid URL.";
+  }
+
+  return;
+}
+
+if (slug === "url-protocol-extractor") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter a full URL.";
+    return;
+  }
+
+  try {
+    const url = new URL(text);
+    output.value = url.protocol;
+  } catch {
+    output.value = "Invalid URL.";
+  }
+
+  return;
+}
+
+
+if (slug === "http-request-builder") {
+  const text = input.value.replace(/\r\n/g, "\n").trim();
+
+  if (!text) {
+    output.value = "Enter request parts.";
+    return;
+  }
+
+  const parts = text.split("\n");
+  const method = parts[0]?.trim();
+  const path = parts[1]?.trim();
+  const host = parts[2]?.trim();
+
+  if (!method || !path || !host) {
+    output.value = "Enter method, path, and host on separate lines.";
+    return;
+  }
+
+  const rest = parts.slice(3);
+  const blankIndex = rest.findIndex((line: string) => line.trim() === "");
+  const headerLines = blankIndex === -1 ? rest : rest.slice(0, blankIndex);
+  const bodyLines = blankIndex === -1 ? [] : rest.slice(blankIndex + 1);
+
+  let result = `${method} ${path} HTTP/1.1\nHost: ${host}`;
+
+  if (headerLines.length > 0) {
+    result += `\n${headerLines.join("\n")}`;
+  }
+
+  if (bodyLines.length > 0) {
+    result += `\n\n${bodyLines.join("\n")}`;
+  }
+
+  output.value = result;
+  return;
+}
+
+if (slug === "http-header-generator") {
+  const text = input.value.replace(/\r\n/g, "\n").trim();
+
+  if (!text) {
+    output.value = "Enter header pairs.";
+    return;
+  }
+
+  const lines = text
+    .split("\n")
+    .map((line: string) => line.trim())
+    .filter(Boolean);
+
+  const result: string[] = [];
+
+  for (const line of lines) {
+    const eqIndex = line.indexOf("=");
+
+    if (eqIndex === -1) {
+      output.value = "Use one header per line in Header-Name=Value format.";
+      return;
+    }
+
+    const key = line.slice(0, eqIndex).trim();
+    const value = line.slice(eqIndex + 1).trim();
+
+    if (!key) {
+      output.value = "Invalid header name.";
+      return;
+    }
+
+    result.push(`${key}: ${value}`);
+  }
+
+  output.value = result.join("\n");
+  return;
+}
+
+if (slug === "http-header-extractor") {
+  const text = input.value.replace(/\r\n/g, "\n");
+
+  if (!text.trim()) {
+    output.value = "Enter raw HTTP text.";
+    return;
+  }
+
+  const lines = text.split("\n");
+  const result: string[] = [];
+
+  for (let i = 1; i < lines.length; i++) {
+    const line = lines[i];
+
+    if (line.trim() === "") {
+      break;
+    }
+
+    if (line.includes(":")) {
+      result.push(line.trim());
+    }
+  }
+
+  output.value = result.length > 0 ? result.join("\n") : "No headers found.";
   return;
 }
       output.value = "This tool logic is not connected yet.";

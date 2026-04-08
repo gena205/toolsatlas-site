@@ -1,0 +1,140 @@
+JSON / Data (расширение)
+JSON to CSV
+CSV to JSON
+JSON to YAML
+YAML to JSON (проверь, если нет)
+JSON Key Extractor
+JSON Value Extractor
+JSON Path Finder
+JSON Path Extractor
+JSON Schema Validator
+JSON Schema Generator
+JSON Key Sorter
+JSON Key Remover
+JSON Array Flattener
+JSON Array Extractor
+JSON Merge Tool
+JSON Split Tool
+JSON Compare Tool
+JSON Size Calculator
+🔥 XML
+XML Formatter
+XML Validator
+XML Minifier
+XML Beautifier
+XML to JSON (если нет полноценного)
+XML to CSV
+CSV to XML
+XML Path Extractor
+XML Attribute Extractor
+XML Tag Extractor
+XML Namespace Extractor
+🔥 URL / Web parsing
+URL Builder
+URL Splitter
+URL Query Cleaner
+URL Parameter Remover
+URL Parameter Sorter
+URL Parameter Decoder
+URL Parameter Encoder
+URL Domain Extractor
+URL Path Extractor (если нет)
+URL Protocol Extractor
+URL Hash Extractor
+URL Fragment Extractor
+🔥 HTTP / Headers / Security (очень жирный кластер)
+HTTP Status Code Checker
+HTTP Response Viewer
+HTTP Request Builder
+HTTP Header Generator
+HTTP Header Extractor
+Security Headers Checker
+CSP Header Analyzer
+HSTS Header Checker
+X-Frame Options Checker
+X-XSS Protection Checker
+Referrer Policy Checker
+Permissions Policy Checker
+CORS Checker
+Cache-Control Header Checker
+🔥 JWT / Auth
+JWT Generator
+JWT Validator
+JWT Signature Verifier
+JWT Header Decoder
+JWT Payload Extractor
+JWT Claims Viewer
+Basic Auth Generator
+Basic Auth Decoder
+Bearer Token Parser
+API Key Generator
+🔥 Hash / Crypto
+SHA3 Hash Generator
+PBKDF2 Generator
+Hash Compare Tool
+Hash Identifier
+Salted Hash Generator
+HMAC SHA256 Generator (если нет отдельного)
+HMAC SHA1 Generator
+CRC32 Generator
+🔥 Encoding / Decoding
+ASCII Encoder
+ASCII Decoder
+Unicode Encoder
+Unicode Decoder
+URL-safe Base64 Encoder (если нет отдельно)
+URL-safe Base64 Decoder (если нет отдельно)
+Quoted Printable Encoder
+Quoted Printable Decoder
+HTML Numeric Encoder
+HTML Numeric Decoder
+🔥 Regex (очень важно для SEO)
+Regex Replace Tool
+Regex Split Tool
+Regex Group Extractor
+Regex Validator
+Regex Pattern Tester
+Regex Match Highlighter
+Regex Replace Preview
+🔥 Code / Formatter / Minifier
+HTML Formatter
+HTML Minifier
+HTML Beautifier
+CSS Formatter
+CSS Minifier
+CSS Beautifier
+JavaScript Formatter
+JavaScript Minifier
+JavaScript Beautifier
+Code Diff Checker
+Code Line Counter
+Indentation Fixer
+🔥 Dev helpers (очень полезные)
+Cron Expression Generator
+Cron Expression Parser
+Unix Timestamp Generator
+Date to Timestamp Converter (обратный!)
+Timezone Converter
+UUID Validator
+UUID Parser
+Color Converter HEX to RGB
+Color Converter RGB to HEX
+Color Converter HEX to HSL
+Color Converter HSL to HEX
+Color Contrast Checker
+IP Validator IPv4
+IP Validator IPv6
+CIDR Calculator
+Subnet Calculator
+🔥 EXTRA (очень полезно для масштаба)
+Email Validator
+Email Extractor
+Domain Extractor
+HTML Link Extractor
+Image URL Extractor
+CSS Selector Generator
+HTML Table Extractor
+CSV Column Extractor (если нет)
+Delimiter Converter (если нет)
+TSV to CSV (если нет)
+CSV to TSV (если нет)

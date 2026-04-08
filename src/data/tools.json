@@ -694,7 +694,7 @@
     },
     {
       "title": "Encode Unicode text",
-      "input": "Привет мир",
+      "input": "Hello world",
       "output": "%D0%9F%D1%80%D0%B8%D0%B2%D0%B5%D1%82%20%D0%BC%D0%B8%D1%80",
       "explanation": "Useful when non-English text must be included in a link or parameter safely."
     },
@@ -16389,6 +16389,324 @@
   ]
 },
 
+{
+  "id": "website-security-scanner",
+  "name": "Website Security Scanner",
+  "slug": "website-security-scanner",
+  "category": "network-tools",
+  "intro": "Scan a website for basic security signals like HTTPS, redirects, security headers, robots.txt, and sitemap availability.",
+  "description": "Use this Website Security Scanner to run a fast security-focused website check directly in the browser. It helps you review HTTPS status, redirect behavior, common security headers, robots.txt, and sitemap availability in one place. This tool is useful for quick technical audits, launch checks, client reviews, SEO diagnostics, and basic web security checks before going deeper with advanced testing tools.",
+  "keywords": [
+    "website security scanner",
+    "website security check",
+    "scan website security",
+    "basic website security scan",
+    "security headers checker",
+    "https checker",
+    "website audit tool"
+  ],
+  "whyUse": [
+    "Run a fast website security check without installing separate tools",
+    "Check whether HTTPS and redirects are configured correctly",
+    "Spot missing or weak security headers quickly",
+    "Confirm whether robots.txt and sitemap.xml are available",
+    "Use one simple page for launch checks, audits, and quick reviews"
+  ],
+  "howToUse": [
+    "Enter a full website URL including https:// or http://",
+    "Click Run Tool to start the scan",
+    "Review the output for HTTPS, redirects, headers, robots.txt, and sitemap results",
+    "Use the findings to identify weak configuration areas",
+    "Re-run the scan after making changes to confirm the fixes"
+  ],
+  "examples": [
+    {
+      "title": "Healthy HTTPS website",
+      "input": "https://example.com",
+      "output": "HTTPS: OK\nRedirect: OK\nHeaders: Good\nRobots: Found\nSitemap: Found",
+      "explanation": "Useful for a quick launch or health check when the site already follows basic best practices."
+    },
+    {
+      "title": "Website missing strong header coverage",
+      "input": "https://mysite.com",
+      "output": "HTTPS: OK\nRedirect: OK\nHeaders: Missing CSP\nRobots: Found\nSitemap: Found",
+      "explanation": "Helpful when a site is live but still missing one or more important security-related headers."
+    },
+    {
+      "title": "HTTP site without forced HTTPS",
+      "input": "http://example.com",
+      "output": "HTTPS: Missing\nRedirect: Not forced\nHeaders: Weak\nRobots: Found\nSitemap: Not found",
+      "explanation": "Useful for spotting sites that still allow insecure access or incomplete redirect behavior."
+    },
+    {
+      "title": "Technical SEO plus security signals check",
+      "input": "https://store.example",
+      "output": "HTTPS: OK\nRedirect: OK\nHeaders: Weak\nRobots: Found\nSitemap: Missing",
+      "explanation": "Helpful when reviewing both security basics and crawl-related technical signals together."
+    },
+    {
+      "title": "Problematic staging or client site",
+      "input": "http://staging.example",
+      "output": "HTTPS: Missing\nRedirect: Missing\nHeaders: Weak\nRobots: Not found\nSitemap: Not found",
+      "explanation": "Useful when auditing unfinished deployments, staging environments, or neglected client sites."
+    },
+    {
+      "title": "Unreachable website",
+      "input": "https://not-real-domain.example",
+      "output": "Unable to scan website.",
+      "explanation": "Helpful for showing how the tool behaves when the target is invalid or unreachable."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Invalid URL format",
+      "fix": "Enter a full URL and include http:// or https:// before the domain."
+    },
+    {
+      "issue": "Website is unreachable or blocks the request",
+      "fix": "Check that the domain is live and accessible, then try again."
+    },
+    {
+      "issue": "HTTPS is enabled but redirects are inconsistent",
+      "fix": "Make sure HTTP requests are redirected cleanly to the preferred HTTPS version."
+    },
+    {
+      "issue": "Headers are present but incomplete",
+      "fix": "Review which security headers are missing and add them one by one."
+    },
+    {
+      "issue": "Robots or sitemap results are missing",
+      "fix": "Check whether robots.txt and sitemap.xml exist at the expected paths and are publicly accessible."
+    }
+  ],
+  "useCases": [
+    "Quick website review before launch",
+    "Basic technical audit for a client website",
+    "Checking HTTPS and redirects after deployment",
+    "Reviewing header and crawl-file basics during SEO work",
+    "Learning how basic website security signals are configured"
+  ],
+  "faq": [
+    {
+      "q": "What does this website security scanner check?",
+      "a": "It checks basic website security and technical signals such as HTTPS, redirects, common security headers, robots.txt, and sitemap availability."
+    },
+    {
+      "q": "Is this a full vulnerability scanner?",
+      "a": "No. It is a lightweight configuration and signal checker, not a deep vulnerability assessment platform."
+    },
+    {
+      "q": "Can this tool detect missing security headers?",
+      "a": "Yes. It helps identify whether key security-related headers appear to be missing or weak."
+    },
+    {
+      "q": "Why does the tool check robots.txt and sitemap.xml too?",
+      "a": "These files are not security controls, but they are useful technical website signals that often matter during launch reviews and technical audits."
+    },
+    {
+      "q": "Can I use this tool for SEO audits?",
+      "a": "Yes. It is useful for technical SEO checks because HTTPS, redirects, robots.txt, and sitemap availability often overlap with audit workflows."
+    },
+    {
+      "q": "Why does my site show weak headers?",
+      "a": "That usually means one or more important headers are missing, incomplete, or not configured consistently."
+    },
+    {
+      "q": "Does this scanner check malware or deep vulnerabilities?",
+      "a": "No. It focuses on common visible website configuration checks rather than deep exploit or malware scanning."
+    },
+    {
+      "q": "Can I scan client websites with it?",
+      "a": "Yes. It works well for quick reviews and first-pass checks before deeper technical analysis."
+    },
+    {
+      "q": "What should I do after finding issues?",
+      "a": "Review each result, fix the configuration on the site or server side, and run the scan again to confirm the improvement."
+    },
+    {
+      "q": "What is the difference between this tool and a header checker?",
+      "a": "A header checker focuses mainly on HTTP headers, while this scanner combines headers with HTTPS, redirect, robots.txt, and sitemap checks in one place."
+    }
+  ],
+  "related": [
+  "ssl-checker",
+  "http-header-checker",
+  "website-redirect-checker",
+  "dns-lookup"
+  ]
+},
+
+{
+  "id": "ssl-checker",
+  "name": "SSL Checker",
+  "slug": "ssl-checker",
+  "category": "network-tools",
+  "intro": "Check SSL certificate status, HTTPS support, and basic certificate information for a website.",
+  "description": "Use this SSL Checker to verify whether a website uses HTTPS and to inspect basic SSL certificate details. It helps confirm if a site is secure, whether HTTPS is properly configured, and whether the certificate appears valid. Useful for quick audits, launch checks, and troubleshooting HTTPS-related issues before deeper investigation.",
+  "keywords": [
+    "ssl checker",
+    "https checker",
+    "ssl certificate check",
+    "check ssl certificate",
+    "https status check",
+    "website ssl check"
+  ],
+  "whyUse": [
+    "Quickly verify whether a site uses HTTPS",
+    "Check if SSL is properly configured",
+    "Confirm certificate availability before launch",
+    "Run a fast HTTPS validation during audits",
+    "Detect missing or broken HTTPS setups"
+  ],
+  "howToUse": [
+    "Enter a website URL or domain",
+    "Click Run Tool",
+    "Check whether HTTPS is enabled",
+    "Review certificate-related output",
+    "Fix issues and test again"
+  ],
+  "examples": [
+    {
+      "title": "HTTPS enabled website",
+      "input": "https://example.com",
+      "output": "HTTPS: OK",
+      "explanation": "The site uses HTTPS correctly."
+    },
+    {
+      "title": "HTTP only website",
+      "input": "http://example.com",
+      "output": "HTTPS: Missing",
+      "explanation": "The site is not secured with HTTPS."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Invalid domain",
+      "fix": "Enter a valid website URL."
+    },
+    {
+      "issue": "HTTPS not enforced",
+      "fix": "Redirect HTTP to HTTPS."
+    }
+  ],
+  "useCases": [
+    "Checking HTTPS before launch",
+    "Quick SSL verification",
+    "SEO technical audits",
+    "Client website review"
+  ],
+  "faq": [
+    {
+      "q": "What does SSL Checker do?",
+      "a": "It checks whether a website uses HTTPS and if SSL appears correctly configured."
+    },
+    {
+      "q": "Does it validate certificate details?",
+      "a": "It provides basic checks, not full certificate analysis."
+    },
+    {
+      "q": "Is HTTPS important for SEO?",
+      "a": "Yes, HTTPS is a ranking factor and trust signal."
+    },
+    {
+      "q": "Can HTTPS work without redirect?",
+      "a": "Yes, but it is recommended to force HTTPS."
+    },
+    {
+      "q": "Is this a full SSL audit?",
+      "a": "No, it is a basic checker."
+    }
+  ],
+  "related": [
+    "website-security-scanner",
+    "website-redirect-checker",
+    "dns-lookup"
+  ]
+},
+
+{
+  "id": "http-header-checker",
+  "name": "HTTP Header Checker",
+  "slug": "http-header-checker",
+  "category": "network-tools",
+  "intro": "Check HTTP response headers and detect missing security headers.",
+  "description": "Use this HTTP Header Checker to inspect response headers and identify missing security-related headers like CSP, HSTS, X-Frame-Options, and others. Useful for debugging, audits, and improving browser-side security signals.",
+  "keywords": [
+    "http header checker",
+    "security headers check",
+    "check headers online",
+    "http headers tool",
+    "security headers scanner"
+  ],
+  "whyUse": [
+    "See all response headers in one place",
+    "Detect missing security headers quickly",
+    "Debug server responses",
+    "Improve website security signals",
+    "Run quick header audits"
+  ],
+  "howToUse": [
+    "Enter a website URL",
+    "Click Run Tool",
+    "Review headers in output",
+    "Check missing security headers",
+    "Fix configuration and re-run"
+  ],
+  "examples": [
+    {
+      "title": "Headers with missing CSP",
+      "input": "https://example.com",
+      "output": "Missing CSP, Missing HSTS",
+      "explanation": "Common weak configuration"
+    },
+    {
+      "title": "Good header setup",
+      "input": "https://secure-site.com",
+      "output": "All important headers present",
+      "explanation": "Strong configuration"
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Site blocks requests",
+      "fix": "Try again or test another domain"
+    }
+  ],
+  "useCases": [
+    "Security header audits",
+    "Debugging backend responses",
+    "SEO + security checks",
+    "Learning HTTP headers"
+  ],
+  "faq": [
+    {
+      "q": "What headers are checked?",
+      "a": "CSP, HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy."
+    },
+    {
+      "q": "Does this improve security?",
+      "a": "It helps identify missing protections."
+    },
+    {
+      "q": "Is this a full security scan?",
+      "a": "No, only header inspection."
+    },
+    {
+      "q": "Can I see all headers?",
+      "a": "Yes, depending on implementation."
+    },
+    {
+      "q": "Why are headers important?",
+      "a": "They control browser security behavior."
+    }
+  ],
+  "related": [
+    "website-security-scanner",
+    "ssl-checker",
+    "dns-lookup"
+  ]
+},
+
   {
     "id": "url-safe-base64-decoder",
     "name": "URL-safe Base64 Decoder",
@@ -25744,6 +26062,3668 @@
     "hourly-to-salary-calculator",
     "overtime-calculator",
     "commission-calculator"
+  ]
+},
+{
+  "id": "json-to-yaml",
+  "name": "JSON to YAML",
+  "slug": "json-to-yaml",
+  "category": "converters",
+  "intro": "Convert JSON into clean YAML format instantly for configs, DevOps, and developer workflows.",
+  "description": "Use this JSON to YAML converter to turn valid JSON into readable YAML instantly. It is useful for config files, DevOps work, infrastructure templates, automation setups, app settings, and developer workflows where YAML is easier to read or required by a tool. Paste a JSON object or array to convert it into structured YAML directly in the browser.",
+  "keywords": [
+    "json to yaml",
+    "convert json to yaml",
+    "json yaml converter",
+    "yaml converter",
+    "json to yaml online"
+  ],
+  "whyUse": [
+    "Convert machine-friendly JSON into more readable YAML quickly",
+    "Useful for config files, DevOps tools, and deployment workflows",
+    "Helps move structured data into systems that expect YAML",
+    "Makes nested objects easier to scan in many cases",
+    "Runs directly in the browser without needing a library or script"
+  ],
+  "howToUse": [
+    "Paste valid JSON into the input box",
+    "Click Run Tool to convert the structure",
+    "Review the YAML output with indentation",
+    "Copy the result into your config, template, or workflow file",
+    "If needed, validate the source JSON before converting again"
+  ],
+  "examples": [
+    {
+      "title": "Convert a simple JSON object",
+      "input": "{\"name\":\"John\",\"age\":30}",
+      "output": "name: John\nage: 30",
+      "explanation": "Useful when turning a simple JSON payload into a cleaner YAML format."
+    },
+    {
+      "title": "Convert nested JSON data",
+      "input": "{\"app\":{\"name\":\"demo\",\"debug\":true},\"ports\":[3000,3001]}",
+      "output": "app:\n  name: demo\n  debug: true\nports:\n  - 3000\n  - 3001",
+      "explanation": "Helpful for configs, app settings, and deployment-related data."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The input is not valid JSON",
+      "fix": "Validate the JSON first and remove trailing commas, single quotes, or broken brackets."
+    },
+    {
+      "issue": "The user expects comments to be preserved from the source",
+      "fix": "JSON does not support comments, so only the actual data structure can be converted."
+    },
+    {
+      "issue": "Nested objects look different than expected in YAML",
+      "fix": "Remember that YAML uses indentation instead of braces and brackets to represent structure."
+    }
+  ],
+  "useCases": [
+    "Turning JSON config data into YAML for DevOps tools",
+    "Converting API or app settings into YAML-based formats",
+    "Preparing YAML snippets for docs, templates, or deployment files",
+    "Moving structured data into systems that prefer YAML",
+    "Comparing JSON and YAML versions of the same data"
+  ],
+  "faq": [
+    {
+      "q": "What does JSON to YAML do?",
+      "a": "It converts valid JSON data into YAML format while preserving the same structure and values."
+    },
+    {
+      "q": "Can I convert nested JSON objects and arrays?",
+      "a": "Yes. Nested objects and arrays are converted into indented YAML structure."
+    },
+    {
+      "q": "What is the difference between JSON and YAML?",
+      "a": "JSON uses braces and brackets, while YAML uses indentation and a more human-readable style."
+    },
+    {
+      "q": "Why would I use YAML instead of JSON?",
+      "a": "YAML is often easier to read in config files, infrastructure tools, and deployment workflows."
+    },
+    {
+      "q": "What happens if my JSON is invalid?",
+      "a": "The converter should fail and ask for valid JSON input before generating YAML."
+    }
+  ],
+  "related": [
+    "yaml-to-json",
+    "json-formatter",
+    "json-validator",
+    "json-key-extractor"
+  ]
+},
+{
+  "id": "yaml-to-json",
+  "name": "YAML to JSON",
+  "slug": "yaml-to-json",
+  "category": "converters",
+  "intro": "Convert simple YAML into structured JSON instantly for APIs, configs, and developer workflows.",
+  "description": "Use this YAML to JSON converter to turn YAML into structured JSON instantly. It is useful for config migration, DevOps workflows, app settings, infrastructure files, and developer tasks where a YAML structure needs to become machine-friendly JSON. Paste simple YAML data to convert it into readable JSON directly in the browser.",
+  "keywords": [
+    "yaml to json",
+    "convert yaml to json",
+    "yaml json converter",
+    "yaml converter",
+    "yaml to json online"
+  ],
+  "whyUse": [
+    "Convert readable YAML into machine-friendly JSON quickly",
+    "Useful when moving config data into apps or APIs",
+    "Helps compare YAML-based settings with JSON-based tools",
+    "Good for config migration and structured data cleanup",
+    "Works in the browser without needing a script or local package"
+  ],
+  "howToUse": [
+    "Paste simple YAML into the input box",
+    "Click Run Tool to convert it into JSON",
+    "Review the formatted JSON output",
+    "Copy the result into your app, API payload, or config workflow",
+    "Keep indentation clean because YAML structure depends on spacing"
+  ],
+  "examples": [
+    {
+      "title": "Convert simple YAML fields",
+      "input": "name: John\nage: 30",
+      "output": "{\n  \"name\": \"John\",\n  \"age\": 30\n}",
+      "explanation": "Useful for converting flat YAML key-value pairs into JSON."
+    },
+    {
+      "title": "Convert nested YAML with a list",
+      "input": "app:\n  name: demo\n  debug: true\nports:\n  - 3000\n  - 3001",
+      "output": "{\n  \"app\": {\n    \"name\": \"demo\",\n    \"debug\": true\n  },\n  \"ports\": [\n    3000,\n    3001\n  ]\n}",
+      "explanation": "Helpful when moving YAML config structure into JSON-based systems."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Indentation is inconsistent",
+      "fix": "Use consistent spaces because YAML structure depends on indentation."
+    },
+    {
+      "issue": "The YAML includes advanced syntax the simple parser does not support",
+      "fix": "Use clean key-value YAML with standard nesting and lists for predictable conversion."
+    },
+    {
+      "issue": "The user expects comments to appear in JSON output",
+      "fix": "JSON does not support comments, so only the actual data can be converted."
+    }
+  ],
+  "useCases": [
+    "Turning YAML configs into JSON for apps or APIs",
+    "Migrating data between YAML-based and JSON-based tools",
+    "Checking what a YAML file looks like as structured JSON",
+    "Preparing machine-friendly output from human-readable config data",
+    "Comparing config formats during development or DevOps work"
+  ],
+  "faq": [
+    {
+      "q": "What does YAML to JSON do?",
+      "a": "It converts YAML structure into JSON while preserving the same values and hierarchy."
+    },
+    {
+      "q": "Can I convert nested YAML?",
+      "a": "Yes. Nested YAML can be converted into nested JSON objects and arrays."
+    },
+    {
+      "q": "Why is indentation important in YAML?",
+      "a": "YAML uses indentation to define structure, so broken spacing can change or break the result."
+    },
+    {
+      "q": "What is the difference between YAML and JSON?",
+      "a": "YAML is more human-readable and indentation-based, while JSON is more explicit and machine-friendly."
+    },
+    {
+      "q": "Why would I convert YAML to JSON?",
+      "a": "Many apps, APIs, and developer workflows expect JSON even when the original data starts in YAML."
+    }
+  ],
+  "related": [
+    "json-to-yaml",
+    "json-formatter",
+    "json-validator",
+    "json-key-extractor"
+  ]
+},
+{
+  "id": "json-key-extractor",
+  "name": "JSON Key Extractor",
+  "slug": "json-key-extractor",
+  "category": "developer-tools",
+  "intro": "Extract JSON keys instantly to inspect structure, fields, and nested paths more easily.",
+  "description": "Use this JSON Key Extractor to pull out keys from a JSON object or array and review the field structure quickly. It is useful for API debugging, schema inspection, payload analysis, documentation, data mapping, and developer workflows where you need to see which keys exist without reading every value manually. Paste JSON to extract unique keys and nested key paths directly in the browser.",
+  "keywords": [
+    "json key extractor",
+    "extract json keys",
+    "json fields list",
+    "json key list",
+    "json path extractor"
+  ],
+  "whyUse": [
+    "See JSON structure faster without reading every value manually",
+    "Useful for API responses, logs, and payload inspection",
+    "Helps document field names and nested key paths",
+    "Good for mapping data between systems or preparing transformations",
+    "Extracts keys directly in the browser without custom scripts"
+  ],
+  "howToUse": [
+    "Paste valid JSON into the input box",
+    "Click Run Tool to scan the structure",
+    "Review the list of extracted keys and nested paths",
+    "Copy the result for docs, mapping, or debugging",
+    "Use a formatter or validator first if the input is messy or invalid"
+  ],
+  "examples": [
+    {
+      "title": "Extract keys from a flat object",
+      "input": "{\"name\":\"John\",\"age\":30,\"active\":true}",
+      "output": "name\nage\nactive",
+      "explanation": "Useful when you only need the field names and not the values."
+    },
+    {
+      "title": "Extract nested key paths",
+      "input": "{\"user\":{\"id\":7,\"profile\":{\"email\":\"a@example.com\"}},\"roles\":[\"admin\"]}",
+      "output": "user\nuser.id\nuser.profile\nuser.profile.email\nroles",
+      "explanation": "Helpful for understanding nested structures in API payloads and app data."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The JSON input is invalid",
+      "fix": "Validate the JSON first and fix syntax issues before extracting keys."
+    },
+    {
+      "issue": "The user expects array values to become separate keys",
+      "fix": "Remember that the extractor lists field names and nested paths, not every repeated value."
+    },
+    {
+      "issue": "Only one object in an array is checked mentally",
+      "fix": "Use the tool on the full payload so keys from multiple objects can be collected."
+    }
+  ],
+  "useCases": [
+    "Inspecting API response structure before mapping fields",
+    "Listing keys from JSON logs or webhook payloads",
+    "Preparing docs or schema notes from real data",
+    "Checking nested field paths before writing code",
+    "Comparing payload structure between environments or endpoints"
+  ],
+  "faq": [
+    {
+      "q": "What does a JSON key extractor do?",
+      "a": "It lists JSON field names and often nested key paths so you can inspect structure more quickly."
+    },
+    {
+      "q": "Can it extract nested keys?",
+      "a": "Yes. Nested objects can be represented as dot-style paths such as user.profile.email."
+    },
+    {
+      "q": "Does it show values too?",
+      "a": "No. The goal is to show keys and structure, not every field value."
+    },
+    {
+      "q": "Can I use it with arrays of objects?",
+      "a": "Yes. It is useful for arrays because it can collect keys across repeated records."
+    },
+    {
+      "q": "Why use a key extractor instead of a formatter?",
+      "a": "A formatter helps you read the full payload, while a key extractor focuses specifically on field names and structure."
+    }
+  ],
+  "related": [
+    "json-formatter",
+    "json-validator",
+    "json-to-yaml",
+    "yaml-to-json"
+  ]
+},
+{
+  "id": "xml-minifier",
+  "name": "XML Minifier",
+  "slug": "xml-minifier",
+  "category": "developer-tools",
+  "intro": "Minify XML by removing extra whitespace and line breaks while keeping the markup structure intact.",
+  "description": "Use this XML minifier to compress XML into a shorter compact form for embedding, transport, storage, logging, and technical debugging. It is useful when you need smaller XML output without manually removing indentation and empty spacing between tags.",
+  "keywords": [
+    "xml minifier",
+    "minify xml",
+    "compress xml",
+    "xml compact",
+    "xml minify online"
+  ],
+  "whyUse": [
+    "Reduces XML size by removing unnecessary spacing between tags",
+    "Useful for logs, payloads, configs, exports, and compact storage",
+    "Helps turn formatted XML into one-line machine-friendly output",
+    "Makes copied XML easier to embed into scripts or requests",
+    "Runs directly in the browser without extra tools"
+  ],
+  "howToUse": [
+    "Paste the XML into the input box",
+    "Click Run Tool to minify the markup",
+    "Review the compact XML output",
+    "Copy the result into your app, config, request, or log workflow",
+    "If needed, use XML Beautifier to make it readable again"
+  ],
+  "examples": [
+    {
+      "title": "Minify simple XML",
+      "input": "<user>\n  <name>John</name>\n  <role>admin</role>\n</user>",
+      "output": "<user><name>John</name><role>admin</role></user>",
+      "explanation": "Removes indentation and line breaks while keeping the XML structure."
+    },
+    {
+      "title": "Minify nested XML",
+      "input": "<config>\n  <server>\n    <host>localhost</host>\n    <port>3000</port>\n  </server>\n</config>",
+      "output": "<config><server><host>localhost</host><port>3000</port></server></config>",
+      "explanation": "Useful when a nested XML config needs compact output."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The input is invalid XML",
+      "fix": "Validate or correct broken tags, attributes, or nesting before minifying."
+    },
+    {
+      "issue": "The user expects readable output instead of compact output",
+      "fix": "Use XML Beautifier when readability matters more than size."
+    },
+    {
+      "issue": "Whitespace inside text content is expected to behave like indentation",
+      "fix": "Remember that only formatting whitespace between tags should be removed safely."
+    }
+  ],
+  "useCases": [
+    "Compressing XML for request payloads and integrations",
+    "Embedding XML into scripts or configs",
+    "Cleaning formatted XML into one-line log-friendly output",
+    "Reducing visual noise in stored XML snippets",
+    "Switching readable XML into compact machine-oriented form"
+  ],
+  "faq": [
+    {
+      "q": "What does an XML minifier do?",
+      "a": "An XML minifier removes unnecessary formatting whitespace and line breaks to create a shorter compact XML output."
+    },
+    {
+      "q": "Does XML minification change the markup structure?",
+      "a": "No. It should keep the XML structure the same while removing formatting whitespace."
+    },
+    {
+      "q": "What is the difference between XML Minifier and XML Beautifier?",
+      "a": "XML Minifier makes XML shorter and compact, while XML Beautifier makes XML easier to read with indentation and line breaks."
+    },
+    {
+      "q": "Can I minify nested XML?",
+      "a": "Yes. Nested XML can be minified as long as the markup is valid."
+    },
+    {
+      "q": "Why is my XML not minifying?",
+      "a": "The most common reason is invalid XML caused by broken tags, malformed attributes, or incorrect nesting."
+    }
+  ],
+  "related": [
+    "xml-formatter",
+    "xml-validator",
+    "xml-to-json",
+    "json-to-xml"
+  ]
+},
+{
+  "id": "xml-beautifier",
+  "name": "XML Beautifier",
+  "slug": "xml-beautifier",
+  "category": "developer-tools",
+  "intro": "Beautify XML with cleaner indentation and readable structure for configs, feeds, and debugging.",
+  "description": "Use this XML beautifier to make messy or minified XML easier to read. It is useful for configs, API payloads, feeds, exports, testing, and developer workflows when users search specifically for beautify or pretty XML output.",
+  "keywords": [
+    "xml beautifier",
+    "beautify xml",
+    "pretty xml",
+    "xml prettifier",
+    "format xml online"
+  ],
+  "whyUse": [
+    "Makes dense XML easier to read quickly",
+    "Useful for debugging configs, payloads, and nested markup",
+    "Helps turn minified XML into readable structured output",
+    "Good for users searching for beautify or pretty XML",
+    "Works directly in the browser with no setup"
+  ],
+  "howToUse": [
+    "Paste the XML into the input box",
+    "Click Run Tool to beautify the markup",
+    "Review the indented readable output",
+    "Copy the result into docs, notes, configs, or debugging workflows",
+    "Use XML Minifier later if you need compact output again"
+  ],
+  "examples": [
+    {
+      "title": "Beautify compact XML",
+      "input": "<user><name>John</name><role>admin</role></user>",
+      "output": "<user>\n  <name>John</name>\n  <role>admin</role>\n</user>",
+      "explanation": "Turns dense one-line XML into a cleaner readable structure."
+    },
+    {
+      "title": "Beautify nested config XML",
+      "input": "<config><server><host>localhost</host><port>3000</port></server></config>",
+      "output": "<config>\n  <server>\n    <host>localhost</host>\n    <port>3000</port>\n  </server>\n</config>",
+      "explanation": "Useful for reviewing nested XML configuration blocks."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The XML is invalid and cannot be parsed cleanly",
+      "fix": "Validate or fix the XML first if the tool reports invalid markup."
+    },
+    {
+      "issue": "The user expects schema correction instead of formatting",
+      "fix": "Use XML Validator when correctness matters more than presentation."
+    },
+    {
+      "issue": "The user wants compact output instead of readable output",
+      "fix": "Use XML Minifier when size matters more than readability."
+    }
+  ],
+  "useCases": [
+    "Reading minified XML copied from APIs or logs",
+    "Cleaning XML before code review or debugging",
+    "Making feed or export XML easier to inspect",
+    "Formatting XML configs before sharing with a team",
+    "Targeting users who search for beautify or pretty XML"
+  ],
+  "faq": [
+    {
+      "q": "What does an XML beautifier do?",
+      "a": "An XML beautifier adds indentation and line breaks to make XML easier to read."
+    },
+    {
+      "q": "Is XML Beautifier different from XML Formatter?",
+      "a": "They solve the same practical problem, but XML Beautifier targets users who search for beautify or pretty XML."
+    },
+    {
+      "q": "Can it fix broken XML?",
+      "a": "No. It improves readability, but invalid XML still needs to be corrected separately."
+    },
+    {
+      "q": "Can I beautify nested XML?",
+      "a": "Yes. Nested XML is one of the main use cases for a beautifier."
+    },
+    {
+      "q": "When should I use XML Beautifier instead of XML Minifier?",
+      "a": "Use XML Beautifier when readability matters and XML Minifier when compact output matters."
+    }
+  ],
+  "related": [
+    "xml-formatter",
+    "xml-minifier",
+    "xml-validator",
+    "xml-to-json"
+  ]
+},
+{
+  "id": "yaml-minifier",
+  "name": "YAML Minifier",
+  "slug": "yaml-minifier",
+  "category": "developer-tools",
+  "intro": "Minify YAML by removing blank lines, comments, and unnecessary spacing for more compact config output.",
+  "description": "Use this YAML minifier to make YAML more compact by removing blank lines, trailing spaces, and removable comment noise while preserving the overall structure. It is useful for configs, CI files, deployment snippets, and compact storage when readability matters less than shorter output.",
+  "keywords": [
+    "yaml minifier",
+    "minify yaml",
+    "compress yaml",
+    "yaml compact",
+    "yaml minify online"
+  ],
+  "whyUse": [
+    "Reduces YAML clutter without rewriting it manually",
+    "Useful for CI configs, manifests, and deployment snippets",
+    "Helps clean copied YAML into a more compact form",
+    "Good when you want less whitespace and comment noise",
+    "Runs in the browser with no setup"
+  ],
+  "howToUse": [
+    "Paste the YAML into the input box",
+    "Click Run Tool to minify the content",
+    "Review the cleaned compact YAML output",
+    "Copy the result into your config, repo, or notes",
+    "Use YAML Formatter later if you want readability again"
+  ],
+  "examples": [
+    {
+      "title": "Remove blank lines and comments",
+      "input": "app:\n  name: demo\n\n  # comment\n  port: 3000",
+      "output": "app:\n  name: demo\n  port: 3000",
+      "explanation": "Useful when copied YAML has blank lines and comment noise."
+    },
+    {
+      "title": "Normalize trailing spaces and tabs",
+      "input": "services:\n\tweb:\n\t  image: nginx   ",
+      "output": "services:\n  web:\n    image: nginx",
+      "explanation": "Makes pasted YAML cleaner and more compact."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The user expects full YAML parsing or schema validation",
+      "fix": "Use YAML Validator if the main goal is to check correctness."
+    },
+    {
+      "issue": "The YAML already contains structural indentation problems",
+      "fix": "Fix indentation issues first because minification is not a full YAML repair tool."
+    },
+    {
+      "issue": "The user wants readable output instead of compact output",
+      "fix": "Use YAML Formatter when readability matters more than size."
+    }
+  ],
+  "useCases": [
+    "Cleaning deployment YAML into a shorter form",
+    "Reducing comment and blank-line noise in CI files",
+    "Preparing compact YAML snippets for storage or sharing",
+    "Turning edited YAML into a tighter config block",
+    "Switching readable YAML into a more compact form"
+  ],
+  "faq": [
+    {
+      "q": "What does a YAML minifier do?",
+      "a": "A YAML minifier removes unnecessary blank lines, trailing spaces, and comment noise to create a more compact YAML result."
+    },
+    {
+      "q": "Does YAML minification change the data structure?",
+      "a": "It should not change the intended structure if the YAML is already well-formed."
+    },
+    {
+      "q": "What is the difference between YAML Minifier and YAML Formatter?",
+      "a": "YAML Minifier aims for shorter output, while YAML Formatter aims for better readability."
+    },
+    {
+      "q": "Can YAML Minifier fix broken YAML?",
+      "a": "No. It is better to validate and correct broken YAML before minifying it."
+    },
+    {
+      "q": "When should I use YAML Validator instead?",
+      "a": "Use YAML Validator when your main goal is checking syntax, indentation, and common YAML mistakes."
+    }
+  ],
+  "related": [
+    "yaml-formatter",
+    "yaml-validator",
+    "yaml-to-json",
+    "json-to-yaml"
+  ]
+},
+{
+  "id": "toml-formatter",
+  "name": "TOML Formatter",
+  "slug": "toml-formatter",
+  "category": "developer-tools",
+  "intro": "Format TOML with clean spacing, normalized layout, and readable sections for config work.",
+  "description": "Use this TOML formatter to clean up TOML files with more consistent spacing, key-value layout, arrays, and section structure. It is useful for app configs, package settings, scripts, and developer workflows where messy TOML becomes harder to read or review.",
+  "keywords": [
+    "toml formatter",
+    "format toml",
+    "toml beautifier",
+    "pretty toml",
+    "toml prettifier"
+  ],
+  "whyUse": [
+    "Makes messy TOML easier to read quickly",
+    "Useful for configs, package files, and scripts",
+    "Helps normalize key-value layout and sections",
+    "Good for one-off cleanup before review or sharing",
+    "Runs directly in the browser with readable output"
+  ],
+  "howToUse": [
+    "Paste the TOML into the input box",
+    "Click Run Tool to format the content",
+    "Review the normalized TOML output",
+    "Copy the result into your config, repo, or debugging workflow",
+    "Use TOML Validator if you mainly want a syntax check"
+  ],
+  "examples": [
+    {
+      "title": "Format simple TOML",
+      "input": "title=\"Demo\"\nenabled=true",
+      "output": "title = \"Demo\"\nenabled = true",
+      "explanation": "Adds normalized spacing around TOML assignments."
+    },
+    {
+      "title": "Format TOML section",
+      "input": "[server]\nport=3000\ndebug=true",
+      "output": "[server]\nport = 3000\ndebug = true",
+      "explanation": "Useful for making config sections easier to scan."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The TOML syntax is invalid",
+      "fix": "Fix malformed sections, keys, arrays, or values before expecting clean formatted output."
+    },
+    {
+      "issue": "The user expects comments and original spacing to be preserved exactly",
+      "fix": "Formatting focuses on normalized readable output, not perfect preservation of every original style choice."
+    },
+    {
+      "issue": "The user wants pure syntax checking instead of formatting",
+      "fix": "Use TOML Validator when correctness matters more than presentation."
+    }
+  ],
+  "useCases": [
+    "Cleaning app and package TOML configs before review",
+    "Normalizing copied TOML from docs or examples",
+    "Making TOML easier to inspect during debugging",
+    "Formatting sections and arrays into a cleaner layout",
+    "Preparing readable TOML before sharing with a team"
+  ],
+  "faq": [
+    {
+      "q": "What does a TOML formatter do?",
+      "a": "A TOML formatter makes TOML easier to read by normalizing spacing, assignments, arrays, and section layout."
+    },
+    {
+      "q": "What is the difference between TOML Formatter and TOML Validator?",
+      "a": "TOML Formatter focuses on readability, while TOML Validator focuses on whether the TOML is valid."
+    },
+    {
+      "q": "Can TOML Formatter fix invalid TOML?",
+      "a": "No. Invalid TOML still needs to be corrected before it can be formatted reliably."
+    },
+    {
+      "q": "Can I format TOML config sections and arrays?",
+      "a": "Yes. Sections, keys, and arrays are common TOML formatting use cases."
+    },
+    {
+      "q": "When should I use TOML to JSON instead?",
+      "a": "Use TOML to JSON when you want to transform TOML into JSON rather than keep it as TOML."
+    }
+  ],
+  "related": [
+    "toml-validator",
+    "toml-to-json",
+    "json-to-toml",
+    "json-formatter"
+  ]
+},
+{
+  "id": "toml-validator",
+  "name": "TOML Validator",
+  "slug": "toml-validator",
+  "category": "developer-tools",
+  "intro": "Validate TOML for common syntax issues in configs, package files, and app settings.",
+  "description": "Use this TOML validator to check whether TOML is structurally valid before using it in apps, package files, scripts, or configuration workflows. It is useful when broken TOML can cause config errors, startup failures, or confusing debugging sessions.",
+  "keywords": [
+    "toml validator",
+    "validate toml",
+    "toml checker",
+    "toml syntax checker",
+    "is my toml valid"
+  ],
+  "whyUse": [
+    "Catches TOML syntax problems before config files break your workflow",
+    "Useful for package files, app settings, and scripts",
+    "Helps spot malformed sections, values, and arrays",
+    "Saves time before deployment or debugging",
+    "Runs directly in the browser with a quick result"
+  ],
+  "howToUse": [
+    "Paste the TOML into the input box",
+    "Click Run Tool to validate the content",
+    "Review whether the TOML is valid or invalid",
+    "Fix broken sections, arrays, or assignments if needed",
+    "Run it again after changes to confirm the result"
+  ],
+  "examples": [
+    {
+      "title": "Valid simple TOML",
+      "input": "title = \"Demo\"\nenabled = true",
+      "output": "Valid TOML.",
+      "explanation": "A simple TOML file with valid assignments passes validation."
+    },
+    {
+      "title": "Invalid section syntax",
+      "input": "[server\nport = 3000",
+      "output": "Invalid TOML.",
+      "explanation": "Broken section syntax should fail validation."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Broken table or section syntax",
+      "fix": "Make sure every section header is complete, for example [server] instead of [server."
+    },
+    {
+      "issue": "Malformed arrays or mixed value formatting",
+      "fix": "Check commas, brackets, and value quoting inside arrays."
+    },
+    {
+      "issue": "The user expects formatting instead of validation",
+      "fix": "Use TOML Formatter when readability is the main goal."
+    }
+  ],
+  "useCases": [
+    "Checking app and package TOML before deployment",
+    "Validating config files copied from docs or examples",
+    "Catching broken TOML before startup or script failures",
+    "Reviewing sections and arrays during debugging",
+    "Confirming TOML correctness before converting it to JSON"
+  ],
+  "faq": [
+    {
+      "q": "What does a TOML validator do?",
+      "a": "A TOML validator checks whether TOML syntax is valid and structurally readable by a TOML parser."
+    },
+    {
+      "q": "Why use TOML Validator?",
+      "a": "It helps catch syntax problems before broken TOML causes config or application errors."
+    },
+    {
+      "q": "What is the difference between TOML Validator and TOML Formatter?",
+      "a": "TOML Validator checks correctness, while TOML Formatter improves readability."
+    },
+    {
+      "q": "Can valid TOML still contain the wrong values?",
+      "a": "Yes. TOML can be syntactically valid but still contain incorrect settings for your app."
+    },
+    {
+      "q": "When should I use TOML to JSON after validation?",
+      "a": "Use TOML to JSON after validation when you want to inspect or reuse the data in JSON-based tools or workflows."
+    }
+  ],
+  "related": [
+    "toml-formatter",
+    "toml-to-json",
+    "json-to-toml",
+    "json-validator"
+  ]
+}
+,
+{
+  "id": "cron-expression-parser",
+  "name": "Cron Expression Parser",
+  "slug": "cron-expression-parser",
+  "category": "developer-tools",
+  "intro": "Parse cron expressions into readable schedule text for faster debugging and review.",
+  "description": "Use this Cron Expression Parser to turn a cron expression into a more readable explanation. It is useful for debugging scheduled jobs, reviewing automation timing, checking CI or server tasks, and understanding what a cron pattern means before using it in production.",
+  "keywords": [
+    "cron expression parser",
+    "parse cron expression",
+    "cron schedule parser",
+    "cron reader",
+    "cron expression explained"
+  ],
+  "whyUse": [
+    "Makes cron expressions easier to understand at a glance",
+    "Useful for debugging scheduled jobs before deployment",
+    "Helps review CI, server, backup, and automation schedules",
+    "Reduces mistakes caused by misreading cron fields",
+    "Works in the browser without opening terminal tools"
+  ],
+  "howToUse": [
+    "Paste a 5-field cron expression into the input box",
+    "Click Run Tool to parse the schedule",
+    "Read the human-friendly explanation of each field",
+    "Check whether the schedule matches what you intended",
+    "Adjust the cron string and run it again if needed"
+  ],
+  "examples": [
+    {
+      "title": "Run every day at midnight",
+      "input": "0 0 * * *",
+      "output": "Minute: 0\nHour: 0\nDay of month: every day\nMonth: every month\nDay of week: every day\nSummary: At 00:00 every day.",
+      "explanation": "Useful for common daily jobs like cleanup tasks or reports."
+    },
+    {
+      "title": "Run every 15 minutes",
+      "input": "*/15 * * * *",
+      "output": "Minute: every 15 minutes\nHour: every hour\nDay of month: every day\nMonth: every month\nDay of week: every day\nSummary: Every 15 minutes.",
+      "explanation": "Helpful when checking recurring job frequency."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Using the wrong number of cron fields",
+      "fix": "Enter exactly 5 fields in the standard minute hour day month weekday format."
+    },
+    {
+      "issue": "Expecting the parser to validate every platform-specific cron extension",
+      "fix": "Use standard 5-field cron syntax unless your own system clearly supports custom formats."
+    },
+    {
+      "issue": "Confusing day of month with day of week",
+      "fix": "Double-check the 3rd and 5th fields because they are easy to mix up."
+    }
+  ],
+  "useCases": [
+    "Reviewing cron jobs before deployment",
+    "Explaining a schedule copied from a config file",
+    "Checking server, backup, and maintenance task timing",
+    "Understanding CI or automation schedules",
+    "Debugging unexpected job frequency"
+  ],
+  "faq": [
+    {
+      "q": "What does a cron expression parser do?",
+      "a": "It translates a cron expression into a more readable explanation so you can understand the schedule faster."
+    },
+    {
+      "q": "How many fields does this cron parser expect?",
+      "a": "This tool expects the standard 5-field cron format: minute, hour, day of month, month, and day of week."
+    },
+    {
+      "q": "What is the difference between Cron Expression Parser and Cron Expression Builder?",
+      "a": "The parser explains an existing cron string, while the builder helps create a cron expression from human-friendly choices."
+    },
+    {
+      "q": "Can I use this parser for every cron system?",
+      "a": "It is best for standard 5-field cron expressions. Some systems add extra fields or custom syntax."
+    },
+    {
+      "q": "Why is my cron expression invalid?",
+      "a": "The most common reasons are the wrong number of fields, unsupported symbols, or values outside the allowed range."
+    }
+  ],
+  "related": [
+    "cron-expression-builder",
+    "timestamp-converter",
+    "json-formatter",
+    "uuid-generator"
+  ]
+},
+{
+  "id": "cron-expression-builder",
+  "name": "Cron Expression Builder",
+  "slug": "cron-expression-builder",
+  "category": "developer-tools",
+  "intro": "Build simple cron expressions from readable schedule options without memorizing cron syntax.",
+  "description": "Use this Cron Expression Builder to generate a cron expression from simple schedule inputs like minute, hour, day, month, and weekday. It is useful for developers, admins, and automation workflows when you want to create a cron string without remembering every field manually.",
+  "keywords": [
+    "cron expression builder",
+    "build cron expression",
+    "cron generator",
+    "cron schedule builder",
+    "cron maker"
+  ],
+  "whyUse": [
+    "Creates cron strings without memorizing field order",
+    "Useful for admins, developers, and automation workflows",
+    "Helps reduce cron syntax mistakes before deployment",
+    "Makes schedule creation faster for common patterns",
+    "Works directly in the browser with simple input"
+  ],
+  "howToUse": [
+    "Enter five values for minute, hour, day of month, month, and day of week",
+    "Use values like 0, *, */5, 1-5, or comma-separated lists",
+    "Click Run Tool to build the cron expression",
+    "Review the generated cron string in the output box",
+    "If needed, test the result with Cron Expression Parser"
+  ],
+  "examples": [
+    {
+      "title": "Build a daily midnight job",
+      "input": "0\n0\n*\n*\n*",
+      "output": "0 0 * * *",
+      "explanation": "Useful for daily scheduled jobs."
+    },
+    {
+      "title": "Build a weekday morning job",
+      "input": "30\n8\n*\n*\n1-5",
+      "output": "30 8 * * 1-5",
+      "explanation": "Helpful for workday-only schedules."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Entering fewer or more than 5 lines",
+      "fix": "Use exactly 5 lines: minute, hour, day of month, month, and day of week."
+    },
+    {
+      "issue": "Using unsupported words instead of cron values",
+      "fix": "Use cron syntax like *, 0, */10, 1-5, or comma-separated values."
+    },
+    {
+      "issue": "Placing values in the wrong field order",
+      "fix": "Keep the order as minute, hour, day of month, month, day of week."
+    }
+  ],
+  "useCases": [
+    "Creating cron jobs for servers and scheduled tasks",
+    "Building automation schedules for CI or scripts",
+    "Preparing cron expressions without memorizing syntax",
+    "Teaching cron basics to beginners",
+    "Generating quick schedule strings for config files"
+  ],
+  "faq": [
+    {
+      "q": "What does a cron expression builder do?",
+      "a": "It helps you generate a cron expression from human-friendly schedule inputs."
+    },
+    {
+      "q": "What field order does the builder use?",
+      "a": "It uses the standard 5-field order: minute, hour, day of month, month, and day of week."
+    },
+    {
+      "q": "What is the difference between Cron Expression Builder and Cron Expression Parser?",
+      "a": "The builder creates cron expressions, while the parser explains existing ones."
+    },
+    {
+      "q": "Can I use wildcards and step values?",
+      "a": "Yes. Common values like *, */15, 1-5, and comma-separated lists are supported."
+    },
+    {
+      "q": "Why is my generated cron expression not working in my system?",
+      "a": "Some platforms use non-standard cron formats or extra fields, so confirm what your target system expects."
+    }
+  ],
+  "related": [
+    "cron-expression-parser",
+    "timestamp-converter",
+    "json-formatter",
+    "random-string-generator"
+  ]
+},
+{
+  "id": "cidr-calculator",
+  "name": "CIDR Calculator",
+  "slug": "cidr-calculator",
+  "category": "network-tools",
+  "intro": "Calculate network details from CIDR notation including mask, range, broadcast, and usable hosts.",
+  "description": "Use this CIDR Calculator to analyze an IPv4 CIDR block and return important subnet details such as subnet mask, network address, broadcast address, first usable IP, last usable IP, and usable host count. It is useful for subnet planning, firewall rules, routing, network labs, and day-to-day infrastructure work.",
+  "keywords": [
+    "cidr calculator",
+    "calculate cidr",
+    "subnet cidr calculator",
+    "cidr range calculator",
+    "ip subnet calculator"
+  ],
+  "whyUse": [
+    "Quickly turns CIDR notation into usable subnet details",
+    "Useful for subnet planning and firewall or routing rules",
+    "Helps find network and broadcast boundaries faster",
+    "Reduces manual subnet math mistakes",
+    "Good for labs, exams, and production network work"
+  ],
+  "howToUse": [
+    "Enter an IPv4 CIDR such as 192.168.1.0/24",
+    "Click Run Tool to calculate the subnet details",
+    "Review the network address, mask, range, and usable hosts",
+    "Use the output for planning, troubleshooting, or documentation",
+    "Run it again with another prefix to compare subnet sizes"
+  ],
+  "examples": [
+    {
+      "title": "Standard /24 subnet",
+      "input": "192.168.1.0/24",
+      "output": "CIDR: 192.168.1.0/24\nSubnet mask: 255.255.255.0\nNetwork address: 192.168.1.0\nBroadcast address: 192.168.1.255\nFirst usable IP: 192.168.1.1\nLast usable IP: 192.168.1.254\nTotal addresses: 256\nUsable hosts: 254",
+      "explanation": "A common LAN subnet used in offices, homes, and labs."
+    },
+    {
+      "title": "Small /30 subnet",
+      "input": "10.0.0.4/30",
+      "output": "CIDR: 10.0.0.4/30\nSubnet mask: 255.255.255.252\nNetwork address: 10.0.0.4\nBroadcast address: 10.0.0.7\nFirst usable IP: 10.0.0.5\nLast usable IP: 10.0.0.6\nTotal addresses: 4\nUsable hosts: 2",
+      "explanation": "Useful for point-to-point style network examples and small subnets."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Entering an IP without a prefix length",
+      "fix": "Use full CIDR notation such as 192.168.1.0/24 instead of only an IP address."
+    },
+    {
+      "issue": "Using an invalid prefix like /33",
+      "fix": "For IPv4 CIDR, the prefix must be between /0 and /32."
+    },
+    {
+      "issue": "Expecting host ranges that ignore network and broadcast addresses",
+      "fix": "Remember that many IPv4 subnets reserve the first and last address for network and broadcast."
+    }
+  ],
+  "useCases": [
+    "Planning IPv4 subnets for networks and labs",
+    "Checking usable host counts before deployment",
+    "Preparing ACL, firewall, and routing rules",
+    "Reviewing network and broadcast boundaries",
+    "Practicing subnetting for exams and technical interviews"
+  ],
+  "faq": [
+    {
+      "q": "What does a CIDR calculator do?",
+      "a": "A CIDR calculator converts CIDR notation into subnet details such as mask, network range, broadcast address, and usable hosts."
+    },
+    {
+      "q": "What is CIDR notation?",
+      "a": "CIDR notation combines an IP address with a prefix length, such as 192.168.1.0/24."
+    },
+    {
+      "q": "What is the difference between CIDR Calculator and IP Range Calculator?",
+      "a": "CIDR Calculator starts from CIDR notation, while IP Range Calculator may focus more generally on subnet boundaries and host ranges."
+    },
+    {
+      "q": "Can I use this for IPv6?",
+      "a": "This version is focused on IPv4 CIDR calculation."
+    },
+    {
+      "q": "Why is the usable host count smaller than the total address count?",
+      "a": "In many IPv4 subnets, the first address is the network address and the last is the broadcast address, so they are not counted as normal usable hosts."
+    }
+  ],
+  "related": [
+    "ip-range-calculator",
+    "ipv4-validator",
+    "network-mask-calculator",
+    "usable-hosts-calculator"
+  ]
+}
+,
+{
+  "id": "json-key-extractor",
+  "name": "JSON Key Extractor",
+  "slug": "json-key-extractor",
+  "category": "developer-tools",
+  "intro": "Extract JSON keys and key paths instantly from objects and nested structures.",
+  "description": "Use this JSON Key Extractor to pull out keys from a JSON object, including nested paths. It is useful for API analysis, debugging, schema review, data mapping, documentation, and understanding unfamiliar JSON payloads without manually scanning the whole structure.",
+  "keywords": [
+    "json key extractor",
+    "extract json keys",
+    "json keys list",
+    "json key paths",
+    "json structure extractor"
+  ],
+  "whyUse": [
+    "Quickly list keys from large JSON payloads",
+    "Useful for API inspection and schema review",
+    "Helps understand nested objects faster",
+    "Makes field mapping and documentation easier",
+    "Works directly in the browser without writing code"
+  ],
+  "howToUse": [
+    "Paste valid JSON into the input box",
+    "Click Run Tool to scan the structure",
+    "Review the extracted keys and nested key paths",
+    "Copy the result for mapping, docs, or debugging",
+    "If needed, clean or format the JSON before extracting again"
+  ],
+  "examples": [
+    {
+      "title": "Extract top-level keys",
+      "input": "{\"name\":\"John\",\"age\":30,\"active\":true}",
+      "output": "name\nage\nactive",
+      "explanation": "Useful for quickly listing fields in a simple JSON object."
+    },
+    {
+      "title": "Extract nested key paths",
+      "input": "{\"user\":{\"profile\":{\"name\":\"Anna\"},\"roles\":[\"admin\"]}}",
+      "output": "user\nuser.profile\nuser.profile.name\nuser.roles",
+      "explanation": "Helpful when you need to understand nested structure instead of only top-level fields."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The input is invalid JSON",
+      "fix": "Validate or format the JSON first before extracting keys."
+    },
+    {
+      "issue": "The user expects array values to become separate key paths automatically",
+      "fix": "Remember that arrays are usually represented by their parent key unless the tool is designed to enumerate indexes."
+    },
+    {
+      "issue": "Only part of the payload was pasted",
+      "fix": "Paste the full JSON object or array so all keys can be discovered."
+    }
+  ],
+  "useCases": [
+    "Reviewing API response fields",
+    "Preparing field mappings for ETL or automation",
+    "Understanding nested webhook payloads",
+    "Documenting JSON schema structure",
+    "Checking which fields exist before transformation"
+  ],
+  "faq": [
+    {
+      "q": "What does a JSON Key Extractor do?",
+      "a": "It scans JSON and returns the keys or nested key paths found in the structure."
+    },
+    {
+      "q": "Can it extract nested JSON keys?",
+      "a": "Yes. Nested objects can be returned as full paths such as user.profile.name."
+    },
+    {
+      "q": "What is the difference between JSON Key Extractor and JSON Value Extractor?",
+      "a": "JSON Key Extractor lists field names and paths, while JSON Value Extractor pulls out the actual values."
+    },
+    {
+      "q": "Can I use this for API responses?",
+      "a": "Yes. This is one of the most useful cases for key extraction."
+    },
+    {
+      "q": "Why are my keys not showing?",
+      "a": "The most common reasons are invalid JSON, incomplete pasted data, or an input that is not actually a JSON object."
+    }
+  ],
+  "related": [
+    "json-value-extractor",
+    "json-formatter",
+    "json-validator",
+    "json-to-yaml"
+  ]
+},
+{
+  "id": "json-value-extractor",
+  "name": "JSON Value Extractor",
+  "slug": "json-value-extractor",
+  "category": "developer-tools",
+  "intro": "Extract JSON values and value paths from objects, arrays, and nested structures instantly.",
+  "description": "Use this JSON Value Extractor to pull out values from JSON and display them with their paths. It is useful for API inspection, debugging, data review, field auditing, payload analysis, and understanding what values are actually stored inside nested JSON structures.",
+  "keywords": [
+    "json value extractor",
+    "extract json values",
+    "json values list",
+    "json path values",
+    "json data extractor"
+  ],
+  "whyUse": [
+    "Shows actual JSON values without manually expanding every level",
+    "Useful for debugging nested API and webhook payloads",
+    "Helps inspect scalar values across a complex object",
+    "Makes data review and field auditing faster",
+    "Works directly in the browser with no setup"
+  ],
+  "howToUse": [
+    "Paste valid JSON into the input box",
+    "Click Run Tool to extract the values",
+    "Review the returned paths and scalar values",
+    "Copy the result for analysis, docs, or debugging",
+    "Re-run after editing the payload if needed"
+  ],
+  "examples": [
+    {
+      "title": "Extract values from a simple object",
+      "input": "{\"name\":\"John\",\"age\":30,\"active\":true}",
+      "output": "name: John\nage: 30\nactive: true",
+      "explanation": "Useful for reading simple scalar values quickly."
+    },
+    {
+      "title": "Extract values from nested JSON",
+      "input": "{\"user\":{\"profile\":{\"name\":\"Anna\"},\"roles\":[\"admin\",\"editor\"]}}",
+      "output": "user.profile.name: Anna\nuser.roles[0]: admin\nuser.roles[1]: editor",
+      "explanation": "Helpful when you need to inspect nested values without reading the raw JSON manually."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The input is invalid JSON",
+      "fix": "Validate the JSON first and make sure the full payload was pasted."
+    },
+    {
+      "issue": "The user expects keys only instead of values",
+      "fix": "Use JSON Key Extractor if your main goal is listing field names."
+    },
+    {
+      "issue": "Complex nested objects are expected to appear as a single flat value",
+      "fix": "This tool is better for extracting scalar values and array items with their paths."
+    }
+  ],
+  "useCases": [
+    "Inspecting API response data quickly",
+    "Reviewing webhook payload contents",
+    "Auditing JSON values before conversion or mapping",
+    "Understanding nested payload data in debugging",
+    "Extracting visible values from large JSON objects"
+  ],
+  "faq": [
+    {
+      "q": "What does a JSON Value Extractor do?",
+      "a": "It reads JSON and returns values, usually together with their field paths."
+    },
+    {
+      "q": "Can it extract nested values?",
+      "a": "Yes. Nested values can be shown with paths such as user.profile.name."
+    },
+    {
+      "q": "What is the difference between JSON Value Extractor and JSON Key Extractor?",
+      "a": "JSON Value Extractor shows actual data values, while JSON Key Extractor lists keys and paths."
+    },
+    {
+      "q": "Can I use this for API debugging?",
+      "a": "Yes. It is useful when you want to inspect real payload values quickly."
+    },
+    {
+      "q": "Why is my output empty?",
+      "a": "The most common reasons are invalid JSON, incomplete input, or a payload with no scalar values to extract."
+    }
+  ],
+  "related": [
+    "json-key-extractor",
+    "json-formatter",
+    "json-validator",
+    "yaml-to-json"
+  ]
+}
+,
+{
+  "id": "json-schema-validator",
+  "name": "JSON Schema Validator",
+  "slug": "json-schema-validator",
+  "category": "developer-tools",
+  "intro": "Validate JSON against a schema to ensure structure and data correctness.",
+  "description": "Use this JSON Schema Validator to check whether your JSON matches a defined schema. It is useful for API validation, backend checks, testing, and ensuring data structure consistency before processing.",
+  "keywords": [
+    "json schema validator",
+    "validate json schema",
+    "json validation tool",
+    "json schema checker",
+    "json structure validation"
+  ],
+  "whyUse": [
+    "Validates JSON against a defined schema",
+    "Prevents incorrect data structures in APIs",
+    "Useful for testing and debugging payloads",
+    "Helps enforce consistent data formats",
+    "Works instantly in the browser"
+  ],
+  "howToUse": [
+    "Paste JSON and schema separated by ---",
+    "Click Run Tool",
+    "Check validation result",
+    "Fix errors if needed",
+    "Re-run validation"
+  ],
+  "examples": [
+    {
+      "title": "Simple validation",
+      "input": "{\"name\":\"John\"}\n---\n{\"type\":\"object\",\"properties\":{\"name\":{\"type\":\"string\"}}}",
+      "output": "Valid JSON schema.",
+      "explanation": "Checks if JSON matches schema."
+    }
+  ],
+  "commonErrors": [
+    { "issue": "Invalid JSON", "fix": "Fix JSON syntax" },
+    { "issue": "Invalid schema", "fix": "Check schema format" },
+    { "issue": "Missing fields", "fix": "Match required fields in schema" }
+  ],
+  "useCases": [
+    "API validation",
+    "Backend checks",
+    "Testing payloads",
+    "Schema enforcement",
+    "Debugging JSON"
+  ],
+  "faq": [
+    { "q": "What does this tool do?", "a": "It validates JSON against schema." },
+    { "q": "Do I need both JSON and schema?", "a": "Yes." },
+    { "q": "Can it fix JSON?", "a": "No, only validate." },
+    { "q": "What format is schema?", "a": "Standard JSON Schema." },
+    { "q": "Why invalid?", "a": "Mismatch with schema." }
+  ],
+  "related": [
+    "json-validator",
+    "json-formatter",
+    "json-key-extractor",
+    "json-to-yaml"
+  ]
+},
+{
+  "id": "json-schema-generator",
+  "name": "JSON Schema Generator",
+  "slug": "json-schema-generator",
+  "category": "developer-tools",
+  "intro": "Generate JSON schema automatically from a JSON object.",
+  "description": "Use this JSON Schema Generator to create a schema based on your JSON structure. It is useful for API design, validation setup, documentation, and backend development workflows.",
+  "keywords": [
+    "json schema generator",
+    "generate json schema",
+    "json schema from json",
+    "json structure generator",
+    "json schema tool"
+  ],
+  "whyUse": [
+    "Auto-generate schema from JSON",
+    "Useful for API development",
+    "Helps create validation rules",
+    "Speeds up backend workflows",
+    "No manual schema writing"
+  ],
+  "howToUse": [
+    "Paste JSON",
+    "Click Run Tool",
+    "Get generated schema",
+    "Use schema in validation",
+    "Modify if needed"
+  ],
+  "examples": [
+    {
+      "title": "Generate schema",
+      "input": "{\"name\":\"John\",\"age\":30}",
+      "output": "{\"type\":\"object\",\"properties\":{\"name\":{\"type\":\"string\"},\"age\":{\"type\":\"number\"}}}",
+      "explanation": "Creates schema automatically."
+    }
+  ],
+  "commonErrors": [
+    { "issue": "Invalid JSON", "fix": "Fix JSON first" },
+    { "issue": "Unexpected types", "fix": "Review generated schema" },
+    { "issue": "Nested complexity", "fix": "Check nested objects" }
+  ],
+  "useCases": [
+    "API schema generation",
+    "Validation setup",
+    "Documentation",
+    "Backend dev",
+    "Testing"
+  ],
+  "faq": [
+    { "q": "What does it do?", "a": "Generates schema from JSON." },
+    { "q": "Can I edit schema?", "a": "Yes after generation." },
+    { "q": "Supports nested JSON?", "a": "Yes." },
+    { "q": "Is it automatic?", "a": "Yes." },
+    { "q": "Is schema perfect?", "a": "Needs review." }
+  ],
+  "related": [
+    "json-schema-validator",
+    "json-formatter",
+    "json-validator",
+    "yaml-to-json"
+  ]
+},
+{
+  "id": "json-key-sorter",
+  "name": "JSON Key Sorter",
+  "slug": "json-key-sorter",
+  "category": "developer-tools",
+  "intro": "Sort JSON keys alphabetically for consistent structure and readability.",
+  "description": "Use this JSON Key Sorter to reorder object keys alphabetically. It is useful for diffing, debugging, formatting, and making JSON consistent across environments.",
+  "keywords": [
+    "json key sorter",
+    "sort json keys",
+    "json sort keys",
+    "json alphabetical sort",
+    "json order tool"
+  ],
+  "whyUse": [
+    "Makes JSON consistent",
+    "Useful for git diff",
+    "Improves readability",
+    "Helps debugging",
+    "Standardizes structure"
+  ],
+  "howToUse": [
+    "Paste JSON",
+    "Click Run Tool",
+    "Get sorted JSON",
+    "Copy result",
+    "Use in workflow"
+  ],
+  "examples": [
+    {
+      "title": "Sort keys",
+      "input": "{\"b\":2,\"a\":1}",
+      "output": "{\"a\":1,\"b\":2}",
+      "explanation": "Keys sorted alphabetically."
+    }
+  ],
+  "commonErrors": [
+    { "issue": "Invalid JSON", "fix": "Fix syntax" },
+    { "issue": "Expect array sorting", "fix": "Only keys sorted" },
+    { "issue": "Nested objects not sorted", "fix": "Tool handles nested automatically" }
+  ],
+  "useCases": [
+    "Git diffs",
+    "Debugging",
+    "Formatting JSON",
+    "Standardizing data",
+    "Cleaning payloads"
+  ],
+  "faq": [
+    { "q": "What does it do?", "a": "Sorts keys alphabetically." },
+    { "q": "Does it change values?", "a": "No." },
+    { "q": "Supports nested?", "a": "Yes." },
+    { "q": "Why use it?", "a": "Consistency." },
+    { "q": "Is it safe?", "a": "Yes." }
+  ],
+  "related": [
+    "json-formatter",
+    "json-validator",
+    "json-key-extractor",
+    "json-minifier"
+  ]
+},
+{
+  "id": "json-path-extractor",
+  "name": "JSON Path Extractor",
+  "slug": "json-path-extractor",
+  "category": "developer-tools",
+  "intro": "Extract values from JSON using path-like syntax.",
+  "description": "Use this JSON Path Extractor to retrieve specific values from JSON using path notation. It is useful for filtering data, debugging APIs, and extracting fields from complex structures.",
+  "keywords": [
+    "json path extractor",
+    "json path tool",
+    "extract json path",
+    "json query tool",
+    "json path online"
+  ],
+  "whyUse": [
+    "Extract specific values quickly",
+    "Useful for API debugging",
+    "Works with nested JSON",
+    "Reduces manual searching",
+    "Fast data access"
+  ],
+  "howToUse": [
+    "Paste JSON and path separated by ---",
+    "Click Run Tool",
+    "Get extracted value",
+    "Adjust path if needed",
+    "Repeat"
+  ],
+  "examples": [
+    {
+      "title": "Extract nested value",
+      "input": "{\"user\":{\"name\":\"John\"}}\n---\nuser.name",
+      "output": "John",
+      "explanation": "Gets nested value."
+    }
+  ],
+  "commonErrors": [
+    { "issue": "Wrong path", "fix": "Check structure" },
+    { "issue": "Invalid JSON", "fix": "Fix JSON" },
+    { "issue": "Missing field", "fix": "Verify key exists" }
+  ],
+  "useCases": [
+    "API debugging",
+    "Data extraction",
+    "Filtering JSON",
+    "Automation",
+    "Testing"
+  ],
+  "faq": [
+    { "q": "What does it do?", "a": "Extracts values using path." },
+    { "q": "Supports nested?", "a": "Yes." },
+    { "q": "What syntax?", "a": "Dot notation." },
+    { "q": "Multiple values?", "a": "Depends on path." },
+    { "q": "Why empty?", "a": "Path not found." }
+  ],
+  "related": [
+    "json-value-extractor",
+    "json-key-extractor",
+    "json-formatter",
+    "json-validator"
+  ]
+}
+,
+{
+  "id": "json-key-remover",
+  "name": "JSON Key Remover",
+  "slug": "json-key-remover",
+  "category": "developer-tools",
+  "intro": "Remove selected keys from JSON objects quickly to clean payloads and simplify nested data.",
+  "description": "Use this JSON Key Remover to delete one or more keys from a JSON object, including nested keys with dot notation. It is useful for cleaning API responses, removing sensitive fields, simplifying payloads before sharing, and preparing smaller JSON objects for debugging, testing, or transformation workflows.",
+  "keywords": [
+    "json key remover",
+    "remove json key",
+    "delete json keys",
+    "json field remover",
+    "json cleanup tool"
+  ],
+  "whyUse": [
+    "Remove unwanted keys from JSON before sharing or storing it",
+    "Useful for deleting sensitive, noisy, or irrelevant fields from payloads",
+    "Helps simplify large API responses for debugging and testing",
+    "Supports nested key removal with dot-style paths",
+    "Works directly in the browser without manual editing"
+  ],
+  "howToUse": [
+    "Paste the JSON into the first section",
+    "Add one or more keys or nested paths after a separator line",
+    "Click Run Tool to remove the selected keys",
+    "Review the cleaned JSON output",
+    "Adjust the key list and run it again if needed"
+  ],
+  "examples": [
+    {
+      "title": "Remove a top-level key",
+      "input": "{\"name\":\"John\",\"age\":30,\"active\":true}\n---\nage",
+      "output": "{\n  \"name\": \"John\",\n  \"active\": true\n}",
+      "explanation": "Useful when you want to delete a simple field from a small object."
+    },
+    {
+      "title": "Remove a nested key",
+      "input": "{\"user\":{\"name\":\"Anna\",\"password\":\"secret\"},\"role\":\"admin\"}\n---\nuser.password",
+      "output": "{\n  \"user\": {\n    \"name\": \"Anna\"\n  },\n  \"role\": \"admin\"\n}",
+      "explanation": "Helpful when cleaning sensitive nested fields from a payload."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The JSON input is invalid",
+      "fix": "Validate or format the JSON first before removing keys."
+    },
+    {
+      "issue": "The key path does not match the actual structure",
+      "fix": "Check the JSON carefully and use the correct top-level or nested path."
+    },
+    {
+      "issue": "The user expects array items to be removed by this key-only tool",
+      "fix": "Use exact object key paths only and handle array-specific transformations separately."
+    }
+  ],
+  "useCases": [
+    "Removing sensitive fields before sharing JSON with others",
+    "Cleaning noisy API responses before debugging",
+    "Deleting irrelevant keys from exported payloads",
+    "Preparing smaller JSON objects for tests and examples",
+    "Simplifying nested data before conversion or mapping"
+  ],
+  "faq": [
+    {
+      "q": "What does a JSON Key Remover do?",
+      "a": "It deletes selected keys from a JSON object and returns the cleaned result."
+    },
+    {
+      "q": "Can it remove nested keys?",
+      "a": "Yes. Nested paths like user.password can be removed when the structure matches."
+    },
+    {
+      "q": "Can I remove more than one key at a time?",
+      "a": "Yes. Enter multiple keys on separate lines after the separator."
+    },
+    {
+      "q": "What is the difference between JSON Key Remover and JSON Key Extractor?",
+      "a": "JSON Key Remover deletes selected fields, while JSON Key Extractor lists existing keys and paths."
+    },
+    {
+      "q": "Why is a key still showing in the result?",
+      "a": "The most common reasons are a wrong path, invalid JSON input, or a key that does not exist in that object."
+    }
+  ],
+  "related": [
+    "json-key-extractor",
+    "json-formatter",
+    "json-validator",
+    "json-key-sorter"
+  ]
+},
+{
+  "id": "json-array-flattener",
+  "name": "JSON Array Flattener",
+  "slug": "json-array-flattener",
+  "category": "developer-tools",
+  "intro": "Flatten nested JSON arrays into a single-level array for easier review and processing.",
+  "description": "Use this JSON Array Flattener to convert nested arrays into a single flat array. It is useful for cleaning array-heavy payloads, simplifying exported JSON, preparing values for processing, and reducing nested array complexity during debugging, transformation, or automation workflows.",
+  "keywords": [
+    "json array flattener",
+    "flatten json array",
+    "json flatten array",
+    "nested array flattener",
+    "json array cleanup"
+  ],
+  "whyUse": [
+    "Turns nested arrays into a simpler flat structure",
+    "Useful for data cleanup and preprocessing workflows",
+    "Helps reduce complexity in array-heavy JSON payloads",
+    "Makes exported or transformed arrays easier to inspect",
+    "Runs directly in the browser without code"
+  ],
+  "howToUse": [
+    "Paste a JSON array into the input box",
+    "Click Run Tool to flatten the nested array structure",
+    "Review the single-level array output",
+    "Copy the result for processing or reuse",
+    "Run the tool again with another array if needed"
+  ],
+  "examples": [
+    {
+      "title": "Flatten a simple nested array",
+      "input": "[1,[2,3],[4,[5]]]",
+      "output": "[\n  1,\n  2,\n  3,\n  4,\n  5\n]",
+      "explanation": "Useful when you want one flat list instead of multiple nested levels."
+    },
+    {
+      "title": "Flatten string arrays",
+      "input": "[\"a\",[\"b\",\"c\"],[\"d\"]]",
+      "output": "[\n  \"a\",\n  \"b\",\n  \"c\",\n  \"d\"\n]",
+      "explanation": "Helpful for combining nested string lists into one simple array."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The input is not valid JSON",
+      "fix": "Validate or format the JSON first before flattening the array."
+    },
+    {
+      "issue": "The input is a JSON object instead of an array",
+      "fix": "This tool expects an array as the main input, not an object."
+    },
+    {
+      "issue": "The user expects object fields inside arrays to be flattened into key-value output",
+      "fix": "This tool only flattens array nesting. It does not transform object structure."
+    }
+  ],
+  "useCases": [
+    "Flattening nested arrays from exports or API payloads",
+    "Preparing arrays for easier processing in other tools",
+    "Reducing nesting before debugging array-heavy JSON",
+    "Cleaning arrays before conversion or mapping",
+    "Creating simpler list-style JSON output"
+  ],
+  "faq": [
+    {
+      "q": "What does a JSON Array Flattener do?",
+      "a": "It turns nested arrays into a single flat array."
+    },
+    {
+      "q": "Does it work on deeply nested arrays?",
+      "a": "Yes. Nested arrays can be flattened across multiple levels."
+    },
+    {
+      "q": "Does it change object values inside arrays?",
+      "a": "No. It keeps array items as they are and only removes array nesting."
+    },
+    {
+      "q": "What is the difference between JSON Array Flattener and JSON Split Tool?",
+      "a": "JSON Array Flattener reduces nesting inside an array, while JSON Split Tool breaks JSON into separate parts."
+    },
+    {
+      "q": "Why is my result not changing?",
+      "a": "The most common reasons are that the input is already flat, invalid, or not actually a JSON array."
+    }
+  ],
+  "related": [
+    "json-split-tool",
+    "json-formatter",
+    "json-validator",
+    "json-merge-tool"
+  ]
+},
+{
+  "id": "json-merge-tool",
+  "name": "JSON Merge Tool",
+  "slug": "json-merge-tool",
+  "category": "developer-tools",
+  "intro": "Merge multiple JSON objects into one combined result for faster payload building and cleanup.",
+  "description": "Use this JSON Merge Tool to combine multiple JSON objects into a single merged object. It is useful for building test payloads, combining config fragments, merging exported data blocks, and simplifying workflows where several JSON objects need to become one result for debugging, integration, or reuse.",
+  "keywords": [
+    "json merge tool",
+    "merge json",
+    "combine json objects",
+    "json merger",
+    "json object merge"
+  ],
+  "whyUse": [
+    "Combines multiple JSON objects into one result quickly",
+    "Useful for test payloads, configs, and data cleanup",
+    "Helps merge separate fragments without manual editing",
+    "Makes multi-part JSON easier to reuse and inspect",
+    "Works directly in the browser with no extra setup"
+  ],
+  "howToUse": [
+    "Paste one JSON object per block separated by a line with ---",
+    "Click Run Tool to merge the objects",
+    "Review the merged JSON result",
+    "Copy the output into your workflow or test data",
+    "Adjust the object order if you want later values to override earlier ones"
+  ],
+  "examples": [
+    {
+      "title": "Merge two simple objects",
+      "input": "{\"name\":\"John\"}\n---\n{\"age\":30}",
+      "output": "{\n  \"name\": \"John\",\n  \"age\": 30\n}",
+      "explanation": "Useful for combining two small JSON fragments into one object."
+    },
+    {
+      "title": "Merge with overwrite",
+      "input": "{\"role\":\"user\",\"active\":false}\n---\n{\"active\":true}",
+      "output": "{\n  \"role\": \"user\",\n  \"active\": true\n}",
+      "explanation": "Helpful when later blocks should override earlier values for the same key."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "One of the blocks is invalid JSON",
+      "fix": "Validate each block separately before trying to merge them."
+    },
+    {
+      "issue": "The input contains arrays instead of objects",
+      "fix": "This version expects JSON objects as the merge input."
+    },
+    {
+      "issue": "The user is surprised that later keys overwrite earlier ones",
+      "fix": "Remember that when the same key appears again, the later value replaces the earlier value."
+    }
+  ],
+  "useCases": [
+    "Combining test payload fragments into one JSON object",
+    "Merging config pieces before reuse",
+    "Building one response body from several smaller objects",
+    "Cleaning up exported JSON fragments",
+    "Preparing merged data for debugging and integration work"
+  ],
+  "faq": [
+    {
+      "q": "What does a JSON Merge Tool do?",
+      "a": "It combines multiple JSON objects into one merged result."
+    },
+    {
+      "q": "What happens if the same key appears in more than one object?",
+      "a": "The later object usually overrides the earlier value for that key."
+    },
+    {
+      "q": "Can I merge more than two objects?",
+      "a": "Yes. Add more object blocks separated by --- lines."
+    },
+    {
+      "q": "What is the difference between JSON Merge Tool and JSON Split Tool?",
+      "a": "JSON Merge Tool combines multiple objects into one, while JSON Split Tool breaks JSON into separate parts."
+    },
+    {
+      "q": "Why is my merge failing?",
+      "a": "The most common reasons are invalid JSON, missing separators, or using arrays instead of plain objects."
+    }
+  ],
+  "related": [
+    "json-split-tool",
+    "json-formatter",
+    "json-validator",
+    "json-minifier"
+  ]
+},
+{
+  "id": "json-split-tool",
+  "name": "JSON Split Tool",
+  "slug": "json-split-tool",
+  "category": "developer-tools",
+  "intro": "Split JSON into separate parts to inspect arrays or top-level object sections more easily.",
+  "description": "Use this JSON Split Tool to break JSON into smaller parts for review and reuse. It is especially useful for splitting top-level arrays into separate items or top-level object keys into separate blocks, which helps with debugging, exporting, test preparation, and working with large JSON structures more comfortably.",
+  "keywords": [
+    "json split tool",
+    "split json",
+    "json splitter",
+    "split json array",
+    "json object splitter"
+  ],
+  "whyUse": [
+    "Breaks large JSON into smaller easier-to-review parts",
+    "Useful for debugging array-heavy payloads and exports",
+    "Helps inspect one item or section at a time",
+    "Makes large JSON structures easier to copy and reuse",
+    "Works in the browser without manual splitting"
+  ],
+  "howToUse": [
+    "Paste valid JSON into the input box",
+    "Click Run Tool to split the structure",
+    "Review the separated output blocks",
+    "Copy the parts you need for testing or analysis",
+    "Use the result together with merge or formatting tools if needed"
+  ],
+  "examples": [
+    {
+      "title": "Split a top-level array",
+      "input": "[{\"id\":1},{\"id\":2}]",
+      "output": "Part 1:\n{\n  \"id\": 1\n}\n\n---\n\nPart 2:\n{\n  \"id\": 2\n}",
+      "explanation": "Useful when you want to inspect each array item separately."
+    },
+    {
+      "title": "Split a top-level object",
+      "input": "{\"user\":{\"name\":\"Anna\"},\"settings\":{\"theme\":\"dark\"}}",
+      "output": "Key: user\n{\n  \"name\": \"Anna\"\n}\n\n---\n\nKey: settings\n{\n  \"theme\": \"dark\"\n}",
+      "explanation": "Helpful when reviewing top-level sections one by one."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The JSON input is invalid",
+      "fix": "Validate or format the JSON first before splitting it."
+    },
+    {
+      "issue": "The user expects deep recursive splitting automatically",
+      "fix": "This tool splits the top-level structure first, such as a top-level array or top-level object keys."
+    },
+    {
+      "issue": "The user expects the result to stay as one JSON object",
+      "fix": "This tool is for inspection and separation, not for keeping one single JSON result."
+    }
+  ],
+  "useCases": [
+    "Splitting large JSON arrays into separate item blocks",
+    "Inspecting top-level object sections independently",
+    "Preparing test cases from one combined JSON payload",
+    "Reviewing exported JSON in smaller chunks",
+    "Breaking up large JSON before further editing"
+  ],
+  "faq": [
+    {
+      "q": "What does a JSON Split Tool do?",
+      "a": "It breaks JSON into smaller separate parts for easier review and reuse."
+    },
+    {
+      "q": "Can it split arrays?",
+      "a": "Yes. A top-level array can be split into separate item blocks."
+    },
+    {
+      "q": "Can it split top-level object keys?",
+      "a": "Yes. A top-level object can be shown as separate key blocks."
+    },
+    {
+      "q": "What is the difference between JSON Split Tool and JSON Merge Tool?",
+      "a": "JSON Split Tool breaks JSON into smaller parts, while JSON Merge Tool combines separate objects into one."
+    },
+    {
+      "q": "Why is my JSON not splitting the way I expected?",
+      "a": "The most common reasons are invalid JSON, a non-top-level array structure, or expecting recursive deep splitting instead of top-level separation."
+    }
+  ],
+  "related": [
+    "json-merge-tool",
+    "json-array-flattener",
+    "json-formatter",
+    "json-validator"
+  ]
+}
+,
+{
+  "id": "json-size-calculator",
+  "name": "JSON Size Calculator",
+  "slug": "json-size-calculator",
+  "category": "developer-tools",
+  "intro": "Calculate JSON size in characters, bytes, lines, and minified length for quick payload review.",
+  "description": "Use this JSON Size Calculator to measure the size of a JSON payload in characters, bytes, lines, and minified output length. It is useful for API debugging, payload review, storage checks, request size estimation, and understanding how formatting changes the size of JSON before transport or logging.",
+  "keywords": [
+    "json size calculator",
+    "json size checker",
+    "json payload size",
+    "json byte calculator",
+    "json length tool"
+  ],
+  "whyUse": [
+    "Shows JSON size quickly without manual counting",
+    "Useful for API payload checks and request review",
+    "Helps compare formatted and minified JSON length",
+    "Good for logging, transport, and storage workflows",
+    "Works directly in the browser with instant output"
+  ],
+  "howToUse": [
+    "Paste valid JSON into the input box",
+    "Click Run Tool to calculate the size metrics",
+    "Review the character, byte, line, and minified length output",
+    "Use the result to compare payload size before sending or storing it",
+    "Minify the JSON separately if you want a smaller transport version"
+  ],
+  "examples": [
+    {
+      "title": "Measure a small JSON object",
+      "input": "{\"name\":\"John\",\"age\":30}",
+      "output": "Characters: 24\nBytes (UTF-8): 24\nLines: 1\nMinified characters: 24",
+      "explanation": "Useful for checking the size of a simple compact payload."
+    },
+    {
+      "title": "Measure formatted JSON",
+      "input": "{\n  \"name\": \"John\",\n  \"age\": 30\n}",
+      "output": "Characters: 36\nBytes (UTF-8): 36\nLines: 4\nMinified characters: 24",
+      "explanation": "Helpful when comparing formatted JSON with the smaller minified version."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The input is invalid JSON",
+      "fix": "Validate or format the JSON first before measuring the size."
+    },
+    {
+      "issue": "The user expects network transfer size with headers included",
+      "fix": "This tool measures JSON content size only, not full HTTP request overhead."
+    },
+    {
+      "issue": "The user assumes character count and byte count are always the same",
+      "fix": "For non-ASCII text, UTF-8 byte size can differ from visible character count."
+    }
+  ],
+  "useCases": [
+    "Checking JSON payload size before sending API requests",
+    "Comparing formatted and minified JSON length",
+    "Reviewing storage or log size impact",
+    "Estimating payload size in debugging workflows",
+    "Measuring JSON with Unicode text and special characters"
+  ],
+  "faq": [
+    {
+      "q": "What does a JSON Size Calculator do?",
+      "a": "It measures JSON size in several ways, such as characters, bytes, lines, and minified length."
+    },
+    {
+      "q": "What is the difference between character count and byte count?",
+      "a": "Character count measures visible text length, while byte count measures encoded size, often in UTF-8."
+    },
+    {
+      "q": "Why is formatted JSON larger than minified JSON?",
+      "a": "Formatted JSON contains spaces, indentation, and line breaks that increase the total size."
+    },
+    {
+      "q": "What is the difference between JSON Size Calculator and JSON Minifier?",
+      "a": "JSON Size Calculator measures payload size, while JSON Minifier removes formatting whitespace to reduce size."
+    },
+    {
+      "q": "Can I use this for API payload review?",
+      "a": "Yes. It is useful when you want to estimate JSON size before sending or logging a payload."
+    }
+  ],
+  "related": [
+    "json-minifier",
+    "json-formatter",
+    "json-validator",
+    "json-diff-checker"
+  ]
+},
+{
+  "id": "xml-minifier",
+  "name": "XML Minifier",
+  "slug": "xml-minifier",
+  "category": "developer-tools",
+  "intro": "Minify XML by removing extra whitespace and line breaks while keeping the markup structure intact.",
+  "description": "Use this XML Minifier to compress XML into a compact form by removing unnecessary indentation and line breaks. It is useful for payload cleanup, storage, transport, embedding XML into scripts or requests, and reducing formatting noise when readable layout is no longer needed.",
+  "keywords": [
+    "xml minifier",
+    "minify xml",
+    "xml compressor",
+    "compact xml",
+    "xml minify online"
+  ],
+  "whyUse": [
+    "Removes unnecessary formatting whitespace from XML",
+    "Useful for transport, storage, and compact output workflows",
+    "Helps turn readable XML into one-line machine-friendly output",
+    "Good for embedding XML in requests or config values",
+    "Runs directly in the browser with no extra setup"
+  ],
+  "howToUse": [
+    "Paste valid XML into the input box",
+    "Click Run Tool to minify the XML",
+    "Review the compact XML output",
+    "Copy the result into your request, config, or storage target",
+    "Use XML Formatter again later if you need readable output"
+  ],
+  "examples": [
+    {
+      "title": "Minify simple XML",
+      "input": "<user>\n  <name>John</name>\n  <role>admin</role>\n</user>",
+      "output": "<user><name>John</name><role>admin</role></user>",
+      "explanation": "Useful when you want compact XML without indentation or line breaks."
+    },
+    {
+      "title": "Minify nested XML",
+      "input": "<config>\n  <server>\n    <host>localhost</host>\n    <port>3000</port>\n  </server>\n</config>",
+      "output": "<config><server><host>localhost</host><port>3000</port></server></config>",
+      "explanation": "Helpful for converting formatted XML configs into a shorter one-line form."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The input is invalid XML",
+      "fix": "Validate the XML first and correct broken tags or malformed markup."
+    },
+    {
+      "issue": "The user expects readable output instead of compact output",
+      "fix": "Use XML Formatter when readability matters more than compactness."
+    },
+    {
+      "issue": "Whitespace inside text content is confused with formatting whitespace",
+      "fix": "Remember that the tool removes formatting whitespace between tags, not meaningful text values."
+    }
+  ],
+  "useCases": [
+    "Reducing XML size for transport or storage",
+    "Embedding XML into scripts or request payloads",
+    "Cleaning readable XML into a compact one-line form",
+    "Preparing XML for logging or compact export",
+    "Switching from readable layout to machine-friendly output"
+  ],
+  "faq": [
+    {
+      "q": "What does an XML Minifier do?",
+      "a": "It removes unnecessary line breaks and indentation to create a more compact XML result."
+    },
+    {
+      "q": "Does XML minification change the actual markup structure?",
+      "a": "No. It keeps the same XML structure while removing formatting whitespace."
+    },
+    {
+      "q": "What is the difference between XML Minifier and XML Formatter?",
+      "a": "XML Minifier creates compact output, while XML Formatter creates readable indented output."
+    },
+    {
+      "q": "Can I minify nested XML?",
+      "a": "Yes. Nested XML can be minified as long as the input is valid."
+    },
+    {
+      "q": "Why is my XML not minifying?",
+      "a": "The most common reason is invalid XML with broken tags, malformed markup, or parser errors."
+    }
+  ],
+  "related": [
+    "xml-formatter",
+    "xml-validator",
+    "xml-to-json",
+    "json-to-xml"
+  ]
+}
+,
+{
+  "id": "xml-to-csv",
+  "name": "XML to CSV",
+  "slug": "xml-to-csv",
+  "category": "developer-tools",
+  "intro": "Convert simple XML records into CSV rows for export, cleanup, and spreadsheet-style workflows.",
+  "description": "Use this XML to CSV converter to turn repeating XML record structures into CSV output. It is useful for exports, reporting, spreadsheet workflows, data cleanup, and quickly converting simple XML lists into a tabular format that is easier to review or reuse.",
+  "keywords": [
+    "xml to csv",
+    "convert xml to csv",
+    "xml csv converter",
+    "xml to csv online",
+    "xml table converter"
+  ],
+  "whyUse": [
+    "Turns repeating XML records into a simpler tabular format",
+    "Useful for exports, spreadsheets, and reporting workflows",
+    "Helps review XML data in row-and-column style output",
+    "Makes simple XML lists easier to reuse in CSV-based tools",
+    "Works directly in the browser without manual conversion"
+  ],
+  "howToUse": [
+    "Paste XML with repeating record elements into the input box",
+    "Click Run Tool to extract rows and columns",
+    "Review the generated CSV output",
+    "Copy the CSV into a spreadsheet, file, or import workflow",
+    "Use a cleaner XML structure if the conversion result is missing fields"
+  ],
+  "examples": [
+    {
+      "title": "Convert two XML records into CSV",
+      "input": "<items><item><name>John</name><age>30</age></item><item><name>Anna</name><age>25</age></item></items>",
+      "output": "name,age\nJohn,30\nAnna,25",
+      "explanation": "Useful when each record has the same child fields."
+    },
+    {
+      "title": "Convert product records",
+      "input": "<products><product><id>1</id><title>Book</title></product><product><id>2</id><title>Pen</title></product></products>",
+      "output": "id,title\n1,Book\n2,Pen",
+      "explanation": "Helpful for simple XML export conversion into spreadsheet-friendly output."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The XML input is invalid",
+      "fix": "Validate the XML first and make sure all tags are properly closed."
+    },
+    {
+      "issue": "The records do not have a consistent structure",
+      "fix": "Use repeating child elements with the same field names for the cleanest CSV result."
+    },
+    {
+      "issue": "The user expects deeply nested XML to become a perfect table automatically",
+      "fix": "This tool works best with simple repeating record structures rather than highly nested XML."
+    }
+  ],
+  "useCases": [
+    "Converting XML exports into spreadsheet-style CSV",
+    "Preparing XML data for reports and table review",
+    "Cleaning simple XML records before import elsewhere",
+    "Turning repeating XML items into flat row data",
+    "Reviewing XML lists in a simpler tabular format"
+  ],
+  "faq": [
+    {
+      "q": "What does an XML to CSV converter do?",
+      "a": "It turns simple repeating XML records into CSV rows and columns."
+    },
+    {
+      "q": "What kind of XML works best with this tool?",
+      "a": "It works best with repeating record elements that contain similar child fields."
+    },
+    {
+      "q": "Can it handle deeply nested XML perfectly?",
+      "a": "It is better for simple XML lists than for very deeply nested XML structures."
+    },
+    {
+      "q": "What is the difference between XML to CSV and XML to JSON?",
+      "a": "XML to CSV creates tabular row-based output, while XML to JSON keeps a hierarchical data structure."
+    },
+    {
+      "q": "Why is my CSV missing some columns?",
+      "a": "The most common reason is inconsistent XML record structure or missing child fields across records."
+    }
+  ],
+  "related": [
+    "csv-to-xml",
+    "xml-to-json",
+    "csv-formatter",
+    "xml-formatter"
+  ]
+},
+{
+  "id": "csv-to-xml",
+  "name": "CSV to XML",
+  "slug": "csv-to-xml",
+  "category": "developer-tools",
+  "intro": "Convert CSV rows into simple XML records for export, integration, and structured data workflows.",
+  "description": "Use this CSV to XML converter to turn CSV rows into XML records with field-based child tags. It is useful for exports, integrations, legacy systems, test data creation, and transforming spreadsheet-style content into a more structured XML format.",
+  "keywords": [
+    "csv to xml",
+    "convert csv to xml",
+    "csv xml converter",
+    "csv to xml online",
+    "csv export to xml"
+  ],
+  "whyUse": [
+    "Turns flat CSV rows into structured XML records",
+    "Useful for exports, integrations, and legacy workflows",
+    "Helps convert spreadsheet-style data into XML format quickly",
+    "Good for test data and structured record generation",
+    "Works directly in the browser with no setup"
+  ],
+  "howToUse": [
+    "Paste CSV with a header row into the input box",
+    "Click Run Tool to convert the rows into XML",
+    "Review the generated XML output",
+    "Copy the XML into your export, import, or testing workflow",
+    "Check the CSV headers if the XML field names look wrong"
+  ],
+  "examples": [
+    {
+      "title": "Convert simple CSV rows to XML",
+      "input": "name,age\nJohn,30\nAnna,25",
+      "output": "<items><item><name>John</name><age>30</age></item><item><name>Anna</name><age>25</age></item></items>",
+      "explanation": "Useful when the CSV header should become XML field names."
+    },
+    {
+      "title": "Convert product CSV to XML",
+      "input": "id,title\n1,Book\n2,Pen",
+      "output": "<items><item><id>1</id><title>Book</title></item><item><id>2</id><title>Pen</title></item></items>",
+      "explanation": "Helpful for turning flat product rows into simple XML records."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The CSV does not have a header row",
+      "fix": "Use a first row with field names so the XML tags can be generated correctly."
+    },
+    {
+      "issue": "The CSV rows have inconsistent column counts",
+      "fix": "Make sure each row matches the same number of columns as the header."
+    },
+    {
+      "issue": "The user expects complex nested XML from flat CSV automatically",
+      "fix": "This tool generates simple record-style XML rather than deep custom nesting."
+    }
+  ],
+  "useCases": [
+    "Converting spreadsheet rows into XML exports",
+    "Preparing XML records for integrations",
+    "Creating simple XML test data from CSV",
+    "Turning flat CSV into structured record output",
+    "Working with legacy systems that expect XML input"
+  ],
+  "faq": [
+    {
+      "q": "What does a CSV to XML converter do?",
+      "a": "It turns CSV rows into XML records using the header row as field names."
+    },
+    {
+      "q": "Do I need a header row?",
+      "a": "Yes. The header row is used to generate the XML tag names."
+    },
+    {
+      "q": "Can it create deeply nested XML?",
+      "a": "This version is built for simple record-style XML, not complex custom nesting."
+    },
+    {
+      "q": "What is the difference between CSV to XML and CSV to JSON?",
+      "a": "CSV to XML creates XML record output, while CSV to JSON creates JSON objects or arrays."
+    },
+    {
+      "q": "Why is my XML malformed or missing values?",
+      "a": "The most common reasons are broken CSV formatting, missing headers, or inconsistent row structure."
+    }
+  ],
+  "related": [
+    "xml-to-csv",
+    "csv-formatter",
+    "csv-validator",
+    "xml-formatter"
+  ]
+},
+{
+  "id": "xml-path-extractor",
+  "name": "XML Path Extractor",
+  "slug": "xml-path-extractor",
+  "category": "developer-tools",
+  "intro": "Extract a specific XML value using a simple tag path so nested fields are easier to inspect.",
+  "description": "Use this XML Path Extractor to retrieve a specific value from XML using a simple tag path like user.profile.name. It is useful for debugging XML payloads, checking nested fields in exports, reviewing integration data, and inspecting one target value without scanning the full XML structure manually.",
+  "keywords": [
+    "xml path extractor",
+    "extract xml value",
+    "xml field extractor",
+    "xml path tool",
+    "xml nested value extractor"
+  ],
+  "whyUse": [
+    "Pulls one specific value from nested XML quickly",
+    "Useful for payload review and integration debugging",
+    "Reduces manual searching through large XML structures",
+    "Helps verify target fields during testing",
+    "Works directly in the browser with simple path input"
+  ],
+  "howToUse": [
+    "Paste valid XML into the first section",
+    "Add a tag path like user.profile.name after a separator line",
+    "Click Run Tool to extract the value",
+    "Review the extracted result in the output box",
+    "Adjust the path and run it again if needed"
+  ],
+  "examples": [
+    {
+      "title": "Extract a nested XML value",
+      "input": "<user><name>John</name></user>\n---\nuser.name",
+      "output": "John",
+      "explanation": "Useful for checking a simple nested field in XML."
+    },
+    {
+      "title": "Extract a deeper nested XML field",
+      "input": "<user><profile><city>London</city></profile></user>\n---\nuser.profile.city",
+      "output": "London",
+      "explanation": "Helpful when reviewing a deeper XML structure without reading the whole payload."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The XML input is invalid",
+      "fix": "Validate the XML first and make sure all tags are properly formed."
+    },
+    {
+      "issue": "The path does not match the real XML structure",
+      "fix": "Check the tag nesting carefully and use the correct path segments."
+    },
+    {
+      "issue": "The user expects attribute extraction instead of tag text extraction",
+      "fix": "This version is focused on extracting text content from simple nested tag paths."
+    }
+  ],
+  "useCases": [
+    "Checking a specific field inside a large XML payload",
+    "Verifying nested XML values during testing",
+    "Reviewing export or integration data one field at a time",
+    "Inspecting a target value without scanning the full XML manually",
+    "Pulling out simple tag-path values in debugging workflows"
+  ],
+  "faq": [
+    {
+      "q": "What does an XML Path Extractor do?",
+      "a": "It retrieves a specific text value from XML using a simple nested tag path."
+    },
+    {
+      "q": "What kind of path syntax does this tool use?",
+      "a": "It uses simple dot notation such as user.profile.city for nested tags."
+    },
+    {
+      "q": "Can it extract deeply nested values?",
+      "a": "Yes. Nested tag structures can be read as long as the path matches the XML."
+    },
+    {
+      "q": "What is the difference between XML Path Extractor and XML to JSON?",
+      "a": "XML Path Extractor retrieves one specific value, while XML to JSON converts the full structure into JSON."
+    },
+    {
+      "q": "Why does the tool say path not found?",
+      "a": "The most common reasons are an incorrect path, missing tag, or invalid XML input."
+    }
+  ],
+  "related": [
+    "xml-to-json",
+    "xml-formatter",
+    "xml-validator",
+    "json-path-extractor"
+  ]
+}
+,
+{
+  "id": "xml-attribute-extractor",
+  "name": "XML Attribute Extractor",
+  "slug": "xml-attribute-extractor",
+  "category": "developer-tools",
+  "intro": "Extract XML attribute values quickly from tags so you can inspect attribute-based data without scanning the full document.",
+  "description": "Use this XML Attribute Extractor to list XML attribute values from elements in a document. It is useful for payload review, export cleanup, integration debugging, and checking IDs, classes, names, codes, or other attribute-based values stored inside XML tags.",
+  "keywords": [
+    "xml attribute extractor",
+    "extract xml attributes",
+    "xml attribute values",
+    "xml attribute tool",
+    "xml extractor"
+  ],
+  "whyUse": [
+    "Pulls attribute values from XML tags quickly",
+    "Useful for reviewing IDs, codes, classes, and other tag attributes",
+    "Helps inspect XML data without reading the full document manually",
+    "Makes debugging exports and integration payloads easier",
+    "Works directly in the browser without extra tools"
+  ],
+  "howToUse": [
+    "Paste valid XML into the first section",
+    "Add an attribute name after a separator line",
+    "Click Run Tool to extract matching attribute values",
+    "Review the result in the output box",
+    "Try another attribute name if you need a different field"
+  ],
+  "examples": [
+    {
+      "title": "Extract id attributes",
+      "input": "<items><item id=\"1\" /><item id=\"2\" /></items>\n---\nid",
+      "output": "1\n2",
+      "explanation": "Useful when XML records store identifiers in attributes."
+    },
+    {
+      "title": "Extract code attributes",
+      "input": "<products><product code=\"BK1\" /><product code=\"PN2\" /></products>\n---\ncode",
+      "output": "BK1\nPN2",
+      "explanation": "Helpful when product or export data uses attributes instead of child tags."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The XML input is invalid",
+      "fix": "Validate the XML first and correct broken tags or malformed markup."
+    },
+    {
+      "issue": "The requested attribute name does not exist",
+      "fix": "Check the XML carefully and use the exact attribute name."
+    },
+    {
+      "issue": "The user expects tag text instead of attribute values",
+      "fix": "Use XML Path Extractor when you need nested tag text rather than attributes."
+    }
+  ],
+  "useCases": [
+    "Extracting IDs or codes from XML records",
+    "Reviewing attribute-based export data",
+    "Debugging integration payloads that use tag attributes",
+    "Checking repeated XML tags for specific attribute values",
+    "Inspecting XML data without scanning the full markup manually"
+  ],
+  "faq": [
+    {
+      "q": "What does an XML Attribute Extractor do?",
+      "a": "It finds and lists values for a specific attribute name across XML tags."
+    },
+    {
+      "q": "Do I need to provide an attribute name?",
+      "a": "Yes. Add the attribute name after the separator so the tool knows what to extract."
+    },
+    {
+      "q": "Can it extract multiple matching values?",
+      "a": "Yes. It can return all matching values found in the XML document."
+    },
+    {
+      "q": "What is the difference between XML Attribute Extractor and XML Path Extractor?",
+      "a": "XML Attribute Extractor reads attribute values from tags, while XML Path Extractor reads nested tag text."
+    },
+    {
+      "q": "Why is my output empty?",
+      "a": "The most common reasons are invalid XML, the wrong attribute name, or XML that does not contain that attribute."
+    }
+  ],
+  "related": [
+    "xml-path-extractor",
+    "xml-validator",
+    "xml-formatter",
+    "xml-namespace-extractor"
+  ]
+},
+{
+  "id": "xml-namespace-extractor",
+  "name": "XML Namespace Extractor",
+  "slug": "xml-namespace-extractor",
+  "category": "developer-tools",
+  "intro": "Extract XML namespaces quickly so you can inspect prefixes and namespace URIs used in a document.",
+  "description": "Use this XML Namespace Extractor to list namespace declarations from XML documents. It is useful for debugging namespaced XML, integration work, SOAP-style payloads, schema review, and checking which namespace prefixes and URIs are declared in an XML document.",
+  "keywords": [
+    "xml namespace extractor",
+    "extract xml namespaces",
+    "xml namespace tool",
+    "xml namespace parser",
+    "xml namespace list"
+  ],
+  "whyUse": [
+    "Lists declared XML namespaces quickly",
+    "Useful for SOAP, schema-based, and integration-related XML",
+    "Helps review prefixes and namespace URIs without manual scanning",
+    "Makes debugging namespaced XML easier",
+    "Works directly in the browser with no extra setup"
+  ],
+  "howToUse": [
+    "Paste valid XML into the input box",
+    "Click Run Tool to extract namespace declarations",
+    "Review the prefixes and namespace URIs in the output",
+    "Copy the result for debugging or documentation",
+    "Validate the XML first if the result looks wrong"
+  ],
+  "examples": [
+    {
+      "title": "Extract default and prefixed namespaces",
+      "input": "<root xmlns=\"http://example.com/default\" xmlns:x=\"http://example.com/x\"><x:item>1</x:item></root>",
+      "output": "default: http://example.com/default\nx: http://example.com/x",
+      "explanation": "Useful when XML mixes a default namespace with prefixed ones."
+    },
+    {
+      "title": "Extract SOAP-style namespaces",
+      "input": "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:m=\"http://example.com/msg\"></soap:Envelope>",
+      "output": "soap: http://schemas.xmlsoap.org/soap/envelope/\nm: http://example.com/msg",
+      "explanation": "Helpful when reviewing namespaced integration payloads."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The XML input is invalid",
+      "fix": "Validate the XML first and make sure namespace declarations are in valid markup."
+    },
+    {
+      "issue": "The user expects every prefixed tag to be listed instead of only namespaces",
+      "fix": "This tool lists namespace declarations, not every tag in the document."
+    },
+    {
+      "issue": "The XML does not declare any namespaces",
+      "fix": "If there are no xmlns declarations, the output may be empty."
+    }
+  ],
+  "useCases": [
+    "Reviewing namespace declarations in XML integrations",
+    "Debugging SOAP or schema-driven XML payloads",
+    "Checking prefixes and namespace URIs in exported XML",
+    "Documenting namespace usage in XML files",
+    "Inspecting namespaced XML before transformation or parsing"
+  ],
+  "faq": [
+    {
+      "q": "What does an XML Namespace Extractor do?",
+      "a": "It lists namespace declarations found in an XML document, including prefixes and URIs."
+    },
+    {
+      "q": "Can it extract the default namespace?",
+      "a": "Yes. The default namespace can be shown when the XML declares one."
+    },
+    {
+      "q": "What is the difference between XML Namespace Extractor and XML Path Extractor?",
+      "a": "XML Namespace Extractor lists namespace declarations, while XML Path Extractor retrieves text values from nested tags."
+    },
+    {
+      "q": "Can it help with SOAP XML?",
+      "a": "Yes. SOAP payloads are a common case because they often use multiple namespace declarations."
+    },
+    {
+      "q": "Why is my output empty?",
+      "a": "The most common reasons are invalid XML or an XML document that does not declare any namespaces."
+    }
+  ],
+  "related": [
+    "xml-validator",
+    "xml-formatter",
+    "xml-path-extractor",
+    "xml-attribute-extractor"
+  ]
+},
+{
+  "id": "url-builder",
+  "name": "URL Builder",
+  "slug": "url-builder",
+  "category": "developer-tools",
+  "intro": "Build full URLs from a base URL and query parameters so links are easier to create correctly.",
+  "description": "Use this URL Builder to create a full URL from a base address and parameter list. It is useful for tracking links, redirect targets, API requests, test URLs, and debugging when you want to build a correct URL without manually joining query strings and separators.",
+  "keywords": [
+    "url builder",
+    "build url",
+    "query string builder",
+    "url parameter builder",
+    "url creation tool"
+  ],
+  "whyUse": [
+    "Builds clean URLs from a base and parameter list",
+    "Useful for query strings, tracking links, and test requests",
+    "Helps avoid mistakes with ?, &, and encoding",
+    "Makes URL creation faster during debugging and development",
+    "Works directly in the browser without manual joining"
+  ],
+  "howToUse": [
+    "Paste the base URL on the first line",
+    "Add one key=value parameter per line after a separator line",
+    "Click Run Tool to build the final URL",
+    "Review the result in the output box",
+    "Adjust the parameter list and run it again if needed"
+  ],
+  "examples": [
+    {
+      "title": "Build a simple URL with two parameters",
+      "input": "https://example.com/search\n---\nq=hello world\npage=2",
+      "output": "https://example.com/search?q=hello%20world&page=2",
+      "explanation": "Useful when building a search URL with encoded parameter values."
+    },
+    {
+      "title": "Build an API-style URL",
+      "input": "https://api.example.com/items\n---\nlimit=10\nsort=desc",
+      "output": "https://api.example.com/items?limit=10&sort=desc",
+      "explanation": "Helpful when constructing request URLs quickly."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The base URL is missing",
+      "fix": "Put the base URL on the first line before the separator."
+    },
+    {
+      "issue": "Parameters are not written as key=value",
+      "fix": "Use one parameter per line in key=value format."
+    },
+    {
+      "issue": "The user expects the tool to parse an existing URL",
+      "fix": "Use URL Splitter or URL Parser when you need to break apart an existing URL."
+    }
+  ],
+  "useCases": [
+    "Creating URLs with multiple query parameters",
+    "Building tracking links and redirect targets",
+    "Preparing API request URLs for tests",
+    "Constructing links without manual query-string mistakes",
+    "Checking how encoded parameters affect a final URL"
+  ],
+  "faq": [
+    {
+      "q": "What does a URL Builder do?",
+      "a": "It creates a full URL from a base address and a list of query parameters."
+    },
+    {
+      "q": "How should I enter parameters?",
+      "a": "Enter one parameter per line using key=value format."
+    },
+    {
+      "q": "Does it encode spaces and special characters?",
+      "a": "Yes. Parameter values are encoded when building the final URL."
+    },
+    {
+      "q": "What is the difference between URL Builder and URL Splitter?",
+      "a": "URL Builder creates a URL from parts, while URL Splitter breaks an existing URL into readable parts."
+    },
+    {
+      "q": "Why is my result wrong?",
+      "a": "The most common reasons are a missing base URL, bad key=value formatting, or incorrect parameter lines."
+    }
+  ],
+  "related": [
+    "url-splitter",
+    "url-encode",
+    "url-decode",
+    "url-parser"
+  ]
+},
+{
+  "id": "url-splitter",
+  "name": "URL Splitter",
+  "slug": "url-splitter",
+  "category": "developer-tools",
+  "intro": "Split a URL into readable parts such as protocol, host, path, query, and fragment.",
+  "description": "Use this URL Splitter to break a full URL into readable parts like protocol, hostname, pathname, query string, and fragment. It is useful for debugging links, reviewing redirects, inspecting tracking URLs, understanding nested URLs, and checking the structure of a long or messy web address more clearly.",
+  "keywords": [
+    "url splitter",
+    "split url",
+    "url parts tool",
+    "url breakdown",
+    "parse url parts"
+  ],
+  "whyUse": [
+    "Breaks long URLs into readable parts quickly",
+    "Useful for redirects, tracking links, and debugging",
+    "Helps inspect host, path, query, and fragment separately",
+    "Makes complex URLs easier to review and understand",
+    "Works directly in the browser without manual parsing"
+  ],
+  "howToUse": [
+    "Paste a full URL into the input box",
+    "Click Run Tool to split the URL",
+    "Review the protocol, host, path, query, and fragment output",
+    "Copy the part you need for debugging or reuse",
+    "Run it again with another link if needed"
+  ],
+  "examples": [
+    {
+      "title": "Split a simple URL with parameters",
+      "input": "https://example.com/search?q=test&page=2#top",
+      "output": "Protocol: https:\nHost: example.com\nPath: /search\nQuery: ?q=test&page=2\nFragment: #top",
+      "explanation": "Useful for checking the full structure of a tracked or filtered URL."
+    },
+    {
+      "title": "Split an API-style URL",
+      "input": "https://api.example.com/items/42?expand=true",
+      "output": "Protocol: https:\nHost: api.example.com\nPath: /items/42\nQuery: ?expand=true\nFragment: ",
+      "explanation": "Helpful when reviewing request URLs in debugging workflows."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The input is not a valid full URL",
+      "fix": "Enter a full URL including the protocol such as https://example.com."
+    },
+    {
+      "issue": "The user expects the tool to build a URL from parts",
+      "fix": "Use URL Builder when you need to create a URL rather than split one."
+    },
+    {
+      "issue": "The input is only a query string or path",
+      "fix": "This tool works best with full URLs, not partial fragments by themselves."
+    }
+  ],
+  "useCases": [
+    "Inspecting redirect and tracking URLs",
+    "Reviewing long URLs during debugging",
+    "Checking protocol, host, path, and query separately",
+    "Understanding nested or messy web addresses",
+    "Breaking a URL into parts before further analysis"
+  ],
+  "faq": [
+    {
+      "q": "What does a URL Splitter do?",
+      "a": "It breaks a full URL into readable parts such as protocol, host, path, query, and fragment."
+    },
+    {
+      "q": "Do I need a full URL with protocol?",
+      "a": "Yes. A full URL like https://example.com works best."
+    },
+    {
+      "q": "What is the difference between URL Splitter and URL Builder?",
+      "a": "URL Splitter breaks down an existing URL, while URL Builder creates one from a base URL and parameters."
+    },
+    {
+      "q": "Can it show query strings and fragments separately?",
+      "a": "Yes. Query and fragment parts are shown separately in the output."
+    },
+    {
+      "q": "Why is my result invalid?",
+      "a": "The most common reasons are a partial URL, a missing protocol, or malformed input."
+    }
+  ],
+  "related": [
+    "url-builder",
+    "url-parser",
+    "url-decode",
+    "url-encode"
+  ]
+}
+,
+{
+  "id": "url-query-cleaner",
+  "name": "URL Query Cleaner",
+  "slug": "url-query-cleaner",
+  "category": "developer-tools",
+  "intro": "Clean messy query strings by removing duplicate separators, empty params, and broken parameter noise.",
+  "description": "Use this URL Query Cleaner to clean messy URLs and query strings by removing empty parameters, duplicate separators, and obvious formatting noise. It is useful for debugging links, cleaning tracking URLs, preparing test requests, and making long URLs easier to read and reuse.",
+  "keywords": [
+    "url query cleaner",
+    "clean query string",
+    "url cleaner",
+    "clean url parameters",
+    "query string cleanup"
+  ],
+  "whyUse": [
+    "Removes obvious query-string noise from messy URLs",
+    "Useful for cleaning copied links before sharing or testing",
+    "Helps make long parameter-heavy URLs easier to read",
+    "Good for debugging redirect and tracking links",
+    "Works directly in the browser without manual editing"
+  ],
+  "howToUse": [
+    "Paste a full URL or query string into the input box",
+    "Click Run Tool to clean the query part",
+    "Review the cleaned result in the output box",
+    "Copy the cleaned URL into your workflow",
+    "Run it again if you want to compare different variants"
+  ],
+  "examples": [
+    {
+      "title": "Clean empty and duplicate separators",
+      "input": "https://example.com/?a=1&&b=2&empty=&",
+      "output": "https://example.com/?a=1&b=2",
+      "explanation": "Useful for fixing messy copied URLs with broken query separators."
+    },
+    {
+      "title": "Clean query string without changing valid params",
+      "input": "https://example.com/search?q=test&&page=2&&",
+      "output": "https://example.com/search?q=test&page=2",
+      "explanation": "Helpful when a valid URL contains repeated ampersands or trailing query noise."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The input is not a valid URL",
+      "fix": "Paste a full URL with a valid protocol such as https://example.com."
+    },
+    {
+      "issue": "The user expects tracking parameters to be removed automatically",
+      "fix": "Use URL Parameter Remover if you want to explicitly remove selected parameters."
+    },
+    {
+      "issue": "The input contains only partial text instead of a real URL",
+      "fix": "Use a full URL or a properly structured query string for the cleanest result."
+    }
+  ],
+  "useCases": [
+    "Cleaning copied tracking and redirect URLs",
+    "Fixing malformed query separators before debugging",
+    "Preparing cleaner links for sharing or docs",
+    "Reviewing noisy query strings more easily",
+    "Normalizing URLs before using other parameter tools"
+  ],
+  "faq": [
+    {
+      "q": "What does a URL Query Cleaner do?",
+      "a": "It removes obvious query-string noise such as empty parameters and repeated separators from a URL."
+    },
+    {
+      "q": "Does it remove valid parameters?",
+      "a": "It keeps valid parameters and focuses on cleaning broken or empty query-string noise."
+    },
+    {
+      "q": "What is the difference between URL Query Cleaner and URL Parameter Remover?",
+      "a": "URL Query Cleaner cleans malformed or noisy query strings, while URL Parameter Remover deletes specific parameters you choose."
+    },
+    {
+      "q": "Can I use it on tracking URLs?",
+      "a": "Yes. It is useful for cleaning tracking-heavy URLs before further editing."
+    },
+    {
+      "q": "Why is my result unchanged?",
+      "a": "The most common reason is that the original URL was already clean and valid."
+    }
+  ],
+  "related": [
+    "url-parameter-remover",
+    "url-parameter-sorter",
+    "url-parser",
+    "url-builder"
+  ]
+},
+{
+  "id": "url-parameter-remover",
+  "name": "URL Parameter Remover",
+  "slug": "url-parameter-remover",
+  "category": "developer-tools",
+  "intro": "Remove selected query parameters from a URL to simplify links and strip tracking values.",
+  "description": "Use this URL Parameter Remover to delete selected query parameters from a URL. It is useful for cleaning tracking links, simplifying shared URLs, removing unwanted values before debugging, and preparing shorter cleaner links without manually editing the query string by hand.",
+  "keywords": [
+    "url parameter remover",
+    "remove url parameters",
+    "strip query params",
+    "delete query parameter",
+    "url tracking remover"
+  ],
+  "whyUse": [
+    "Removes selected parameters without manual editing",
+    "Useful for stripping tracking values from shared links",
+    "Helps simplify long URLs before debugging or reuse",
+    "Good for deleting unwanted query values quickly",
+    "Works directly in the browser with no setup"
+  ],
+  "howToUse": [
+    "Paste a full URL into the first section",
+    "Add one parameter name per line after the separator",
+    "Click Run Tool to remove the selected parameters",
+    "Review the cleaned URL in the output box",
+    "Adjust the parameter list and run it again if needed"
+  ],
+  "examples": [
+    {
+      "title": "Remove one tracking parameter",
+      "input": "https://example.com/?a=1&utm_source=google&b=2\n---\nutm_source",
+      "output": "https://example.com/?a=1&b=2",
+      "explanation": "Useful when cleaning a link before sharing it."
+    },
+    {
+      "title": "Remove multiple parameters",
+      "input": "https://example.com/search?q=test&page=2&ref=ad&utm_campaign=sale\n---\nref\nutm_campaign",
+      "output": "https://example.com/search?q=test&page=2",
+      "explanation": "Helpful when deleting several unwanted parameters at once."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The input is not a valid full URL",
+      "fix": "Use a full URL with a protocol such as https://example.com."
+    },
+    {
+      "issue": "The parameter names do not match the actual query string",
+      "fix": "Use the exact parameter names that appear in the URL."
+    },
+    {
+      "issue": "The user expects cleanup of malformed separators instead of parameter removal",
+      "fix": "Use URL Query Cleaner if your main goal is query cleanup rather than deleting specific params."
+    }
+  ],
+  "useCases": [
+    "Removing tracking params before sharing a link",
+    "Cleaning URLs before testing and debugging",
+    "Deleting unwanted query values from redirect URLs",
+    "Simplifying long parameter-heavy links",
+    "Preparing cleaner documentation examples"
+  ],
+  "faq": [
+    {
+      "q": "What does a URL Parameter Remover do?",
+      "a": "It removes selected query parameters from a URL and returns the cleaned result."
+    },
+    {
+      "q": "Can I remove more than one parameter?",
+      "a": "Yes. Add multiple parameter names on separate lines after the separator."
+    },
+    {
+      "q": "Does it remove all matching occurrences?",
+      "a": "Yes. Matching parameter names are removed from the query string."
+    },
+    {
+      "q": "What is the difference between URL Parameter Remover and URL Query Cleaner?",
+      "a": "URL Parameter Remover deletes specific parameters, while URL Query Cleaner removes broken or noisy query formatting."
+    },
+    {
+      "q": "Why is my URL unchanged?",
+      "a": "The most common reason is that the listed parameter names were not found in the URL."
+    }
+  ],
+  "related": [
+    "url-query-cleaner",
+    "url-parameter-sorter",
+    "url-builder",
+    "url-parser"
+  ]
+},
+{
+  "id": "url-parameter-sorter",
+  "name": "URL Parameter Sorter",
+  "slug": "url-parameter-sorter",
+  "category": "developer-tools",
+  "intro": "Sort URL query parameters alphabetically to make links more consistent and easier to compare.",
+  "description": "Use this URL Parameter Sorter to reorder query parameters alphabetically. It is useful for debugging links, standardizing URL structure, reducing noisy diffs, reviewing long query strings, and making parameter-heavy URLs easier to compare between environments or test cases.",
+  "keywords": [
+    "url parameter sorter",
+    "sort query parameters",
+    "sort url params",
+    "query string sorter",
+    "url param order tool"
+  ],
+  "whyUse": [
+    "Makes query strings more consistent across links",
+    "Useful for debugging and comparing parameter-heavy URLs",
+    "Helps reduce noise in manual reviews and test cases",
+    "Makes long URLs easier to scan and compare",
+    "Works directly in the browser without manual reordering"
+  ],
+  "howToUse": [
+    "Paste a full URL into the input box",
+    "Click Run Tool to sort the query parameters",
+    "Review the reordered URL in the output box",
+    "Copy the sorted result into your workflow",
+    "Use it again if you want a predictable parameter order"
+  ],
+  "examples": [
+    {
+      "title": "Sort simple query parameters",
+      "input": "https://example.com/?b=2&a=1",
+      "output": "https://example.com/?a=1&b=2",
+      "explanation": "Useful when you want a predictable alphabetical parameter order."
+    },
+    {
+      "title": "Sort a longer tracking URL",
+      "input": "https://example.com/search?utm_source=google&q=test&page=2",
+      "output": "https://example.com/search?page=2&q=test&utm_source=google",
+      "explanation": "Helpful when comparing long URLs with multiple parameters."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The input is not a valid full URL",
+      "fix": "Enter a full URL including the protocol such as https://example.com."
+    },
+    {
+      "issue": "The user expects parameter values to be changed",
+      "fix": "This tool only changes parameter order, not the values themselves."
+    },
+    {
+      "issue": "The user wants broken query formatting cleaned at the same time",
+      "fix": "Use URL Query Cleaner if the query string is malformed or noisy."
+    }
+  ],
+  "useCases": [
+    "Standardizing query string order across links",
+    "Comparing URLs more easily during debugging",
+    "Reducing noisy diffs in URL-based tests",
+    "Cleaning long parameter-heavy links for review",
+    "Creating predictable parameter order in examples"
+  ],
+  "faq": [
+    {
+      "q": "What does a URL Parameter Sorter do?",
+      "a": "It reorders query parameters alphabetically to make the URL easier to compare and review."
+    },
+    {
+      "q": "Does it change parameter values?",
+      "a": "No. It only changes the order of the parameters."
+    },
+    {
+      "q": "What is the difference between URL Parameter Sorter and URL Query Cleaner?",
+      "a": "URL Parameter Sorter changes parameter order, while URL Query Cleaner fixes noisy or malformed query formatting."
+    },
+    {
+      "q": "Can it help with debugging?",
+      "a": "Yes. Sorted parameters make long URLs easier to compare across requests and environments."
+    },
+    {
+      "q": "Why is my URL unchanged?",
+      "a": "The most common reason is that the parameters were already in sorted order or the URL had no query string."
+    }
+  ],
+  "related": [
+    "url-query-cleaner",
+    "url-parameter-remover",
+    "url-parser",
+    "url-builder"
+  ]
+},
+{
+  "id": "url-parameter-decoder",
+  "name": "URL Parameter Decoder",
+  "slug": "url-parameter-decoder",
+  "category": "developer-tools",
+  "intro": "Decode a URL parameter value back into readable text without decoding the entire URL.",
+  "description": "Use this URL Parameter Decoder to decode a single query parameter value back into readable text. It is useful for debugging encoded redirects, reading encoded JSON or nested URLs inside a parameter, and checking what one encoded query value actually contains without decoding the whole link.",
+  "keywords": [
+    "url parameter decoder",
+    "decode query parameter",
+    "query value decoder",
+    "url param decode",
+    "parameter decoder"
+  ],
+  "whyUse": [
+    "Decodes one parameter value without changing the full URL",
+    "Useful for reading encoded redirect targets and nested URLs",
+    "Helps inspect encoded JSON or text stored in a parameter",
+    "Reduces mistakes caused by decoding the whole link unnecessarily",
+    "Works directly in the browser with simple input"
+  ],
+  "howToUse": [
+    "Paste an encoded parameter value into the input box",
+    "Click Run Tool to decode the value",
+    "Review the readable output in the result box",
+    "Copy the decoded result for debugging or reuse",
+    "Run it again with another parameter value if needed"
+  ],
+  "examples": [
+    {
+      "title": "Decode a simple parameter value",
+      "input": "hello%20world",
+      "output": "hello world",
+      "explanation": "Useful for reading a plain encoded query value."
+    },
+    {
+      "title": "Decode an encoded redirect URL",
+      "input": "https%3A%2F%2Fexample.com%2Flogin%3Fnext%3D%2Fdashboard",
+      "output": "https://example.com/login?next=/dashboard",
+      "explanation": "Helpful when a parameter contains another encoded URL."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The user pastes a full URL instead of a single parameter value",
+      "fix": "Paste only the encoded parameter value, not the entire URL."
+    },
+    {
+      "issue": "The user expects the whole URL to be decoded",
+      "fix": "Use URL Decoder if you want to decode the entire URL string."
+    },
+    {
+      "issue": "The value is decoded more than once",
+      "fix": "Check whether the parameter value has already been decoded before running the tool again."
+    }
+  ],
+  "useCases": [
+    "Reading encoded redirect parameters",
+    "Inspecting encoded JSON stored in one query value",
+    "Checking nested URLs inside query parameters",
+    "Debugging specific encoded parameter values",
+    "Decoding one field without touching the whole link"
+  ],
+  "faq": [
+    {
+      "q": "What does a URL Parameter Decoder do?",
+      "a": "It decodes one encoded query parameter value back into readable text."
+    },
+    {
+      "q": "Should I paste a full URL here?",
+      "a": "No. This tool is meant for one parameter value, not the whole URL."
+    },
+    {
+      "q": "What is the difference between URL Parameter Decoder and URL Decoder?",
+      "a": "URL Parameter Decoder is focused on one query value, while URL Decoder is for a full encoded URL or encoded string."
+    },
+    {
+      "q": "Can I decode nested URLs with it?",
+      "a": "Yes. That is one of the most useful cases for this tool."
+    },
+    {
+      "q": "Why is my output wrong?",
+      "a": "The most common reasons are double-decoding, partial copied input, or using a full URL instead of one parameter value."
+    }
+  ],
+  "related": [
+    "url-parameter-encoder",
+    "url-decode",
+    "url-parser",
+    "url-splitter"
+  ]
+},
+{
+  "id": "url-parameter-encoder",
+  "name": "URL Parameter Encoder",
+  "slug": "url-parameter-encoder",
+  "category": "developer-tools",
+  "intro": "Encode a single query parameter value safely without encoding the entire URL.",
+  "description": "Use this URL Parameter Encoder to encode one parameter value for safe use inside a URL query string. It is useful for redirect targets, nested URLs, JSON values, tracking links, and any case where one parameter value needs encoding without transforming the full URL.",
+  "keywords": [
+    "url parameter encoder",
+    "encode query parameter",
+    "query value encoder",
+    "url param encode",
+    "parameter encoder"
+  ],
+  "whyUse": [
+    "Encodes one parameter value without affecting the whole URL",
+    "Useful for redirect targets and nested URLs inside parameters",
+    "Helps safely place JSON or special text inside query strings",
+    "Prevents mistakes caused by encoding an entire URL unnecessarily",
+    "Works directly in the browser with simple input"
+  ],
+  "howToUse": [
+    "Paste a raw parameter value into the input box",
+    "Click Run Tool to encode the value",
+    "Review the encoded result in the output box",
+    "Copy the result into your query string or URL builder workflow",
+    "Run it again if you need to encode another parameter value"
+  ],
+  "examples": [
+    {
+      "title": "Encode a simple parameter value",
+      "input": "hello world",
+      "output": "hello%20world",
+      "explanation": "Useful when a parameter contains spaces or symbols."
+    },
+    {
+      "title": "Encode a nested redirect URL",
+      "input": "https://example.com/login?next=/dashboard",
+      "output": "https%3A%2F%2Fexample.com%2Flogin%3Fnext%3D%2Fdashboard",
+      "explanation": "Helpful when one parameter contains another URL."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The user pastes a full URL instead of one parameter value",
+      "fix": "Paste only the parameter value you want to encode, not the entire URL."
+    },
+    {
+      "issue": "The user expects the whole URL to be encoded",
+      "fix": "Use URL Encoder if you want to encode a full URL string."
+    },
+    {
+      "issue": "The same value is encoded more than once",
+      "fix": "Check whether the parameter value was already encoded before running the tool again."
+    }
+  ],
+  "useCases": [
+    "Encoding redirect targets for query params",
+    "Placing nested URLs safely inside parameters",
+    "Encoding JSON values for one parameter field",
+    "Preparing special text for query strings",
+    "Building tracking and test URLs safely"
+  ],
+  "faq": [
+    {
+      "q": "What does a URL Parameter Encoder do?",
+      "a": "It encodes one parameter value for safe use inside a URL query string."
+    },
+    {
+      "q": "Should I paste the full URL here?",
+      "a": "No. This tool is for one parameter value, not the whole URL."
+    },
+    {
+      "q": "What is the difference between URL Parameter Encoder and URL Encoder?",
+      "a": "URL Parameter Encoder is for one query value, while URL Encoder is for broader encoded URL text."
+    },
+    {
+      "q": "Can I use it for nested URLs?",
+      "a": "Yes. Nested redirect URLs are one of the most useful cases for this tool."
+    },
+    {
+      "q": "Why does my encoded value look over-encoded?",
+      "a": "The most common reason is that the value was already encoded before you ran the tool again."
+    }
+  ],
+  "related": [
+    "url-parameter-decoder",
+    "url-encode",
+    "url-builder",
+    "url-splitter"
+  ]
+}
+,
+{
+  "id": "url-domain-extractor",
+  "name": "URL Domain Extractor",
+  "slug": "url-domain-extractor",
+  "category": "developer-tools",
+  "intro": "Extract the domain or host from a full URL so you can inspect link targets more quickly.",
+  "description": "Use this URL Domain Extractor to pull the domain from a full URL. It is useful for debugging links, checking redirect targets, reviewing tracking URLs, extracting hosts from copied links, and understanding where a URL points without manually scanning the whole address.",
+  "keywords": [
+    "url domain extractor",
+    "extract domain from url",
+    "url host extractor",
+    "get domain from url",
+    "url domain tool"
+  ],
+  "whyUse": [
+    "Extracts the host from a full URL quickly",
+    "Useful for redirects, tracking links, and debugging workflows",
+    "Helps inspect where a URL points without reading the whole address",
+    "Makes long links easier to review and compare",
+    "Works directly in the browser with no extra setup"
+  ],
+  "howToUse": [
+    "Paste a full URL into the input box",
+    "Click Run Tool to extract the domain",
+    "Review the host value in the output box",
+    "Copy the result for debugging or reuse",
+    "Run it again with another URL if needed"
+  ],
+  "examples": [
+    {
+      "title": "Extract a simple domain",
+      "input": "https://example.com/search?q=test",
+      "output": "example.com",
+      "explanation": "Useful when you want the main host from a URL quickly."
+    },
+    {
+      "title": "Extract a subdomain",
+      "input": "https://api.example.com/items/42?expand=true",
+      "output": "api.example.com",
+      "explanation": "Helpful when you need the exact host including a subdomain."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The input is not a full valid URL",
+      "fix": "Use a full URL with a protocol such as https://example.com."
+    },
+    {
+      "issue": "The user expects only the root domain without subdomains",
+      "fix": "This tool extracts the actual host from the URL, which may include a subdomain."
+    },
+    {
+      "issue": "The input is only a path or partial string",
+      "fix": "Paste a full URL rather than only /path or query text."
+    }
+  ],
+  "useCases": [
+    "Checking the host of redirect and tracking URLs",
+    "Reviewing long copied links more quickly",
+    "Extracting subdomains from API or app URLs",
+    "Inspecting which site a URL points to",
+    "Preparing URL hosts for debugging workflows"
+  ],
+  "faq": [
+    {
+      "q": "What does a URL Domain Extractor do?",
+      "a": "It extracts the host or domain part from a full URL."
+    },
+    {
+      "q": "Does it return subdomains too?",
+      "a": "Yes. If the URL uses a subdomain, the extracted host includes it."
+    },
+    {
+      "q": "What is the difference between URL Domain Extractor and URL Splitter?",
+      "a": "URL Domain Extractor returns only the host, while URL Splitter shows several URL parts such as protocol, host, path, query, and fragment."
+    },
+    {
+      "q": "Do I need a full URL with protocol?",
+      "a": "Yes. A full URL like https://example.com works best."
+    },
+    {
+      "q": "Why is my result invalid?",
+      "a": "The most common reasons are a missing protocol, malformed input, or using a partial URL instead of a full one."
+    }
+  ],
+  "related": [
+    "url-splitter",
+    "url-path-extractor",
+    "url-protocol-extractor",
+    "url-parser"
+  ]
+},
+{
+  "id": "url-path-extractor",
+  "name": "URL Path Extractor",
+  "slug": "url-path-extractor",
+  "category": "developer-tools",
+  "intro": "Extract the path from a full URL so you can inspect route structure without the rest of the link.",
+  "description": "Use this URL Path Extractor to pull the pathname from a full URL. It is useful for debugging routes, checking redirect targets, reviewing API endpoints, inspecting long links, and understanding the path portion of a URL without manually removing the protocol, host, query string, or fragment.",
+  "keywords": [
+    "url path extractor",
+    "extract path from url",
+    "url pathname extractor",
+    "get path from url",
+    "url path tool"
+  ],
+  "whyUse": [
+    "Extracts the path part from a full URL quickly",
+    "Useful for route debugging and endpoint review",
+    "Helps inspect URL structure without host and query noise",
+    "Makes redirect and tracking URLs easier to analyze",
+    "Works directly in the browser with no setup"
+  ],
+  "howToUse": [
+    "Paste a full URL into the input box",
+    "Click Run Tool to extract the path",
+    "Review the pathname in the output box",
+    "Copy the result for debugging or reuse",
+    "Run it again with another URL if needed"
+  ],
+  "examples": [
+    {
+      "title": "Extract a simple path",
+      "input": "https://example.com/search?q=test",
+      "output": "/search",
+      "explanation": "Useful when you want only the pathname without query parameters."
+    },
+    {
+      "title": "Extract a deeper endpoint path",
+      "input": "https://api.example.com/items/42/details?expand=true",
+      "output": "/items/42/details",
+      "explanation": "Helpful when checking a full API route."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The input is not a full valid URL",
+      "fix": "Use a full URL with a protocol such as https://example.com/path."
+    },
+    {
+      "issue": "The user expects the query string to be included in the result",
+      "fix": "This tool returns only the pathname. Use URL Splitter if you also need the query."
+    },
+    {
+      "issue": "The input is only a host or partial string",
+      "fix": "Paste a full URL so the path can be extracted correctly."
+    }
+  ],
+  "useCases": [
+    "Checking routes in redirect and app URLs",
+    "Reviewing API endpoint paths",
+    "Extracting pathname values from long copied links",
+    "Inspecting URL structure without extra parts",
+    "Preparing route paths for debugging workflows"
+  ],
+  "faq": [
+    {
+      "q": "What does a URL Path Extractor do?",
+      "a": "It extracts the pathname part from a full URL."
+    },
+    {
+      "q": "Does it include the query string?",
+      "a": "No. It returns only the path portion of the URL."
+    },
+    {
+      "q": "What is the difference between URL Path Extractor and URL Splitter?",
+      "a": "URL Path Extractor returns only the pathname, while URL Splitter shows several URL parts at once."
+    },
+    {
+      "q": "Do I need a full URL?",
+      "a": "Yes. A full URL with protocol works best."
+    },
+    {
+      "q": "Why is my result empty or invalid?",
+      "a": "The most common reasons are malformed input, missing protocol, or using partial text instead of a full URL."
+    }
+  ],
+  "related": [
+    "url-domain-extractor",
+    "url-protocol-extractor",
+    "url-splitter",
+    "url-parser"
+  ]
+},
+{
+  "id": "url-protocol-extractor",
+  "name": "URL Protocol Extractor",
+  "slug": "url-protocol-extractor",
+  "category": "developer-tools",
+  "intro": "Extract the protocol from a full URL so you can check whether a link uses http, https, or another scheme.",
+  "description": "Use this URL Protocol Extractor to pull the protocol or scheme from a full URL. It is useful for checking whether a link uses http or https, reviewing redirect targets, debugging API endpoints, and inspecting copied links when protocol choice matters for routing, security, or environment checks.",
+  "keywords": [
+    "url protocol extractor",
+    "extract protocol from url",
+    "url scheme extractor",
+    "get protocol from url",
+    "url protocol tool"
+  ],
+  "whyUse": [
+    "Extracts the protocol from a full URL quickly",
+    "Useful for checking http vs https in debugging workflows",
+    "Helps inspect copied links without reading the full address",
+    "Makes redirect and endpoint review easier",
+    "Works directly in the browser with no setup"
+  ],
+  "howToUse": [
+    "Paste a full URL into the input box",
+    "Click Run Tool to extract the protocol",
+    "Review the scheme in the output box",
+    "Copy the result for debugging or reuse",
+    "Run it again with another URL if needed"
+  ],
+  "examples": [
+    {
+      "title": "Extract an HTTPS protocol",
+      "input": "https://example.com/search?q=test",
+      "output": "https:",
+      "explanation": "Useful when checking whether a link is secure."
+    },
+    {
+      "title": "Extract an HTTP protocol",
+      "input": "http://example.com/login",
+      "output": "http:",
+      "explanation": "Helpful when reviewing legacy or redirected links."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The input is not a full valid URL",
+      "fix": "Use a full URL including the protocol, such as https://example.com."
+    },
+    {
+      "issue": "The user expects the host or path instead of the protocol",
+      "fix": "Use URL Domain Extractor or URL Path Extractor if you need those parts."
+    },
+    {
+      "issue": "The input is only a domain without a scheme",
+      "fix": "Paste a full URL rather than only example.com."
+    }
+  ],
+  "useCases": [
+    "Checking whether a link uses http or https",
+    "Reviewing protocols in redirect targets",
+    "Inspecting copied URLs during debugging",
+    "Comparing endpoint schemes across environments",
+    "Preparing protocol values for link analysis"
+  ],
+  "faq": [
+    {
+      "q": "What does a URL Protocol Extractor do?",
+      "a": "It extracts the scheme or protocol from a full URL, such as http: or https:."
+    },
+    {
+      "q": "Why is protocol important?",
+      "a": "Protocol affects how the URL is accessed and can matter for security, routing, and environment checks."
+    },
+    {
+      "q": "What is the difference between URL Protocol Extractor and URL Splitter?",
+      "a": "URL Protocol Extractor returns only the scheme, while URL Splitter shows several URL parts together."
+    },
+    {
+      "q": "Do I need a full URL with protocol included?",
+      "a": "Yes. A full URL is required for reliable extraction."
+    },
+    {
+      "q": "Why is my input invalid?",
+      "a": "The most common reasons are missing protocol, malformed URL text, or using a partial address instead of a full URL."
+    }
+  ],
+  "related": [
+    "url-domain-extractor",
+    "url-path-extractor",
+    "url-splitter",
+    "url-parser"
+  ]
+}
+,
+{
+  "id": "http-request-builder",
+  "name": "HTTP Request Builder",
+  "slug": "http-request-builder",
+  "category": "developer-tools",
+  "intro": "Build a simple raw HTTP request from method, URL path, host, and optional headers or body.",
+  "description": "Use this HTTP Request Builder to generate a simple raw HTTP request format from structured input. It is useful for learning HTTP, preparing test requests, documenting examples, and quickly building request text for debugging or educational workflows.",
+  "keywords": [
+    "http request builder",
+    "build http request",
+    "raw http request builder",
+    "http request generator",
+    "http request tool"
+  ],
+  "whyUse": [
+    "Generates raw HTTP request text quickly",
+    "Useful for learning and documenting HTTP structure",
+    "Helps prepare simple request examples for testing",
+    "Makes method, path, host, and body easier to assemble correctly",
+    "Works directly in the browser without manual formatting"
+  ],
+  "howToUse": [
+    "Paste the request parts in the expected line order",
+    "Click Run Tool to build the raw HTTP request",
+    "Review the generated request block",
+    "Copy the result into notes, docs, or testing workflows",
+    "Adjust method, path, headers, or body and run again if needed"
+  ],
+  "examples": [
+    {
+      "title": "Build a simple GET request",
+      "input": "GET\n/example\nexample.com",
+      "output": "GET /example HTTP/1.1\nHost: example.com",
+      "explanation": "Useful for basic HTTP request examples."
+    },
+    {
+      "title": "Build a POST request with body",
+      "input": "POST\n/api/items\napi.example.com\nContent-Type: application/json\n\n{\"name\":\"Book\"}",
+      "output": "POST /api/items HTTP/1.1\nHost: api.example.com\nContent-Type: application/json\n\n{\"name\":\"Book\"}",
+      "explanation": "Helpful when building a simple raw request example with headers and body."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The method, path, or host is missing",
+      "fix": "Provide at least method, path, and host on the first lines."
+    },
+    {
+      "issue": "The user expects the request to be sent automatically",
+      "fix": "This tool builds request text. It does not send the request itself."
+    },
+    {
+      "issue": "Headers are not written line by line",
+      "fix": "Put each header on its own line before the blank line and body."
+    }
+  ],
+  "useCases": [
+    "Learning raw HTTP request structure",
+    "Creating request examples for docs or notes",
+    "Preparing simple request text for debugging",
+    "Building educational GET and POST examples",
+    "Formatting request parts without manual assembly"
+  ],
+  "faq": [
+    {
+      "q": "What does an HTTP Request Builder do?",
+      "a": "It generates a simple raw HTTP request text block from structured input."
+    },
+    {
+      "q": "Does it send the request?",
+      "a": "No. It only builds the request text."
+    },
+    {
+      "q": "What input order should I use?",
+      "a": "Use method, path, host, optional headers, then an optional blank line and body."
+    },
+    {
+      "q": "What is the difference between HTTP Request Builder and HTTP Response Viewer?",
+      "a": "HTTP Request Builder creates request text, while HTTP Response Viewer fetches a URL and shows the returned response."
+    },
+    {
+      "q": "Can I use it for POST requests?",
+      "a": "Yes. You can include headers and a body for simple POST-style request examples."
+    }
+  ],
+  "related": [
+    "http-response-viewer",
+    "http-header-generator",
+    "http-header-extractor",
+    "url-builder"
+  ]
+},
+{
+  "id": "http-header-generator",
+  "name": "HTTP Header Generator",
+  "slug": "http-header-generator",
+  "category": "developer-tools",
+  "intro": "Generate a clean HTTP header block from key=value pairs for request and response examples.",
+  "description": "Use this HTTP Header Generator to turn header name and value pairs into a clean HTTP header block. It is useful for testing, documentation, raw request examples, debugging, and preparing request or response header text without manual formatting.",
+  "keywords": [
+    "http header generator",
+    "generate http headers",
+    "http headers builder",
+    "header block generator",
+    "http header tool"
+  ],
+  "whyUse": [
+    "Creates a formatted HTTP header block quickly",
+    "Useful for request examples, docs, and debugging",
+    "Helps avoid manual formatting mistakes",
+    "Good for building raw header text from simple pairs",
+    "Works directly in the browser with no setup"
+  ],
+  "howToUse": [
+    "Enter one header per line in Header-Name=Value format",
+    "Click Run Tool to generate the header block",
+    "Review the output in standard Header: Value format",
+    "Copy the result into your request or response example",
+    "Edit the header pairs and run again if needed"
+  ],
+  "examples": [
+    {
+      "title": "Generate a basic JSON header block",
+      "input": "Content-Type=application/json\nAccept=application/json",
+      "output": "Content-Type: application/json\nAccept: application/json",
+      "explanation": "Useful for API request examples."
+    },
+    {
+      "title": "Generate an auth-related header block",
+      "input": "Authorization=Bearer token123\nX-Request-ID=abc-123",
+      "output": "Authorization: Bearer token123\nX-Request-ID: abc-123",
+      "explanation": "Helpful when preparing raw request examples."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "A header line is missing the = separator",
+      "fix": "Use one line per header in Header-Name=Value format."
+    },
+    {
+      "issue": "The user expects automatic validation of header correctness",
+      "fix": "This tool formats headers but does not validate whether every header is semantically correct."
+    },
+    {
+      "issue": "The input uses colon format already",
+      "fix": "Use Header-Name=Value if you want this generator to build the output cleanly."
+    }
+  ],
+  "useCases": [
+    "Preparing HTTP request header examples",
+    "Building raw header text for docs or notes",
+    "Formatting header pairs during debugging",
+    "Creating cleaner request examples for testing",
+    "Converting simple name=value input into header lines"
+  ],
+  "faq": [
+    {
+      "q": "What does an HTTP Header Generator do?",
+      "a": "It turns header name and value pairs into a formatted HTTP header block."
+    },
+    {
+      "q": "What input format should I use?",
+      "a": "Use one line per header in Header-Name=Value format."
+    },
+    {
+      "q": "Does it validate the meaning of headers?",
+      "a": "No. It formats the headers but does not deeply validate them."
+    },
+    {
+      "q": "What is the difference between HTTP Header Generator and HTTP Header Extractor?",
+      "a": "HTTP Header Generator creates header text from pairs, while HTTP Header Extractor pulls header lines out of raw HTTP text."
+    },
+    {
+      "q": "Can I use it for request and response examples?",
+      "a": "Yes. It is useful for both kinds of HTTP header examples."
+    }
+  ],
+  "related": [
+    "http-header-extractor",
+    "http-request-builder",
+    "http-response-viewer",
+    "json-formatter"
+  ]
+},
+{
+  "id": "http-header-extractor",
+  "name": "HTTP Header Extractor",
+  "slug": "http-header-extractor",
+  "category": "developer-tools",
+  "intro": "Extract HTTP header lines from raw request or response text for easier inspection.",
+  "description": "Use this HTTP Header Extractor to pull HTTP header lines from raw request or response text. It is useful for debugging, reviewing copied HTTP messages, isolating headers from a larger raw block, and checking which headers are present without manually separating them from the body.",
+  "keywords": [
+    "http header extractor",
+    "extract http headers",
+    "http headers parser",
+    "raw header extractor",
+    "http header tool"
+  ],
+  "whyUse": [
+    "Extracts header lines from raw HTTP text quickly",
+    "Useful for debugging copied requests and responses",
+    "Helps isolate headers from body content",
+    "Makes long raw HTTP blocks easier to review",
+    "Works directly in the browser without manual cleanup"
+  ],
+  "howToUse": [
+    "Paste a raw HTTP request or response into the input box",
+    "Click Run Tool to extract the header lines",
+    "Review the headers in the output box",
+    "Copy the extracted headers for debugging or reuse",
+    "Use another tool if you need to build or modify headers"
+  ],
+  "examples": [
+    {
+      "title": "Extract headers from a raw response",
+      "input": "HTTP/1.1 200 OK\nContent-Type: application/json\nX-Test: 1\n\n{\"ok\":true}",
+      "output": "Content-Type: application/json\nX-Test: 1",
+      "explanation": "Useful when separating headers from a response body."
+    },
+    {
+      "title": "Extract headers from a raw request",
+      "input": "GET /items HTTP/1.1\nHost: example.com\nAccept: application/json\n\n",
+      "output": "Host: example.com\nAccept: application/json",
+      "explanation": "Helpful when reviewing copied raw request text."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The input is not raw HTTP text",
+      "fix": "Paste a request or response block that contains header lines."
+    },
+    {
+      "issue": "The user expects the tool to validate headers semantically",
+      "fix": "This tool extracts header lines but does not deeply validate each header's meaning."
+    },
+    {
+      "issue": "The body is pasted without any headers",
+      "fix": "Use raw HTTP text that includes request or response headers above the blank line."
+    }
+  ],
+  "useCases": [
+    "Extracting headers from copied HTTP responses",
+    "Reviewing request headers during debugging",
+    "Separating header lines from raw body text",
+    "Checking which headers are present in a raw block",
+    "Cleaning raw HTTP text for easier inspection"
+  ],
+  "faq": [
+    {
+      "q": "What does an HTTP Header Extractor do?",
+      "a": "It pulls header lines out of raw HTTP request or response text."
+    },
+    {
+      "q": "Can it work on both requests and responses?",
+      "a": "Yes. It can extract headers from either type of raw HTTP text."
+    },
+    {
+      "q": "Does it extract the body too?",
+      "a": "No. It focuses on the header lines and ignores the body content."
+    },
+    {
+      "q": "What is the difference between HTTP Header Extractor and HTTP Header Generator?",
+      "a": "HTTP Header Extractor pulls headers from raw HTTP text, while HTTP Header Generator creates header lines from simple input pairs."
+    },
+    {
+      "q": "Why is my output empty?",
+      "a": "The most common reasons are missing header lines, malformed raw HTTP text, or body-only input."
+    }
+  ],
+  "related": [
+    "http-header-generator",
+    "http-response-viewer",
+    "http-request-builder",
+    "json-formatter"
   ]
 }
 ]
