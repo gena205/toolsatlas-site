@@ -29726,4 +29726,4522 @@
     "json-formatter"
   ]
 }
+,
+{
+  "id": "url-parameter-remover",
+  "name": "URL Parameter Remover",
+  "slug": "url-parameter-remover",
+  "category": "developer-tools",
+  "intro": "Remove query parameters from a full URL and keep a cleaner base link instantly.",
+  "description": "Use this URL Parameter Remover to strip query parameters from a full URL while keeping the protocol, domain, path, and optional hash. It is useful for cleaning tracking links, removing UTM tags, simplifying copied URLs, preparing canonical-like links, and debugging redirects where query strings add noise.",
+  "keywords": [
+    "url parameter remover",
+    "remove query parameters from url",
+    "strip url parameters",
+    "remove utm from url",
+    "clean url online"
+  ],
+  "whyUse": [
+    "Remove UTM tags and tracking parameters from long copied URLs",
+    "Keep a cleaner shareable or review-friendly version of a link",
+    "Reduce noise when comparing URLs during debugging",
+    "Prepare simplified URLs for documentation or notes",
+    "Clean browser links without editing query strings manually"
+  ],
+  "howToUse": [
+    "Paste a full URL into the input box",
+    "Click Run Tool to remove the query parameter section",
+    "Review the cleaned URL in the output area",
+    "Copy the result for sharing, comparison, or documentation",
+    "If you need the parameters later, use a parameter extractor or parser before removing them"
+  ],
+  "examples": [
+    {
+      "title": "Remove UTM parameters from a landing page URL",
+      "input": "https://example.com/page?utm_source=google&utm_medium=cpc",
+      "output": "https://example.com/page",
+      "explanation": "Useful when you want a cleaner page URL without campaign tags."
+    },
+    {
+      "title": "Remove query string but keep the hash",
+      "input": "https://example.com/docs?id=42&lang=en#install",
+      "output": "https://example.com/docs#install",
+      "explanation": "The query string is removed while the fragment stays in place."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "A partial path is pasted instead of a full URL",
+      "fix": "Paste a complete URL with protocol when possible so the parser can handle it correctly."
+    },
+    {
+      "issue": "The user expects the hash fragment to be removed too",
+      "fix": "This tool removes query parameters. Use a hash extractor or another cleaner if you also want to change the fragment."
+    },
+    {
+      "issue": "The input does not contain any query parameters",
+      "fix": "The tool will return the original URL if there is no query string to remove."
+    }
+  ],
+  "useCases": [
+    "Cleaning marketing URLs before sharing them",
+    "Removing tracking tags from copied browser links",
+    "Simplifying URLs for SEO review or documentation",
+    "Comparing clean routes without query-string noise",
+    "Preparing neater links for notes, tickets, or audits"
+  ],
+  "faq": [
+    {
+      "q": "What does URL Parameter Remover do?",
+      "a": "It removes the query string from a full URL and returns the cleaner base link."
+    },
+    {
+      "q": "Does it remove UTM tags?",
+      "a": "Yes. UTM parameters are part of the query string, so they are removed with the rest of the parameters."
+    },
+    {
+      "q": "Does it keep the hash fragment?",
+      "a": "Yes. The tool removes query parameters but can keep the fragment part such as #section."
+    },
+    {
+      "q": "What is the difference between URL Parameter Remover and URL Parameter Extractor?",
+      "a": "The remover deletes the parameter section. The extractor reads and lists the parameter values."
+    },
+    {
+      "q": "When should I use this instead of URL Parser?",
+      "a": "Use this tool when your only goal is to remove the query string. Use URL Parser when you want to inspect all URL parts."
+    }
+  ],
+  "related": [
+    "url-parameter-extractor",
+    "url-parser",
+    "url-hash-extractor",
+    "url-path-extractor"
+  ]
+},
+{
+  "id": "url-parameter-sorter",
+  "name": "URL Parameter Sorter",
+  "slug": "url-parameter-sorter",
+  "category": "developer-tools",
+  "intro": "Sort URL query parameters alphabetically to make long links easier to compare and review.",
+  "description": "Use this URL Parameter Sorter to reorder query parameters in a full URL alphabetically by key. It is useful for debugging long links, comparing similar URLs, normalizing request samples, cleaning test cases, and making tracking or API URLs easier to read without changing the base route.",
+  "keywords": [
+    "url parameter sorter",
+    "sort query parameters",
+    "sort url params",
+    "alphabetize query string",
+    "normalize url parameters"
+  ],
+  "whyUse": [
+    "Make long query strings easier to compare visually",
+    "Normalize URLs for debugging or documentation",
+    "Reduce noise when the same parameters appear in different orders",
+    "Create cleaner request samples for testing",
+    "Keep the same URL meaning while making it easier to inspect"
+  ],
+  "howToUse": [
+    "Paste the full URL into the input box",
+    "Click Run Tool to sort the query parameters",
+    "Review the normalized URL in the output area",
+    "Copy the sorted result for debugging or comparison",
+    "Use a parameter extractor if you also want a readable key-value list"
+  ],
+  "examples": [
+    {
+      "title": "Sort three query parameters alphabetically",
+      "input": "https://example.com/search?z=9&a=1&m=5",
+      "output": "https://example.com/search?a=1&m=5&z=9",
+      "explanation": "The parameter order becomes easier to compare and review."
+    },
+    {
+      "title": "Sort tracking parameters on a page URL",
+      "input": "https://example.com/page?utm_medium=email&utm_campaign=spring&utm_source=newsletter",
+      "output": "https://example.com/page?utm_campaign=spring&utm_medium=email&utm_source=newsletter",
+      "explanation": "Useful for normalizing campaign links before comparison."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The user expects parameters to be removed instead of reordered",
+      "fix": "Use URL Parameter Remover if you want the whole query string deleted."
+    },
+    {
+      "issue": "The input has no query parameters",
+      "fix": "The tool returns the original URL when there is nothing to sort."
+    },
+    {
+      "issue": "The user expects sorting by value instead of key",
+      "fix": "This version sorts by parameter key for predictable readable output."
+    }
+  ],
+  "useCases": [
+    "Comparing two similar URLs during debugging",
+    "Normalizing test URLs for documentation",
+    "Cleaning query strings before saving examples",
+    "Reviewing long API or tracking links",
+    "Making parameter-heavy URLs easier to scan"
+  ],
+  "faq": [
+    {
+      "q": "What does URL Parameter Sorter do?",
+      "a": "It reorders the query parameters in a full URL, usually alphabetically by key."
+    },
+    {
+      "q": "Does sorting change the base URL?",
+      "a": "No. It keeps the same protocol, host, and path while only reordering the query string."
+    },
+    {
+      "q": "Why sort query parameters?",
+      "a": "Sorting makes URLs easier to compare, review, and document when parameter order is inconsistent."
+    },
+    {
+      "q": "What is the difference between URL Parameter Sorter and URL Parameter Remover?",
+      "a": "The sorter keeps parameters and changes their order. The remover deletes the parameter section completely."
+    },
+    {
+      "q": "When should I use this instead of URL Parser?",
+      "a": "Use this tool when you want a normalized URL output. Use URL Parser when you want to inspect the structure and parts separately."
+    }
+  ],
+  "related": [
+    "url-parameter-remover",
+    "url-parameter-extractor",
+    "url-parser",
+    "query-string-parser"
+  ]
+},
+{
+  "id": "url-domain-extractor",
+  "name": "URL Domain Extractor",
+  "slug": "url-domain-extractor",
+  "category": "developer-tools",
+  "intro": "Extract the domain or hostname from a full URL instantly for debugging and link review.",
+  "description": "Use this URL Domain Extractor to pull the domain from a full URL without the protocol, path, query string, or hash. It is useful for link audits, redirect debugging, copied URL cleanup, host checks, SEO review, and quick inspection of which site a long URL actually belongs to.",
+  "keywords": [
+    "url domain extractor",
+    "extract domain from url",
+    "get hostname from url",
+    "url host extractor",
+    "domain from full url"
+  ],
+  "whyUse": [
+    "Pull the host from long URLs quickly",
+    "Inspect which domain a copied link belongs to",
+    "Reduce noise from path, parameters, and fragments",
+    "Help with redirect, audit, and SEO checks",
+    "Get clean host output without manual parsing"
+  ],
+  "howToUse": [
+    "Paste the full URL into the input box",
+    "Click Run Tool to extract the domain",
+    "Review the hostname in the output area",
+    "Copy the result for notes, checks, or comparison",
+    "Use URL Parser if you need the other URL parts too"
+  ],
+  "examples": [
+    {
+      "title": "Extract a simple domain from a page URL",
+      "input": "https://example.com/blog/post-1?ref=test",
+      "output": "example.com",
+      "explanation": "Useful when you only need the host and not the rest of the URL."
+    },
+    {
+      "title": "Extract a subdomain",
+      "input": "https://app.docs.example.com/login?next=%2Fhome#top",
+      "output": "app.docs.example.com",
+      "explanation": "Keeps the full hostname including subdomains."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "A plain domain is pasted instead of a full URL",
+      "fix": "This tool works best with full URLs. Add the protocol if the input cannot be parsed."
+    },
+    {
+      "issue": "The user expects only the root domain instead of the full hostname",
+      "fix": "This tool returns the hostname, which may include subdomains."
+    },
+    {
+      "issue": "The input contains invalid URL formatting",
+      "fix": "Paste a clean full URL like https://example.com/path."
+    }
+  ],
+  "useCases": [
+    "Checking which host a redirect target uses",
+    "Cleaning copied links for audit work",
+    "Reviewing hostnames in SEO or dev workflows",
+    "Inspecting long URLs from logs or tickets",
+    "Pulling the domain out of messy tracked links"
+  ],
+  "faq": [
+    {
+      "q": "What does URL Domain Extractor return?",
+      "a": "It returns the hostname part of a full URL, such as example.com or app.example.com."
+    },
+    {
+      "q": "Does it include the protocol?",
+      "a": "No. It extracts only the domain or hostname."
+    },
+    {
+      "q": "Does it keep subdomains?",
+      "a": "Yes. If the input uses a subdomain, the full hostname is returned."
+    },
+    {
+      "q": "What is the difference between URL Domain Extractor and URL Path Extractor?",
+      "a": "Domain Extractor returns the host. Path Extractor returns the pathname after the host."
+    },
+    {
+      "q": "When should I use this instead of URL Parser?",
+      "a": "Use this tool when you only need the host quickly. Use URL Parser when you want protocol, path, query, and hash too."
+    }
+  ],
+  "related": [
+    "url-path-extractor",
+    "url-protocol-extractor",
+    "url-parser",
+    "hostname-extractor"
+  ]
+},
+{
+  "id": "url-protocol-extractor",
+  "name": "URL Protocol Extractor",
+  "slug": "url-protocol-extractor",
+  "category": "developer-tools",
+  "intro": "Extract the protocol from a full URL, such as https, http, ftp, or mailto.",
+  "description": "Use this URL Protocol Extractor to pull the scheme or protocol from a full URL without the host, path, query string, or fragment. It is useful for debugging links, checking whether a URL uses HTTPS, reviewing redirect targets, and quickly inspecting the transport scheme used in copied URLs.",
+  "keywords": [
+    "url protocol extractor",
+    "extract protocol from url",
+    "get scheme from url",
+    "url scheme extractor",
+    "http https extractor"
+  ],
+  "whyUse": [
+    "Check whether a URL uses HTTP or HTTPS quickly",
+    "Inspect copied links during redirect or SEO review",
+    "Separate the scheme from the rest of the URL cleanly",
+    "Review protocol usage without manual parsing",
+    "Useful for debugging mixed or unexpected URL formats"
+  ],
+  "howToUse": [
+    "Paste the full URL into the input box",
+    "Click Run Tool to extract the protocol",
+    "Review the returned scheme in the output area",
+    "Copy the result if you need to document or compare the URL",
+    "Use URL Parser if you want the full breakdown too"
+  ],
+  "examples": [
+    {
+      "title": "Extract HTTPS from a secure page URL",
+      "input": "https://example.com/path?a=1#top",
+      "output": "https",
+      "explanation": "Useful when checking whether a link is already secure."
+    },
+    {
+      "title": "Extract another scheme",
+      "input": "ftp://files.example.com/downloads/report.csv",
+      "output": "ftp",
+      "explanation": "The extractor is useful beyond only HTTP and HTTPS."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The input does not contain a full URL with a scheme",
+      "fix": "Paste a complete URL such as https://example.com so the protocol can be detected."
+    },
+    {
+      "issue": "The user expects the protocol separator too",
+      "fix": "This tool returns the protocol name like https, not the full https:// string."
+    },
+    {
+      "issue": "A plain domain is pasted without protocol",
+      "fix": "Add the full scheme first if you need an exact protocol result."
+    }
+  ],
+  "useCases": [
+    "Checking whether a URL uses HTTPS",
+    "Reviewing redirect targets and copied links",
+    "Inspecting mixed URL samples in debugging",
+    "Separating scheme data from full URLs",
+    "Quick protocol checks during audits or dev work"
+  ],
+  "faq": [
+    {
+      "q": "What does URL Protocol Extractor return?",
+      "a": "It returns the scheme or protocol from a full URL, such as https, http, ftp, or mailto."
+    },
+    {
+      "q": "Does it return https:// or just https?",
+      "a": "It returns the protocol name only, such as https."
+    },
+    {
+      "q": "Why would I extract the protocol from a URL?",
+      "a": "It helps with security review, redirect debugging, and quick checks of whether a URL uses the expected scheme."
+    },
+    {
+      "q": "What is the difference between URL Protocol Extractor and URL Domain Extractor?",
+      "a": "Protocol Extractor returns the scheme like https, while Domain Extractor returns the hostname like example.com."
+    },
+    {
+      "q": "When should I use this instead of URL Parser?",
+      "a": "Use this tool when you only need the protocol quickly. Use URL Parser when you want the whole URL split into parts."
+    }
+  ],
+  "related": [
+    "url-domain-extractor",
+    "url-parser",
+    "http-to-https-checker",
+    "url-path-extractor"
+  ]
+},
+{
+  "id": "url-hash-extractor",
+  "name": "URL Hash Extractor",
+  "slug": "url-hash-extractor",
+  "category": "developer-tools",
+  "intro": "Extract the hash or fragment part from a full URL instantly.",
+  "description": "Use this URL Hash Extractor to pull the fragment part from a full URL, including anchor-style values after the hash sign. It is useful for debugging in-page links, SPA routes, redirect targets, documentation anchors, and copied URLs where the fragment is easy to miss inside a long string.",
+  "keywords": [
+    "url hash extractor",
+    "extract fragment from url",
+    "url fragment extractor",
+    "get hash from url",
+    "anchor extractor"
+  ],
+  "whyUse": [
+    "Pull the fragment from long URLs quickly",
+    "Inspect anchor links and SPA hash routes",
+    "Check redirect targets that use fragments",
+    "Separate the hash from the rest of the URL cleanly",
+    "Make long copied URLs easier to inspect"
+  ],
+  "howToUse": [
+    "Paste the full URL into the input box",
+    "Click Run Tool to extract the hash fragment",
+    "Review the returned fragment in the output area",
+    "Copy the result for debugging or documentation",
+    "Use URL Parser if you want protocol, domain, path, and query details too"
+  ],
+  "examples": [
+    {
+      "title": "Extract a section anchor",
+      "input": "https://example.com/docs/install?lang=en#requirements",
+      "output": "#requirements",
+      "explanation": "Useful when checking in-page navigation targets."
+    },
+    {
+      "title": "Extract an SPA-style hash route",
+      "input": "https://example.com/#/dashboard/settings",
+      "output": "#/dashboard/settings",
+      "explanation": "Helpful when reviewing client-side route fragments."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The input URL has no fragment at all",
+      "fix": "The tool will return an empty result or a no-hash message when there is no # section."
+    },
+    {
+      "issue": "The user expects the query string instead of the fragment",
+      "fix": "Use a parameter extractor or parser when you need the query section rather than the hash."
+    },
+    {
+      "issue": "A partial fragment is pasted instead of a full URL",
+      "fix": "Paste the complete URL if you want consistent extraction from real links."
+    }
+  ],
+  "useCases": [
+    "Checking in-page anchor links",
+    "Reviewing SPA client-side routes",
+    "Inspecting long redirect targets with fragments",
+    "Pulling hash data from copied documentation links",
+    "Debugging fragment-based navigation behavior"
+  ],
+  "faq": [
+    {
+      "q": "What does URL Hash Extractor return?",
+      "a": "It returns the fragment part of the URL, including the leading hash sign when present."
+    },
+    {
+      "q": "Does it include the # character?",
+      "a": "Yes. The output includes the hash sign so the fragment stays easy to recognize."
+    },
+    {
+      "q": "What if the URL has no fragment?",
+      "a": "The tool returns an empty or no-hash result because there is no fragment to extract."
+    },
+    {
+      "q": "What is the difference between URL Hash Extractor and URL Parameter Extractor?",
+      "a": "Hash Extractor reads the fragment after #, while Parameter Extractor reads the query string after ?."
+    },
+    {
+      "q": "When should I use this instead of URL Parser?",
+      "a": "Use this tool when you only need the fragment quickly. Use URL Parser when you need the whole URL structure."
+    }
+  ],
+  "related": [
+    "url-parameter-extractor",
+    "url-parser",
+    "url-parameter-remover",
+    "url-path-extractor"
+  ]
+}
+,
+{
+  "id": "url-query-string-cleaner",
+  "name": "URL Query String Cleaner",
+  "slug": "url-query-string-cleaner",
+  "category": "developer-tools",
+  "intro": "Clean a raw URL query string by removing noise, empty separators, and malformed spacing.",
+  "description": "Use this URL Query String Cleaner to normalize a raw query string such as ?a=1&&b=2& into a cleaner and more readable format. It is useful for debugging copied parameter strings, cleaning test data, fixing messy redirects, and preparing query strings before using them in APIs, links, or documentation.",
+  "keywords": [
+    "url query string cleaner",
+    "clean query string",
+    "normalize query params",
+    "query string cleanup",
+    "fix url query string"
+  ],
+  "whyUse": [
+    "Clean messy query strings copied from logs, links, or browser tools",
+    "Remove repeated separators and empty parameter fragments",
+    "Prepare cleaner parameter strings for testing and documentation",
+    "Make query strings easier to review before attaching them to a URL",
+    "Normalize noisy raw parameter input without editing it manually"
+  ],
+  "howToUse": [
+    "Paste a raw query string into the input box",
+    "Click Run Tool to normalize the parameter string",
+    "Review the cleaned output without extra separators or empty pairs",
+    "Copy the result into a URL, request, or documentation sample",
+    "Use a query parser if you also want key-value inspection"
+  ],
+  "examples": [
+    {
+      "title": "Clean repeated separators",
+      "input": "?a=1&&b=2&&&c=3&",
+      "output": "a=1&b=2&c=3",
+      "explanation": "Removes extra ampersands and trailing noise."
+    },
+    {
+      "title": "Clean mixed spacing and leading question mark",
+      "input": " ?utm_source=email&  utm_campaign=spring  &&ref=top ",
+      "output": "utm_source=email&utm_campaign=spring&ref=top",
+      "explanation": "Useful when copied query strings contain spacing noise."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "A full URL is pasted instead of just the raw query string",
+      "fix": "Paste only the parameter part or use a full-URL tool if you need URL-aware cleanup."
+    },
+    {
+      "issue": "The user expects percent-decoding",
+      "fix": "This tool cleans separators and structure. Use a decoder if you need readable decoded values."
+    },
+    {
+      "issue": "The string contains duplicate keys that should stay",
+      "fix": "This tool keeps parameter order and values. It only cleans structure noise."
+    }
+  ],
+  "useCases": [
+    "Cleaning copied query strings from redirects or logs",
+    "Preparing raw parameters for testing APIs",
+    "Fixing malformed parameter strings before documentation",
+    "Cleaning campaign parameter fragments",
+    "Normalizing parameter input before parsing"
+  ],
+  "faq": [
+    {
+      "q": "What does URL Query String Cleaner do?",
+      "a": "It cleans a raw query string by removing repeated separators, trailing ampersands, and extra spacing."
+    },
+    {
+      "q": "Does it decode query parameter values?",
+      "a": "No. It cleans the structure of the query string but does not decode encoded values."
+    },
+    {
+      "q": "Can I paste a leading question mark?",
+      "a": "Yes. The cleaner can handle input that starts with a question mark."
+    },
+    {
+      "q": "What is the difference between this tool and Query String Parser?",
+      "a": "This tool cleans the raw query string. Query String Parser turns it into readable key-value output."
+    },
+    {
+      "q": "What is the difference between this tool and URL Parameter Remover?",
+      "a": "Query String Cleaner works on the raw parameter section. URL Parameter Remover removes the whole parameter section from a full URL."
+    }
+  ],
+  "related": [
+    "query-string-parser",
+    "query-string-builder",
+    "url-parameter-extractor",
+    "url-parameter-remover"
+  ]
+},
+{
+  "id": "remove-utm-parameters",
+  "name": "Remove UTM Parameters",
+  "slug": "remove-utm-parameters",
+  "category": "developer-tools",
+  "intro": "Remove only UTM tracking parameters from a full URL while keeping the rest of the link intact.",
+  "description": "Use this Remove UTM Parameters tool to strip utm_source, utm_medium, utm_campaign, utm_term, utm_content, and other UTM-style tracking parameters from a full URL. It is useful for link cleanup, sharing cleaner URLs, comparing landing-page links, removing analytics noise, and keeping non-UTM parameters untouched.",
+  "keywords": [
+    "remove utm parameters",
+    "strip utm tags",
+    "remove utm from url",
+    "clean tracking url",
+    "utm cleaner"
+  ],
+  "whyUse": [
+    "Remove only marketing tracking parameters without losing useful query values",
+    "Create cleaner shareable links",
+    "Keep non-UTM filters or IDs intact",
+    "Reduce analytics noise when comparing URLs",
+    "Clean copied campaign links quickly"
+  ],
+  "howToUse": [
+    "Paste a full URL into the input box",
+    "Click Run Tool to remove UTM parameters",
+    "Review the cleaned URL in the output box",
+    "Copy the result for sharing or analysis",
+    "Use a full parameter remover if you want to delete all query parameters instead"
+  ],
+  "examples": [
+    {
+      "title": "Remove common UTM tags",
+      "input": "https://example.com/page?utm_source=google&utm_medium=cpc&id=42",
+      "output": "https://example.com/page?id=42",
+      "explanation": "UTM tags are removed while the useful id parameter stays."
+    },
+    {
+      "title": "Remove multiple tracking values and keep hash",
+      "input": "https://example.com/docs?ref=top&utm_campaign=spring&utm_content=button#install",
+      "output": "https://example.com/docs?ref=top#install",
+      "explanation": "Only UTM-style parameters are removed."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The user expects all parameters to be removed",
+      "fix": "This tool removes only UTM-style tracking parameters, not the whole query string."
+    },
+    {
+      "issue": "The input has no UTM parameters",
+      "fix": "If no UTM keys are present, the tool returns the original URL."
+    },
+    {
+      "issue": "The input is not a full URL",
+      "fix": "Paste a complete URL like https://example.com/page?utm_source=test&id=42."
+    }
+  ],
+  "useCases": [
+    "Cleaning marketing links before sharing",
+    "Removing analytics noise from copied URLs",
+    "Comparing landing-page links without tracking tags",
+    "Keeping useful query values while deleting UTM tags",
+    "Preparing neater links for documentation or tickets"
+  ],
+  "faq": [
+    {
+      "q": "What does Remove UTM Parameters do?",
+      "a": "It removes tracking parameters that start with utm_ from a full URL."
+    },
+    {
+      "q": "Does it remove non-UTM parameters too?",
+      "a": "No. It keeps other parameters unless they also match the UTM pattern."
+    },
+    {
+      "q": "Will it keep the hash fragment?",
+      "a": "Yes. The fragment can stay while UTM parameters are removed from the query string."
+    },
+    {
+      "q": "What is the difference between this tool and URL Parameter Remover?",
+      "a": "This tool removes only utm_* parameters. URL Parameter Remover removes the whole query string."
+    },
+    {
+      "q": "Can I use this for cleaner share links?",
+      "a": "Yes. That is one of the main use cases."
+    }
+  ],
+  "related": [
+    "url-parameter-remover",
+    "url-parameter-sorter",
+    "url-parameter-extractor",
+    "url-query-string-cleaner"
+  ]
+},
+{
+  "id": "url-canonicalizer",
+  "name": "URL Canonicalizer",
+  "slug": "url-canonicalizer",
+  "category": "developer-tools",
+  "intro": "Normalize a full URL into a cleaner canonical-style form for comparison and cleanup.",
+  "description": "Use this URL Canonicalizer to normalize a full URL into a cleaner and more stable form by trimming spaces, lowercasing the hostname, removing default ports, collapsing duplicate slashes in the path, sorting query parameters, and optionally removing a trailing slash from non-root paths. It is useful for deduplication, URL comparison, cleanup workflows, and debugging links that look different but should resolve to the same structure.",
+  "keywords": [
+    "url canonicalizer",
+    "normalize url",
+    "canonicalize url",
+    "clean url structure",
+    "url normalizer"
+  ],
+  "whyUse": [
+    "Normalize inconsistent URLs into a cleaner comparable form",
+    "Reduce duplicate-looking URL variants in analysis",
+    "Make URLs easier to compare in logs and audits",
+    "Clean default ports and duplicate path slashes automatically",
+    "Sort parameters for a more stable final result"
+  ],
+  "howToUse": [
+    "Paste a full URL into the input box",
+    "Click Run Tool to normalize the URL",
+    "Review the canonicalized result in the output area",
+    "Copy the result for comparison, cleanup, or documentation",
+    "Use narrower extractors if you only need one part of the URL"
+  ],
+  "examples": [
+    {
+      "title": "Normalize hostname, default port, and parameter order",
+      "input": "HTTPS://Example.com:443/path/?b=2&a=1",
+      "output": "https://example.com/path?a=1&b=2",
+      "explanation": "Lowercases the hostname, removes the default HTTPS port, trims the path, and sorts query parameters."
+    },
+    {
+      "title": "Collapse duplicate path slashes",
+      "input": "https://example.com//docs///install/?z=9&a=1",
+      "output": "https://example.com/docs/install?a=1&z=9",
+      "explanation": "Useful for comparing noisy copied URLs."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The user expects a search-engine canonical tag checker",
+      "fix": "This tool canonicalizes the URL string itself. It does not inspect a page’s rel=canonical markup."
+    },
+    {
+      "issue": "The input is not a complete URL",
+      "fix": "Paste a full URL like https://example.com/path?a=1."
+    },
+    {
+      "issue": "The user expects tracking parameters to be removed automatically",
+      "fix": "This tool normalizes structure. Use a UTM remover or parameter remover if you also want cleanup by policy."
+    }
+  ],
+  "useCases": [
+    "Comparing noisy URLs in logs or spreadsheets",
+    "Normalizing URLs before deduplication",
+    "Cleaning copied links for documentation",
+    "Preparing more stable URL samples for testing",
+    "Reducing structural differences during audits"
+  ],
+  "faq": [
+    {
+      "q": "What does URL Canonicalizer do?",
+      "a": "It normalizes a full URL into a cleaner canonical-style structure for comparison and cleanup."
+    },
+    {
+      "q": "Does it check rel=canonical tags on a website?",
+      "a": "No. It canonicalizes the URL string itself, not the HTML markup of a page."
+    },
+    {
+      "q": "Does it sort query parameters?",
+      "a": "Yes. Sorting query parameters helps create a more stable normalized output."
+    },
+    {
+      "q": "Does it remove default ports?",
+      "a": "Yes. Default ports like 80 for http and 443 for https can be removed."
+    },
+    {
+      "q": "What is the difference between URL Canonicalizer and URL Parameter Sorter?",
+      "a": "Parameter Sorter only reorders query parameters. URL Canonicalizer also normalizes host, path, default ports, and overall URL structure."
+    }
+  ],
+  "related": [
+    "url-parameter-sorter",
+    "url-parameter-remover",
+    "url-domain-extractor",
+    "url-path-extractor"
+  ]
+},
+{
+  "id": "http-status-code-checker",
+  "name": "HTTP Status Code Checker",
+  "slug": "http-status-code-checker",
+  "category": "developer-tools",
+  "intro": "Check the HTTP status code of a URL quickly for debugging, audits, and link validation.",
+  "description": "Use this HTTP Status Code Checker to fetch a URL and return its final HTTP status code, final resolved URL, and whether a redirect likely occurred. It is useful for debugging broken links, checking response behavior, validating redirects, and confirming whether a page returns 200, 301, 302, 404, 500, or another HTTP code.",
+  "keywords": [
+    "http status code checker",
+    "check http status code",
+    "url status checker",
+    "response code checker",
+    "http code lookup"
+  ],
+  "whyUse": [
+    "Check whether a page returns the expected HTTP code",
+    "Validate redirects and final destination URLs",
+    "Debug broken links or unexpected page behavior",
+    "Confirm whether a URL resolves successfully before deeper checks",
+    "Get a quick status-only result without opening other tools"
+  ],
+  "howToUse": [
+    "Paste a full URL into the input box",
+    "Click Run Tool to fetch the URL",
+    "Review the final status code and final URL",
+    "Use the result to continue with redirect or response debugging if needed",
+    "Try the response viewer if you also want body preview information"
+  ],
+  "examples": [
+    {
+      "title": "Check a normal page response",
+      "input": "https://example.com",
+      "output": "Input URL: https://example.com\nFinal URL: https://example.com/\nHTTP Status: 200\nRedirect Detected: No",
+      "explanation": "Useful for confirming that a page resolves normally."
+    },
+    {
+      "title": "Check a redirecting URL",
+      "input": "http://example.com",
+      "output": "Input URL: http://example.com\nFinal URL: https://example.com/\nHTTP Status: 301 or 302\nRedirect Detected: Yes",
+      "explanation": "Useful when validating whether HTTP redirects to HTTPS."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The input is missing protocol",
+      "fix": "Paste a full URL like https://example.com to avoid ambiguous results."
+    },
+    {
+      "issue": "The target blocks external fetch access",
+      "fix": "Some targets may fail because of upstream restrictions, anti-bot rules, or fetch limitations."
+    },
+    {
+      "issue": "The user expects the full body content too",
+      "fix": "Use HTTP Response Viewer if you want a body preview in addition to the status."
+    }
+  ],
+  "useCases": [
+    "Checking whether a page returns 200 or an error",
+    "Validating redirects and final landing URLs",
+    "Testing links during audits or QA work",
+    "Confirming response behavior before deeper debugging",
+    "Checking HTTP/HTTPS behavior quickly"
+  ],
+  "faq": [
+    {
+      "q": "What does HTTP Status Code Checker return?",
+      "a": "It returns the final HTTP status code, final URL, and whether a redirect likely happened."
+    },
+    {
+      "q": "Can it help with redirect testing?",
+      "a": "Yes. It is useful for checking whether a redirect occurs and where the final URL resolves."
+    },
+    {
+      "q": "Does it show the full response body?",
+      "a": "No. This tool is focused on the status code and final URL."
+    },
+    {
+      "q": "What is the difference between this tool and Website Status Checker?",
+      "a": "This page is a narrower developer-style tool focused on HTTP status code intent."
+    },
+    {
+      "q": "Why might the check fail on some sites?",
+      "a": "Some targets block automated fetches, proxy access, or cross-origin style retrieval."
+    }
+  ],
+  "related": [
+    "http-response-viewer",
+    "website-status-checker",
+    "website-redirect-checker",
+    "response-time-checker"
+  ]
+},
+{
+  "id": "http-response-viewer",
+  "name": "HTTP Response Viewer",
+  "slug": "http-response-viewer",
+  "category": "developer-tools",
+  "intro": "Fetch a URL and preview its HTTP response status, final URL, content type, and body snippet.",
+  "description": "Use this HTTP Response Viewer to fetch a URL and inspect a lightweight view of the response, including final URL, status code, content type, and a preview of the body text. It is useful for debugging URLs, checking what a page returns, reviewing raw response behavior quickly, and inspecting simple response output without opening browser dev tools.",
+  "keywords": [
+    "http response viewer",
+    "view http response",
+    "response body viewer",
+    "fetch url response",
+    "http response preview"
+  ],
+  "whyUse": [
+    "Inspect a simple response preview directly in the browser",
+    "Check final URL, status, and content type in one place",
+    "Review what a page or endpoint returns without opening dev tools",
+    "Get a quick body snippet for debugging",
+    "Pair status information with a readable response preview"
+  ],
+  "howToUse": [
+    "Paste a full URL into the input box",
+    "Click Run Tool to fetch the response",
+    "Review the final URL, status code, content type, and body preview",
+    "Copy the result for debugging or comparison if needed",
+    "Use a status checker if you only care about the response code"
+  ],
+  "examples": [
+    {
+      "title": "Preview a normal HTML page response",
+      "input": "https://example.com",
+      "output": "Input URL: https://example.com\nFinal URL: https://example.com/\nHTTP Status: 200\nContent-Type: text/html\n\nBody Preview:\n<!doctype html>...",
+      "explanation": "Useful for checking what a page actually returns."
+    },
+    {
+      "title": "Preview a JSON endpoint",
+      "input": "https://example.com/api/status",
+      "output": "Input URL: https://example.com/api/status\nFinal URL: https://example.com/api/status\nHTTP Status: 200\nContent-Type: application/json\n\nBody Preview:\n{\"status\":\"ok\"}",
+      "explanation": "Useful for quick API response inspection."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The user expects a full developer-network panel",
+      "fix": "This tool provides a lightweight response preview, not a full browser devtools waterfall."
+    },
+    {
+      "issue": "The target blocks proxy or fetch access",
+      "fix": "Some sites or APIs may reject proxy-based or cross-origin style access."
+    },
+    {
+      "issue": "The response body is too large or binary",
+      "fix": "This tool is best for text-like preview output and may only show a short snippet."
+    }
+  ],
+  "useCases": [
+    "Previewing what a URL returns",
+    "Checking whether an endpoint responds with HTML or JSON",
+    "Reading a short body snippet during debugging",
+    "Inspecting final URL and content type together",
+    "Quick response checks without opening browser developer tools"
+  ],
+  "faq": [
+    {
+      "q": "What does HTTP Response Viewer show?",
+      "a": "It shows a lightweight response view with final URL, status code, content type, and a body preview."
+    },
+    {
+      "q": "Does it show the full response body?",
+      "a": "Usually it is better to show only a short preview, especially for large responses."
+    },
+    {
+      "q": "Can it be used for APIs?",
+      "a": "Yes. It can be useful for simple JSON or text response previews."
+    },
+    {
+      "q": "What is the difference between HTTP Response Viewer and HTTP Status Code Checker?",
+      "a": "Response Viewer also shows content type and body preview, while Status Code Checker focuses on HTTP code intent."
+    },
+    {
+      "q": "Why might some responses fail to load?",
+      "a": "Some targets block proxy-based access, automation, or cross-origin retrieval."
+    }
+  ],
+  "related": [
+    "http-status-code-checker",
+    "website-redirect-checker",
+    "response-time-checker",
+    "http-header-parser"
+  ]
+}
+,
+{
+  "id": "http-header-extractor",
+  "name": "HTTP Header Extractor",
+  "slug": "http-header-extractor",
+  "category": "developer-tools",
+  "intro": "Extract HTTP headers from raw response text and return a clean header-only block.",
+  "description": "Use this HTTP Header Extractor to pull header lines from raw HTTP response text. It is useful when you copy a full raw response from logs, tools, docs, or terminals and want only the header section without the response body.",
+  "keywords": [
+    "http header extractor",
+    "extract http headers",
+    "raw response header extractor",
+    "http headers from response",
+    "header parser"
+  ],
+  "whyUse": [
+    "Pull only the header section from a raw HTTP response",
+    "Clean noisy copied response text before analysis",
+    "Separate headers from body content quickly",
+    "Prepare raw response samples for debugging or documentation",
+    "Review header lines without manual cleanup"
+  ],
+  "howToUse": [
+    "Paste the raw HTTP response into the input box",
+    "Click Run Tool to extract the header block",
+    "Review the cleaned header-only output",
+    "Copy the result for debugging, comparison, or notes",
+    "Use another parser if you need deeper header analysis"
+  ],
+  "examples": [
+    {
+      "title": "Extract headers from a simple response",
+      "input": "HTTP/1.1 200 OK\nContent-Type: text/html\nCache-Control: no-cache\n\n<html>Hello</html>",
+      "output": "HTTP/1.1 200 OK\nContent-Type: text/html\nCache-Control: no-cache",
+      "explanation": "Stops at the first empty line and returns only the header section."
+    },
+    {
+      "title": "Extract headers from a JSON response",
+      "input": "HTTP/2 404\nContent-Type: application/json\nX-Test: yes\n\n{\"error\":\"not found\"}",
+      "output": "HTTP/2 404\nContent-Type: application/json\nX-Test: yes",
+      "explanation": "Useful when the body is irrelevant and only headers matter."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Only headers are pasted without a status line",
+      "fix": "That is still fine. The tool can return the lines it recognizes as the header block."
+    },
+    {
+      "issue": "The raw text uses unusual formatting with no blank line before the body",
+      "fix": "Use a normally formatted raw response if you want clean separation."
+    },
+    {
+      "issue": "The user expects a live fetch from a URL",
+      "fix": "This tool extracts from pasted raw response text, not from a live network request."
+    }
+  ],
+  "useCases": [
+    "Cleaning copied responses from terminals or logs",
+    "Preparing header-only samples for docs",
+    "Separating response body noise from header review",
+    "Reviewing raw HTTP responses from debugging tools",
+    "Keeping only headers for comparison or teaching"
+  ],
+  "faq": [
+    {
+      "q": "What does HTTP Header Extractor do?",
+      "a": "It extracts the header section from raw HTTP response text and removes the response body."
+    },
+    {
+      "q": "Can I paste a full raw response?",
+      "a": "Yes. The tool is designed for full raw response input."
+    },
+    {
+      "q": "Does it fetch headers from a live URL?",
+      "a": "No. This version works on pasted raw HTTP response text."
+    },
+    {
+      "q": "What is the difference between HTTP Header Extractor and HTTP Header Generator?",
+      "a": "Extractor pulls headers from existing raw text. Generator creates a clean header block from simple input."
+    },
+    {
+      "q": "When should I use this instead of HTTP Response Viewer?",
+      "a": "Use this tool when you already have raw response text and only want the header section."
+    }
+  ],
+  "related": [
+    "http-header-generator",
+    "http-response-viewer",
+    "http-status-code-checker",
+    "http-request-builder"
+  ]
+},
+{
+  "id": "http-header-generator",
+  "name": "HTTP Header Generator",
+  "slug": "http-header-generator",
+  "category": "developer-tools",
+  "intro": "Generate a clean HTTP header block from simple key:value input lines.",
+  "description": "Use this HTTP Header Generator to turn simple header lines into a clean, normalized HTTP header block. It is useful for test samples, documentation, debugging, teaching, API examples, and preparing request or response header snippets quickly.",
+  "keywords": [
+    "http header generator",
+    "generate http headers",
+    "build header block",
+    "http headers tool",
+    "request headers generator"
+  ],
+  "whyUse": [
+    "Build a clean header block quickly",
+    "Normalize header lines for docs or tests",
+    "Prepare simple request or response header examples",
+    "Avoid manual formatting mistakes",
+    "Create reusable header snippets from plain input"
+  ],
+  "howToUse": [
+    "Paste one header per line in key:value format",
+    "Click Run Tool to normalize the header block",
+    "Review the cleaned output",
+    "Copy the generated headers into docs, tests, or notes",
+    "Add or edit lines and run again if needed"
+  ],
+  "examples": [
+    {
+      "title": "Generate a simple header block",
+      "input": "Content-Type: application/json\nAuthorization: Bearer token123",
+      "output": "Content-Type: application/json\nAuthorization: Bearer token123",
+      "explanation": "Useful for quick API examples or notes."
+    },
+    {
+      "title": "Normalize spacing around colons",
+      "input": "Host:example.com\nAccept : */*\nUser-Agent:ToolsAtlas",
+      "output": "Host: example.com\nAccept: */*\nUser-Agent: ToolsAtlas",
+      "explanation": "Cleans uneven spacing into a more consistent format."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Header lines are pasted without colons",
+      "fix": "Use one header per line in key:value format."
+    },
+    {
+      "issue": "The user expects a full HTTP request",
+      "fix": "Use HTTP Request Builder if you want method, path, and protocol line too."
+    },
+    {
+      "issue": "Blank lines or random text are mixed into the input",
+      "fix": "Keep one clean header pair per line for better output."
+    }
+  ],
+  "useCases": [
+    "Preparing header samples for API docs",
+    "Creating request or response header snippets",
+    "Normalizing header formatting before sharing",
+    "Teaching or learning common HTTP headers",
+    "Building cleaner manual test cases"
+  ],
+  "faq": [
+    {
+      "q": "What does HTTP Header Generator do?",
+      "a": "It formats simple header input into a clean HTTP header block."
+    },
+    {
+      "q": "What input format should I use?",
+      "a": "Use one header per line in key:value format."
+    },
+    {
+      "q": "Does it create a full HTTP request?",
+      "a": "No. This tool focuses on the header block only."
+    },
+    {
+      "q": "What is the difference between HTTP Header Generator and HTTP Request Builder?",
+      "a": "Header Generator builds only the headers. Request Builder builds a full raw request block."
+    },
+    {
+      "q": "Can I use this for both request and response header examples?",
+      "a": "Yes. It is useful for either type when you only need the header lines."
+    }
+  ],
+  "related": [
+    "http-header-extractor",
+    "http-request-builder",
+    "http-response-viewer",
+    "http-status-code-checker"
+  ]
+},
+{
+  "id": "http-request-builder",
+  "name": "HTTP Request Builder",
+  "slug": "http-request-builder",
+  "category": "developer-tools",
+  "intro": "Build a raw HTTP request block from method, path, host, and header lines.",
+  "description": "Use this HTTP Request Builder to generate a raw HTTP request sample from simple line-based input. It is useful for debugging, teaching, manual request examples, documentation, and understanding the structure of raw HTTP requests.",
+  "keywords": [
+    "http request builder",
+    "build raw http request",
+    "raw request generator",
+    "http request generator",
+    "manual http request builder"
+  ],
+  "whyUse": [
+    "Create raw HTTP request samples quickly",
+    "Understand request structure more clearly",
+    "Prepare manual debugging or teaching examples",
+    "Generate request blocks for docs or notes",
+    "Avoid formatting request lines by hand"
+  ],
+  "howToUse": [
+    "Paste input lines using METHOD, URL, optional BODY, and headers",
+    "Click Run Tool to build the raw request",
+    "Review the generated request line and headers",
+    "Copy the result for documentation or testing notes",
+    "Edit the source lines and run again if needed"
+  ],
+  "examples": [
+    {
+      "title": "Build a simple GET request",
+      "input": "METHOD: GET\nURL: https://example.com/api/status\nAccept: application/json",
+      "output": "GET /api/status HTTP/1.1\nHost: example.com\nAccept: application/json",
+      "explanation": "Creates a raw request line from a full URL and preserves the header lines."
+    },
+    {
+      "title": "Build a POST request with body",
+      "input": "METHOD: POST\nURL: https://example.com/login\nContent-Type: application/json\nBODY: {\"user\":\"anna\"}",
+      "output": "POST /login HTTP/1.1\nHost: example.com\nContent-Type: application/json\n\n{\"user\":\"anna\"}",
+      "explanation": "Useful for showing request structure in examples."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "METHOD or URL line is missing",
+      "fix": "Provide METHOD: and URL: lines so the tool can build the request line."
+    },
+    {
+      "issue": "Header lines are mixed with invalid formatting",
+      "fix": "Use clear key:value lines for headers."
+    },
+    {
+      "issue": "The user expects a live request to be sent",
+      "fix": "This tool builds a raw request block only. It does not send the request."
+    }
+  ],
+  "useCases": [
+    "Creating raw request examples for docs",
+    "Teaching how HTTP requests are structured",
+    "Preparing manual request samples for debugging notes",
+    "Building examples for API learning",
+    "Formatting request blocks without doing it by hand"
+  ],
+  "faq": [
+    {
+      "q": "What does HTTP Request Builder do?",
+      "a": "It creates a raw HTTP request block from simple structured input."
+    },
+    {
+      "q": "What input format should I use?",
+      "a": "Use METHOD: and URL: lines first, then add header lines and an optional BODY: line."
+    },
+    {
+      "q": "Does this tool send the request?",
+      "a": "No. It only generates the raw request text."
+    },
+    {
+      "q": "What is the difference between this tool and HTTP Header Generator?",
+      "a": "Request Builder creates the full raw request including the request line and host, while Header Generator only formats header lines."
+    },
+    {
+      "q": "Can I use it for GET and POST examples?",
+      "a": "Yes. It works well for simple request examples across common methods."
+    }
+  ],
+  "related": [
+    "http-header-generator",
+    "http-header-extractor",
+    "http-response-viewer",
+    "url-parser"
+  ]
+},
+{
+  "id": "https-redirect-checker",
+  "name": "HTTPS Redirect Checker",
+  "slug": "https-redirect-checker",
+  "category": "developer-tools",
+  "intro": "Check whether a URL redirects from HTTP to HTTPS and where the final destination lands.",
+  "description": "Use this HTTPS Redirect Checker to test whether a site redirects an HTTP version to HTTPS. It is useful for launch checks, migration reviews, technical SEO checks, website debugging, and confirming whether secure redirect behavior is configured correctly.",
+  "keywords": [
+    "https redirect checker",
+    "http to https redirect check",
+    "check https redirect",
+    "https redirect test",
+    "redirect to https"
+  ],
+  "whyUse": [
+    "Check whether HTTP redirects to HTTPS correctly",
+    "Validate secure redirect behavior quickly",
+    "Review launch or migration setups",
+    "Catch redirect issues during audits",
+    "Confirm final destination URLs after redirect"
+  ],
+  "howToUse": [
+    "Paste a domain or full URL into the input box",
+    "Click Run Tool to check redirect behavior",
+    "Review the input URL, final URL, and redirect result",
+    "Use the result for launch, audit, or SEO checks",
+    "Follow up with a status or response viewer if needed"
+  ],
+  "examples": [
+    {
+      "title": "Site redirects to HTTPS",
+      "input": "example.com",
+      "output": "Input URL: http://example.com\nFinal URL: https://example.com/\nHTTPS Redirect: Yes",
+      "explanation": "Useful for checking whether the insecure version redirects to the secure version."
+    },
+    {
+      "title": "No HTTPS redirect detected",
+      "input": "http://insecure-example.test",
+      "output": "Input URL: http://insecure-example.test\nFinal URL: http://insecure-example.test/\nHTTPS Redirect: No",
+      "explanation": "Useful when checking whether a site still stays on HTTP."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The user enters an HTTPS URL and expects HTTP redirect testing",
+      "fix": "This tool forces an HTTP starting point to test whether it redirects to HTTPS."
+    },
+    {
+      "issue": "The site blocks requests or times out",
+      "fix": "Some targets may fail because of server rules, blocking, or network limitations."
+    },
+    {
+      "issue": "The user expects a full redirect chain analysis",
+      "fix": "This tool focuses on the HTTP-to-HTTPS result rather than every redirect detail."
+    }
+  ],
+  "useCases": [
+    "Checking launch readiness for secure redirects",
+    "Validating HTTP-to-HTTPS migrations",
+    "Reviewing technical SEO redirect setup",
+    "Testing basic website security behavior",
+    "Confirming final secure landing URLs"
+  ],
+  "faq": [
+    {
+      "q": "What does HTTPS Redirect Checker do?",
+      "a": "It checks whether the HTTP version of a URL redirects to HTTPS."
+    },
+    {
+      "q": "Does it always start from HTTP?",
+      "a": "Yes. That is the point of the test."
+    },
+    {
+      "q": "Can I use it with a domain only?",
+      "a": "Yes. The tool can normalize simple input into an HTTP starting URL."
+    },
+    {
+      "q": "What is the difference between this tool and Check if URL is HTTPS?",
+      "a": "This tool tests redirect behavior. Check if URL is HTTPS only checks the scheme of the URL string you entered."
+    },
+    {
+      "q": "Can this help with SEO audits?",
+      "a": "Yes. HTTP-to-HTTPS redirect behavior is a common technical SEO check."
+    }
+  ],
+  "related": [
+    "check-if-url-is-https",
+    "http-status-code-checker",
+    "website-redirect-checker",
+    "url-protocol-extractor"
+  ]
+},
+{
+  "id": "check-if-website-uses-https",
+  "name": "Check if Website Uses HTTPS",
+  "slug": "check-if-website-uses-https",
+  "category": "developer-tools",
+  "intro": "Check whether a website resolves to HTTPS and show the final URL and response status.",
+  "description": "Use this Check if Website Uses HTTPS tool to test whether a website resolves over HTTPS in practice. It is useful for quick security checks, launch reviews, technical SEO checks, migration validation, and confirming whether a domain really ends up on a secure HTTPS version instead of only checking the URL string.",
+  "keywords": [
+    "check if website uses https",
+    "https enabled checker",
+    "does website use https",
+    "https website checker",
+    "check https support"
+  ],
+  "whyUse": [
+    "Check real HTTPS usage instead of only reading the pasted URL string",
+    "Confirm whether a website ends up on a secure version",
+    "Useful for launch and migration checks",
+    "Help with technical SEO and basic security review",
+    "Get a quick yes or no answer with final URL context"
+  ],
+  "howToUse": [
+    "Paste a domain or full URL into the input box",
+    "Click Run Tool to check HTTPS usage",
+    "Review the final URL and HTTPS result",
+    "Use the result for audits, reviews, or cleanup",
+    "Follow up with HTTPS Redirect Checker if you also want HTTP-to-HTTPS redirect behavior"
+  ],
+  "examples": [
+    {
+      "title": "Website uses HTTPS",
+      "input": "example.com",
+      "output": "Input URL: https://example.com\nFinal URL: https://example.com/\nHTTP Status: 200\nHTTPS Enabled: Yes",
+      "explanation": "Useful for confirming that a domain resolves to a secure HTTPS page."
+    },
+    {
+      "title": "Website does not use HTTPS",
+      "input": "http://insecure-example.test",
+      "output": "Input URL: http://insecure-example.test\nFinal URL: http://insecure-example.test/\nHTTP Status: 200\nHTTPS Enabled: No",
+      "explanation": "Useful when checking whether a site stays on HTTP."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The user expects only string-based protocol inspection",
+      "fix": "This tool performs a live website check, not just a URL text check."
+    },
+    {
+      "issue": "The site blocks requests or times out",
+      "fix": "Some targets may fail because of server rules, blocking, or network limitations."
+    },
+    {
+      "issue": "The user expects full redirect-chain analysis",
+      "fix": "This tool focuses on whether the website ends up using HTTPS."
+    }
+  ],
+  "useCases": [
+    "Checking whether a domain really uses HTTPS",
+    "Reviewing launch or migration readiness",
+    "Running simple technical SEO checks",
+    "Validating secure website availability",
+    "Confirming HTTPS support before deeper checks"
+  ],
+  "faq": [
+    {
+      "q": "What does Check if Website Uses HTTPS do?",
+      "a": "It checks whether a website resolves to an HTTPS final URL in practice."
+    },
+    {
+      "q": "How is this different from HTTPS Redirect Checker?",
+      "a": "This tool checks whether the website ends up on HTTPS. HTTPS Redirect Checker specifically starts from HTTP and tests redirect behavior."
+    },
+    {
+      "q": "Can I enter only a domain?",
+      "a": "Yes. The tool can normalize a simple domain input."
+    },
+    {
+      "q": "Does it show the final URL?",
+      "a": "Yes. That helps confirm where the site actually resolves."
+    },
+    {
+      "q": "Can this help with audits?",
+      "a": "Yes. It is useful for quick HTTPS validation in security and SEO workflows."
+    }
+  ],
+  "related": [
+    "https-redirect-checker",
+    "http-status-code-checker",
+    "url-protocol-extractor",
+    "url-canonicalizer"
+  ]
+}
+,
+{
+  "id": "security-headers-analyzer",
+  "name": "Security Headers Analyzer",
+  "slug": "security-headers-analyzer",
+  "category": "developer-tools",
+  "intro": "Check a URL for common security headers and see which important headers are present or missing.",
+  "description": "Use this Security Headers Analyzer to fetch a URL and review common HTTP security headers such as Content-Security-Policy, Strict-Transport-Security, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, and Permissions-Policy. It is useful for launch checks, security reviews, technical audits, and quick validation of visible browser-facing security controls.",
+  "keywords": [
+    "security headers analyzer",
+    "check security headers",
+    "http security headers checker",
+    "security headers test",
+    "website security headers"
+  ],
+  "whyUse": [
+    "Check common browser-facing security headers quickly",
+    "Spot missing headers during launch or audit work",
+    "Review visible security controls without opening developer tools",
+    "Use a simple report for basic technical checks",
+    "Validate common header coverage from a live URL"
+  ],
+  "howToUse": [
+    "Paste a full URL into the input box",
+    "Click Run Tool to fetch the response headers",
+    "Review the present and missing security headers",
+    "Use the result for security review or launch checks",
+    "Follow up with HTTPS or redirect tools if needed"
+  ],
+  "examples": [
+    {
+      "title": "Analyze a normal HTTPS page",
+      "input": "https://example.com",
+      "output": "Status, final URL, present headers, missing headers",
+      "explanation": "Useful for a quick visible security-header check."
+    },
+    {
+      "title": "Analyze a login page",
+      "input": "https://example.com/login",
+      "output": "Status, final URL, present headers, missing headers",
+      "explanation": "Helpful when checking sensitive routes for browser-facing protections."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The target blocks requests or times out",
+      "fix": "Some sites block automated requests or respond differently depending on origin and infrastructure."
+    },
+    {
+      "issue": "The user expects deep application security testing",
+      "fix": "This tool checks visible HTTP response headers only, not deeper security posture."
+    },
+    {
+      "issue": "The URL is pasted without protocol",
+      "fix": "Use a full URL like https://example.com for clearer results."
+    }
+  ],
+  "useCases": [
+    "Checking launch readiness for common security headers",
+    "Running a fast security-focused website review",
+    "Validating header coverage after CDN or server changes",
+    "Reviewing browser-facing protections on important pages",
+    "Spotting missing headers during audits"
+  ],
+  "faq": [
+    {
+      "q": "What does Security Headers Analyzer check?",
+      "a": "It checks common browser-facing security headers such as CSP, HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, and Permissions-Policy."
+    },
+    {
+      "q": "Does it test all website security issues?",
+      "a": "No. It focuses only on visible HTTP security headers."
+    },
+    {
+      "q": "Can it help with launch checks?",
+      "a": "Yes. It is useful for basic pre-launch and audit-style reviews."
+    },
+    {
+      "q": "What is the difference between this tool and Website Security Scanner?",
+      "a": "This tool is narrower and focused specifically on security-related response headers."
+    },
+    {
+      "q": "Why might some headers be missing?",
+      "a": "They may not be configured, may be stripped by infrastructure, or may differ by route."
+    }
+  ],
+  "related": [
+    "website-security-scanner",
+    "https-redirect-checker",
+    "http-status-code-checker",
+    "http-response-viewer"
+  ]
+},
+{
+  "id": "cors-header-checker",
+  "name": "CORS Header Checker",
+  "slug": "cors-header-checker",
+  "category": "developer-tools",
+  "intro": "Check a URL for common CORS response headers and review permissive or missing values.",
+  "description": "Use this CORS Header Checker to fetch a URL and inspect common CORS response headers such as Access-Control-Allow-Origin, Access-Control-Allow-Methods, Access-Control-Allow-Headers, Access-Control-Allow-Credentials, and Vary. It is useful for debugging browser requests, API integrations, frontend issues, and basic cross-origin configuration checks.",
+  "keywords": [
+    "cors header checker",
+    "check cors headers",
+    "access-control-allow-origin checker",
+    "cors response headers",
+    "cors config checker"
+  ],
+  "whyUse": [
+    "Inspect CORS response headers quickly",
+    "Check whether Access-Control-Allow-Origin is present",
+    "Review cross-origin settings during API debugging",
+    "Spot overly broad or missing CORS values",
+    "Use a simple output instead of manual header inspection"
+  ],
+  "howToUse": [
+    "Paste a full URL into the input box",
+    "Click Run Tool to fetch the response",
+    "Review the returned CORS-related headers",
+    "Use the result for API or frontend troubleshooting",
+    "Follow up with response viewer tools if needed"
+  ],
+  "examples": [
+    {
+      "title": "Check an API endpoint for CORS",
+      "input": "https://example.com/api/status",
+      "output": "Status, final URL, and CORS header values",
+      "explanation": "Useful when debugging frontend requests to APIs."
+    },
+    {
+      "title": "Check a public endpoint",
+      "input": "https://example.com/data.json",
+      "output": "Status, final URL, and CORS header values",
+      "explanation": "Helpful for checking whether a resource is exposed cross-origin."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The user expects a browser preflight simulation",
+      "fix": "This tool checks visible response headers, not full browser-side CORS behavior."
+    },
+    {
+      "issue": "The target endpoint blocks requests or returns route-specific headers",
+      "fix": "CORS behavior can vary by method, route, and infrastructure."
+    },
+    {
+      "issue": "The input is not a full URL",
+      "fix": "Use a full URL like https://example.com/api/data."
+    }
+  ],
+  "useCases": [
+    "Checking API response headers during frontend debugging",
+    "Reviewing Access-Control-Allow-Origin values quickly",
+    "Spotting permissive wildcard CORS settings",
+    "Checking route-level cross-origin configuration",
+    "Debugging integration issues with web apps"
+  ],
+  "faq": [
+    {
+      "q": "What does CORS Header Checker show?",
+      "a": "It shows common CORS-related response headers such as Access-Control-Allow-Origin and related values."
+    },
+    {
+      "q": "Does it simulate the browser fully?",
+      "a": "No. It is a header inspection tool, not a full browser CORS emulator."
+    },
+    {
+      "q": "Can it help with API debugging?",
+      "a": "Yes. That is one of its main use cases."
+    },
+    {
+      "q": "Why can a request still fail even if headers look okay?",
+      "a": "Real browser CORS behavior depends on method, credentials, preflight, origin, and route-specific logic."
+    },
+    {
+      "q": "Can wildcard origin be risky?",
+      "a": "It can be overly broad depending on the type of endpoint and whether credentials are involved."
+    }
+  ],
+  "related": [
+    "http-response-viewer",
+    "http-status-code-checker",
+    "security-headers-analyzer",
+    "website-security-scanner"
+  ]
+},
+{
+  "id": "jwt-header-viewer",
+  "name": "JWT Header Viewer",
+  "slug": "jwt-header-viewer",
+  "category": "developer-tools",
+  "intro": "Decode and view only the JWT header section without focusing on the payload.",
+  "description": "Use this JWT Header Viewer to decode only the first part of a JWT token and display the header as readable JSON. It is useful when you only need to inspect header values such as alg, typ, kid, cty, and other metadata without parsing the full payload.",
+  "keywords": [
+    "jwt header viewer",
+    "view jwt header",
+    "decode jwt header",
+    "jwt alg viewer",
+    "jwt kid viewer"
+  ],
+  "whyUse": [
+    "Inspect JWT header metadata quickly",
+    "Check alg, typ, kid, and related fields without payload noise",
+    "Use a narrower view when troubleshooting tokens",
+    "Avoid scanning the whole token when only the header matters",
+    "Decode the header directly in the browser"
+  ],
+  "howToUse": [
+    "Paste the full JWT token into the input box",
+    "Click Run Tool to decode the header segment",
+    "Review the JSON output for header values",
+    "Copy the result for debugging or comparison",
+    "Use JWT Decoder or JWT Parser if you also need the payload"
+  ],
+  "examples": [
+    {
+      "title": "View a simple JWT header",
+      "input": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjMifQ.signature",
+      "output": "{\n  \"alg\": \"HS256\",\n  \"typ\": \"JWT\"\n}",
+      "explanation": "Useful when checking only the algorithm and token type."
+    },
+    {
+      "title": "View a header with kid",
+      "input": "eyJhbGciOiJSUzI1NiIsImtpZCI6ImtleS0xIiwidHlwIjoiSldUIn0.eyJzdWIiOiIxMjMifQ.signature",
+      "output": "{\n  \"alg\": \"RS256\",\n  \"kid\": \"key-1\",\n  \"typ\": \"JWT\"\n}",
+      "explanation": "Helpful when troubleshooting key selection and signing metadata."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The token is incomplete or does not contain dot-separated parts",
+      "fix": "Paste the full JWT token with header, payload, and signature sections."
+    },
+    {
+      "issue": "The user expects payload claims too",
+      "fix": "Use JWT Decoder or JWT Parser if you need the payload."
+    },
+    {
+      "issue": "The header segment is not valid Base64 URL data",
+      "fix": "Check whether the token was copied fully and is actually a JWT."
+    }
+  ],
+  "useCases": [
+    "Checking JWT alg and kid values",
+    "Reviewing signing metadata quickly",
+    "Comparing headers across tokens",
+    "Inspecting token type and custom header fields",
+    "Troubleshooting JWT setup without payload noise"
+  ],
+  "faq": [
+    {
+      "q": "What does JWT Header Viewer show?",
+      "a": "It decodes and shows only the header part of a JWT token."
+    },
+    {
+      "q": "What fields are usually in the JWT header?",
+      "a": "Common fields include alg, typ, kid, and sometimes cty."
+    },
+    {
+      "q": "Does it verify the signature?",
+      "a": "No. It only decodes the header."
+    },
+    {
+      "q": "What is the difference between JWT Header Viewer and JWT Decoder?",
+      "a": "JWT Header Viewer focuses only on the first JWT segment, while JWT Decoder shows the broader token content."
+    },
+    {
+      "q": "When should I use this instead of JWT Parser?",
+      "a": "Use it when you only need header metadata and do not want payload details."
+    }
+  ],
+  "related": [
+    "jwt-decoder",
+    "jwt-parser",
+    "jwt-signature-checker-basic",
+    "base64-url-decode"
+  ]
+},
+{
+  "id": "jwt-signature-checker-basic",
+  "name": "JWT Signature Checker (Basic)",
+  "slug": "jwt-signature-checker-basic",
+  "category": "developer-tools",
+  "intro": "Run a basic structural JWT signature check to see whether the token has a signature part and whether alg is none.",
+  "description": "Use this JWT Signature Checker (Basic) to run a lightweight structural check on a JWT token. It does not cryptographically verify the signature against a secret or public key. Instead, it checks whether the token has three parts, whether the signature part is present, and whether the header uses alg:none or another algorithm value. It is useful for quick token sanity checks before deeper verification.",
+  "keywords": [
+    "jwt signature checker basic",
+    "check jwt signature structure",
+    "jwt signature part checker",
+    "jwt alg none checker",
+    "jwt token sanity check"
+  ],
+  "whyUse": [
+    "Check whether a JWT has a signature segment",
+    "Spot alg:none style tokens quickly",
+    "Run a lightweight token sanity check before deeper analysis",
+    "See whether the token structure looks suspicious",
+    "Use a simple browser-based structural check"
+  ],
+  "howToUse": [
+    "Paste the full JWT token into the input box",
+    "Click Run Tool to inspect the token structure",
+    "Review whether the token has three parts and a non-empty signature",
+    "Check the reported alg value from the header",
+    "Use deeper verification tools elsewhere if real cryptographic validation is needed"
+  ],
+  "examples": [
+    {
+      "title": "JWT with signature part present",
+      "input": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjMifQ.c2lnbmF0dXJl",
+      "output": "JWT Structure: 3 parts\nHeader alg: HS256\nSignature Present: Yes\nBasic Signature Check: Looks structurally signed",
+      "explanation": "Useful as a fast structural sanity check."
+    },
+    {
+      "title": "JWT using alg none",
+      "input": "eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJzdWIiOiIxMjMifQ.",
+      "output": "JWT Structure: 3 parts\nHeader alg: none\nSignature Present: No\nBasic Signature Check: Unsigned or alg none token",
+      "explanation": "Helpful for spotting tokens that are not structurally signed."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The user expects real signature verification against a key",
+      "fix": "This tool is only a structural checker and does not validate cryptographic trust."
+    },
+    {
+      "issue": "The token is incomplete and has fewer than three parts",
+      "fix": "Paste the full JWT token, not only the header or payload."
+    },
+    {
+      "issue": "The header cannot be decoded",
+      "fix": "Check whether the token is valid Base64 URL JWT data."
+    }
+  ],
+  "useCases": [
+    "Running a quick sanity check on JWT structure",
+    "Spotting unsigned or alg:none tokens",
+    "Checking whether a signature segment exists",
+    "Reviewing tokens before deeper auth debugging",
+    "Comparing suspicious and normal token structures"
+  ],
+  "faq": [
+    {
+      "q": "Does JWT Signature Checker (Basic) verify the signature cryptographically?",
+      "a": "No. It only performs a basic structural check."
+    },
+    {
+      "q": "What does it actually check?",
+      "a": "It checks whether the JWT has three parts, whether the signature segment is present, and what alg value appears in the header."
+    },
+    {
+      "q": "Can it detect alg:none tokens?",
+      "a": "Yes. That is one of its useful basic checks."
+    },
+    {
+      "q": "What is the difference between this tool and JWT Decoder?",
+      "a": "JWT Decoder is for reading token content. This tool is for a narrow signature-structure sanity check."
+    },
+    {
+      "q": "When should I use this tool?",
+      "a": "Use it when you want a very quick check of whether the token looks structurally signed before deeper investigation."
+    }
+  ],
+  "related": [
+    "jwt-header-viewer",
+    "jwt-decoder",
+    "jwt-parser",
+    "jwt-expiry-checker"
+  ]
+}
+,
+{
+  "id": "password-entropy-calculator",
+  "name": "Password Entropy Calculator",
+  "slug": "password-entropy-calculator",
+  "category": "developer-tools",
+  "intro": "Estimate password entropy based on character variety and length.",
+  "description": "Use this Password Entropy Calculator to estimate the entropy of a password based on its length and character set variety. It is useful for security education, password policy review, training, and quick strength estimation without pretending to be a full password-cracking simulator.",
+  "keywords": [
+    "password entropy calculator",
+    "calculate password entropy",
+    "password strength entropy",
+    "entropy estimator",
+    "password bits calculator"
+  ],
+  "whyUse": [
+    "Estimate password entropy quickly",
+    "Show how character variety affects strength",
+    "Useful for training and password policy discussions",
+    "Compare weak and stronger password structures",
+    "Get a readable bits estimate directly in the browser"
+  ],
+  "howToUse": [
+    "Paste the password into the input box",
+    "Click Run Tool to estimate entropy",
+    "Review the detected character pools and bit estimate",
+    "Compare results after changing length or symbol variety",
+    "Use the output for learning or policy review"
+  ],
+  "examples": [
+    {
+      "title": "Lowercase only password",
+      "input": "password",
+      "output": "Length: 8\nCharacter Pool Size: 26\nEstimated Entropy: 37.60 bits\nEstimated Strength: Weak",
+      "explanation": "Shows why short lowercase-only passwords are weak."
+    },
+    {
+      "title": "Mixed password with symbols",
+      "input": "P@ssw0rd!2026",
+      "output": "Length: 13\nCharacter Pool Size: 94\nEstimated Entropy: 85.22 bits\nEstimated Strength: Strong",
+      "explanation": "Longer passwords with broader character variety produce higher entropy estimates."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The user expects real cracking-time prediction",
+      "fix": "This tool provides an entropy estimate, not a full attack simulation."
+    },
+    {
+      "issue": "The password contains only repeated characters",
+      "fix": "Entropy math can still look higher than the real-world quality of a predictable password pattern."
+    },
+    {
+      "issue": "The user thinks entropy alone proves safety",
+      "fix": "Entropy is helpful, but password reuse and predictability still matter."
+    }
+  ],
+  "useCases": [
+    "Teaching password strength basics",
+    "Reviewing password policy ideas",
+    "Comparing simple and complex password structures",
+    "Estimating password quality quickly",
+    "Showing why longer passwords help"
+  ],
+  "faq": [
+    {
+      "q": "What does Password Entropy Calculator measure?",
+      "a": "It estimates password entropy in bits based on length and the character sets used."
+    },
+    {
+      "q": "Does higher entropy usually mean a stronger password?",
+      "a": "Usually yes, but predictable patterns and reuse can still weaken real-world security."
+    },
+    {
+      "q": "Does this tool store my password?",
+      "a": "If your implementation runs in the browser only, the calculation happens locally on the client side."
+    },
+    {
+      "q": "Why can a long password score better than a short complex one?",
+      "a": "Length contributes heavily to entropy, so longer passwords often raise the estimate significantly."
+    },
+    {
+      "q": "Is this the same as a full password strength checker?",
+      "a": "No. This page focuses on an entropy estimate rather than blacklist checks, leaks, or behavioral patterns."
+    }
+  ],
+  "related": [
+    "password-generator",
+    "random-token-generator",
+    "api-key-generator",
+    "hash-compare-tool"
+  ]
+},
+{
+  "id": "hash-compare-tool",
+  "name": "Hash Compare Tool",
+  "slug": "hash-compare-tool",
+  "category": "developer-tools",
+  "intro": "Compare two hash values and check whether they match exactly.",
+  "description": "Use this Hash Compare Tool to compare two hash values and see whether they match exactly after normalizing common formatting differences. It is useful for checksum comparison, debugging, file-integrity workflows, and checking whether two generated hashes are identical.",
+  "keywords": [
+    "hash compare tool",
+    "compare hashes",
+    "hash equality checker",
+    "checksum compare",
+    "hash match checker"
+  ],
+  "whyUse": [
+    "Compare two hashes quickly",
+    "Normalize whitespace and casing before comparison",
+    "Useful for checksum and integrity workflows",
+    "Spot mismatches instantly",
+    "Avoid manual visual comparison of long hash strings"
+  ],
+  "howToUse": [
+    "Paste the first hash on the first line",
+    "Paste the second hash on the second line",
+    "Click Run Tool to compare them",
+    "Review the match result and normalized values",
+    "Use the output for debugging or verification"
+  ],
+  "examples": [
+    {
+      "title": "Matching SHA-256 values",
+      "input": "2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824\n2CF24DBA5FB0A30E26E83B2AC5B9E29E1B161E5C1FA7425E73043362938B9824",
+      "output": "Hashes Match: Yes\nNormalized Left: 2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824\nNormalized Right: 2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824",
+      "explanation": "Uppercase and lowercase formatting differences should not change the equality result."
+    },
+    {
+      "title": "Different hash values",
+      "input": "5d41402abc4b2a76b9719d911017c592\n8b1a9953c4611296a827abf8c47804d7",
+      "output": "Hashes Match: No\nNormalized Left: 5d41402abc4b2a76b9719d911017c592\nNormalized Right: 8b1a9953c4611296a827abf8c47804d7",
+      "explanation": "Useful for quick mismatch detection."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Only one hash value is entered",
+      "fix": "Put the first hash on the first line and the second hash on the second line."
+    },
+    {
+      "issue": "The user compares hashes from different algorithms",
+      "fix": "Make sure both values come from the same algorithm before comparing them."
+    },
+    {
+      "issue": "Extra spaces or prefixes change the comparison",
+      "fix": "This tool trims surrounding whitespace, but you should still keep the values clean."
+    }
+  ],
+  "useCases": [
+    "Comparing generated checksum values",
+    "Checking whether two file hashes match",
+    "Verifying copied hash output",
+    "Debugging integrity-related workflows",
+    "Quick visual-independent hash comparison"
+  ],
+  "faq": [
+    {
+      "q": "What does Hash Compare Tool do?",
+      "a": "It compares two hash strings and tells you whether they match exactly after basic normalization."
+    },
+    {
+      "q": "Does it generate a hash?",
+      "a": "No. It compares hashes that were already generated elsewhere."
+    },
+    {
+      "q": "Can I compare uppercase and lowercase hex values?",
+      "a": "Yes. The tool normalizes casing before comparison."
+    },
+    {
+      "q": "Should I compare hashes from the same algorithm?",
+      "a": "Yes. Comparing values from different algorithms is not meaningful."
+    },
+    {
+      "q": "What is the difference between this page and a hash generator?",
+      "a": "Hash generators create new hash values, while this page compares existing ones."
+    }
+  ],
+  "related": [
+    "md5-hash-generator",
+    "sha256-hash-generator",
+    "sha1-hash-generator",
+    "sha512-hash-generator"
+  ]
+},
+{
+  "id": "basic-auth-header-generator",
+  "name": "Basic Auth Header Generator",
+  "slug": "basic-auth-header-generator",
+  "category": "developer-tools",
+  "intro": "Generate an HTTP Basic Authorization header from username and password input.",
+  "description": "Use this Basic Auth Header Generator to create a ready-to-copy Authorization header for HTTP Basic authentication. It is useful for API testing, manual requests, debugging, and documentation when you need the exact Basic header value generated from username and password.",
+  "keywords": [
+    "basic auth header generator",
+    "authorization basic generator",
+    "http basic auth header",
+    "basic auth base64",
+    "generate basic authorization header"
+  ],
+  "whyUse": [
+    "Generate a Basic Authorization header quickly",
+    "Avoid manual Base64 conversion",
+    "Useful for API testing and debugging",
+    "Create ready-to-copy header values",
+    "Understand how username and password become a Basic header"
+  ],
+  "howToUse": [
+    "Enter the username on the first line",
+    "Enter the password on the second line",
+    "Click Run Tool to generate the header",
+    "Copy the Authorization header output",
+    "Use it in requests, docs, or tests"
+  ],
+  "examples": [
+    {
+      "title": "Generate a simple Basic header",
+      "input": "admin\nsecret123",
+      "output": "Authorization: Basic YWRtaW46c2VjcmV0MTIz",
+      "explanation": "Combines username and password as username:password and encodes the result."
+    },
+    {
+      "title": "Generate another Basic header",
+      "input": "user@example.com\nP@ssw0rd!",
+      "output": "Authorization: Basic dXNlckBleGFtcGxlLmNvbTpQQHNzdzByZCE=",
+      "explanation": "Useful for copying directly into HTTP request headers."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The username and password are placed on one line only",
+      "fix": "Put the username on the first line and the password on the second line."
+    },
+    {
+      "issue": "The user expects encryption",
+      "fix": "Basic Auth uses Base64 encoding, not encryption."
+    },
+    {
+      "issue": "The generated header is used on the wrong auth scheme",
+      "fix": "Use this only for systems that explicitly require HTTP Basic authentication."
+    }
+  ],
+  "useCases": [
+    "Building request headers for API testing",
+    "Preparing Basic Auth examples for docs",
+    "Debugging manual HTTP requests",
+    "Learning how Basic Auth headers are formed",
+    "Creating ready-to-copy Authorization values"
+  ],
+  "faq": [
+    {
+      "q": "What does Basic Auth Header Generator produce?",
+      "a": "It produces an Authorization header in the form Authorization: Basic <base64>."
+    },
+    {
+      "q": "What input format should I use?",
+      "a": "Put the username on the first line and the password on the second line."
+    },
+    {
+      "q": "Is Basic Auth encryption?",
+      "a": "No. It is Base64 encoding, so HTTPS still matters."
+    },
+    {
+      "q": "Can I paste the output directly into a request header?",
+      "a": "Yes. The output is ready to copy as an Authorization header."
+    },
+    {
+      "q": "What is the difference between this tool and Base64 Encoder?",
+      "a": "This tool builds the exact username:password format and returns the ready Authorization header, while Base64 Encoder works on general text."
+    }
+  ],
+  "related": [
+    "base64-encode",
+    "http-header-generator",
+    "http-request-builder",
+    "api-key-generator"
+  ]
+},
+{
+  "id": "api-key-generator",
+  "name": "API Key Generator",
+  "slug": "api-key-generator",
+  "category": "developer-tools",
+  "intro": "Generate random API-style keys in a clean format for testing, demos, and development.",
+  "description": "Use this API Key Generator to create random API-style keys for development, testing, placeholder values, and documentation. It is useful when you need a realistic-looking key format without using a real production secret.",
+  "keywords": [
+    "api key generator",
+    "generate api key",
+    "random api key",
+    "test api key generator",
+    "api secret generator"
+  ],
+  "whyUse": [
+    "Generate realistic-looking API keys quickly",
+    "Use safe placeholder values instead of real secrets",
+    "Create test data for demos and development",
+    "Avoid reusing actual production credentials in examples",
+    "Get ready-to-copy keys in a browser tool"
+  ],
+  "howToUse": [
+    "Optionally enter a prefix and length",
+    "Click Run Tool to generate a key",
+    "Review the generated API-style value",
+    "Copy the result for tests or examples",
+    "Run again to generate a different key"
+  ],
+  "examples": [
+    {
+      "title": "Generate a prefixed API key",
+      "input": "prefix=sk_test\nlength=32",
+      "output": "sk_test_8Fh2Kp9LmQ4Xy7ZaBc1Nd3Rt6Uv0We2Q",
+      "explanation": "Useful for test environments and docs."
+    },
+    {
+      "title": "Generate a generic API key",
+      "input": "length=24",
+      "output": "api_4Gk9Lm2Qs7Nx0Pw8Yr1Zc6Hv",
+      "explanation": "Good for demos and placeholder secrets."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The user expects the key to be registered somewhere",
+      "fix": "This tool only generates a random key string. It does not provision or activate anything."
+    },
+    {
+      "issue": "The chosen length is too short",
+      "fix": "Use a longer key length for more realistic-looking secret values."
+    },
+    {
+      "issue": "A real production key is used in docs by mistake",
+      "fix": "Use generated placeholder values instead of real secrets in examples."
+    }
+  ],
+  "useCases": [
+    "Creating placeholder keys for docs",
+    "Generating fake secrets for demos",
+    "Preparing test data for apps",
+    "Building realistic-looking examples without real credentials",
+    "Quickly producing random API-style tokens"
+  ],
+  "faq": [
+    {
+      "q": "What does API Key Generator do?",
+      "a": "It generates random API-style key strings for testing, docs, and placeholder use."
+    },
+    {
+      "q": "Does it create a real working API key?",
+      "a": "No. It only generates a random string."
+    },
+    {
+      "q": "Can I choose a prefix?",
+      "a": "Yes. You can include a prefix such as sk_test or api."
+    },
+    {
+      "q": "Can I control the length?",
+      "a": "Yes. The tool can generate keys of different lengths."
+    },
+    {
+      "q": "What is the difference between this tool and Random Token Generator?",
+      "a": "API Key Generator focuses on API-style formatted keys, while Random Token Generator is broader and more generic."
+    }
+  ],
+  "related": [
+    "random-token-generator",
+    "password-generator",
+    "basic-auth-header-generator",
+    "uuid-generator"
+  ]
+},
+{
+  "id": "random-token-generator",
+  "name": "Random Token Generator",
+  "slug": "random-token-generator",
+  "category": "developer-tools",
+  "intro": "Generate random token strings for development, placeholders, tests, and temporary values.",
+  "description": "Use this Random Token Generator to create random token strings with configurable length and character sets. It is useful for development, test fixtures, temporary placeholders, integration demos, and quick generation of non-production token-style values.",
+  "keywords": [
+    "random token generator",
+    "generate token",
+    "test token generator",
+    "random secret token",
+    "dev token generator"
+  ],
+  "whyUse": [
+    "Generate generic token strings quickly",
+    "Create development and testing placeholders",
+    "Control token length and character mix",
+    "Avoid typing random values manually",
+    "Use browser-based token generation for demos and fixtures"
+  ],
+  "howToUse": [
+    "Optionally enter token length and character options",
+    "Click Run Tool to generate a token",
+    "Review the random output",
+    "Copy the token for tests or demo workflows",
+    "Run again to create another value"
+  ],
+  "examples": [
+    {
+      "title": "Generate a mixed token",
+      "input": "length=32\noptions=upper,lower,digits",
+      "output": "A7kQp9LmN2xY4cTd8Rz1Wu5Hs0Jv6BeF",
+      "explanation": "Useful for test fixtures and generic token examples."
+    },
+    {
+      "title": "Generate a token with symbols",
+      "input": "length=24\noptions=upper,lower,digits,symbols",
+      "output": "Q7v!sM2@xL9#dP4$kT8%wR1&",
+      "explanation": "Useful when you want a broader character set."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The user expects a signed or real auth token",
+      "fix": "This tool generates random strings only and does not create JWTs or registered auth tokens."
+    },
+    {
+      "issue": "The selected options produce no valid character pool",
+      "fix": "Use upper, lower, digits, or symbols to define at least one character group."
+    },
+    {
+      "issue": "The requested token length is too small",
+      "fix": "Use a longer length if you want more realistic token-style values."
+    }
+  ],
+  "useCases": [
+    "Creating placeholders for apps and docs",
+    "Generating generic test tokens",
+    "Preparing development fixtures",
+    "Making temporary non-production values",
+    "Quick token generation during debugging"
+  ],
+  "faq": [
+    {
+      "q": "What does Random Token Generator do?",
+      "a": "It generates random token-like strings for development, testing, and placeholder use."
+    },
+    {
+      "q": "Does it create JWTs or signed tokens?",
+      "a": "No. It creates generic random strings only."
+    },
+    {
+      "q": "Can I choose the length?",
+      "a": "Yes. You can control the generated token length."
+    },
+    {
+      "q": "Can I choose character groups?",
+      "a": "Yes. You can use upper, lower, digits, and symbols."
+    },
+    {
+      "q": "What is the difference between this tool and API Key Generator?",
+      "a": "Random Token Generator is broader and generic, while API Key Generator focuses on API-style key formatting."
+    }
+  ],
+  "related": [
+    "api-key-generator",
+    "password-generator",
+    "uuid-generator",
+    "password-entropy-calculator"
+  ]
+}
+,
+{
+  "id": "secure-password-generator",
+  "name": "Secure Password Generator",
+  "slug": "secure-password-generator",
+  "category": "developer-tools",
+  "intro": "Generate a secure random password with configurable length and character rules.",
+  "description": "Use this Secure Password Generator to create strong random passwords directly in the browser. It is useful for account setup, admin work, testing login flows, creating temporary credentials, and generating passwords that include uppercase letters, lowercase letters, numbers, and symbols. You can use the default settings or provide custom options such as length and character groups.",
+  "keywords": [
+    "secure password generator",
+    "random password generator",
+    "strong password generator",
+    "generate secure password",
+    "developer password tool"
+  ],
+  "whyUse": [
+    "Generate strong random passwords without using an external service",
+    "Control password length and character groups for different requirements",
+    "Create temporary credentials for testing, staging, and admin workflows",
+    "Avoid weak or repeated manually typed passwords",
+    "Get a ready-to-copy password instantly in the browser"
+  ],
+  "howToUse": [
+    "Leave the input empty to generate a default secure password",
+    "Or provide options as JSON or key=value lines such as length=20 and symbols=true",
+    "Click Run Tool to generate the password",
+    "Review the password and the settings summary in the output",
+    "Copy the generated result into your app, password manager, or test workflow"
+  ],
+  "examples": [
+    {
+      "title": "Generate a default secure password",
+      "input": "",
+      "output": "{\n  \"password\": \"random 16-character password\",\n  \"length\": 16,\n  \"uppercase\": true,\n  \"lowercase\": true,\n  \"numbers\": true,\n  \"symbols\": true\n}",
+      "explanation": "Useful when you just need a strong default password quickly."
+    },
+    {
+      "title": "Generate a 24-character password without symbols",
+      "input": "length=24\nsymbols=false",
+      "output": "{\n  \"password\": \"random 24-character password\",\n  \"length\": 24,\n  \"uppercase\": true,\n  \"lowercase\": true,\n  \"numbers\": true,\n  \"symbols\": false\n}",
+      "explanation": "Useful when the target system blocks special characters."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The requested length is too short for the selected character groups",
+      "fix": "Use a longer length so the generator can include at least one character from each enabled group."
+    },
+    {
+      "issue": "All character groups are disabled",
+      "fix": "Enable at least one group such as lowercase, uppercase, numbers, or symbols."
+    },
+    {
+      "issue": "The input uses unclear option names",
+      "fix": "Use simple keys like length, uppercase, lowercase, numbers, and symbols."
+    },
+    {
+      "issue": "The user expects the same password every run",
+      "fix": "This tool generates a new random password each time unless you reuse the same output manually."
+    },
+    {
+      "issue": "The generated password includes characters not allowed by the target system",
+      "fix": "Disable symbols or adjust the length and groups to match the system rules."
+    }
+  ],
+  "useCases": [
+    "Generating temporary passwords for staging or QA accounts",
+    "Creating stronger passwords during admin setup work",
+    "Producing random credentials for internal testing",
+    "Checking password policy combinations before implementation",
+    "Generating one-off passwords without opening a password manager"
+  ],
+  "faq": [
+    {
+      "q": "What does Secure Password Generator do?",
+      "a": "It creates a random password using the character groups and length you choose."
+    },
+    {
+      "q": "Can I generate a password without symbols?",
+      "a": "Yes. You can disable symbols if the target system does not allow them."
+    },
+    {
+      "q": "What input format does this tool support?",
+      "a": "You can leave the input empty for defaults, or use JSON or key=value lines such as length=20 and numbers=true."
+    },
+    {
+      "q": "Why does the password change every time I run the tool?",
+      "a": "Because it generates a new random value on each run."
+    },
+    {
+      "q": "What is the difference between Secure Password Generator and Random String Generator?",
+      "a": "Secure Password Generator is designed around password rules and balanced character groups, while a random string tool is more generic."
+    }
+  ],
+  "related": [
+    "random-string-generator",
+    "uuid-generator",
+    "bcrypt-hash-generator",
+    "sha256-generator"
+  ]
+},
+{
+  "id": "json-key-extractor",
+  "name": "JSON Key Extractor",
+  "slug": "json-key-extractor",
+  "category": "developer-tools",
+  "intro": "Extract unique keys and key paths from JSON objects and arrays.",
+  "description": "Use this JSON Key Extractor to list keys and nested key paths from JSON data. It is useful for API inspection, schema review, payload discovery, documentation work, test preparation, and understanding unknown JSON structures before mapping or transforming them. Paste a JSON object or array and get a clean list of unique paths in dot notation.",
+  "keywords": [
+    "json key extractor",
+    "extract json keys",
+    "json keys list",
+    "json path keys",
+    "json schema helper"
+  ],
+  "whyUse": [
+    "See the structure of unknown JSON quickly",
+    "Extract nested key paths for mapping and debugging",
+    "Review API fields before writing code or transformations",
+    "Create a clean field list from large payloads",
+    "Understand object and array structure without manual scanning"
+  ],
+  "howToUse": [
+    "Paste a JSON object or array into the input box",
+    "Click Run Tool to extract keys",
+    "Review the unique key paths in the output",
+    "Use the result for API mapping, docs, or transformation planning",
+    "If needed, compare the same payload later with JSON Diff Checker"
+  ],
+  "examples": [
+    {
+      "title": "Extract keys from a simple object",
+      "input": "{\"name\":\"John\",\"age\":30}",
+      "output": "[\n  \"$.age\",\n  \"$.name\"\n]",
+      "explanation": "Useful when you only need a quick field list from a small object."
+    },
+    {
+      "title": "Extract nested keys from an API payload",
+      "input": "{\"user\":{\"id\":7,\"name\":\"Anna\"},\"roles\":[{\"type\":\"admin\"}]}",
+      "output": "[\n  \"$.roles\",\n  \"$.roles[]\",\n  \"$.roles[].type\",\n  \"$.user\",\n  \"$.user.id\",\n  \"$.user.name\"\n]",
+      "explanation": "Useful when reviewing nested response fields before writing mappings or tests."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The pasted JSON is invalid",
+      "fix": "Validate or format the JSON first before extracting keys."
+    },
+    {
+      "issue": "The user expects values instead of only keys",
+      "fix": "Use JSON Path Finder if you need to search by key names and inspect matching values."
+    },
+    {
+      "issue": "Arrays are expected to show every index separately",
+      "fix": "This tool uses [] notation for array structure instead of listing every numeric index."
+    },
+    {
+      "issue": "Only part of the payload is pasted",
+      "fix": "Paste the full JSON structure so all keys can be discovered."
+    },
+    {
+      "issue": "Repeated keys appear in many objects",
+      "fix": "The extractor returns unique paths so repeated structures do not flood the output."
+    }
+  ],
+  "useCases": [
+    "Reviewing API payload fields before mapping them",
+    "Listing nested keys for documentation or QA notes",
+    "Understanding third-party webhook structures",
+    "Preparing transformation rules for flattening or conversion",
+    "Inspecting JSON exports before building queries or selectors"
+  ],
+  "faq": [
+    {
+      "q": "What does JSON Key Extractor return?",
+      "a": "It returns a unique list of keys and nested key paths found in the JSON input."
+    },
+    {
+      "q": "Does it work with arrays?",
+      "a": "Yes. Arrays are represented with [] notation in the extracted paths."
+    },
+    {
+      "q": "What is the difference between JSON Key Extractor and JSON Path Finder?",
+      "a": "Key Extractor lists all available paths, while JSON Path Finder searches for paths that match a specific key term."
+    },
+    {
+      "q": "Can I use this on large API responses?",
+      "a": "Yes. It is useful for quickly understanding the shape of large payloads."
+    },
+    {
+      "q": "Why are array indexes not listed one by one?",
+      "a": "The tool focuses on reusable structure paths rather than every concrete array position."
+    }
+  ],
+  "related": [
+    "json-path-finder",
+    "json-formatter",
+    "json-flatten",
+    "json-diff-checker"
+  ]
+},
+{
+  "id": "json-path-finder",
+  "name": "JSON Path Finder",
+  "slug": "json-path-finder",
+  "category": "developer-tools",
+  "intro": "Find matching JSON paths and values by key name inside nested JSON.",
+  "description": "Use this JSON Path Finder to search a JSON object or array for matching key names and return their paths with values. It is useful for large API responses, webhook debugging, field discovery, payload analysis, and quickly locating where a specific key appears inside nested JSON. You can provide the JSON and a search term in JSON format or with a separator block.",
+  "keywords": [
+    "json path finder",
+    "find json path",
+    "search json keys",
+    "json field finder",
+    "json path search"
+  ],
+  "whyUse": [
+    "Find a specific field quickly inside large nested JSON",
+    "Return both the matching path and the current value",
+    "Save time when debugging APIs and webhook payloads",
+    "Locate repeated keys across nested objects and arrays",
+    "Avoid manual scanning of long JSON structures"
+  ],
+  "howToUse": [
+    "Provide input as JSON with json and query fields, or separate the JSON and search term with ---",
+    "Click Run Tool to search the structure",
+    "Review the list of matching paths and values",
+    "Use the result to inspect the target field or continue with another JSON tool",
+    "If needed, use JSON Key Extractor to review the full structure"
+  ],
+  "examples": [
+    {
+      "title": "Find one nested key by name",
+      "input": "{\"json\":{\"user\":{\"id\":7,\"profile\":{\"email\":\"a@example.com\"}}},\"query\":\"email\"}",
+      "output": "{\n  \"query\": \"email\",\n  \"matchCount\": 1,\n  \"matches\": [\n    {\n      \"path\": \"$.user.profile.email\",\n      \"value\": \"a@example.com\"\n    }\n  ]\n}",
+      "explanation": "Useful when you know the field name but not where it appears in the structure."
+    },
+    {
+      "title": "Find repeated id keys in nested JSON",
+      "input": "{\"json\":{\"user\":{\"id\":7},\"orders\":[{\"id\":101},{\"id\":102}]},\"query\":\"id\"}",
+      "output": "{\n  \"query\": \"id\",\n  \"matchCount\": 3,\n  \"matches\": [\n    {\n      \"path\": \"$.orders[0].id\",\n      \"value\": 101\n    },\n    {\n      \"path\": \"$.orders[1].id\",\n      \"value\": 102\n    },\n    {\n      \"path\": \"$.user.id\",\n      \"value\": 7\n    }\n  ]\n}",
+      "explanation": "Useful when the same key appears in several different parts of a payload."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "Only raw JSON is pasted without a query",
+      "fix": "Use JSON with json and query fields, or separate the JSON and query with ---."
+    },
+    {
+      "issue": "The search term is too broad",
+      "fix": "Use a more specific key name to reduce noisy matches."
+    },
+    {
+      "issue": "The JSON input is invalid",
+      "fix": "Format or validate the payload before running the search."
+    },
+    {
+      "issue": "The user expects full JSONPath query language support",
+      "fix": "This tool searches key names and returns matching paths. It is not a full JSONPath evaluator."
+    },
+    {
+      "issue": "No matches are returned because the wrong key name is searched",
+      "fix": "Use JSON Key Extractor first to inspect the exact path names available."
+    }
+  ],
+  "useCases": [
+    "Locating fields inside large API responses",
+    "Finding repeated keys in webhook payloads",
+    "Inspecting unknown JSON from third-party services",
+    "Searching nested config exports for one setting name",
+    "Debugging field placement before writing selectors or mappings"
+  ],
+  "faq": [
+    {
+      "q": "What does JSON Path Finder search for?",
+      "a": "It searches JSON key names and returns matching paths with their current values."
+    },
+    {
+      "q": "Can I search nested arrays too?",
+      "a": "Yes. Matching keys inside arrays are returned with indexed paths such as $.items[0].id."
+    },
+    {
+      "q": "What input format does this tool support?",
+      "a": "You can use JSON like {\"json\": {...}, \"query\": \"id\"} or separate the JSON and query with ---."
+    },
+    {
+      "q": "Is this a full JSONPath query engine?",
+      "a": "No. It is a path finder for matching key names, not a full JSONPath expression evaluator."
+    },
+    {
+      "q": "When should I use JSON Key Extractor instead?",
+      "a": "Use Key Extractor when you want the full list of keys instead of searching for one specific key name."
+    }
+  ],
+  "related": [
+    "json-key-extractor",
+    "json-formatter",
+    "json-diff-checker",
+    "json-flatten"
+  ]
+},
+{
+  "id": "json-sort-keys",
+  "name": "JSON Sort Keys",
+  "slug": "json-sort-keys",
+  "category": "developer-tools",
+  "intro": "Sort JSON object keys alphabetically across nested objects for cleaner and more stable output.",
+  "description": "Use this JSON Sort Keys tool to reorder JSON object keys alphabetically, including nested objects. It is useful for cleaner diffs, more stable snapshots, documentation, config cleanup, and preparing JSON for review when object key order is inconsistent. The tool preserves values and array order while sorting object keys recursively.",
+  "keywords": [
+    "json sort keys",
+    "sort json keys",
+    "alphabetize json keys",
+    "json key order tool",
+    "json sorter"
+  ],
+  "whyUse": [
+    "Make JSON easier to scan during review",
+    "Reduce noisy diffs caused by inconsistent key order",
+    "Prepare more stable snapshots and fixtures",
+    "Clean up config and payload examples for documentation",
+    "Sort nested objects without changing the actual values"
+  ],
+  "howToUse": [
+    "Paste a valid JSON object or array into the input box",
+    "Click Run Tool to sort object keys alphabetically",
+    "Review the recursively sorted output",
+    "Copy the cleaned JSON for docs, commits, tests, or comparison work",
+    "If needed, compare the before and after result with JSON Diff Checker"
+  ],
+  "examples": [
+    {
+      "title": "Sort a flat object",
+      "input": "{\"b\":2,\"a\":1}",
+      "output": "{\n  \"a\": 1,\n  \"b\": 2\n}",
+      "explanation": "Useful when a small object has inconsistent key order."
+    },
+    {
+      "title": "Sort nested JSON keys",
+      "input": "{\"user\":{\"name\":\"Anna\",\"id\":7},\"meta\":{\"z\":1,\"a\":2}}",
+      "output": "{\n  \"meta\": {\n    \"a\": 2,\n    \"z\": 1\n  },\n  \"user\": {\n    \"id\": 7,\n    \"name\": \"Anna\"\n  }\n}",
+      "explanation": "Useful when nested payloads need stable ordering for review or version control."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The user expects arrays to be sorted too",
+      "fix": "This tool sorts object keys only. It preserves the original order of array items."
+    },
+    {
+      "issue": "Invalid JSON is pasted",
+      "fix": "Validate or format the JSON first before sorting keys."
+    },
+    {
+      "issue": "The user expects semantic changes in the data",
+      "fix": "Sorting keys only changes object key order. Values and meaning stay the same."
+    },
+    {
+      "issue": "The input contains duplicate semantics in different key names",
+      "fix": "This tool only reorders keys. It does not merge, rename, or normalize fields."
+    },
+    {
+      "issue": "The user expects a minified result",
+      "fix": "Use JSON Minifier if you want compact output after sorting."
+    }
+  ],
+  "useCases": [
+    "Cleaning JSON before committing config changes",
+    "Making API fixtures more stable for tests",
+    "Reducing diff noise in version control",
+    "Preparing readable documentation examples",
+    "Standardizing nested object order before comparison"
+  ],
+  "faq": [
+    {
+      "q": "What does JSON Sort Keys do?",
+      "a": "It sorts JSON object keys alphabetically, including nested objects."
+    },
+    {
+      "q": "Does it sort arrays too?",
+      "a": "No. Array item order stays the same."
+    },
+    {
+      "q": "Does sorting keys change the values?",
+      "a": "No. It only changes object key order."
+    },
+    {
+      "q": "Why is this useful for diffs?",
+      "a": "Because stable key order reduces unnecessary diff noise when the same data is represented with different object ordering."
+    },
+    {
+      "q": "What is the difference between JSON Sort Keys and JSON Formatter?",
+      "a": "Formatter improves readability, while Sort Keys also normalizes object key order recursively."
+    }
+  ],
+  "related": [
+    "json-formatter",
+    "json-minifier",
+    "json-diff-checker",
+    "json-flatten"
+  ]
+},
+{
+  "id": "json-flatten",
+  "name": "JSON Flatten",
+  "slug": "json-flatten",
+  "category": "developer-tools",
+  "intro": "Flatten nested JSON into a single-level object with dot notation paths.",
+  "description": "Use this JSON Flatten tool to convert nested JSON into a flat object where each key represents a full path. It is useful for exports, analytics prep, debugging nested payloads, quick mapping work, documentation, and turning complex objects into a simpler shape for inspection or transformation. Arrays are represented with indexed paths so you can still see where values came from.",
+  "keywords": [
+    "json flatten",
+    "flatten json",
+    "json to dot notation",
+    "flatten nested json",
+    "json flatten online"
+  ],
+  "whyUse": [
+    "Turn nested JSON into a simpler flat structure",
+    "Inspect complex payloads without expanding every object manually",
+    "Prepare key-value style output for mapping and exports",
+    "Make nested arrays and objects easier to review",
+    "Create path-based JSON views for debugging and documentation"
+  ],
+  "howToUse": [
+    "Paste a valid JSON object or array into the input box",
+    "Click Run Tool to flatten the structure",
+    "Review the output object with dot and index notation keys",
+    "Copy the flat result for mapping, docs, or analysis",
+    "If needed, use JSON Key Extractor to inspect only the path list"
+  ],
+  "examples": [
+    {
+      "title": "Flatten a nested object",
+      "input": "{\"user\":{\"id\":7,\"profile\":{\"email\":\"a@example.com\"}}}",
+      "output": "{\n  \"user.id\": 7,\n  \"user.profile.email\": \"a@example.com\"\n}",
+      "explanation": "Useful when nested values need to be reviewed as simple path-value pairs."
+    },
+    {
+      "title": "Flatten arrays with indexes",
+      "input": "{\"orders\":[{\"id\":101},{\"id\":102}]}",
+      "output": "{\n  \"orders[0].id\": 101,\n  \"orders[1].id\": 102\n}",
+      "explanation": "Useful when array content must stay traceable after flattening."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The input JSON is invalid",
+      "fix": "Validate or format the payload before flattening it."
+    },
+    {
+      "issue": "The user expects the result to preserve nested objects",
+      "fix": "Flattening converts nested structure into path-based keys, so use JSON Formatter if you want the original shape."
+    },
+    {
+      "issue": "Arrays are expected to stay as plain arrays",
+      "fix": "This tool uses indexed paths like items[0].name so each nested value remains traceable."
+    },
+    {
+      "issue": "The user expects reverse unflatten support",
+      "fix": "This page only flattens JSON. Reverse expansion would be a separate tool."
+    },
+    {
+      "issue": "The output is used where original nested JSON is required",
+      "fix": "Use the flattened result for analysis or mapping, not where the original schema must stay nested."
+    }
+  ],
+  "useCases": [
+    "Preparing nested API payloads for quick mapping work",
+    "Reviewing analytics-style path-value output",
+    "Simplifying webhook payloads for inspection",
+    "Generating flat field views for documentation",
+    "Making nested exports easier to scan and compare"
+  ],
+  "faq": [
+    {
+      "q": "What does JSON Flatten do?",
+      "a": "It converts nested JSON into a flat object where each key represents the full path to a value."
+    },
+    {
+      "q": "How are arrays represented?",
+      "a": "Arrays use indexed paths such as orders[0].id."
+    },
+    {
+      "q": "Does flattening remove the original values?",
+      "a": "No. It keeps the values but changes how they are represented."
+    },
+    {
+      "q": "What is the difference between JSON Flatten and JSON Key Extractor?",
+      "a": "Flatten returns path-value pairs, while Key Extractor mainly returns the path list without restructuring the values into a flat object."
+    },
+    {
+      "q": "When is flattening useful?",
+      "a": "It is useful when nested JSON is too deep to scan easily and you want a simpler path-based view."
+    }
+  ],
+  "related": [
+    "json-key-extractor",
+    "json-path-finder",
+    "json-formatter",
+    "json-sort-keys"
+  ]
+}
+,
+{
+  "id": "json-unflatten",
+  "name": "JSON Unflatten",
+  "slug": "json-unflatten",
+  "category": "developer-tools",
+  "intro": "Expand flat path-based JSON into nested objects and arrays.",
+  "description": "Use this JSON Unflatten tool to convert flat path-based JSON into a nested JSON structure again. It is useful when you receive flattened exports, mapping results, analytics-style path objects, or intermediate transformed data and want to rebuild the original nested shape. The tool supports dot notation for objects and bracket indexes for arrays.",
+  "keywords": [
+    "json unflatten",
+    "unflatten json",
+    "expand flat json",
+    "json dot notation to object",
+    "json nested converter"
+  ],
+  "whyUse": [
+    "Rebuild nested JSON from flat path-based objects",
+    "Turn mapping-style key paths back into structured data",
+    "Restore object hierarchy after flattening or exporting",
+    "Work with dot notation and array index notation in one step",
+    "Inspect flat transformation results in a readable nested form"
+  ],
+  "howToUse": [
+    "Paste a flat JSON object into the input box",
+    "Use keys like user.id or orders[0].id in the input",
+    "Click Run Tool to rebuild the nested structure",
+    "Review the nested JSON output",
+    "Copy the result for reuse, testing, or documentation"
+  ],
+  "examples": [
+    {
+      "title": "Unflatten a simple object",
+      "input": "{\"user.id\":7,\"user.name\":\"Anna\"}",
+      "output": "{\n  \"user\": {\n    \"id\": 7,\n    \"name\": \"Anna\"\n  }\n}",
+      "explanation": "Useful when flat dot-notation keys need to become a normal nested object again."
+    },
+    {
+      "title": "Unflatten array paths",
+      "input": "{\"orders[0].id\":101,\"orders[1].id\":102}",
+      "output": "{\n  \"orders\": [\n    {\n      \"id\": 101\n    },\n    {\n      \"id\": 102\n    }\n  ]\n}",
+      "explanation": "Useful when flattened array paths need to be restored into array items."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The input is not a flat JSON object",
+      "fix": "Use a JSON object with string keys like user.id or items[0].name."
+    },
+    {
+      "issue": "Path notation is inconsistent",
+      "fix": "Use dot notation for objects and bracket indexes for arrays."
+    },
+    {
+      "issue": "The JSON input is invalid",
+      "fix": "Validate or format the input first before unflattening."
+    },
+    {
+      "issue": "Conflicting keys try to assign incompatible structures",
+      "fix": "Avoid mixing paths that force the same field to be both a primitive value and a nested object."
+    },
+    {
+      "issue": "The user expects original key order to be preserved",
+      "fix": "This tool rebuilds structure, but exact ordering may differ."
+    }
+  ],
+  "useCases": [
+    "Restoring nested JSON after flattening for exports",
+    "Rebuilding payloads from path-value mapping results",
+    "Turning analytics-style flat keys into structured objects",
+    "Preparing nested fixtures from flat test data",
+    "Inspecting flat configuration paths in a normal JSON shape"
+  ],
+  "faq": [
+    {
+      "q": "What does JSON Unflatten do?",
+      "a": "It converts a flat object with path-based keys into a nested JSON structure."
+    },
+    {
+      "q": "Does it support arrays?",
+      "a": "Yes. Keys like items[0].name are restored into arrays with indexed objects."
+    },
+    {
+      "q": "What input format should I use?",
+      "a": "Use a JSON object where each key is a path such as user.name or orders[0].id."
+    },
+    {
+      "q": "What is the difference between JSON Unflatten and JSON Flatten?",
+      "a": "Flatten turns nested JSON into path-based keys, while Unflatten does the reverse."
+    },
+    {
+      "q": "Why did my output structure look wrong?",
+      "a": "The most common reasons are conflicting paths, invalid JSON, or inconsistent key notation."
+    }
+  ],
+  "related": [
+    "json-flatten",
+    "json-key-extractor",
+    "json-path-finder",
+    "json-formatter"
+  ]
+},
+{
+  "id": "json-to-table",
+  "name": "JSON to Table",
+  "slug": "json-to-table",
+  "category": "developer-tools",
+  "intro": "Convert JSON arrays of objects into a readable plain-text table.",
+  "description": "Use this JSON to Table tool to convert JSON arrays of objects into a readable plain-text table. It is useful for quick inspection, QA checks, debugging API responses, documentation drafts, and seeing row-and-column style data without opening a spreadsheet. The tool collects all keys across the array and renders a simple text table.",
+  "keywords": [
+    "json to table",
+    "convert json to table",
+    "json table generator",
+    "json array to table",
+    "json table view"
+  ],
+  "whyUse": [
+    "View arrays of objects in a row-and-column format",
+    "Inspect API result sets faster than raw JSON",
+    "Create a readable plain-text table without spreadsheets",
+    "Compare records across the same fields quickly",
+    "Turn simple JSON datasets into documentation-friendly output"
+  ],
+  "howToUse": [
+    "Paste a JSON array of objects into the input box",
+    "Click Run Tool to generate the table",
+    "Review the columns and rows in the output",
+    "Copy the table for debugging, notes, or lightweight documentation",
+    "If needed, clean or reshape the JSON before trying again"
+  ],
+  "examples": [
+    {
+      "title": "Convert a small user list",
+      "input": "[{\"id\":1,\"name\":\"Anna\"},{\"id\":2,\"name\":\"John\"}]",
+      "output": "id | name\n---|-----\n1  | Anna\n2  | John",
+      "explanation": "Useful for turning a simple list into a quick readable table."
+    },
+    {
+      "title": "Convert mixed object keys into one table",
+      "input": "[{\"id\":1,\"name\":\"Anna\"},{\"id\":2,\"role\":\"admin\"}]",
+      "output": "id | name | role\n---|------|------\n1  | Anna | \n2  |      | admin",
+      "explanation": "Useful when records have slightly different fields but still need one table view."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The input is a single object instead of an array",
+      "fix": "Use a JSON array of objects, not one standalone object."
+    },
+    {
+      "issue": "Nested objects appear as raw JSON strings in cells",
+      "fix": "Flatten or simplify nested fields first if you need cleaner columns."
+    },
+    {
+      "issue": "The JSON input is invalid",
+      "fix": "Validate or format the JSON before converting it to a table."
+    },
+    {
+      "issue": "Array items are not objects",
+      "fix": "Use an array of objects for proper column generation."
+    },
+    {
+      "issue": "The user expects an actual HTML table",
+      "fix": "This tool produces a readable text table, not rendered HTML markup."
+    }
+  ],
+  "useCases": [
+    "Reviewing simple API result sets quickly",
+    "Creating table-like notes from JSON arrays",
+    "Comparing rows of records during debugging",
+    "Preparing documentation examples from sample data",
+    "Viewing lightweight datasets without spreadsheet tools"
+  ],
+  "faq": [
+    {
+      "q": "What does JSON to Table do?",
+      "a": "It converts a JSON array of objects into a plain-text table with columns and rows."
+    },
+    {
+      "q": "What input does this tool expect?",
+      "a": "It expects a JSON array of objects, such as [{\"id\":1,\"name\":\"Anna\"}]."
+    },
+    {
+      "q": "Does it support nested objects?",
+      "a": "Nested objects are shown as JSON text inside a cell. Flattening first may give cleaner output."
+    },
+    {
+      "q": "What is the difference between JSON to Table and JSON to CSV?",
+      "a": "JSON to Table creates a quick readable text table, while JSON to CSV produces comma-separated export data."
+    },
+    {
+      "q": "Why are some cells empty?",
+      "a": "Because not every object in the array contains the same keys."
+    }
+  ],
+  "related": [
+    "json-to-csv",
+    "json-flatten",
+    "json-formatter",
+    "json-sort-keys"
+  ]
+},
+{
+  "id": "json-to-form-data",
+  "name": "JSON to Form Data",
+  "slug": "json-to-form-data",
+  "category": "developer-tools",
+  "intro": "Convert JSON into key=value form-data style lines for requests and testing.",
+  "description": "Use this JSON to Form Data tool to turn JSON objects into form-data style key-value pairs. It is useful for API testing, debugging request payloads, converting simple objects into request body fields, and preparing flat key-value input for tools that expect form-data or x-www-form-urlencoded-like structures. Nested objects use dot notation and arrays use indexed paths.",
+  "keywords": [
+    "json to form data",
+    "convert json to form-data",
+    "json form data converter",
+    "json to key value",
+    "json request body helper"
+  ],
+  "whyUse": [
+    "Turn JSON into request-style key-value fields quickly",
+    "Prepare payloads for form-data style testing",
+    "Inspect how nested JSON becomes flat keys",
+    "Save time when moving from JSON to request parameters",
+    "Create easy-to-copy key=value lines for debugging"
+  ],
+  "howToUse": [
+    "Paste a valid JSON object into the input box",
+    "Click Run Tool to convert it into form-data style lines",
+    "Review the flat key=value output",
+    "Copy the result into your request tool, notes, or test case",
+    "If needed, adjust nested or array fields before reusing the output"
+  ],
+  "examples": [
+    {
+      "title": "Convert a simple object",
+      "input": "{\"name\":\"Anna\",\"role\":\"admin\"}",
+      "output": "name=Anna\nrole=admin",
+      "explanation": "Useful for turning a small object into request-ready key-value lines."
+    },
+    {
+      "title": "Convert nested data and arrays",
+      "input": "{\"user\":{\"id\":7},\"tags\":[\"a\",\"b\"]}",
+      "output": "user.id=7\ntags[0]=a\ntags[1]=b",
+      "explanation": "Useful when nested JSON must be flattened for form-style request fields."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The input is not a JSON object",
+      "fix": "Use a JSON object as the source input for the conversion."
+    },
+    {
+      "issue": "The JSON input is invalid",
+      "fix": "Validate the JSON first before converting it."
+    },
+    {
+      "issue": "The user expects actual multipart boundaries",
+      "fix": "This tool creates flat key=value lines, not a raw multipart/form-data HTTP body."
+    },
+    {
+      "issue": "Nested arrays or objects create unexpected paths",
+      "fix": "Review the flattened keys and adjust the structure if your target API expects a different naming style."
+    },
+    {
+      "issue": "Binary files are expected to be represented from JSON",
+      "fix": "This tool is for text-based JSON values, not real file uploads."
+    }
+  ],
+  "useCases": [
+    "Preparing request fields for API testing",
+    "Converting JSON into flat key-value lines for notes",
+    "Inspecting nested payloads before form submission",
+    "Debugging how objects map to request parameters",
+    "Creating lightweight request examples from JSON"
+  ],
+  "faq": [
+    {
+      "q": "What does JSON to Form Data do?",
+      "a": "It converts a JSON object into flat key=value style lines suitable for request-style workflows."
+    },
+    {
+      "q": "Does it create real multipart/form-data bodies?",
+      "a": "No. It creates readable key=value output, not raw multipart request boundaries."
+    },
+    {
+      "q": "How are nested objects represented?",
+      "a": "Nested objects use dot notation such as user.id."
+    },
+    {
+      "q": "How are arrays represented?",
+      "a": "Arrays use indexed keys such as tags[0] and tags[1]."
+    },
+    {
+      "q": "What is the difference between JSON to Form Data and JSON Flatten?",
+      "a": "Form Data focuses on key=value request-style output, while Flatten returns a flat JSON object."
+    }
+  ],
+  "related": [
+    "json-flatten",
+    "json-unflatten",
+    "json-formatter",
+    "http-request-builder"
+  ]
+},
+{
+  "id": "json-escape-unescape",
+  "name": "JSON Escape / Unescape",
+  "slug": "json-escape-unescape",
+  "category": "developer-tools",
+  "intro": "Escape or unescape JSON-style string content for debugging, embedding, and raw string cleanup.",
+  "description": "Use this JSON Escape / Unescape tool to either escape plain text into JSON-style string content or simplify escaped JSON-style text back into a more readable raw form. It is useful when debugging copied payload fragments, preparing strings for code examples, cleaning escaped log output, and converting backslash-heavy text into a lighter readable version. In unescape mode, the tool removes common backslash escapes like \\\" and \\n into plain characters instead of turning them into real control characters.",
+  "keywords": [
+    "json escape unescape",
+    "escape json string",
+    "unescape json string",
+    "json string escape tool",
+    "json raw string cleanup"
+  ],
+  "whyUse": [
+    "Convert plain text into JSON-style escaped string output",
+    "Clean copied escaped text from logs or payload fragments",
+    "Turn backslash-heavy strings into simpler readable text",
+    "Prepare string examples for docs, code, and debugging",
+    "Switch quickly between escaped and simplified raw forms"
+  ],
+  "howToUse": [
+    "Provide input as JSON with mode and text fields, or separate the mode and text with ---",
+    "Use mode escape to generate JSON-style escaped string output",
+    "Use mode unescape to remove common backslash escapes into plain visible characters",
+    "Click Run Tool to process the value",
+    "Copy the result into your docs, code, notes, or debugging workflow"
+  ],
+  "examples": [
+    {
+      "title": "Escape quotes and line break markers",
+      "input": "{\"mode\":\"escape\",\"text\":\"Hello \\\"world\\\"\\nnext\"}",
+      "output": "\"Hello \\\"world\\\"\\\\nnext\"",
+      "explanation": "Useful when you want a JSON-style escaped string for code, logs, or payload examples."
+    },
+    {
+      "title": "Unescape JSON-style text without creating a real newline",
+      "input": "{\"mode\":\"unescape\",\"text\":\"Hello \\\\\"world\\\\\"\\\\nnext\"}",
+      "output": "Hello \"world\"nnext",
+      "explanation": "Useful when you want to remove backslashes but keep everything as visible text instead of creating a real line break."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The user expects \\n to become a real newline",
+      "fix": "This tool's unescape mode converts \\n into the visible character n, not an actual line break."
+    },
+    {
+      "issue": "The mode field is missing or invalid",
+      "fix": "Use mode escape or mode unescape in the input."
+    },
+    {
+      "issue": "The wrapper JSON is invalid",
+      "fix": "Use valid JSON like {\"mode\":\"escape\",\"text\":\"...\"} or the separator format."
+    },
+    {
+      "issue": "The user expects full JSON object transformation",
+      "fix": "This tool is focused on string content, not full object serialization or parsing."
+    },
+    {
+      "issue": "The input was already escaped or unescaped once before",
+      "fix": "Check whether the text was already processed, because running the same mode again can change the result unexpectedly."
+    }
+  ],
+  "useCases": [
+    "Cleaning escaped text copied from logs",
+    "Preparing string examples for docs and tutorials",
+    "Removing backslashes from quoted payload fragments",
+    "Turning escaped debug output into simpler readable text",
+    "Generating JSON-style escaped strings for code examples"
+  ],
+  "faq": [
+    {
+      "q": "What does JSON Escape / Unescape do?",
+      "a": "It escapes plain text into JSON-style string output or unescapes escaped string content into a simpler readable form."
+    },
+    {
+      "q": "What happens to \\n in unescape mode?",
+      "a": "It becomes the visible character n, not a real newline."
+    },
+    {
+      "q": "What input format does this tool support?",
+      "a": "You can use JSON like {\"mode\":\"escape\",\"text\":\"...\"} or separate the mode and text with ---."
+    },
+    {
+      "q": "Does unescape mode create real tabs or line breaks?",
+      "a": "No. It removes common backslash escapes into plain visible characters instead of creating control characters."
+    },
+    {
+      "q": "What is the difference between escape and unescape here?",
+      "a": "Escape creates JSON-style escaped string output, while unescape removes common backslash escapes into simpler visible text."
+    }
+  ],
+  "related": [
+    "json-formatter",
+    "json-validator",
+    "html-encode",
+    "html-decode"
+  ]
+},
+{
+  "id": "json-size-calculator",
+  "name": "JSON Size Calculator",
+  "slug": "json-size-calculator",
+  "category": "developer-tools",
+  "intro": "Measure JSON size in bytes, characters, and formatted vs minified versions.",
+  "description": "Use this JSON Size Calculator to measure how large a JSON payload is in characters and UTF-8 bytes, and to compare formatted and minified output sizes. It is useful for API debugging, payload budgeting, request limit checks, webhook analysis, and understanding how much space JSON takes before transport or storage. The tool also gives a compact summary for valid JSON input.",
+  "keywords": [
+    "json size calculator",
+    "json payload size",
+    "measure json size",
+    "json bytes calculator",
+    "json size checker"
+  ],
+  "whyUse": [
+    "Measure JSON payload size before sending it to an API",
+    "Compare formatted and minified size quickly",
+    "Check rough payload impact in bytes and characters",
+    "Review whether a JSON body may be too large for a limit",
+    "Understand how whitespace changes JSON size"
+  ],
+  "howToUse": [
+    "Paste valid JSON into the input box",
+    "Click Run Tool to calculate the size summary",
+    "Review character count, byte size, and minified size",
+    "Use the result for request planning or debugging",
+    "If needed, minify the JSON afterward to reduce size"
+  ],
+  "examples": [
+    {
+      "title": "Measure a small object",
+      "input": "{\"name\":\"Anna\",\"role\":\"admin\"}",
+      "output": "{\n  \"characters\": 30,\n  \"utf8Bytes\": 30,\n  \"minifiedCharacters\": 30,\n  \"formattedCharacters\": 39\n}",
+      "explanation": "Useful for understanding the size of a small compact object."
+    },
+    {
+      "title": "Measure JSON with Unicode text",
+      "input": "{\"message\":\"Привет\"}",
+      "output": "{\n  \"characters\": 20,\n  \"utf8Bytes\": 26,\n  \"minifiedCharacters\": 20,\n  \"formattedCharacters\": 25\n}",
+      "explanation": "Useful when character count and byte count differ because of Unicode."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The JSON input is invalid",
+      "fix": "Validate or format the JSON first so the size can be calculated correctly."
+    },
+    {
+      "issue": "The user expects bytes and characters to always match",
+      "fix": "Unicode characters can take more than one byte in UTF-8."
+    },
+    {
+      "issue": "Only raw text is pasted instead of JSON",
+      "fix": "This tool measures valid JSON payloads, not arbitrary text."
+    },
+    {
+      "issue": "The user expects network compression size",
+      "fix": "This tool measures raw JSON size, not compressed transport size."
+    },
+    {
+      "issue": "Whitespace-heavy formatted JSON is compared with compact payloads incorrectly",
+      "fix": "Check both formatted and minified counts to understand the real difference."
+    }
+  ],
+  "useCases": [
+    "Checking whether API payloads may hit size limits",
+    "Comparing formatted and minified JSON output",
+    "Measuring webhook or request body size",
+    "Understanding Unicode byte impact in JSON",
+    "Reviewing payload footprint before storage or transport"
+  ],
+  "faq": [
+    {
+      "q": "What does JSON Size Calculator measure?",
+      "a": "It measures character count, UTF-8 byte size, and compares formatted and minified JSON lengths."
+    },
+    {
+      "q": "Why are bytes and characters different?",
+      "a": "Because some Unicode characters use more than one byte in UTF-8."
+    },
+    {
+      "q": "Does it work on invalid JSON?",
+      "a": "No. The tool expects valid JSON so it can calculate accurate structured sizes."
+    },
+    {
+      "q": "What is the difference between formatted and minified size?",
+      "a": "Formatted JSON includes indentation and line breaks, while minified JSON removes unnecessary whitespace."
+    },
+    {
+      "q": "Does this tool show compressed network size?",
+      "a": "No. It shows raw JSON size, not gzip or transport-compressed size."
+    }
+  ],
+  "related": [
+    "json-minifier",
+    "json-formatter",
+    "json-validator",
+    "base64-encode"
+  ]
+}
+,
+{
+  "id": "cron-expression-generator",
+  "name": "Cron Expression Generator",
+  "slug": "cron-expression-generator",
+  "category": "developer-tools",
+  "intro": "Generate a cron expression from simple schedule values like minute, hour, day, month, and weekday.",
+  "description": "Use this Cron Expression Generator to create standard five-field cron expressions from simple schedule input. It is useful for job scheduling, automation setup, DevOps tasks, backups, scripts, and recurring task planning when you want to build a cron string without remembering the exact field order manually.",
+  "keywords": [
+    "cron expression generator",
+    "generate cron expression",
+    "cron builder",
+    "cron schedule generator",
+    "cron creator"
+  ],
+  "whyUse": [
+    "Build cron expressions faster without remembering field order",
+    "Reduce mistakes when creating recurring schedules",
+    "Generate cron strings for scripts, jobs, and automation",
+    "Make cron setup easier for beginners and quick admin tasks",
+    "Create a readable schedule input before copying the final expression"
+  ],
+  "howToUse": [
+    "Enter five schedule fields using JSON or key=value lines",
+    "Use keys minute, hour, dayOfMonth, month, and dayOfWeek",
+    "Click Run Tool to generate the cron expression",
+    "Review the final five-field cron output",
+    "Copy the expression into your scheduler, crontab, or automation tool"
+  ],
+  "examples": [
+    {
+      "title": "Run every day at midnight",
+      "input": "minute=0\nhour=0\ndayOfMonth=*\nmonth=*\ndayOfWeek=*",
+      "output": "0 0 * * *",
+      "explanation": "Useful for daily jobs such as backups or cleanup tasks."
+    },
+    {
+      "title": "Run every Monday at 09:30",
+      "input": "minute=30\nhour=9\ndayOfMonth=*\nmonth=*\ndayOfWeek=1",
+      "output": "30 9 * * 1",
+      "explanation": "Useful for weekly reports or scheduled maintenance."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The field order is mixed up",
+      "fix": "Use minute, hour, dayOfMonth, month, and dayOfWeek in that exact logical order."
+    },
+    {
+      "issue": "Only part of the schedule is provided",
+      "fix": "Make sure all five cron fields are present."
+    },
+    {
+      "issue": "Invalid numeric ranges are used",
+      "fix": "Check that values fall into valid cron ranges like 0-59 for minutes and 0-23 for hours."
+    },
+    {
+      "issue": "The user expects a six-field format with seconds",
+      "fix": "This tool generates the common five-field cron format only."
+    },
+    {
+      "issue": "Text labels like Monday are used directly",
+      "fix": "Use numeric values or valid cron-compatible symbols."
+    }
+  ],
+  "useCases": [
+    "Creating recurring cron jobs for scripts and backups",
+    "Building scheduler expressions for DevOps tasks",
+    "Preparing cron strings for documentation or examples",
+    "Checking simple daily, weekly, or monthly schedules",
+    "Avoiding manual cron field mistakes"
+  ],
+  "faq": [
+    {
+      "q": "What does Cron Expression Generator do?",
+      "a": "It builds a standard five-field cron expression from simple schedule input."
+    },
+    {
+      "q": "What format does this tool generate?",
+      "a": "It generates the common five-field cron format: minute hour day-of-month month day-of-week."
+    },
+    {
+      "q": "Can I use wildcards like *?",
+      "a": "Yes. You can use standard cron symbols like * where appropriate."
+    },
+    {
+      "q": "Does this tool support seconds?",
+      "a": "No. This page is focused on the common five-field cron format."
+    },
+    {
+      "q": "What is the difference between Cron Expression Generator and Cron Expression Reader?",
+      "a": "Generator builds a cron string from schedule input, while Reader explains what an existing cron string means."
+    }
+  ],
+  "related": [
+    "cron-expression-reader",
+    "unix-timestamp-validator",
+    "uuid-validator",
+    "json-formatter"
+  ]
+},
+{
+  "id": "cron-expression-reader",
+  "name": "Cron Expression Reader",
+  "slug": "cron-expression-reader",
+  "category": "developer-tools",
+  "intro": "Read and explain a five-field cron expression in plain English.",
+  "description": "Use this Cron Expression Reader to understand what a standard five-field cron expression means. It is useful for reviewing scheduled jobs, checking inherited cron strings, debugging automation timing, documenting schedules, and translating compact cron syntax into a more human-readable summary.",
+  "keywords": [
+    "cron expression reader",
+    "read cron expression",
+    "cron parser",
+    "cron explanation tool",
+    "cron translator"
+  ],
+  "whyUse": [
+    "Understand existing cron expressions faster",
+    "Translate compact cron syntax into readable text",
+    "Check whether a schedule means what you think it means",
+    "Review inherited or copied cron jobs more safely",
+    "Document automation schedules in plain language"
+  ],
+  "howToUse": [
+    "Paste a five-field cron expression into the input box",
+    "Click Run Tool to analyze it",
+    "Review the parsed fields and plain-language summary",
+    "Check whether the schedule matches your intended timing",
+    "Copy the explanation into notes or documentation if needed"
+  ],
+  "examples": [
+    {
+      "title": "Read a daily midnight schedule",
+      "input": "0 0 * * *",
+      "output": "Runs at minute 0, hour 0, every day of the month, every month, every day of the week.",
+      "explanation": "Useful when checking a common daily cron job."
+    },
+    {
+      "title": "Read a weekly Monday schedule",
+      "input": "30 9 * * 1",
+      "output": "Runs at minute 30, hour 9, every day of the month, every month, on day-of-week 1.",
+      "explanation": "Useful when reviewing a recurring weekly schedule."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The input has too few or too many fields",
+      "fix": "Use exactly five space-separated fields."
+    },
+    {
+      "issue": "The user expects full natural-language cron interpretation for every advanced syntax case",
+      "fix": "This tool explains the five fields clearly, but it does not try to simulate every scheduler implementation."
+    },
+    {
+      "issue": "A six-field cron string with seconds is pasted",
+      "fix": "Use a standard five-field cron expression for this page."
+    },
+    {
+      "issue": "The cron string contains unsupported text labels",
+      "fix": "Use standard numeric or symbol-based cron input."
+    },
+    {
+      "issue": "The user assumes the reader validates execution in a real scheduler",
+      "fix": "This tool explains the expression format, not the actual server scheduler behavior."
+    }
+  ],
+  "useCases": [
+    "Understanding old cron jobs before editing them",
+    "Explaining schedule timing in docs or tickets",
+    "Checking copied cron expressions from online examples",
+    "Reviewing automation and backup schedules",
+    "Debugging whether a cron string matches intended timing"
+  ],
+  "faq": [
+    {
+      "q": "What does Cron Expression Reader do?",
+      "a": "It explains a five-field cron expression in a more readable way."
+    },
+    {
+      "q": "What input format does this tool expect?",
+      "a": "It expects five space-separated cron fields."
+    },
+    {
+      "q": "Does it support seconds?",
+      "a": "No. This tool is focused on the common five-field cron format."
+    },
+    {
+      "q": "Does the reader also validate the schedule?",
+      "a": "It checks the basic field structure, but it is mainly for explanation rather than full scheduler emulation."
+    },
+    {
+      "q": "What is the difference between Cron Expression Reader and Cron Expression Generator?",
+      "a": "Reader explains an existing cron string, while Generator helps create one."
+    }
+  ],
+  "related": [
+    "cron-expression-generator",
+    "unix-timestamp-validator",
+    "json-formatter",
+    "url-parser"
+  ]
+},
+{
+  "id": "unix-timestamp-validator",
+  "name": "Unix Timestamp Validator",
+  "slug": "unix-timestamp-validator",
+  "category": "developer-tools",
+  "intro": "Validate whether a value looks like a Unix timestamp in seconds or milliseconds.",
+  "description": "Use this Unix Timestamp Validator to check whether a value is a plausible Unix timestamp and whether it appears to be in seconds or milliseconds. It is useful for API debugging, database inspection, logs, event data, payload checks, and verifying whether a numeric time value is likely a valid Unix timestamp before converting or storing it.",
+  "keywords": [
+    "unix timestamp validator",
+    "validate unix timestamp",
+    "timestamp checker",
+    "unix time validator",
+    "timestamp validation tool"
+  ],
+  "whyUse": [
+    "Check whether a numeric value is a plausible Unix timestamp",
+    "See whether the input looks like seconds or milliseconds",
+    "Avoid timestamp mistakes in APIs, logs, and databases",
+    "Catch malformed or non-numeric timestamp input quickly",
+    "Review event time fields before conversion or storage"
+  ],
+  "howToUse": [
+    "Paste the numeric timestamp into the input box",
+    "Click Run Tool to validate it",
+    "Review whether it looks valid and whether it appears to be seconds or milliseconds",
+    "Check the readable UTC date in the output",
+    "Use the result before converting or debugging time fields further"
+  ],
+  "examples": [
+    {
+      "title": "Validate a seconds-based timestamp",
+      "input": "1712668800",
+      "output": "{\n  \"valid\": true,\n  \"type\": \"seconds\",\n  \"iso\": \"2024-04-09T00:00:00.000Z\"\n}",
+      "explanation": "Useful when reviewing common Unix timestamps in API payloads."
+    },
+    {
+      "title": "Validate a milliseconds-based timestamp",
+      "input": "1712668800000",
+      "output": "{\n  \"valid\": true,\n  \"type\": \"milliseconds\",\n  \"iso\": \"2024-04-09T00:00:00.000Z\"\n}",
+      "explanation": "Useful when logs or JS apps store Unix time in milliseconds."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The input is not numeric",
+      "fix": "Enter only digits for the timestamp value."
+    },
+    {
+      "issue": "Seconds and milliseconds are confused",
+      "fix": "Check the length of the number and the detected timestamp type in the output."
+    },
+    {
+      "issue": "The value is far outside a plausible date range",
+      "fix": "Check whether the source system uses another format or unit."
+    },
+    {
+      "issue": "Whitespace or punctuation is included",
+      "fix": "Trim the value and remove separators before validating."
+    },
+    {
+      "issue": "The user expects this tool to convert any date format",
+      "fix": "This page validates Unix timestamps only, not general date strings."
+    }
+  ],
+  "useCases": [
+    "Checking API event timestamps before debugging",
+    "Validating database time fields",
+    "Reviewing log values in seconds or milliseconds",
+    "Inspecting payloads before timestamp conversion",
+    "Catching bad numeric date fields quickly"
+  ],
+  "faq": [
+    {
+      "q": "What does Unix Timestamp Validator do?",
+      "a": "It checks whether a value looks like a valid Unix timestamp and whether it appears to be in seconds or milliseconds."
+    },
+    {
+      "q": "Does it support both seconds and milliseconds?",
+      "a": "Yes. It detects both common Unix timestamp styles."
+    },
+    {
+      "q": "What happens if the input is not numeric?",
+      "a": "The tool returns an invalid result because Unix timestamps must be numeric."
+    },
+    {
+      "q": "Does this tool convert timestamps too?",
+      "a": "It validates them and shows a readable UTC date, but its main purpose is validation."
+    },
+    {
+      "q": "Why does my timestamp look valid but show the wrong date?",
+      "a": "The most common reason is mixing seconds and milliseconds."
+    }
+  ],
+  "related": [
+    "timestamp-converter",
+    "cron-expression-reader",
+    "json-formatter",
+    "uuid-validator"
+  ]
+},
+{
+  "id": "uuid-validator",
+  "name": "UUID Validator",
+  "slug": "uuid-validator",
+  "category": "developer-tools",
+  "intro": "Validate whether a string is a correctly formatted UUID.",
+  "description": "Use this UUID Validator to check whether a string matches the standard UUID format. It is useful for API debugging, database validation, ID checks, request payload review, test data verification, and confirming whether a supposed UUID is correctly shaped before it is stored, compared, or sent to another system.",
+  "keywords": [
+    "uuid validator",
+    "validate uuid",
+    "uuid checker",
+    "guid validator",
+    "uuid format checker"
+  ],
+  "whyUse": [
+    "Check whether an ID matches the expected UUID format",
+    "Catch malformed UUIDs before sending or storing them",
+    "Validate API and database identifiers quickly",
+    "Review copied IDs from logs, payloads, or test data",
+    "Confirm UUID syntax without writing code"
+  ],
+  "howToUse": [
+    "Paste the UUID string into the input box",
+    "Click Run Tool to validate it",
+    "Review whether the value matches the standard UUID format",
+    "Check the reported version and variant if available",
+    "Use the result before storing or comparing the ID"
+  ],
+  "examples": [
+    {
+      "title": "Validate a correct UUID",
+      "input": "550e8400-e29b-41d4-a716-446655440000",
+      "output": "{\n  \"valid\": true,\n  \"version\": 4,\n  \"variant\": \"RFC 4122\"\n}",
+      "explanation": "Useful for checking a typical UUID v4 string."
+    },
+    {
+      "title": "Reject a malformed UUID",
+      "input": "550e8400-e29b-41d4-a716-44665544",
+      "output": "{\n  \"valid\": false\n}",
+      "explanation": "Useful when copied IDs are incomplete or incorrectly formatted."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The UUID is missing characters",
+      "fix": "Check that the value has the full 8-4-4-4-12 structure."
+    },
+    {
+      "issue": "The user pastes surrounding spaces or quotes",
+      "fix": "Trim the input before validating."
+    },
+    {
+      "issue": "The string uses the wrong separator pattern",
+      "fix": "Use standard hyphen placement for UUID format."
+    },
+    {
+      "issue": "The user expects every random string with hyphens to be valid",
+      "fix": "UUIDs must match a strict hexadecimal pattern and version structure."
+    },
+    {
+      "issue": "Uppercase letters are assumed to be invalid",
+      "fix": "Uppercase hex letters are still valid in UUID format."
+    }
+  ],
+  "useCases": [
+    "Validating IDs in API payloads",
+    "Checking database identifiers before insert or update",
+    "Reviewing copied GUID or UUID values from logs",
+    "Verifying test fixtures and sample data",
+    "Catching malformed identifiers early"
+  ],
+  "faq": [
+    {
+      "q": "What does UUID Validator do?",
+      "a": "It checks whether a string matches the standard UUID format."
+    },
+    {
+      "q": "Does it support uppercase UUIDs?",
+      "a": "Yes. UUID validation is case-insensitive for hexadecimal characters."
+    },
+    {
+      "q": "Can it detect the UUID version?",
+      "a": "Yes. It can report the version when the input is valid."
+    },
+    {
+      "q": "What is the difference between UUID Validator and UUID Generator?",
+      "a": "Validator checks whether an ID is correctly formatted, while Generator creates a new UUID."
+    },
+    {
+      "q": "Why is my value invalid even though it looks similar to a UUID?",
+      "a": "It may have the wrong length, broken hyphen positions, or non-hex characters."
+    }
+  ],
+  "related": [
+    "uuid-generator",
+    "unix-timestamp-validator",
+    "md5-generator",
+    "sha256-generator"
+  ]
+}
+,
+{
+  "id": "hex-to-rgb",
+  "name": "HEX to RGB",
+  "slug": "hex-to-rgb",
+  "category": "developer-tools",
+  "intro": "Convert a HEX color value into RGB format instantly.",
+  "description": "Use this HEX to RGB converter to turn a hex color like #ff5733 into RGB values. It is useful for CSS work, UI design, frontend development, theme adjustments, color debugging, and moving between design tools and code where different color formats are used.",
+  "keywords": [
+    "hex to rgb",
+    "convert hex to rgb",
+    "hex color converter",
+    "hex to rgb online",
+    "color format converter"
+  ],
+  "whyUse": [
+    "Convert hex colors into RGB values quickly",
+    "Move between design tools and CSS code more easily",
+    "Check exact red, green, and blue channel values",
+    "Debug UI colors without calculating channels manually",
+    "Use browser-based conversion without extra software"
+  ],
+  "howToUse": [
+    "Paste a hex color like #ff5733 or ff5733 into the input box",
+    "Click Run Tool to convert the value",
+    "Review the RGB output",
+    "Copy the result into your CSS, design notes, or code",
+    "Repeat the process for other colors as needed"
+  ],
+  "examples": [
+    {
+      "title": "Convert a standard hex color",
+      "input": "#ff5733",
+      "output": "rgb(255, 87, 51)",
+      "explanation": "Useful for turning a common six-digit hex value into CSS-ready RGB output."
+    },
+    {
+      "title": "Convert white",
+      "input": "#ffffff",
+      "output": "rgb(255, 255, 255)",
+      "explanation": "Useful for checking a basic full-intensity color."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The hash symbol is missing",
+      "fix": "That is fine if the value still contains exactly 3 or 6 valid hex characters."
+    },
+    {
+      "issue": "The input contains invalid characters",
+      "fix": "Use only hex digits from 0-9 and a-f."
+    },
+    {
+      "issue": "The input length is wrong",
+      "fix": "Use either a 3-digit or 6-digit hex color."
+    },
+    {
+      "issue": "The user expects alpha channel support",
+      "fix": "This tool focuses on standard RGB conversion, not RGBA."
+    },
+    {
+      "issue": "The color value contains spaces or extra text",
+      "fix": "Paste only the clean hex color value."
+    }
+  ],
+  "useCases": [
+    "Converting design hex colors into CSS RGB values",
+    "Checking frontend theme colors",
+    "Debugging UI color values in code",
+    "Preparing RGB values for inline styles",
+    "Translating color values between tools"
+  ],
+  "faq": [
+    {
+      "q": "What does HEX to RGB do?",
+      "a": "It converts a hex color into red, green, and blue numeric values."
+    },
+    {
+      "q": "Can I enter a hex color without #?",
+      "a": "Yes. The tool can still read a valid 3-digit or 6-digit hex value."
+    },
+    {
+      "q": "Does it support shorthand hex like #fff?",
+      "a": "Yes. Shorthand three-digit hex colors are expanded automatically."
+    },
+    {
+      "q": "What is the difference between HEX to RGB and RGB to HEX?",
+      "a": "HEX to RGB converts hex into channel values, while RGB to HEX does the reverse."
+    },
+    {
+      "q": "Does this tool support transparency?",
+      "a": "No. This page is focused on basic RGB conversion only."
+    }
+  ],
+  "related": [
+    "rgb-to-hex",
+    "hex-to-hsl",
+    "rgb-to-hsl",
+    "hsl-to-rgb"
+  ]
+},
+{
+  "id": "rgb-to-hex",
+  "name": "RGB to HEX",
+  "slug": "rgb-to-hex",
+  "category": "developer-tools",
+  "intro": "Convert RGB color values into HEX format instantly.",
+  "description": "Use this RGB to HEX converter to turn RGB values like 255, 87, 51 into a hex color string. It is useful for CSS, theme setup, design handoff, color cleanup, and moving from numeric color channels to a compact hex format used in code and design systems.",
+  "keywords": [
+    "rgb to hex",
+    "convert rgb to hex",
+    "rgb hex converter",
+    "rgb to hex online",
+    "css color converter"
+  ],
+  "whyUse": [
+    "Convert numeric RGB channels into a compact hex color",
+    "Prepare colors for CSS and design tokens",
+    "Move from inspector or computed styles into hex format",
+    "Avoid manual channel-to-hex conversion mistakes",
+    "Generate clean hex values directly in the browser"
+  ],
+  "howToUse": [
+    "Enter RGB values like 255, 87, 51 into the input box",
+    "Click Run Tool to convert the color",
+    "Review the hex output",
+    "Copy the result into CSS, config, or design notes",
+    "Repeat for other colors as needed"
+  ],
+  "examples": [
+    {
+      "title": "Convert RGB to hex",
+      "input": "255, 87, 51",
+      "output": "#ff5733",
+      "explanation": "Useful when numeric channel values need to become a CSS hex color."
+    },
+    {
+      "title": "Convert black",
+      "input": "0, 0, 0",
+      "output": "#000000",
+      "explanation": "Useful for checking a base color value."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The input is missing one channel",
+      "fix": "Enter exactly three values for red, green, and blue."
+    },
+    {
+      "issue": "A channel is outside the 0-255 range",
+      "fix": "Use only integer values between 0 and 255."
+    },
+    {
+      "issue": "The input includes labels or extra text",
+      "fix": "Paste only the RGB values, such as 255, 87, 51."
+    },
+    {
+      "issue": "The user expects alpha conversion",
+      "fix": "This tool converts standard RGB values only, not RGBA."
+    },
+    {
+      "issue": "The values use the wrong separator format",
+      "fix": "Use commas, spaces, or an rgb(...) pattern the tool can parse."
+    }
+  ],
+  "useCases": [
+    "Converting inspector RGB values to CSS hex",
+    "Preparing hex colors for themes and tokens",
+    "Translating design specs into code",
+    "Creating compact color values for config files",
+    "Cleaning up color values in frontend work"
+  ],
+  "faq": [
+    {
+      "q": "What does RGB to HEX do?",
+      "a": "It converts red, green, and blue channel values into a hex color string."
+    },
+    {
+      "q": "What range should RGB values use?",
+      "a": "Each channel should be an integer from 0 to 255."
+    },
+    {
+      "q": "Can I enter rgb(255, 87, 51)?",
+      "a": "Yes. The tool can parse standard RGB-style input patterns."
+    },
+    {
+      "q": "What is the difference between RGB to HEX and HEX to RGB?",
+      "a": "RGB to HEX creates a hex string, while HEX to RGB returns numeric channel values."
+    },
+    {
+      "q": "Does it support alpha values?",
+      "a": "No. This page is focused on standard RGB conversion only."
+    }
+  ],
+  "related": [
+    "hex-to-rgb",
+    "rgb-to-hsl",
+    "hex-to-hsl",
+    "hsl-to-hex"
+  ]
+},
+{
+  "id": "hex-to-hsl",
+  "name": "HEX to HSL",
+  "slug": "hex-to-hsl",
+  "category": "developer-tools",
+  "intro": "Convert a HEX color into HSL format instantly.",
+  "description": "Use this HEX to HSL converter to turn a hex color into hue, saturation, and lightness values. It is useful for theme systems, color tweaking, UI work, design tokens, CSS experiments, and situations where HSL is easier to reason about than raw RGB channels.",
+  "keywords": [
+    "hex to hsl",
+    "convert hex to hsl",
+    "hex color to hsl",
+    "hex to hsl online",
+    "hsl color converter"
+  ],
+  "whyUse": [
+    "Convert hex colors into a hue-based format",
+    "Adjust lightness and saturation more easily in CSS workflows",
+    "Understand color behavior beyond RGB channels",
+    "Prepare HSL values for themes and design systems",
+    "Move between design formats without manual conversion"
+  ],
+  "howToUse": [
+    "Paste a hex color like #ff5733 into the input box",
+    "Click Run Tool to convert it",
+    "Review the HSL output",
+    "Copy the result into CSS or design notes",
+    "Use the values to tweak hue, saturation, or lightness"
+  ],
+  "examples": [
+    {
+      "title": "Convert a warm accent color",
+      "input": "#ff5733",
+      "output": "hsl(11, 100%, 60%)",
+      "explanation": "Useful when converting a strong UI accent color into HSL."
+    },
+    {
+      "title": "Convert white",
+      "input": "#ffffff",
+      "output": "hsl(0, 0%, 100%)",
+      "explanation": "Useful for checking how neutral colors appear in HSL."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The hex input is invalid",
+      "fix": "Use a valid 3-digit or 6-digit hex color."
+    },
+    {
+      "issue": "The input includes extra text or spacing",
+      "fix": "Paste only the color value itself."
+    },
+    {
+      "issue": "The user expects the exact same styling syntax everywhere",
+      "fix": "Different tools may round HSL values slightly differently."
+    },
+    {
+      "issue": "The user expects alpha support",
+      "fix": "This page focuses on standard HSL output, not HSLA."
+    },
+    {
+      "issue": "The shorthand hex format is misunderstood",
+      "fix": "Three-digit hex values are expanded before conversion."
+    }
+  ],
+  "useCases": [
+    "Converting design hex colors into HSL",
+    "Tweaking color lightness in CSS",
+    "Preparing theme values for design systems",
+    "Understanding color relationships more clearly",
+    "Moving from hex-based palettes into HSL workflows"
+  ],
+  "faq": [
+    {
+      "q": "What does HEX to HSL do?",
+      "a": "It converts a hex color into hue, saturation, and lightness values."
+    },
+    {
+      "q": "Why would I use HSL instead of RGB?",
+      "a": "HSL is often easier when you want to adjust hue, saturation, or brightness-like behavior."
+    },
+    {
+      "q": "Does it support shorthand hex values?",
+      "a": "Yes. Three-digit hex values are expanded automatically."
+    },
+    {
+      "q": "What is the difference between HEX to HSL and HSL to HEX?",
+      "a": "HEX to HSL converts a hex color into hue-based values, while HSL to HEX does the reverse."
+    },
+    {
+      "q": "Can results vary slightly between tools?",
+      "a": "Yes. Small rounding differences are normal in HSL conversion."
+    }
+  ],
+  "related": [
+    "hsl-to-hex",
+    "hex-to-rgb",
+    "rgb-to-hsl",
+    "hsl-to-rgb"
+  ]
+},
+{
+  "id": "hsl-to-hex",
+  "name": "HSL to HEX",
+  "slug": "hsl-to-hex",
+  "category": "developer-tools",
+  "intro": "Convert HSL color values into HEX format instantly.",
+  "description": "Use this HSL to HEX converter to turn hue, saturation, and lightness values into a hex color string. It is useful for CSS work, design tokens, palette tuning, theme setup, and moving from HSL-based color logic into a compact hex format used in frontend code and design handoff.",
+  "keywords": [
+    "hsl to hex",
+    "convert hsl to hex",
+    "hsl color to hex",
+    "hsl to hex online",
+    "color conversion tool"
+  ],
+  "whyUse": [
+    "Convert hue-based color values into a compact hex string",
+    "Move from HSL-driven design work into CSS-ready hex output",
+    "Generate hex colors from theme adjustments",
+    "Avoid manual HSL conversion mistakes",
+    "Create hex tokens after color exploration in HSL"
+  ],
+  "howToUse": [
+    "Enter HSL values like 11, 100%, 60% into the input box",
+    "Click Run Tool to convert the values",
+    "Review the hex output",
+    "Copy the result into CSS or design system files",
+    "Repeat the process for other HSL colors"
+  ],
+  "examples": [
+    {
+      "title": "Convert HSL to hex",
+      "input": "11, 100%, 60%",
+      "output": "#ff5733",
+      "explanation": "Useful when a theme or design system starts from HSL values."
+    },
+    {
+      "title": "Convert a neutral color",
+      "input": "0, 0%, 100%",
+      "output": "#ffffff",
+      "explanation": "Useful for checking a white neutral value."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The hue, saturation, and lightness values are incomplete",
+      "fix": "Enter all three values in the correct order."
+    },
+    {
+      "issue": "Saturation or lightness is outside 0-100%",
+      "fix": "Use valid percentage ranges from 0% to 100%."
+    },
+    {
+      "issue": "The hue value is outside the common range",
+      "fix": "Use a hue value from 0 to 360. Values are normalized if needed."
+    },
+    {
+      "issue": "The input includes unsupported text labels",
+      "fix": "Use a clean HSL value like 11, 100%, 60% or hsl(11, 100%, 60%)."
+    },
+    {
+      "issue": "The user expects transparency support",
+      "fix": "This tool converts standard HSL values only, not HSLA."
+    }
+  ],
+  "useCases": [
+    "Turning HSL theme values into hex tokens",
+    "Converting CSS experiment values into reusable hex colors",
+    "Preparing design handoff values",
+    "Moving from hue-based color systems into hex workflows",
+    "Generating hex output after lightness and saturation tuning"
+  ],
+  "faq": [
+    {
+      "q": "What does HSL to HEX do?",
+      "a": "It converts hue, saturation, and lightness values into a hex color string."
+    },
+    {
+      "q": "What format should the input use?",
+      "a": "Use values like 11, 100%, 60% or a standard hsl(...) pattern."
+    },
+    {
+      "q": "Does hue have to stay between 0 and 360?",
+      "a": "That is the normal range, though values can be normalized mathematically."
+    },
+    {
+      "q": "What is the difference between HSL to HEX and HEX to HSL?",
+      "a": "HSL to HEX creates a hex color string, while HEX to HSL returns hue-based values."
+    },
+    {
+      "q": "Does this tool support alpha values?",
+      "a": "No. This page is focused on standard HSL conversion only."
+    }
+  ],
+  "related": [
+    "hex-to-hsl",
+    "rgb-to-hex",
+    "rgb-to-hsl",
+    "hex-to-rgb"
+  ]
+},
+{
+  "id": "rgb-to-hsl",
+  "name": "RGB to HSL",
+  "slug": "rgb-to-hsl",
+  "category": "developer-tools",
+  "intro": "Convert RGB color values into HSL format instantly.",
+  "description": "Use this RGB to HSL converter to turn red, green, and blue channel values into hue, saturation, and lightness. It is useful for color analysis, CSS work, palette tuning, design systems, and situations where HSL is easier to adjust than raw RGB channels.",
+  "keywords": [
+    "rgb to hsl",
+    "convert rgb to hsl",
+    "rgb color to hsl",
+    "rgb to hsl online",
+    "hsl converter"
+  ],
+  "whyUse": [
+    "Translate raw RGB channels into a hue-based color model",
+    "Make color tuning easier through HSL values",
+    "Prepare theme colors for HSL-based workflows",
+    "Understand how saturation and lightness relate to an RGB color",
+    "Move from inspector RGB values into HSL quickly"
+  ],
+  "howToUse": [
+    "Enter RGB values like 255, 87, 51 into the input box",
+    "Click Run Tool to convert the values",
+    "Review the HSL output",
+    "Copy the result into CSS or theme notes",
+    "Adjust hue, saturation, or lightness as needed"
+  ],
+  "examples": [
+    {
+      "title": "Convert a strong accent color",
+      "input": "255, 87, 51",
+      "output": "hsl(11, 100%, 60%)",
+      "explanation": "Useful when converting a vivid RGB color into HSL for easier tuning."
+    },
+    {
+      "title": "Convert black",
+      "input": "0, 0, 0",
+      "output": "hsl(0, 0%, 0%)",
+      "explanation": "Useful for checking a base neutral color in HSL."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "One RGB channel is missing",
+      "fix": "Enter all three channels for red, green, and blue."
+    },
+    {
+      "issue": "A channel is outside 0-255",
+      "fix": "Use valid integer channel values between 0 and 255."
+    },
+    {
+      "issue": "The user expects alpha support",
+      "fix": "This page converts standard RGB only, not RGBA."
+    },
+    {
+      "issue": "The input uses an invalid separator format",
+      "fix": "Use commas, spaces, or an rgb(...) pattern the parser can read."
+    },
+    {
+      "issue": "The user expects exact decimals from another tool",
+      "fix": "Small rounding differences are normal in HSL conversion."
+    }
+  ],
+  "useCases": [
+    "Converting RGB inspector values into HSL",
+    "Preparing colors for HSL-based theme tuning",
+    "Understanding color balance beyond raw channels",
+    "Adjusting frontend colors more intuitively",
+    "Translating RGB design values into HSL workflows"
+  ],
+  "faq": [
+    {
+      "q": "What does RGB to HSL do?",
+      "a": "It converts red, green, and blue values into hue, saturation, and lightness."
+    },
+    {
+      "q": "Why would I use HSL instead of RGB?",
+      "a": "HSL is often easier when you want to change hue, saturation, or perceived brightness."
+    },
+    {
+      "q": "What input format should I use?",
+      "a": "Use values like 255, 87, 51 or a standard rgb(...) pattern."
+    },
+    {
+      "q": "What is the difference between RGB to HSL and HSL to RGB?",
+      "a": "RGB to HSL converts channel values into hue-based values, while HSL to RGB does the reverse."
+    },
+    {
+      "q": "Can results vary slightly between tools?",
+      "a": "Yes. Minor rounding differences are normal."
+    }
+  ],
+  "related": [
+    "hsl-to-rgb",
+    "rgb-to-hex",
+    "hex-to-hsl",
+    "hex-to-rgb"
+  ]
+},
+{
+  "id": "hsl-to-rgb",
+  "name": "HSL to RGB",
+  "slug": "hsl-to-rgb",
+  "category": "developer-tools",
+  "intro": "Convert HSL color values into RGB format instantly.",
+  "description": "Use this HSL to RGB converter to turn hue, saturation, and lightness into red, green, and blue channel values. It is useful for CSS, design systems, color testing, theme work, and moving from HSL-based color adjustments into channel-based RGB output used in many interfaces and development tools.",
+  "keywords": [
+    "hsl to rgb",
+    "convert hsl to rgb",
+    "hsl color to rgb",
+    "hsl to rgb online",
+    "rgb color converter"
+  ],
+  "whyUse": [
+    "Convert HSL colors into channel-based RGB values",
+    "Move from hue-based tuning into CSS-ready RGB",
+    "Check exact RGB channels after HSL adjustments",
+    "Translate theme colors into frontend-friendly output",
+    "Avoid manual HSL-to-RGB calculation errors"
+  ],
+  "howToUse": [
+    "Enter HSL values like 11, 100%, 60% into the input box",
+    "Click Run Tool to convert them",
+    "Review the RGB output",
+    "Copy the result into CSS or design notes",
+    "Repeat as needed for other colors"
+  ],
+  "examples": [
+    {
+      "title": "Convert HSL to RGB",
+      "input": "11, 100%, 60%",
+      "output": "rgb(255, 87, 51)",
+      "explanation": "Useful when a color was tuned in HSL but needs channel-based RGB output."
+    },
+    {
+      "title": "Convert a neutral white",
+      "input": "0, 0%, 100%",
+      "output": "rgb(255, 255, 255)",
+      "explanation": "Useful for checking a standard neutral result."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The input is incomplete",
+      "fix": "Enter hue, saturation, and lightness in the correct order."
+    },
+    {
+      "issue": "Saturation or lightness uses an invalid percentage",
+      "fix": "Use values between 0% and 100%."
+    },
+    {
+      "issue": "The hue value is outside the expected range",
+      "fix": "Use a normal 0-360 hue value. It can be normalized if needed."
+    },
+    {
+      "issue": "The input contains unsupported labels or extra text",
+      "fix": "Use a clean value like 11, 100%, 60% or hsl(11, 100%, 60%)."
+    },
+    {
+      "issue": "The user expects alpha support",
+      "fix": "This tool converts standard HSL only, not HSLA."
+    }
+  ],
+  "useCases": [
+    "Turning HSL theme values into RGB channels",
+    "Preparing CSS rgb(...) output after color tuning",
+    "Checking exact channel values from HSL designs",
+    "Moving from hue-based palettes into RGB workflows",
+    "Converting design system colors for frontend use"
+  ],
+  "faq": [
+    {
+      "q": "What does HSL to RGB do?",
+      "a": "It converts hue, saturation, and lightness values into red, green, and blue channel values."
+    },
+    {
+      "q": "What format should the input use?",
+      "a": "Use values like 11, 100%, 60% or a standard hsl(...) pattern."
+    },
+    {
+      "q": "Does it support percentages for saturation and lightness?",
+      "a": "Yes. Saturation and lightness are expected as percentages."
+    },
+    {
+      "q": "What is the difference between HSL to RGB and RGB to HSL?",
+      "a": "HSL to RGB returns channel values, while RGB to HSL returns hue-based values."
+    },
+    {
+      "q": "Does this tool support alpha values?",
+      "a": "No. This page is focused on standard HSL conversion only."
+    }
+  ],
+  "related": [
+    "rgb-to-hsl",
+    "hsl-to-hex",
+    "hex-to-rgb",
+    "hex-to-hsl"
+  ]
+}
+,
+{
+  "id": "css-minifier",
+  "name": "CSS Minifier",
+  "slug": "css-minifier",
+  "category": "developer-tools",
+  "intro": "Minify CSS by removing unnecessary spaces, line breaks, and comments.",
+  "description": "Use this CSS Minifier to compress CSS into a smaller one-line format by removing extra whitespace, comments, and unnecessary formatting. It is useful for frontend optimization, stylesheet cleanup, snippet preparation, embed code, production builds, and reducing CSS size before deployment or testing.",
+  "keywords": [
+    "css minifier",
+    "minify css",
+    "compress css",
+    "css compressor",
+    "css minify online"
+  ],
+  "whyUse": [
+    "Reduce CSS size for production use",
+    "Remove comments and extra whitespace quickly",
+    "Prepare compact CSS snippets for embeds or inline use",
+    "Make stylesheet output easier to copy into deployment workflows",
+    "Get fast browser-based CSS compression without extra tools"
+  ],
+  "howToUse": [
+    "Paste your CSS into the input box",
+    "Click Run Tool to minify the stylesheet",
+    "Review the compact output",
+    "Copy the result into your app, build step, or deployment workflow",
+    "If needed, keep a beautified version separately for editing"
+  ],
+  "examples": [
+    {
+      "title": "Minify a small CSS block",
+      "input": "body {\n  color: red;\n  margin: 0;\n}",
+      "output": "body{color:red;margin:0;}",
+      "explanation": "Useful for turning readable CSS into compact production-style output."
+    },
+    {
+      "title": "Remove comments and spaces",
+      "input": "/* main */\n.button {\n  padding: 10px 20px;\n  background: blue;\n}",
+      "output": ".button{padding:10px 20px;background:blue;}",
+      "explanation": "Useful when copied CSS contains comments and extra formatting that are not needed in final output."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The input contains broken or incomplete CSS",
+      "fix": "Paste complete CSS rules so the minified output stays usable."
+    },
+    {
+      "issue": "The user expects advanced build-level optimization",
+      "fix": "This tool removes common whitespace and comments, but it is not a full production bundler."
+    },
+    {
+      "issue": "Important comments are removed unexpectedly",
+      "fix": "Do not use this output if you need to preserve comments for documentation or licensing."
+    },
+    {
+      "issue": "The user expects the tool to rewrite selectors or merge rules",
+      "fix": "This page focuses on minification, not advanced CSS refactoring."
+    },
+    {
+      "issue": "The output becomes harder to edit manually",
+      "fix": "Keep the beautified source version for editing and use the minified version for deployment."
+    }
+  ],
+  "useCases": [
+    "Compressing CSS before deployment",
+    "Preparing inline CSS snippets for embeds",
+    "Cleaning up styles for production environments",
+    "Reducing stylesheet size in small frontend projects",
+    "Converting readable CSS into compact output for testing"
+  ],
+  "faq": [
+    {
+      "q": "What does CSS Minifier do?",
+      "a": "It removes unnecessary whitespace, line breaks, and comments to create a smaller CSS output."
+    },
+    {
+      "q": "Does CSS Minifier change the meaning of my styles?",
+      "a": "It is meant to preserve the styles while removing formatting that is not required for execution."
+    },
+    {
+      "q": "Does it remove comments?",
+      "a": "Yes. Standard CSS comments are removed during minification."
+    },
+    {
+      "q": "What is the difference between CSS Minifier and CSS Beautifier?",
+      "a": "CSS Minifier makes CSS compact, while CSS Beautifier makes it easier to read and edit."
+    },
+    {
+      "q": "Should I edit the minified CSS directly?",
+      "a": "Usually no. It is better to edit a readable version and minify it afterward."
+    }
+  ],
+  "related": [
+    "css-beautifier",
+    "html-minifier",
+    "json-minifier",
+    "remove-extra-spaces"
+  ]
+},
+{
+  "id": "css-beautifier",
+  "name": "CSS Beautifier",
+  "slug": "css-beautifier",
+  "category": "developer-tools",
+  "intro": "Beautify and format CSS to make styles easier to read and edit.",
+  "description": "Use this CSS Beautifier to format CSS into a cleaner readable structure with indentation and line breaks. It is useful for editing copied styles, reviewing minified CSS, debugging frontend work, cleaning legacy stylesheets, and making CSS easier to scan before refactoring or sharing with a team.",
+  "keywords": [
+    "css beautifier",
+    "format css",
+    "pretty print css",
+    "css formatter",
+    "beautify css online"
+  ],
+  "whyUse": [
+    "Turn minified CSS into readable formatted code",
+    "Make styles easier to debug and edit",
+    "Clean up copied CSS from browser tools or old files",
+    "Improve readability before refactoring or review",
+    "Create a cleaner version for documentation and collaboration"
+  ],
+  "howToUse": [
+    "Paste your CSS into the input box",
+    "Click Run Tool to beautify the stylesheet",
+    "Review the formatted output with indentation and line breaks",
+    "Copy the result into your editor or docs",
+    "If needed, minify the final version again before deployment"
+  ],
+  "examples": [
+    {
+      "title": "Beautify compact CSS",
+      "input": "body{color:red;margin:0;}",
+      "output": "body {\n  color: red;\n  margin: 0;\n}",
+      "explanation": "Useful when minified CSS needs to be reviewed or edited."
+    },
+    {
+      "title": "Beautify multiple rules",
+      "input": ".card{padding:16px;background:#fff}.title{font-size:20px;color:#222}",
+      "output": ".card {\n  padding: 16px;\n  background: #fff;\n}\n\n.title {\n  font-size: 20px;\n  color: #222;\n}",
+      "explanation": "Useful when multiple compact rules need cleaner separation."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The input contains invalid or incomplete CSS",
+      "fix": "Paste complete CSS rules for the cleanest formatting result."
+    },
+    {
+      "issue": "The user expects linting or validation",
+      "fix": "This tool formats CSS, but it does not act as a full CSS linter."
+    },
+    {
+      "issue": "Comments or unusual formatting styles are expected to stay exactly the same",
+      "fix": "Beautification normalizes the layout for readability."
+    },
+    {
+      "issue": "The input already contains readable formatting",
+      "fix": "The tool may still normalize spacing and indentation into a more consistent layout."
+    },
+    {
+      "issue": "The user expects the tool to fix broken CSS logic",
+      "fix": "Beautification improves readability, but it does not repair incorrect CSS behavior."
+    }
+  ],
+  "useCases": [
+    "Reviewing minified CSS from production pages",
+    "Cleaning copied styles before editing",
+    "Preparing readable CSS for refactoring",
+    "Formatting styles for docs or team review",
+    "Making legacy CSS easier to scan"
+  ],
+  "faq": [
+    {
+      "q": "What does CSS Beautifier do?",
+      "a": "It formats CSS with indentation and line breaks so the stylesheet is easier to read and edit."
+    },
+    {
+      "q": "Can it beautify minified CSS?",
+      "a": "Yes. That is one of the main use cases."
+    },
+    {
+      "q": "Does it validate CSS correctness?",
+      "a": "No. It focuses on formatting, not full validation."
+    },
+    {
+      "q": "What is the difference between CSS Beautifier and CSS Minifier?",
+      "a": "CSS Beautifier improves readability, while CSS Minifier removes formatting for compact output."
+    },
+    {
+      "q": "Should I deploy beautified CSS directly?",
+      "a": "You can, but production deployments often use minified CSS instead."
+    }
+  ],
+  "related": [
+    "css-minifier",
+    "html-formatter",
+    "json-formatter",
+    "remove-extra-spaces"
+  ]
+},
+{
+  "id": "regex-generator-simple",
+  "name": "Regex Generator (simple)",
+  "slug": "regex-generator-simple",
+  "category": "developer-tools",
+  "intro": "Generate a simple regex pattern from a small text rule set like digits, words, prefix, or suffix.",
+  "description": "Use this simple Regex Generator to create a basic regex pattern from straightforward text rules instead of writing the expression manually. It is useful for beginners, quick validation patterns, test input matching, forms, lightweight parsing tasks, and building common regex structures such as digits only, letters only, prefix match, suffix match, contains text, or exact match.",
+  "keywords": [
+    "regex generator",
+    "simple regex generator",
+    "generate regex pattern",
+    "regex builder",
+    "regular expression generator"
+  ],
+  "whyUse": [
+    "Create simple regex patterns without writing them manually",
+    "Speed up common validation and matching tasks",
+    "Help beginners build useful regex safely",
+    "Generate quick patterns for forms and test inputs",
+    "Turn small text rules into copyable regex output"
+  ],
+  "howToUse": [
+    "Enter rules as JSON or key=value lines",
+    "Use a mode such as exact, contains, startsWith, endsWith, digits, letters, alphanumeric, or customLengthDigits",
+    "Click Run Tool to generate the regex",
+    "Review the pattern and summary in the output",
+    "Copy the regex into your app, form, or test case"
+  ],
+  "examples": [
+    {
+      "title": "Generate a digits-only regex",
+      "input": "mode=digits",
+      "output": "/^\\d+$/",
+      "explanation": "Useful for basic numeric field validation."
+    },
+    {
+      "title": "Generate a prefix match",
+      "input": "mode=startsWith\nvalue=INV-",
+      "output": "/^INV\\-/",
+      "explanation": "Useful when values must begin with a fixed prefix."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The mode is missing",
+      "fix": "Provide a supported mode such as exact, contains, startsWith, endsWith, digits, letters, alphanumeric, or customLengthDigits."
+    },
+    {
+      "issue": "A required value field is missing",
+      "fix": "Modes like exact, contains, startsWith, and endsWith require a value."
+    },
+    {
+      "issue": "The user expects a full AI regex engine",
+      "fix": "This page is for simple rule-based regex generation only."
+    },
+    {
+      "issue": "The length value is invalid",
+      "fix": "Use a positive integer for rules like customLengthDigits."
+    },
+    {
+      "issue": "Special characters break the intended literal match",
+      "fix": "The generator escapes regex-sensitive characters for literal-based modes."
+    }
+  ],
+  "useCases": [
+    "Building form validation regex patterns",
+    "Creating quick match rules for test data",
+    "Generating beginner-friendly regex for common cases",
+    "Making exact, contains, prefix, or suffix patterns",
+    "Preparing simple regex snippets for apps and scripts"
+  ],
+  "faq": [
+    {
+      "q": "What does Regex Generator (simple) do?",
+      "a": "It creates a basic regex pattern from simple rule-based input."
+    },
+    {
+      "q": "What modes does it support?",
+      "a": "It supports simple modes like exact, contains, startsWith, endsWith, digits, letters, alphanumeric, and customLengthDigits."
+    },
+    {
+      "q": "Does it support advanced regex logic?",
+      "a": "No. This page is focused on simple generation, not advanced regex authoring."
+    },
+    {
+      "q": "What input format can I use?",
+      "a": "You can use JSON or key=value lines."
+    },
+    {
+      "q": "Why is this useful for beginners?",
+      "a": "Because it turns small matching rules into ready-to-copy regex without requiring manual regex writing."
+    }
+  ],
+  "related": [
+    "regex-tester",
+    "text-diff-checker",
+    "json-validator",
+    "word-counter"
+  ]
+}
 ]

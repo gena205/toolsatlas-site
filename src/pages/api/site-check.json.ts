@@ -791,6 +791,195 @@ export async function GET({ url }: { url: URL }) {
       });
     }
 
+        if (type === "http-status") {
+      const targetUrl = normalizeUrl(target);
+      const data = await traceRedirects(targetUrl);
+      const lastStep = data.chain.length ? data.chain[data.chain.length - 1] : null;
+
+      return json({
+        inputUrl: data.inputUrl,
+        finalUrl: data.finalUrl,
+        status: lastStep?.status || 0,
+        redirectDetected: data.redirectDetected,
+        chain: data.chain
+      });
+    }
+
+    if (type === "http-response") {
+      const targetUrl = normalizeUrl(target);
+      const redirectData = await traceRedirects(targetUrl);
+      const finalUrl = redirectData.finalUrl || targetUrl;
+
+      const urlObj = new URL(finalUrl);
+      const lib = urlObj.protocol === "https:" ? https : http;
+
+      const responseData = await new Promise<{
+        finalUrl: string;
+        status: number;
+        contentType: string;
+        bodyPreview: string;
+      }>((resolve, reject) => {
+        const req = lib.request(
+          {
+            protocol: urlObj.protocol,
+            hostname: urlObj.hostname,
+            port: urlObj.port || undefined,
+            path: `${urlObj.pathname}${urlObj.search}`,
+            method: "GET",
+            headers: {
+              "User-Agent": "ToolsAtlas/1.0",
+              "Accept": "*/*"
+            },
+            timeout: 10000
+          },
+          (res) => {
+            let body = "";
+
+            res.on("data", (chunk) => {
+              body += chunk.toString();
+              if (body.length > 4000) {
+                body = body.slice(0, 4000);
+              }
+            });
+
+            res.on("end", () => {
+              resolve({
+                finalUrl,
+                status: res.statusCode || 0,
+                contentType: String(res.headers["content-type"] || "").trim(),
+                bodyPreview: body.trim().slice(0, 2000)
+              });
+            });
+          }
+        );
+
+        req.on("timeout", () => {
+          req.destroy(new Error("timeout"));
+        });
+
+        req.on("error", reject);
+        req.end();
+      });
+
+      return json({
+        inputUrl: redirectData.inputUrl,
+        finalUrl: responseData.finalUrl,
+        status: responseData.status,
+        redirectDetected: redirectData.redirectDetected,
+        contentType: responseData.contentType || "n/a",
+        bodyPreview: responseData.bodyPreview || "No response body preview available."
+      });
+    }
+
+    async function fetchHeadersOnly(targetUrl: string): Promise<{
+  inputUrl: string;
+  finalUrl: string;
+  status: number;
+  headers: Record<string, string>;
+}> {
+  const redirectData = await traceRedirects(targetUrl);
+  const finalUrl = redirectData.finalUrl || normalizeUrl(targetUrl);
+
+  return await new Promise((resolve, reject) => {
+    const urlObj = new URL(finalUrl);
+    const lib = urlObj.protocol === "https:" ? https : http;
+
+    const req = lib.request(
+      {
+        protocol: urlObj.protocol,
+        hostname: urlObj.hostname,
+        port: urlObj.port || undefined,
+        path: `${urlObj.pathname}${urlObj.search}`,
+        method: "GET",
+        headers: {
+          "User-Agent": "ToolsAtlas/1.0",
+          "Accept": "*/*"
+        },
+        timeout: 10000
+      },
+      (res) => {
+        res.resume();
+
+        const normalizedHeaders: Record<string, string> = {};
+        for (const [key, value] of Object.entries(res.headers)) {
+          if (Array.isArray(value)) {
+            normalizedHeaders[key.toLowerCase()] = value.join(", ");
+          } else if (typeof value === "string") {
+            normalizedHeaders[key.toLowerCase()] = value;
+          }
+        }
+
+        resolve({
+          inputUrl: redirectData.inputUrl,
+          finalUrl,
+          status: res.statusCode || 0,
+          headers: normalizedHeaders
+        });
+      }
+    );
+
+    req.on("timeout", () => {
+      req.destroy(new Error("timeout"));
+    });
+
+    req.on("error", reject);
+    req.end();
+  });
+}
+
+    if (type === "security-headers") {
+      const targetUrl = normalizeUrl(target);
+      const data = await fetchHeadersOnly(targetUrl);
+
+      const headers = data.headers || {};
+
+      const checks = [
+        "content-security-policy",
+        "strict-transport-security",
+        "x-frame-options",
+        "x-content-type-options",
+        "referrer-policy",
+        "permissions-policy"
+      ];
+
+      const present = checks
+        .filter((name: string) => !!headers[name])
+        .map((name: string) => ({
+          name,
+          value: headers[name]
+        }));
+
+      const missing = checks.filter((name: string) => !headers[name]);
+
+      return json({
+        inputUrl: data.inputUrl,
+        finalUrl: data.finalUrl,
+        status: data.status,
+        present,
+        missing
+      });
+    }
+
+    if (type === "cors-headers") {
+      const targetUrl = normalizeUrl(target);
+      const data = await fetchHeadersOnly(targetUrl);
+
+      const headers = data.headers || {};
+
+      return json({
+        inputUrl: data.inputUrl,
+        finalUrl: data.finalUrl,
+        status: data.status,
+        accessControlAllowOrigin: headers["access-control-allow-origin"] || "",
+        accessControlAllowMethods: headers["access-control-allow-methods"] || "",
+        accessControlAllowHeaders: headers["access-control-allow-headers"] || "",
+        accessControlAllowCredentials: headers["access-control-allow-credentials"] || "",
+        vary: headers["vary"] || ""
+      });
+    }
+
+    
+
     return json({ error: "Unsupported type" }, 400);
   } catch (error: any) {
     return json(

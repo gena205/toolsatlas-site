@@ -15565,39 +15565,33 @@ if (slug === "url-query-cleaner") {
 }
 
 if (slug === "url-parameter-remover") {
-  const text = input.value.trim();
+  const raw = input.value.trim();
 
-  if (!text.includes("---")) {
-    output.value = "Use format: URL --- PARAMS";
-    return;
-  }
-
-  const [urlStr, paramsStr] = text.split("---").map((s: string) => s.trim());
-
-  if (!urlStr) {
-    output.value = "Enter a full URL.";
+  if (!raw) {
+    output.value = "Enter URL or format: URL --- PARAMS";
     return;
   }
 
   try {
-    const url = new URL(urlStr);
-    const params = paramsStr
-      .split("\n")
-      .map((line: string) => line.trim())
-      .filter(Boolean);
+    let urlPart = raw;
 
-    params.forEach((param: string) => {
-      url.searchParams.delete(param);
-    });
+    // если есть формат с ---
+    if (raw.includes("---")) {
+      urlPart = raw.split("---")[0].trim();
+    }
+
+    const url = new URL(urlPart);
+
+    // убираем параметры
+    url.search = "";
 
     output.value = url.toString();
   } catch {
-    output.value = "Invalid URL.";
+    output.value = "Invalid URL";
   }
 
   return;
 }
-
 if (slug === "url-parameter-sorter") {
   const text = input.value.trim();
 
@@ -15709,77 +15703,123 @@ if (slug === "url-protocol-extractor") {
 
 
 if (slug === "http-request-builder") {
-  const text = input.value.replace(/\r\n/g, "\n").trim();
+  const raw = input.value.trim();
 
-  if (!text) {
-    output.value = "Enter request parts.";
+  if (!raw) {
+    output.value = "Enter lines like:\nMETHOD: GET\nURL: https://example.com/api/status\nAccept: application/json";
     return;
   }
 
-  const parts = text.split("\n");
-  const method = parts[0]?.trim();
-  const path = parts[1]?.trim();
-  const host = parts[2]?.trim();
-
-  if (!method || !path || !host) {
-    output.value = "Enter method, path, and host on separate lines.";
-    return;
-  }
-
-  const rest = parts.slice(3);
-  const blankIndex = rest.findIndex((line: string) => line.trim() === "");
-  const headerLines = blankIndex === -1 ? rest : rest.slice(0, blankIndex);
-  const bodyLines = blankIndex === -1 ? [] : rest.slice(blankIndex + 1);
-
-  let result = `${method} ${path} HTTP/1.1\nHost: ${host}`;
-
-  if (headerLines.length > 0) {
-    result += `\n${headerLines.join("\n")}`;
-  }
-
-  if (bodyLines.length > 0) {
-    result += `\n\n${bodyLines.join("\n")}`;
-  }
-
-  output.value = result;
-  return;
-}
-
-if (slug === "http-header-generator") {
-  const text = input.value.replace(/\r\n/g, "\n").trim();
-
-  if (!text) {
-    output.value = "Enter header pairs.";
-    return;
-  }
-
-  const lines = text
+  const lines = raw
+    .replace(/\r\n/g, "\n")
     .split("\n")
     .map((line: string) => line.trim())
-    .filter(Boolean);
+    .filter((line: string) => line.length > 0);
 
-  const result: string[] = [];
+  let method = "";
+  let urlValue = "";
+  let body = "";
+  const headers: string[] = [];
 
   for (const line of lines) {
-    const eqIndex = line.indexOf("=");
-
-    if (eqIndex === -1) {
-      output.value = "Use one header per line in Header-Name=Value format.";
-      return;
+    if (/^METHOD\s*:/i.test(line)) {
+      method = line.replace(/^METHOD\s*:/i, "").trim().toUpperCase();
+      continue;
     }
 
-    const key = line.slice(0, eqIndex).trim();
-    const value = line.slice(eqIndex + 1).trim();
-
-    if (!key) {
-      output.value = "Invalid header name.";
-      return;
+    if (/^URL\s*:/i.test(line)) {
+      urlValue = line.replace(/^URL\s*:/i, "").trim();
+      continue;
     }
 
-    result.push(`${key}: ${value}`);
+    if (/^BODY\s*:/i.test(line)) {
+      body = line.replace(/^BODY\s*:/i, "").trim();
+      continue;
+    }
+
+    let index = line.indexOf(":");
+    if (index === -1) {
+      index = line.indexOf("=");
+    }
+
+    if (index === -1) {
+      continue;
+    }
+
+    const key = line.slice(0, index).trim();
+    const value = line.slice(index + 1).trim();
+
+    if (!key || !value) {
+      continue;
+    }
+
+    headers.push(`${key}: ${value}`);
   }
 
-  output.value = result.join("\n");
+  if (!method || !urlValue) {
+    output.value = "Enter METHOD: and URL: on separate lines.";
+    return;
+  }
+
+  try {
+    const parsed = new URL(urlValue);
+    const requestLine = `${method} ${parsed.pathname || "/"}${parsed.search} HTTP/1.1`;
+
+    const hasHost = headers.some((line: string) => /^host\s*:/i.test(line));
+    if (!hasHost) {
+      headers.unshift(`Host: ${parsed.host}`);
+    }
+
+    output.value = [
+      requestLine,
+      ...headers,
+      ...(body ? ["", body] : [])
+    ].join("\n");
+  } catch {
+    output.value = "Invalid URL. Enter a full URL like https://example.com/api/status";
+  }
+
+  return;
+}
+if (slug === "http-header-generator") {
+  const raw = input.value.trim();
+
+  if (!raw) {
+    output.value = "Enter one header per line like Content-Type: application/json or Content-Type=application/json";
+    return;
+  }
+
+  const lines = raw
+    .replace(/\r\n/g, "\n")
+    .split("\n")
+    .map((line: string) => line.trim())
+    .filter((line: string) => line.length > 0);
+
+  const headers = lines
+    .map((line: string) => {
+      let index = line.indexOf(":");
+      let separatorLength = 1;
+
+      if (index === -1) {
+        index = line.indexOf("=");
+      }
+
+      if (index === -1) {
+        return "";
+      }
+
+      const key = line.slice(0, index).trim();
+      const value = line.slice(index + separatorLength).trim();
+
+      if (!key || !value) {
+        return "";
+      }
+
+      return `${key}: ${value}`;
+    })
+    .filter((line: string) => line.length > 0);
+
+  output.value = headers.length ? headers.join("\n") : "No valid header lines found.";
   return;
 }
 
@@ -15807,6 +15847,2075 @@ if (slug === "http-header-extractor") {
   }
 
   output.value = result.length > 0 ? result.join("\n") : "No headers found.";
+  return;
+}
+if (slug === "url-parameter-remover") {
+  const raw = input.value.trim();
+
+  if (!raw) {
+    output.value = "Enter a full URL like https://example.com/page?utm_source=test";
+    return;
+  }
+
+  try {
+    const url = new URL(raw);
+    url.search = "";
+    output.value = url.toString();
+  } catch {
+    output.value = "Invalid URL";
+  }
+
+  return;
+}
+
+if (slug === "url-parameter-sorter") {
+  const raw = input.value.trim();
+
+  if (!raw) {
+    output.value = "Enter a full URL like https://example.com/search?z=9&a=1&m=5";
+    return;
+  }
+
+  try {
+    const url = new URL(raw);
+    const params = Array.from(url.searchParams.entries()).sort((a, b) => {
+      const keyCompare = a[0].localeCompare(b[0]);
+      return keyCompare !== 0 ? keyCompare : a[1].localeCompare(b[1]);
+    });
+
+    const sorted = new URL(url.toString());
+    sorted.search = "";
+
+    for (const [key, value] of params) {
+      sorted.searchParams.append(key, value);
+    }
+
+    output.value = sorted.toString();
+  } catch {
+    output.value = "Invalid URL";
+  }
+
+  return;
+}
+
+if (slug === "url-domain-extractor") {
+  const raw = input.value.trim();
+
+  if (!raw) {
+    output.value = "Enter a full URL like https://app.example.com/path?a=1";
+    return;
+  }
+
+  try {
+    const url = new URL(raw);
+    output.value = url.hostname || "No domain found";
+  } catch {
+    output.value = "Invalid URL";
+  }
+
+  return;
+}
+
+if (slug === "url-protocol-extractor") {
+  const raw = input.value.trim();
+
+  if (!raw) {
+    output.value = "Enter a full URL like https://example.com/path";
+    return;
+  }
+
+  try {
+    const url = new URL(raw);
+    output.value = url.protocol.replace(/:$/, "") || "No protocol found";
+  } catch {
+    output.value = "Invalid URL";
+  }
+
+  return;
+}
+
+if (slug === "url-hash-extractor") {
+  const raw = input.value.trim();
+
+  if (!raw) {
+    output.value = "Enter a full URL like https://example.com/docs#install";
+    return;
+  }
+
+  try {
+    const url = new URL(raw);
+    output.value = url.hash || "No hash found";
+  } catch {
+    output.value = "Invalid URL";
+  }
+
+  return;
+}
+if (slug === "url-query-string-cleaner") {
+  const raw = input.value.trim();
+
+  if (!raw) {
+    output.value = "Enter a raw query string like ?a=1&&b=2&&c=3&";
+    return;
+  }
+
+  let cleaned = raw.trim();
+
+  cleaned = cleaned.replace(/^\?+/, "");
+  cleaned = cleaned.replace(/\s*&\s*/g, "&");
+  cleaned = cleaned.replace(/^&+|&+$/g, "");
+  cleaned = cleaned.replace(/&&+/g, "&");
+
+  const parts = cleaned
+    .split("&")
+    .map((part: string) => part.trim())
+    .filter((part: string) => part.length > 0);
+
+  output.value = parts.join("&");
+  return;
+}
+
+if (slug === "remove-utm-parameters") {
+  const raw = input.value.trim();
+
+  if (!raw) {
+    output.value = "Enter a full URL like https://example.com/page?utm_source=test&id=42";
+    return;
+  }
+
+  try {
+    const url = new URL(raw);
+    const keep: Array<[string, string]> = [];
+
+    for (const [key, value] of url.searchParams.entries()) {
+      if (!/^utm_/i.test(key)) {
+        keep.push([key, value]);
+      }
+    }
+
+    url.search = "";
+
+    keep.forEach(([key, value]) => {
+      url.searchParams.append(key, value);
+    });
+
+    output.value = url.toString();
+  } catch {
+    output.value = "Invalid URL. Enter a full URL like https://example.com/page?utm_source=test&id=42";
+  }
+
+  return;
+}
+
+if (slug === "url-canonicalizer") {
+  const raw = input.value.trim();
+
+  if (!raw) {
+    output.value = "Enter a full URL like https://Example.com:443//path/?b=2&a=1";
+    return;
+  }
+
+  try {
+    const url = new URL(raw);
+
+    const protocol = url.protocol.toLowerCase();
+    const hostname = url.hostname.toLowerCase();
+
+    let pathname = url.pathname.replace(/\/{2,}/g, "/");
+    if (pathname.length > 1 && pathname.endsWith("/")) {
+      pathname = pathname.slice(0, -1);
+    }
+
+    const entries = Array.from(url.searchParams.entries()).sort((a, b) => {
+      const keyCompare = a[0].localeCompare(b[0]);
+      return keyCompare !== 0 ? keyCompare : a[1].localeCompare(b[1]);
+    });
+
+    let port = url.port;
+    if ((protocol === "https:" && port === "443") || (protocol === "http:" && port === "80")) {
+      port = "";
+    }
+
+    const origin = `${protocol}//${hostname}${port ? `:${port}` : ""}`;
+
+    const query = entries.length
+      ? `?${entries.map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`).join("&")}`
+      : "";
+
+    output.value = `${origin}${pathname || "/"}${query}${url.hash}`;
+  } catch {
+    output.value = "Invalid URL. Enter a full URL like https://example.com/path?a=1";
+  }
+
+  return;
+}
+
+if (slug === "http-status-code-checker") {
+  const rawUrl = input.value.trim();
+
+  if (!rawUrl) {
+    output.value = "Enter a full URL like https://example.com.";
+    return;
+  }
+
+  output.value = "Checking HTTP status...";
+
+  fetch(`/api/site-check.json?type=http-status&target=${encodeURIComponent(rawUrl)}`, {
+    cache: "no-store"
+  })
+    .then((response: Response) => response.json())
+    .then((data: any) => {
+      if (data?.error) {
+        output.value = data.error;
+        return;
+      }
+
+      output.value = [
+        `Input URL: ${data.inputUrl || rawUrl}`,
+        `Final URL: ${data.finalUrl || "n/a"}`,
+        `HTTP Status: ${data.status ?? "n/a"}`,
+        `Redirect Detected: ${data.redirectDetected ? "Yes" : "No"}`
+      ].join("\n");
+    })
+    .catch(() => {
+      output.value = "Unable to check HTTP status.";
+    });
+
+  return;
+}
+
+if (slug === "http-response-viewer") {
+  const rawUrl = input.value.trim();
+
+  if (!rawUrl) {
+    output.value = "Enter a full URL like https://example.com.";
+    return;
+  }
+
+  output.value = "Loading HTTP response...";
+
+  fetch(`/api/site-check.json?type=http-response&target=${encodeURIComponent(rawUrl)}`, {
+    cache: "no-store"
+  })
+    .then((response: Response) => response.json())
+    .then((data: any) => {
+      if (data?.error) {
+        output.value = data.error;
+        return;
+      }
+
+      output.value = [
+        `Input URL: ${data.inputUrl || rawUrl}`,
+        `Final URL: ${data.finalUrl || "n/a"}`,
+        `HTTP Status: ${data.status ?? "n/a"}`,
+        `Redirect Detected: ${data.redirectDetected ? "Yes" : "No"}`,
+        `Content-Type: ${data.contentType || "n/a"}`,
+        "",
+        "Body Preview:",
+        data.bodyPreview || "No response body preview available."
+      ].join("\n");
+    })
+    .catch(() => {
+      output.value = "Unable to load HTTP response.";
+    });
+
+  return;
+}
+if (slug === "http-header-extractor") {
+  const raw = input.value.trim();
+
+  if (!raw) {
+    output.value = "Enter a raw HTTP response like HTTP/1.1 200 OK followed by headers and an optional body.";
+    return;
+  }
+
+  const normalized = raw.replace(/\r\n/g, "\n");
+  const parts = normalized.split("\n\n");
+  const headerBlock = parts[0]?.trim() || "";
+
+  output.value = headerBlock || "No HTTP header block found.";
+  return;
+}
+
+if (slug === "http-header-generator") {
+  const raw = input.value.trim();
+
+  if (!raw) {
+    output.value = "Enter header lines like Content-Type: application/json";
+    return;
+  }
+
+  const lines = raw
+    .replace(/\r\n/g, "\n")
+    .split("\n")
+    .map((line: string) => line.trim())
+    .filter((line: string) => line.length > 0);
+
+  const headers = lines
+    .map((line: string) => {
+      const index = line.indexOf(":");
+      if (index === -1) {
+        return "";
+      }
+
+      const key = line.slice(0, index).trim();
+      const value = line.slice(index + 1).trim();
+
+      if (!key || !value) {
+        return "";
+      }
+
+      return `${key}: ${value}`;
+    })
+    .filter((line: string) => line.length > 0);
+
+  output.value = headers.length ? headers.join("\n") : "No valid header lines found.";
+  return;
+}
+
+if (slug === "http-request-builder") {
+  const raw = input.value.trim();
+
+  if (!raw) {
+    output.value = "Enter lines like:\nMETHOD: GET\nURL: https://example.com/api/status\nAccept: application/json";
+    return;
+  }
+
+  const lines = raw
+    .replace(/\r\n/g, "\n")
+    .split("\n")
+    .map((line: string) => line.trim())
+    .filter((line: string) => line.length > 0);
+
+  let method = "";
+  let urlValue = "";
+  let body = "";
+  const headers: string[] = [];
+
+  for (const line of lines) {
+    if (/^METHOD\s*:/i.test(line)) {
+      method = line.replace(/^METHOD\s*:/i, "").trim().toUpperCase();
+      continue;
+    }
+
+    if (/^URL\s*:/i.test(line)) {
+      urlValue = line.replace(/^URL\s*:/i, "").trim();
+      continue;
+    }
+
+    if (/^BODY\s*:/i.test(line)) {
+      body = line.replace(/^BODY\s*:/i, "").trim();
+      continue;
+    }
+
+    let index = line.indexOf(":");
+    if (index === -1) {
+      index = line.indexOf("=");
+    }
+
+    if (index === -1) {
+      continue;
+    }
+
+    const key = line.slice(0, index).trim();
+    const value = line.slice(index + 1).trim();
+
+    if (!key || !value) {
+      continue;
+    }
+
+    headers.push(`${key}: ${value}`);
+  }
+
+  if (!method || !urlValue) {
+    output.value = "Enter METHOD: and URL: on separate lines.";
+    return;
+  }
+
+  try {
+    const parsed = new URL(urlValue);
+    const requestLine = `${method} ${parsed.pathname || "/"}${parsed.search} HTTP/1.1`;
+
+    const hasHost = headers.some((line: string) => /^host\s*:/i.test(line));
+    if (!hasHost) {
+      headers.unshift(`Host: ${parsed.host}`);
+    }
+
+    output.value = [
+      requestLine,
+      ...headers,
+      ...(body ? ["", body] : [])
+    ].join("\n");
+  } catch {
+    output.value = "Invalid URL. Enter a full URL like https://example.com/api/status";
+  }
+
+  return;
+}
+
+if (slug === "https-redirect-checker") {
+  const raw = input.value.trim();
+
+  if (!raw) {
+    output.value = "Enter a domain or URL like example.com";
+    return;
+  }
+
+  let normalized = raw;
+  normalized = normalized.replace(/^https:\/\//i, "");
+  normalized = normalized.replace(/^http:\/\//i, "");
+
+  const httpUrl = `http://${normalized}`;
+
+  output.value = "Checking HTTPS redirect...";
+
+  fetch(`/api/site-check.json?type=redirect&target=${encodeURIComponent(httpUrl)}`, {
+    cache: "no-store"
+  })
+    .then((response: Response) => response.json())
+    .then((data: any) => {
+      if (data?.error) {
+        output.value = data.error;
+        return;
+      }
+
+      const finalUrl = String(data.finalUrl || "");
+      const chain = Array.isArray(data.chain) ? data.chain : [];
+
+      const httpsRedirect =
+        /^https:\/\//i.test(finalUrl) ||
+        chain.some((step: any) => /^https:\/\//i.test(String(step?.location || "")));
+
+      output.value = [
+        `Input URL: ${data.inputUrl || httpUrl}`,
+        `Final URL: ${finalUrl || "n/a"}`,
+        `HTTPS Redirect: ${httpsRedirect ? "Yes" : "No"}`
+      ].join("\n");
+    })
+    .catch(() => {
+      output.value = "Unable to check HTTPS redirect.";
+    });
+
+  return;
+}
+
+if (slug === "check-if-url-is-https") {
+  const raw = input.value.trim();
+
+  if (!raw) {
+    output.value = "Enter a full URL like https://example.com/path";
+    return;
+  }
+
+  try {
+    const parsed = new URL(raw);
+    output.value = `HTTPS: ${parsed.protocol.toLowerCase() === "https:" ? "Yes" : "No"}`;
+  } catch {
+    output.value = "Invalid URL. Enter a full URL like https://example.com/path";
+  }
+
+  return;
+}
+if (slug === "check-if-website-uses-https") {
+  const raw = input.value.trim();
+
+  if (!raw) {
+    output.value = "Enter a domain or URL like example.com";
+    return;
+  }
+
+  const targetUrl = /^https?:\/\//i.test(raw) ? raw : `https://${raw}`;
+
+  output.value = "Checking HTTPS usage...";
+
+  fetch(`/api/site-check.json?type=http-status&target=${encodeURIComponent(targetUrl)}`, {
+    cache: "no-store"
+  })
+    .then((response: Response) => response.json())
+    .then((data: any) => {
+      if (data?.error) {
+        output.value = data.error;
+        return;
+      }
+
+      const finalUrl = String(data.finalUrl || "");
+      const httpsEnabled = /^https:\/\//i.test(finalUrl);
+
+      output.value = [
+        `Input URL: ${data.inputUrl || targetUrl}`,
+        `Final URL: ${finalUrl || "n/a"}`,
+        `HTTP Status: ${data.status ?? "n/a"}`,
+        `HTTPS Enabled: ${httpsEnabled ? "Yes" : "No"}`
+      ].join("\n");
+    })
+    .catch(() => {
+      output.value = "Unable to check HTTPS usage.";
+    });
+
+  return;
+}
+
+function decodeBase64UrlToText(value: string): string {
+  const normalized = value.replace(/-/g, "+").replace(/_/g, "/");
+  const padded = normalized + "=".repeat((4 - (normalized.length % 4 || 4)) % 4);
+
+  try {
+    const decoded = atob(padded);
+    return decodeURIComponent(
+      Array.from(decoded)
+        .map((char: string) => `%${char.charCodeAt(0).toString(16).padStart(2, "0")}`)
+        .join("")
+    );
+  } catch {
+    return decodedURIComponentFallback(padded);
+  }
+}
+
+function decodedURIComponentFallback(base64Value: string): string {
+  try {
+    return atob(base64Value);
+  } catch {
+    return "";
+  }
+}
+
+if (slug === "security-headers-analyzer") {
+  const rawUrl = input.value.trim();
+
+  if (!rawUrl) {
+    output.value = "Enter a full URL like https://example.com";
+    return;
+  }
+
+  output.value = "Checking security headers...";
+
+  fetch(`/api/site-check.json?type=security-headers&target=${encodeURIComponent(rawUrl)}`, {
+    cache: "no-store"
+  })
+    .then((response: Response) => response.json())
+    .then((data: any) => {
+      if (data?.error) {
+        output.value = data.error;
+        return;
+      }
+
+      const present = Array.isArray(data.present) ? data.present : [];
+      const missing = Array.isArray(data.missing) ? data.missing : [];
+
+      output.value = [
+        `Input URL: ${data.inputUrl || rawUrl}`,
+        `Final URL: ${data.finalUrl || "n/a"}`,
+        `HTTP Status: ${data.status ?? "n/a"}`,
+        "",
+        "Present Headers:",
+        ...(present.length
+          ? present.map((item: any) => `${item.name}: ${item.value}`)
+          : ["None found"]),
+        "",
+        "Missing Headers:",
+        ...(missing.length ? missing : ["None"])
+      ].join("\n");
+    })
+    .catch(() => {
+      output.value = "Unable to check security headers.";
+    });
+
+  return;
+}
+
+if (slug === "cors-header-checker") {
+  const rawUrl = input.value.trim();
+
+  if (!rawUrl) {
+    output.value = "Enter a full URL like https://example.com/api/data";
+    return;
+  }
+
+  output.value = "Checking CORS headers...";
+
+  fetch(`/api/site-check.json?type=cors-headers&target=${encodeURIComponent(rawUrl)}`, {
+    cache: "no-store"
+  })
+    .then((response: Response) => response.json())
+    .then((data: any) => {
+      if (data?.error) {
+        output.value = data.error;
+        return;
+      }
+
+      output.value = [
+        `Input URL: ${data.inputUrl || rawUrl}`,
+        `Final URL: ${data.finalUrl || "n/a"}`,
+        `HTTP Status: ${data.status ?? "n/a"}`,
+        `Access-Control-Allow-Origin: ${data.accessControlAllowOrigin || "Not present"}`,
+        `Access-Control-Allow-Methods: ${data.accessControlAllowMethods || "Not present"}`,
+        `Access-Control-Allow-Headers: ${data.accessControlAllowHeaders || "Not present"}`,
+        `Access-Control-Allow-Credentials: ${data.accessControlAllowCredentials || "Not present"}`,
+        `Vary: ${data.vary || "Not present"}`
+      ].join("\n");
+    })
+    .catch(() => {
+      output.value = "Unable to check CORS headers.";
+    });
+
+  return;
+}
+
+if (slug === "jwt-header-viewer") {
+  const raw = input.value.trim();
+
+  if (!raw) {
+    output.value = "Enter a full JWT token.";
+    return;
+  }
+
+  const parts = raw.split(".");
+
+  if (parts.length < 2) {
+    output.value = "Invalid JWT. Expected at least header.payload";
+    return;
+  }
+
+  try {
+    const decodedHeader = decodeBase64UrlToText(parts[0]);
+    const parsedHeader = JSON.parse(decodedHeader);
+    output.value = JSON.stringify(parsedHeader, null, 2);
+  } catch {
+    output.value = "Unable to decode JWT header.";
+  }
+
+  return;
+}
+
+if (slug === "jwt-signature-checker-basic") {
+  const raw = input.value.trim();
+
+  if (!raw) {
+    output.value = "Enter a full JWT token.";
+    return;
+  }
+
+  const parts = raw.split(".");
+
+  if (parts.length !== 3) {
+    output.value = "Invalid JWT. Expected exactly 3 dot-separated parts.";
+    return;
+  }
+
+  try {
+    const decodedHeader = decodeBase64UrlToText(parts[0]);
+    const parsedHeader = JSON.parse(decodedHeader);
+    const alg = String(parsedHeader?.alg || "n/a");
+    const signaturePresent = parts[2].trim().length > 0;
+    const looksUnsigned = alg.toLowerCase() === "none" || !signaturePresent;
+
+    output.value = [
+      "JWT Structure: 3 parts",
+      `Header alg: ${alg}`,
+      `Signature Present: ${signaturePresent ? "Yes" : "No"}`,
+      `Basic Signature Check: ${looksUnsigned ? "Unsigned or alg none token" : "Looks structurally signed"}`
+    ].join("\n");
+  } catch {
+    output.value = "Unable to inspect JWT signature structure.";
+  }
+
+  return;
+}
+if (slug === "password-entropy-calculator") {
+  const text = input.value;
+
+  if (!text) {
+    output.value = "Enter a password to estimate entropy.";
+    return;
+  }
+
+  const hasLower = /[a-z]/.test(text);
+  const hasUpper = /[A-Z]/.test(text);
+  const hasDigits = /\d/.test(text);
+  const hasSymbols = /[^A-Za-z0-9]/.test(text);
+
+  let poolSize = 0;
+  if (hasLower) poolSize += 26;
+  if (hasUpper) poolSize += 26;
+  if (hasDigits) poolSize += 10;
+  if (hasSymbols) poolSize += 32;
+
+  if (poolSize === 0) {
+    output.value = "Unable to estimate entropy.";
+    return;
+  }
+
+  const length = text.length;
+  const entropy = length * Math.log2(poolSize);
+
+  let strength = "Weak";
+  if (entropy >= 80) {
+    strength = "Strong";
+  } else if (entropy >= 60) {
+    strength = "Moderate";
+  }
+
+  output.value = [
+    `Length: ${length}`,
+    `Character Pool Size: ${poolSize}`,
+    `Estimated Entropy: ${entropy.toFixed(2)} bits`,
+    `Estimated Strength: ${strength}`
+  ].join("\n");
+
+  return;
+}
+
+if (slug === "hash-compare-tool") {
+  const lines = input.value
+    .replace(/\r\n/g, "\n")
+    .split("\n")
+    .map((line: string) => line.trim())
+    .filter((line: string) => line.length > 0);
+
+  const left = lines[0] || "";
+  const right = lines[1] || "";
+
+  if (!left || !right) {
+    output.value = "Enter the first hash on the first line and the second hash on the second line.";
+    return;
+  }
+
+  const normalizeHash = (value: string): string =>
+    value.trim().replace(/\s+/g, "").toLowerCase();
+
+  const normalizedLeft = normalizeHash(left);
+  const normalizedRight = normalizeHash(right);
+  const match = normalizedLeft === normalizedRight;
+
+  output.value = [
+    `Hashes Match: ${match ? "Yes" : "No"}`,
+    `Normalized Left: ${normalizedLeft}`,
+    `Normalized Right: ${normalizedRight}`
+  ].join("\n");
+
+  return;
+}
+
+if (slug === "basic-auth-header-generator") {
+  const lines = input.value
+    .replace(/\r\n/g, "\n")
+    .split("\n");
+
+  const username = (lines[0] || "").trim();
+  const password = (lines[1] || "").trim();
+
+  if (!username || !password) {
+    output.value = "Enter the username on the first line and the password on the second line.";
+    return;
+  }
+
+  const rawPair = `${username}:${password}`;
+  const encoded = btoa(unescape(encodeURIComponent(rawPair)));
+
+  output.value = `Authorization: Basic ${encoded}`;
+  return;
+}
+
+if (slug === "api-key-generator") {
+  const text = input.value.trim();
+  const config: Record<string, string> = {};
+
+  if (text) {
+    const lines = text
+      .replace(/\r\n/g, "\n")
+      .split("\n")
+      .map((line: string) => line.trim())
+      .filter((line: string) => line.length > 0);
+
+    for (const line of lines) {
+      const separatorIndex = line.indexOf("=");
+
+      if (separatorIndex === -1) {
+        continue;
+      }
+
+      const key = line.slice(0, separatorIndex).trim().toLowerCase();
+      const value = line.slice(separatorIndex + 1).trim();
+      config[key] = value;
+    }
+  }
+
+  const prefix = (config.prefix || "api").replace(/[^a-zA-Z0-9_-]/g, "");
+  const length = Math.max(12, Math.min(128, Number.parseInt(config.length || "32", 10) || 32));
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  let result = "";
+
+  for (let i = 0; i < length; i++) {
+    result += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+
+  output.value = `${prefix}_${result}`;
+  return;
+}
+
+if (slug === "random-token-generator") {
+  const text = input.value.trim();
+  const config: Record<string, string> = {};
+
+  if (text) {
+    const lines = text
+      .replace(/\r\n/g, "\n")
+      .split("\n")
+      .map((line: string) => line.trim())
+      .filter((line: string) => line.length > 0);
+
+    for (const line of lines) {
+      const separatorIndex = line.indexOf("=");
+
+      if (separatorIndex === -1) {
+        continue;
+      }
+
+      const key = line.slice(0, separatorIndex).trim().toLowerCase();
+      const value = line.slice(separatorIndex + 1).trim();
+      config[key] = value;
+    }
+  }
+
+  const length = Math.max(8, Math.min(256, Number.parseInt(config.length || "32", 10) || 32));
+  const optionsLine = (config.options || "upper,lower,digits").toLowerCase();
+
+  const upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const lower = "abcdefghijklmnopqrstuvwxyz";
+  const digits = "0123456789";
+  const symbols = "!@#$%^&*()_+-=[]{}<>?";
+
+  const pools: string[] = [];
+  if (optionsLine.includes("upper")) pools.push(upper);
+  if (optionsLine.includes("lower")) pools.push(lower);
+  if (optionsLine.includes("digits")) pools.push(digits);
+  if (optionsLine.includes("symbols")) pools.push(symbols);
+
+  const allChars = pools.length ? pools.join("") : `${upper}${lower}${digits}`;
+
+  let token = "";
+  for (let i = 0; i < length; i++) {
+    token += allChars.charAt(Math.floor(Math.random() * allChars.length));
+  }
+
+  output.value = token;
+  return;
+}
+
+if (slug === "secure-password-generator") {
+  const text = input.value.trim();
+
+  const parseBoolean = (value: string): boolean => {
+    return ["true", "1", "yes", "y", "on"].includes(value.trim().toLowerCase());
+  };
+
+  const settings: {
+    length: number;
+    uppercase: boolean;
+    lowercase: boolean;
+    numbers: boolean;
+    symbols: boolean;
+  } = {
+    length: 16,
+    uppercase: true,
+    lowercase: true,
+    numbers: true,
+    symbols: true
+  };
+
+  if (text) {
+    try {
+      const parsed = JSON.parse(text);
+
+      if (typeof parsed === "object" && parsed !== null && !Array.isArray(parsed)) {
+        const obj = parsed as Record<string, unknown>;
+
+        if (obj.length != null) {
+          settings.length = Number(obj.length);
+        }
+        if (obj.uppercase != null) {
+          settings.uppercase = Boolean(obj.uppercase);
+        }
+        if (obj.lowercase != null) {
+          settings.lowercase = Boolean(obj.lowercase);
+        }
+        if (obj.numbers != null) {
+          settings.numbers = Boolean(obj.numbers);
+        }
+        if (obj.symbols != null) {
+          settings.symbols = Boolean(obj.symbols);
+        }
+      } else {
+        output.value = "Use an object like {\"length\":20,\"symbols\":false} or simple key=value lines.";
+        return;
+      }
+    } catch {
+      const lines = text.split(/\r?\n/).map((line: string) => line.trim()).filter(Boolean);
+
+      for (const line of lines) {
+        const [rawKey, ...rest] = line.split("=");
+        if (!rawKey || rest.length === 0) {
+          continue;
+        }
+
+        const key = rawKey.trim().toLowerCase();
+        const value = rest.join("=").trim();
+
+        if (key === "length") {
+          settings.length = Number(value);
+        } else if (key === "uppercase") {
+          settings.uppercase = parseBoolean(value);
+        } else if (key === "lowercase") {
+          settings.lowercase = parseBoolean(value);
+        } else if (key === "numbers") {
+          settings.numbers = parseBoolean(value);
+        } else if (key === "symbols") {
+          settings.symbols = parseBoolean(value);
+        }
+      }
+    }
+  }
+
+  if (!Number.isFinite(settings.length) || settings.length < 4 || settings.length > 256) {
+    output.value = "Length must be a number between 4 and 256.";
+    return;
+  }
+
+  const groups: string[] = [];
+  if (settings.uppercase) groups.push("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+  if (settings.lowercase) groups.push("abcdefghijklmnopqrstuvwxyz");
+  if (settings.numbers) groups.push("0123456789");
+  if (settings.symbols) groups.push("!@#$%^&*()-_=+[]{};:,.?/");
+
+  if (groups.length === 0) {
+    output.value = "Enable at least one character group.";
+    return;
+  }
+
+  if (settings.length < groups.length) {
+    output.value = "Length must be at least as large as the number of enabled character groups.";
+    return;
+  }
+
+  const getRandomChar = (chars: string): string => {
+    const array = new Uint32Array(1);
+    crypto.getRandomValues(array);
+    return chars[array[0] % chars.length];
+  };
+
+  const allChars = groups.join("");
+  const chars: string[] = groups.map((group: string) => getRandomChar(group));
+
+  while (chars.length < settings.length) {
+    chars.push(getRandomChar(allChars));
+  }
+
+  for (let i = chars.length - 1; i > 0; i--) {
+    const array = new Uint32Array(1);
+    crypto.getRandomValues(array);
+    const j = array[0] % (i + 1);
+    [chars[i], chars[j]] = [chars[j], chars[i]];
+  }
+
+  const password = chars.join("");
+
+  output.value = JSON.stringify(
+    {
+      password,
+      length: settings.length,
+      uppercase: settings.uppercase,
+      lowercase: settings.lowercase,
+      numbers: settings.numbers,
+      symbols: settings.symbols
+    },
+    null,
+    2
+  );
+  return;
+}
+
+if (slug === "json-key-extractor") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter a JSON object or array.";
+    return;
+  }
+
+  try {
+    const data = JSON.parse(text);
+    const paths = new Set<string>();
+
+    const walk = (value: unknown, path: string): void => {
+      if (Array.isArray(value)) {
+        paths.add(path);
+        const arrayPath = `${path}[]`;
+        paths.add(arrayPath);
+
+        for (const item of value) {
+          walk(item, arrayPath);
+        }
+        return;
+      }
+
+      if (typeof value === "object" && value !== null) {
+        if (path) {
+          paths.add(path);
+        }
+
+        for (const key of Object.keys(value as Record<string, unknown>).sort()) {
+          const nextPath = path ? `${path}.${key}` : `$.${key}`;
+          paths.add(nextPath);
+          walk((value as Record<string, unknown>)[key], nextPath);
+        }
+      }
+    };
+
+    if (Array.isArray(data)) {
+      walk(data, "$");
+    } else if (typeof data === "object" && data !== null) {
+      walk(data, "$");
+    } else {
+      output.value = "Enter a JSON object or array.";
+      return;
+    }
+
+    output.value = JSON.stringify(Array.from(paths).sort(), null, 2);
+  } catch {
+    output.value = "Invalid JSON.";
+  }
+
+  return;
+}
+
+if (slug === "json-path-finder") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = 'Enter JSON like {"json": {...}, "query": "id"} or use:\n{...}\n---\nid';
+    return;
+  }
+
+  let jsonText = "";
+  let query = "";
+
+  try {
+    const parsed = JSON.parse(text);
+
+    if (typeof parsed === "object" && parsed !== null && !Array.isArray(parsed)) {
+      const obj = parsed as Record<string, unknown>;
+      query = String(obj.query ?? "").trim();
+
+      if (typeof obj.json === "string") {
+        jsonText = String(obj.json);
+      } else if (obj.json != null) {
+        jsonText = JSON.stringify(obj.json);
+      }
+    }
+  } catch {
+    const parts = text.split(/\n---+\n/);
+
+    if (parts.length === 2) {
+      jsonText = parts[0].trim();
+      query = parts[1].trim();
+    }
+  }
+
+  if (!jsonText || !query) {
+    output.value = 'Use JSON like {"json": {...}, "query": "id"} or separate JSON and query with ---';
+    return;
+  }
+
+  try {
+    const data = JSON.parse(jsonText);
+    const matches: Array<{ path: string; value: unknown }> = [];
+    const q = query.toLowerCase();
+
+    const walk = (value: unknown, path: string): void => {
+      if (Array.isArray(value)) {
+        value.forEach((item: unknown, index: number) => {
+          walk(item, `${path}[${index}]`);
+        });
+        return;
+      }
+
+      if (typeof value === "object" && value !== null) {
+        for (const key of Object.keys(value as Record<string, unknown>).sort()) {
+          const nextPath = path ? `${path}.${key}` : `$.${key}`;
+          const nextValue = (value as Record<string, unknown>)[key];
+
+          if (key.toLowerCase().includes(q)) {
+            matches.push({
+              path: nextPath,
+              value: nextValue
+            });
+          }
+
+          walk(nextValue, nextPath);
+        }
+      }
+    };
+
+    walk(data, "$");
+
+    output.value = JSON.stringify(
+      {
+        query,
+        matchCount: matches.length,
+        matches
+      },
+      null,
+      2
+    );
+  } catch {
+    output.value = "Invalid JSON input.";
+  }
+
+  return;
+}
+
+if (slug === "json-sort-keys") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter valid JSON.";
+    return;
+  }
+
+  try {
+    const data = JSON.parse(text);
+
+    const sortValue = (value: unknown): unknown => {
+      if (Array.isArray(value)) {
+        return value.map((item: unknown) => sortValue(item));
+      }
+
+      if (typeof value === "object" && value !== null) {
+        const sorted: Record<string, unknown> = {};
+        for (const key of Object.keys(value as Record<string, unknown>).sort()) {
+          sorted[key] = sortValue((value as Record<string, unknown>)[key]);
+        }
+        return sorted;
+      }
+
+      return value;
+    };
+
+    output.value = JSON.stringify(sortValue(data), null, 2);
+  } catch {
+    output.value = "Invalid JSON.";
+  }
+
+  return;
+}
+
+if (slug === "json-flatten") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter valid JSON.";
+    return;
+  }
+
+  try {
+    const data = JSON.parse(text);
+    const result: Record<string, unknown> = {};
+
+    const flatten = (value: unknown, path: string): void => {
+      if (Array.isArray(value)) {
+        if (value.length === 0 && path) {
+          result[path] = [];
+          return;
+        }
+
+        value.forEach((item: unknown, index: number) => {
+          const nextPath = path ? `${path}[${index}]` : `[${index}]`;
+          flatten(item, nextPath);
+        });
+        return;
+      }
+
+      if (typeof value === "object" && value !== null) {
+        const keys = Object.keys(value as Record<string, unknown>);
+
+        if (keys.length === 0 && path) {
+          result[path] = {};
+          return;
+        }
+
+        for (const key of keys) {
+          const nextPath = path ? `${path}.${key}` : key;
+          flatten((value as Record<string, unknown>)[key], nextPath);
+        }
+        return;
+      }
+
+      result[path] = value;
+    };
+
+    if (typeof data === "object" && data !== null) {
+      flatten(data, "");
+      output.value = JSON.stringify(result, null, 2);
+    } else {
+      output.value = "Enter a JSON object or array.";
+    }
+  } catch {
+    output.value = "Invalid JSON.";
+  }
+
+  return;
+}
+if (slug === "json-unflatten") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter a flat JSON object.";
+    return;
+  }
+
+  try {
+    const data = JSON.parse(text);
+
+    if (typeof data !== "object" || data === null || Array.isArray(data)) {
+      output.value = "Enter a flat JSON object.";
+      return;
+    }
+
+    const result: Record<string, unknown> = {};
+
+    const pathParts = (path: string): string[] => {
+      const parts: string[] = [];
+      const regex = /([^[.\]]+)|\[(\d+)\]/g;
+      let match: RegExpExecArray | null;
+
+      while ((match = regex.exec(path)) !== null) {
+        if (match[1]) {
+          parts.push(match[1]);
+        } else if (match[2]) {
+          parts.push(match[2]);
+        }
+      }
+
+      return parts;
+    };
+
+    const setDeep = (target: Record<string, unknown>, path: string, value: unknown): void => {
+      const parts = pathParts(path);
+
+      if (parts.length === 0) {
+        return;
+      }
+
+      let current: unknown = target;
+
+      for (let i = 0; i < parts.length; i++) {
+        const part = parts[i];
+        const nextPart = parts[i + 1];
+        const isLast = i === parts.length - 1;
+        const isIndex = /^\d+$/.test(part);
+        const nextIsIndex = /^\d+$/.test(nextPart ?? "");
+
+        if (isLast) {
+          if (isIndex) {
+            if (!Array.isArray(current)) {
+              output.value = "Conflicting path structure detected.";
+              throw new Error("conflict");
+            }
+            (current as unknown[])[Number(part)] = value;
+          } else {
+            (current as Record<string, unknown>)[part] = value;
+          }
+          return;
+        }
+
+        if (isIndex) {
+          if (!Array.isArray(current)) {
+            output.value = "Conflicting path structure detected.";
+            throw new Error("conflict");
+          }
+
+          const arr = current as unknown[];
+          const index = Number(part);
+
+          if (arr[index] == null) {
+            arr[index] = nextIsIndex ? [] : {};
+          }
+
+          current = arr[index];
+        } else {
+          const obj = current as Record<string, unknown>;
+
+          if (obj[part] == null) {
+            obj[part] = nextIsIndex ? [] : {};
+          }
+
+          current = obj[part];
+        }
+      }
+    };
+
+    for (const [key, value] of Object.entries(data)) {
+      setDeep(result, key, value);
+    }
+
+    output.value = JSON.stringify(result, null, 2);
+  } catch (error) {
+    if (output.value === "Conflicting path structure detected.") {
+      return;
+    }
+    output.value = "Invalid JSON.";
+  }
+
+  return;
+}
+
+if (slug === "json-to-table") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter a JSON array of objects.";
+    return;
+  }
+
+  try {
+    const data = JSON.parse(text);
+
+    if (!Array.isArray(data) || data.some((item: unknown) => typeof item !== "object" || item === null || Array.isArray(item))) {
+      output.value = "Enter a JSON array of objects.";
+      return;
+    }
+
+    const rows = data as Array<Record<string, unknown>>;
+    const columns = Array.from(
+      new Set(rows.flatMap((row: Record<string, unknown>) => Object.keys(row)))
+    ).sort();
+
+    if (columns.length === 0) {
+      output.value = "No columns found.";
+      return;
+    }
+
+    const cellValue = (value: unknown): string => {
+      if (value == null) return "";
+      if (typeof value === "object") return JSON.stringify(value);
+      return String(value);
+    };
+
+    const widths = columns.map((column: string) => {
+      const values = rows.map((row: Record<string, unknown>) => cellValue(row[column]));
+      return Math.max(column.length, ...values.map((v: string) => v.length));
+    });
+
+    const formatRow = (values: string[]): string =>
+      values.map((value: string, index: number) => value.padEnd(widths[index], " ")).join(" | ");
+
+    const header = formatRow(columns);
+    const separator = widths.map((width: number) => "-".repeat(width)).join("-|-");
+    const body = rows.map((row: Record<string, unknown>) =>
+      formatRow(columns.map((column: string) => cellValue(row[column])))
+    );
+
+    output.value = [header, separator, ...body].join("\n");
+  } catch {
+    output.value = "Invalid JSON.";
+  }
+
+  return;
+}
+
+if (slug === "json-to-form-data") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter a JSON object.";
+    return;
+  }
+
+  try {
+    const data = JSON.parse(text);
+
+    if (typeof data !== "object" || data === null || Array.isArray(data)) {
+      output.value = "Enter a JSON object.";
+      return;
+    }
+
+    const lines: string[] = [];
+
+    const walk = (value: unknown, path: string): void => {
+      if (Array.isArray(value)) {
+        value.forEach((item: unknown, index: number) => {
+          walk(item, `${path}[${index}]`);
+        });
+        return;
+      }
+
+      if (typeof value === "object" && value !== null) {
+        for (const key of Object.keys(value as Record<string, unknown>).sort()) {
+          const nextPath = path ? `${path}.${key}` : key;
+          walk((value as Record<string, unknown>)[key], nextPath);
+        }
+        return;
+      }
+
+      lines.push(`${path}=${value == null ? "" : String(value)}`);
+    };
+
+    walk(data, "");
+
+    output.value = lines.join("\n");
+  } catch {
+    output.value = "Invalid JSON.";
+  }
+
+  return;
+}
+
+if (slug === "json-escape-unescape") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = 'Use {"mode":"escape","text":"..."} or {"mode":"unescape","text":"..."}';
+    return;
+  }
+
+  let mode = "";
+  let payload = "";
+
+  try {
+    const parsed = JSON.parse(text);
+
+    if (typeof parsed === "object" && parsed !== null && !Array.isArray(parsed)) {
+      const obj = parsed as Record<string, unknown>;
+      mode = String(obj.mode ?? "").trim().toLowerCase();
+      payload = String(obj.text ?? "");
+    }
+  } catch {
+    const parts = text.split(/\n---+\n/);
+
+    if (parts.length === 2) {
+      mode = parts[0].trim().toLowerCase();
+      payload = parts[1];
+    }
+  }
+
+  if (!mode || !["escape", "unescape"].includes(mode)) {
+    output.value = 'Mode must be "escape" or "unescape".';
+    return;
+  }
+
+  if (mode === "escape") {
+    output.value = JSON.stringify(payload);
+    return;
+  }
+
+  output.value = payload
+    .replace(/\\\\/g, "\\")
+    .replace(/\\"/g, "\"")
+    .replace(/\\'/g, "'")
+    .replace(/\\\//g, "/")
+    .replace(/\\n/g, "n")
+    .replace(/\\r/g, "r")
+    .replace(/\\t/g, "t")
+    .replace(/\\b/g, "b")
+    .replace(/\\f/g, "f");
+
+  return;
+}
+
+if (slug === "json-size-calculator") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter valid JSON.";
+    return;
+  }
+
+  try {
+    const data = JSON.parse(text);
+    const original = text;
+    const minified = JSON.stringify(data);
+    const formatted = JSON.stringify(data, null, 2);
+
+    const utf8Bytes = (value: string): number => new TextEncoder().encode(value).length;
+
+    output.value = JSON.stringify(
+      {
+        characters: original.length,
+        utf8Bytes: utf8Bytes(original),
+        minifiedCharacters: minified.length,
+        minifiedUtf8Bytes: utf8Bytes(minified),
+        formattedCharacters: formatted.length,
+        formattedUtf8Bytes: utf8Bytes(formatted),
+        whitespaceSavedByMinify: formatted.length - minified.length
+      },
+      null,
+      2
+    );
+  } catch {
+    output.value = "Invalid JSON.";
+  }
+
+  return;
+}
+if (slug === "cron-expression-generator") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter schedule fields as JSON or key=value lines.";
+    return;
+  }
+
+  const fields: Record<string, string> = {
+    minute: "*",
+    hour: "*",
+    dayOfMonth: "*",
+    month: "*",
+    dayOfWeek: "*"
+  };
+
+  try {
+    const parsed = JSON.parse(text);
+
+    if (typeof parsed === "object" && parsed !== null && !Array.isArray(parsed)) {
+      const obj = parsed as Record<string, unknown>;
+
+      if (obj.minute != null) fields.minute = String(obj.minute).trim();
+      if (obj.hour != null) fields.hour = String(obj.hour).trim();
+      if (obj.dayOfMonth != null) fields.dayOfMonth = String(obj.dayOfMonth).trim();
+      if (obj.month != null) fields.month = String(obj.month).trim();
+      if (obj.dayOfWeek != null) fields.dayOfWeek = String(obj.dayOfWeek).trim();
+    } else {
+      output.value = 'Use JSON like {"minute":"0","hour":"0","dayOfMonth":"*","month":"*","dayOfWeek":"*"} or key=value lines.';
+      return;
+    }
+  } catch {
+    const lines = text.split(/\r?\n/).map((line: string) => line.trim()).filter(Boolean);
+
+    for (const line of lines) {
+      const [rawKey, ...rest] = line.split("=");
+      if (!rawKey || rest.length === 0) continue;
+
+      const key = rawKey.trim();
+      const value = rest.join("=").trim();
+
+      if (key in fields) {
+        fields[key] = value;
+      }
+    }
+  }
+
+  const values = [fields.minute, fields.hour, fields.dayOfMonth, fields.month, fields.dayOfWeek];
+
+  if (values.some((value: string) => !value)) {
+    output.value = "All five cron fields must be present.";
+    return;
+  }
+
+  output.value = `${fields.minute} ${fields.hour} ${fields.dayOfMonth} ${fields.month} ${fields.dayOfWeek}`;
+  return;
+}
+
+if (slug === "cron-expression-reader") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter a five-field cron expression.";
+    return;
+  }
+
+  const parts = text.split(/\s+/).filter(Boolean);
+
+  if (parts.length !== 5) {
+    output.value = "Enter exactly five space-separated cron fields.";
+    return;
+  }
+
+  const [minute, hour, dayOfMonth, month, dayOfWeek] = parts;
+
+  output.value =
+    `Runs at minute ${minute}, hour ${hour}, day-of-month ${dayOfMonth}, month ${month}, day-of-week ${dayOfWeek}.`;
+  return;
+}
+
+if (slug === "unix-timestamp-validator") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter a Unix timestamp.";
+    return;
+  }
+
+  if (!/^-?\d+$/.test(text)) {
+    output.value = JSON.stringify({ valid: false, reason: "Input must be numeric." }, null, 2);
+    return;
+  }
+
+  const value = Number(text);
+
+  if (!Number.isFinite(value)) {
+    output.value = JSON.stringify({ valid: false, reason: "Invalid number." }, null, 2);
+    return;
+  }
+
+  let type = "";
+  let date: Date | null = null;
+
+  if (text.length >= 13) {
+    type = "milliseconds";
+    date = new Date(value);
+  } else {
+    type = "seconds";
+    date = new Date(value * 1000);
+  }
+
+  if (Number.isNaN(date.getTime())) {
+    output.value = JSON.stringify({ valid: false, reason: "Invalid timestamp." }, null, 2);
+    return;
+  }
+
+  const year = date.getUTCFullYear();
+
+  if (year < 1970 || year > 3000) {
+    output.value = JSON.stringify({ valid: false, reason: "Timestamp is outside the plausible range." }, null, 2);
+    return;
+  }
+
+  output.value = JSON.stringify(
+    {
+      valid: true,
+      type,
+      iso: date.toISOString()
+    },
+    null,
+    2
+  );
+  return;
+}
+
+if (slug === "uuid-validator") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter a UUID.";
+    return;
+  }
+
+  const uuidRegex =
+    /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-([1-5])[0-9a-fA-F]{3}-([89abAB])[0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/;
+
+  const match = text.match(uuidRegex);
+
+  if (!match) {
+    output.value = JSON.stringify({ valid: false }, null, 2);
+    return;
+  }
+
+  const version = Number(match[1]);
+  const variant = "RFC 4122";
+
+  output.value = JSON.stringify(
+    {
+      valid: true,
+      version,
+      variant
+    },
+    null,
+    2
+  );
+  return;
+}
+if (slug === "hex-to-rgb") {
+  const text = input.value.trim().replace(/^#/, "");
+
+  if (!text) {
+    output.value = "Enter a HEX color like #ff5733.";
+    return;
+  }
+
+  if (!/^[0-9a-fA-F]{3}$|^[0-9a-fA-F]{6}$/.test(text)) {
+    output.value = "Enter a valid 3-digit or 6-digit HEX color.";
+    return;
+  }
+
+  const hex = text.length === 3
+    ? text.split("").map((char: string) => char + char).join("")
+    : text;
+
+  const r = parseInt(hex.slice(0, 2), 16);
+  const g = parseInt(hex.slice(2, 4), 16);
+  const b = parseInt(hex.slice(4, 6), 16);
+
+  output.value = `rgb(${r}, ${g}, ${b})`;
+  return;
+}
+
+if (slug === "rgb-to-hex") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter RGB values like 255, 87, 51.";
+    return;
+  }
+
+  const matches = text.match(/\d+/g)?.map((value: string) => Number(value)) || [];
+
+  if (matches.length !== 3 || matches.some((value: number) => !Number.isInteger(value) || value < 0 || value > 255)) {
+    output.value = "Enter exactly three RGB integers from 0 to 255.";
+    return;
+  }
+
+  const [r, g, b] = matches;
+  const toHex = (value: number): string => value.toString(16).padStart(2, "0");
+
+  output.value = `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+  return;
+}
+
+if (slug === "hex-to-hsl") {
+  const text = input.value.trim().replace(/^#/, "");
+
+  if (!text) {
+    output.value = "Enter a HEX color like #ff5733.";
+    return;
+  }
+
+  if (!/^[0-9a-fA-F]{3}$|^[0-9a-fA-F]{6}$/.test(text)) {
+    output.value = "Enter a valid 3-digit or 6-digit HEX color.";
+    return;
+  }
+
+  const hex = text.length === 3
+    ? text.split("").map((char: string) => char + char).join("")
+    : text;
+
+  let r = parseInt(hex.slice(0, 2), 16) / 255;
+  let g = parseInt(hex.slice(2, 4), 16) / 255;
+  let b = parseInt(hex.slice(4, 6), 16) / 255;
+
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  let h = 0;
+  let s = 0;
+  const l = (max + min) / 2;
+  const d = max - min;
+
+  if (d !== 0) {
+    s = d / (1 - Math.abs(2 * l - 1));
+
+    switch (max) {
+      case r:
+        h = 60 * (((g - b) / d) % 6);
+        break;
+      case g:
+        h = 60 * ((b - r) / d + 2);
+        break;
+      default:
+        h = 60 * ((r - g) / d + 4);
+        break;
+    }
+  }
+
+  if (h < 0) h += 360;
+
+  output.value = `hsl(${Math.round(h)}, ${Math.round(s * 100)}%, ${Math.round(l * 100)}%)`;
+  return;
+}
+
+if (slug === "hsl-to-hex") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter HSL values like 11, 100%, 60%.";
+    return;
+  }
+
+  const matches = text.match(/-?\d+(?:\.\d+)?/g)?.map((value: string) => Number(value)) || [];
+
+  if (matches.length < 3) {
+    output.value = "Enter hue, saturation, and lightness values.";
+    return;
+  }
+
+  let [h, s, l] = matches;
+  h = ((h % 360) + 360) % 360;
+  s = Math.max(0, Math.min(100, s)) / 100;
+  l = Math.max(0, Math.min(100, l)) / 100;
+
+  const c = (1 - Math.abs(2 * l - 1)) * s;
+  const x = c * (1 - Math.abs((h / 60) % 2 - 1));
+  const m = l - c / 2;
+
+  let r1 = 0;
+  let g1 = 0;
+  let b1 = 0;
+
+  if (h < 60) {
+    r1 = c; g1 = x; b1 = 0;
+  } else if (h < 120) {
+    r1 = x; g1 = c; b1 = 0;
+  } else if (h < 180) {
+    r1 = 0; g1 = c; b1 = x;
+  } else if (h < 240) {
+    r1 = 0; g1 = x; b1 = c;
+  } else if (h < 300) {
+    r1 = x; g1 = 0; b1 = c;
+  } else {
+    r1 = c; g1 = 0; b1 = x;
+  }
+
+  const r = Math.round((r1 + m) * 255);
+  const g = Math.round((g1 + m) * 255);
+  const b = Math.round((b1 + m) * 255);
+
+  const toHex = (value: number): string => value.toString(16).padStart(2, "0");
+
+  output.value = `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+  return;
+}
+
+if (slug === "rgb-to-hsl") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter RGB values like 255, 87, 51.";
+    return;
+  }
+
+  const matches = text.match(/\d+/g)?.map((value: string) => Number(value)) || [];
+
+  if (matches.length !== 3 || matches.some((value: number) => !Number.isInteger(value) || value < 0 || value > 255)) {
+    output.value = "Enter exactly three RGB integers from 0 to 255.";
+    return;
+  }
+
+  let [r, g, b] = matches.map((value: number) => value / 255);
+
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  let h = 0;
+  let s = 0;
+  const l = (max + min) / 2;
+  const d = max - min;
+
+  if (d !== 0) {
+    s = d / (1 - Math.abs(2 * l - 1));
+
+    switch (max) {
+      case r:
+        h = 60 * (((g - b) / d) % 6);
+        break;
+      case g:
+        h = 60 * ((b - r) / d + 2);
+        break;
+      default:
+        h = 60 * ((r - g) / d + 4);
+        break;
+    }
+  }
+
+  if (h < 0) h += 360;
+
+  output.value = `hsl(${Math.round(h)}, ${Math.round(s * 100)}%, ${Math.round(l * 100)}%)`;
+  return;
+}
+
+if (slug === "hsl-to-rgb") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter HSL values like 11, 100%, 60%.";
+    return;
+  }
+
+  const matches = text.match(/-?\d+(?:\.\d+)?/g)?.map((value: string) => Number(value)) || [];
+
+  if (matches.length < 3) {
+    output.value = "Enter hue, saturation, and lightness values.";
+    return;
+  }
+
+  let [h, s, l] = matches;
+  h = ((h % 360) + 360) % 360;
+  s = Math.max(0, Math.min(100, s)) / 100;
+  l = Math.max(0, Math.min(100, l)) / 100;
+
+  const c = (1 - Math.abs(2 * l - 1)) * s;
+  const x = c * (1 - Math.abs((h / 60) % 2 - 1));
+  const m = l - c / 2;
+
+  let r1 = 0;
+  let g1 = 0;
+  let b1 = 0;
+
+  if (h < 60) {
+    r1 = c; g1 = x; b1 = 0;
+  } else if (h < 120) {
+    r1 = x; g1 = c; b1 = 0;
+  } else if (h < 180) {
+    r1 = 0; g1 = c; b1 = x;
+  } else if (h < 240) {
+    r1 = 0; g1 = x; b1 = c;
+  } else if (h < 300) {
+    r1 = x; g1 = 0; b1 = c;
+  } else {
+    r1 = c; g1 = 0; b1 = x;
+  }
+
+  const r = Math.round((r1 + m) * 255);
+  const g = Math.round((g1 + m) * 255);
+  const b = Math.round((b1 + m) * 255);
+
+  output.value = `rgb(${r}, ${g}, ${b})`;
+  return;
+}
+if (slug === "css-minifier") {
+  const text = input.value;
+
+  if (!text.trim()) {
+    output.value = "Enter CSS.";
+    return;
+  }
+
+  let result = text;
+
+  result = result.replace(/\/\*[\s\S]*?\*\//g, "");
+  result = result.replace(/\s+/g, " ");
+  result = result.replace(/\s*([{}:;,>])\s*/g, "$1");
+  result = result.replace(/;}/g, "}");
+  result = result.trim();
+
+  output.value = result;
+  return;
+}
+
+if (slug === "css-beautifier") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter CSS.";
+    return;
+  }
+
+  let result = text
+    .replace(/\s*{\s*/g, " {\n")
+    .replace(/\s*}\s*/g, "\n}\n")
+    .replace(/\s*;\s*/g, ";\n")
+    .replace(/\s*,\s*/g, ", ")
+    .replace(/\n{3,}/g, "\n\n");
+
+  const lines = result.split("\n");
+  let indent = 0;
+  const formatted: string[] = [];
+
+  for (let rawLine of lines) {
+    const line = rawLine.trim();
+    if (!line) continue;
+
+    if (line.startsWith("}")) {
+      indent = Math.max(0, indent - 1);
+    }
+
+    formatted.push(`${"  ".repeat(indent)}${line}`);
+
+    if (line.endsWith("{")) {
+      indent += 1;
+    }
+  }
+
+  output.value = formatted.join("\n");
+  return;
+}
+
+if (slug === "regex-generator-simple") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter rules as JSON or key=value lines.";
+    return;
+  }
+
+  const config: Record<string, string> = {};
+
+  try {
+    const parsed = JSON.parse(text);
+
+    if (typeof parsed === "object" && parsed !== null && !Array.isArray(parsed)) {
+      for (const [key, value] of Object.entries(parsed as Record<string, unknown>)) {
+        config[key] = String(value);
+      }
+    } else {
+      output.value = "Use a JSON object or key=value lines.";
+      return;
+    }
+  } catch {
+    const lines = text.split(/\r?\n/).map((line: string) => line.trim()).filter(Boolean);
+
+    for (const line of lines) {
+      const [rawKey, ...rest] = line.split("=");
+      if (!rawKey || rest.length === 0) continue;
+      config[rawKey.trim()] = rest.join("=").trim();
+    }
+  }
+
+  const mode = (config.mode || "").trim();
+  const value = config.value || "";
+  const length = Number(config.length || "");
+
+  const escapeRegex = (str: string): string =>
+    str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+  let pattern = "";
+
+  if (mode === "digits") {
+    pattern = "^\\d+$";
+  } else if (mode === "letters") {
+    pattern = "^[A-Za-z]+$";
+  } else if (mode === "alphanumeric") {
+    pattern = "^[A-Za-z0-9]+$";
+  } else if (mode === "exact") {
+    if (!value) {
+      output.value = "Mode exact requires a value.";
+      return;
+    }
+    pattern = `^${escapeRegex(value)}$`;
+  } else if (mode === "contains") {
+    if (!value) {
+      output.value = "Mode contains requires a value.";
+      return;
+    }
+    pattern = escapeRegex(value);
+  } else if (mode === "startsWith") {
+    if (!value) {
+      output.value = "Mode startsWith requires a value.";
+      return;
+    }
+    pattern = `^${escapeRegex(value)}`;
+  } else if (mode === "endsWith") {
+    if (!value) {
+      output.value = "Mode endsWith requires a value.";
+      return;
+    }
+    pattern = `${escapeRegex(value)}$`;
+  } else if (mode === "customLengthDigits") {
+    if (!Number.isInteger(length) || length <= 0) {
+      output.value = "Mode customLengthDigits requires a positive integer length.";
+      return;
+    }
+    pattern = `^\\d{${length}}$`;
+  } else {
+    output.value =
+      'Use a supported mode: exact, contains, startsWith, endsWith, digits, letters, alphanumeric, or customLengthDigits.';
+    return;
+  }
+
+  output.value = JSON.stringify(
+    {
+      mode,
+      pattern: `/${pattern}/`
+    },
+    null,
+    2
+  );
   return;
 }
       output.value = "This tool logic is not connected yet.";

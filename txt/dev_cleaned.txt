@@ -46,6 +46,10 @@ HTTP Response Viewer
 HTTP Request Builder
 HTTP Header Generator
 HTTP Header Extractor
+
+----------------------------
+сделано
+
 Security Headers Checker
 CSP Header Analyzer
 HSTS Header Checker

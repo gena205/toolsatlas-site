@@ -1,0 +1,51 @@
+ТОП 50 инструментов (без мусора)
+🧩 URL / Web (очень лёгкие + быстрые)
+URL Parameter Remover
+URL Parameter Sorter
+URL Domain Extractor
+URL Protocol Extractor
+URL Hash Extractor
+URL Query String Cleaner
+Remove UTM Parameters
+URL Canonicalizer
+👉 это золото (микро-интенты)
+🌐 HTTP / Network (очень сильный SEO)
+HTTP Status Code Checker
+HTTP Response Viewer
+HTTP Header Extractor
+HTTP Header Generator
+HTTP Request Builder
+HTTPS Redirect Checker
+Check if URL is HTTPS
+Security Headers Analyzer
+CORS Header Checker
+👉 это уже ближе к SaaS
+🔐 Security / Dev (высокий спрос)
+JWT Expiration Checker
+JWT Header Viewer
+JWT Signature Checker (basic)
+Password Entropy Calculator
+Hash Compare Tool
+Basic Auth Header Generator
+API Key Generator
+Random Token Generator
+Secure Password Generator
+📦 JSON / Data (очень хороший трафик)
+JSON Key Extractor
+JSON Path Finder
+JSON Sort Keys
+JSON Flatten
+JSON Unflatten
+JSON to Table
+JSON to Form Data
+JSON Escape / Unescape
+JSON Size Calculator
+🧮 Dev Helpers (очень легко сделать)
+Cron Expression Generator
+Cron Expression Reader
+Unix Timestamp Validator
+UUID Validator
+Color Converter (HEX ↔ RGB ↔ HSL)
+CSS Minifier
+CSS Beautifier
+Regex Generator (simple)
