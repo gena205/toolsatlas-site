@@ -4680,24 +4680,51 @@ if (slug === "html-to-markdown") {
     return;
   }
 
-  const result = text
-    .replace(/<h1>(.*?)<\/h1>/gi, "# $1\n")
-    .replace(/<h2>(.*?)<\/h2>/gi, "## $1\n")
-    .replace(/<h3>(.*?)<\/h3>/gi, "### $1\n")
-    .replace(/<strong>(.*?)<\/strong>/gi, "**$1**")
-    .replace(/<b>(.*?)<\/b>/gi, "**$1**")
-    .replace(/<em>(.*?)<\/em>/gi, "*$1*")
-    .replace(/<i>(.*?)<\/i>/gi, "*$1*")
-    .replace(/<code>(.*?)<\/code>/gi, "`$1`")
-    .replace(/<a\s+href="(.*?)".*?>(.*?)<\/a>/gi, "[$2]($1)")
+  let markdown = text
+    .replace(/\r\n/g, "\n")
+
+    // headings
+    .replace(/<h1[^>]*>([\s\S]*?)<\/h1>/gi, "# $1\n\n")
+    .replace(/<h2[^>]*>([\s\S]*?)<\/h2>/gi, "## $1\n\n")
+    .replace(/<h3[^>]*>([\s\S]*?)<\/h3>/gi, "### $1\n\n")
+    .replace(/<h4[^>]*>([\s\S]*?)<\/h4>/gi, "#### $1\n\n")
+    .replace(/<h5[^>]*>([\s\S]*?)<\/h5>/gi, "##### $1\n\n")
+    .replace(/<h6[^>]*>([\s\S]*?)<\/h6>/gi, "###### $1\n\n")
+
+    // emphasis
+    .replace(/<strong[^>]*>([\s\S]*?)<\/strong>/gi, "**$1**")
+    .replace(/<b[^>]*>([\s\S]*?)<\/b>/gi, "**$1**")
+    .replace(/<em[^>]*>([\s\S]*?)<\/em>/gi, "*$1*")
+    .replace(/<i[^>]*>([\s\S]*?)<\/i>/gi, "*$1*")
+    .replace(/<code[^>]*>([\s\S]*?)<\/code>/gi, "`$1`")
+
+    // links
+    .replace(/<a[^>]*href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi, "[$2]($1)")
+
+    // line breaks and paragraphs
     .replace(/<br\s*\/?>/gi, "\n")
-    .replace(/<\/p>\s*<p>/gi, "\n\n")
-    .replace(/<p>/gi, "")
-    .replace(/<\/p>/gi, "")
-    .replace(/<\/?[^>]+>/g, "")
+    .replace(/<\/p>\s*<p[^>]*>/gi, "\n\n")
+    .replace(/<p[^>]*>/gi, "")
+    .replace(/<\/p>/gi, "\n\n")
+
+    // unordered lists
+    .replace(/<ul[^>]*>/gi, "\n")
+    .replace(/<\/ul>/gi, "\n")
+    .replace(/<li[^>]*>([\s\S]*?)<\/li>/gi, "- $1\n")
+
+    // ordered lists
+    .replace(/<ol[^>]*>/gi, "\n")
+    .replace(/<\/ol>/gi, "\n")
+
+    // remove remaining tags
+    .replace(/<[^>]+>/g, "")
+
+    // cleanup
+    .replace(/\n{3,}/g, "\n\n")
+    .replace(/[ \t]+\n/g, "\n")
     .trim();
 
-  output.value = result;
+  output.value = markdown;
   return;
 }
 
@@ -6141,133 +6168,113 @@ if (slug === "csv-to-yaml") {
 }
 
 if (slug === "yaml-to-csv") {
-  const text = input.value.replace(/\r\n/g, "\n").trim();
+  const text = input.value.trim();
 
   if (!text) {
-    output.value = "Enter YAML to convert.";
+    output.value = "Enter simple YAML to convert to CSV.";
     return;
   }
 
-  const stripQuotes = (value: string): string => {
-    const trimmed = value.trim();
+  try {
+    const lines = text
+      .replace(/\r\n/g, "\n")
+      .split("\n")
+      .filter((line: string) => line.trim().length > 0);
 
-    if (
-      (trimmed.startsWith('"') && trimmed.endsWith('"')) ||
-      (trimmed.startsWith("'") && trimmed.endsWith("'"))
-    ) {
-      return trimmed.slice(1, -1);
-    }
+    const toCsvCell = (value: string): string => {
+      if (/[",\n]/.test(value)) {
+        return `"${value.replace(/"/g, '""')}"`;
+      }
+      return value;
+    };
 
-    return trimmed;
-  };
+    const isFlatObject = lines.every((line: string) => !line.trim().startsWith("- "));
+    if (isFlatObject) {
+      const pairs = lines.map((line: string) => {
+        const match = line.match(/^([^:]+):\s*(.*)$/);
+        return match ? [match[1].trim(), match[2].trim()] : null;
+      });
 
-  const splitKeyValue = (line: string): { key: string; value: string } | null => {
-    const colonIndex = line.indexOf(":");
-
-    if (colonIndex === -1) {
-      return null;
-    }
-
-    const key = line.slice(0, colonIndex).trim();
-    const value = line.slice(colonIndex + 1).trim();
-
-    if (!key) {
-      return null;
-    }
-
-    return { key, value: stripQuotes(value) };
-  };
-
-  const lines = text
-    .split("\n")
-    .map((line: string) => line.replace(/\s+$/g, ""))
-    .filter((line: string) => line.trim() !== "" && !line.trim().startsWith("#"));
-
-  const items: Record<string, string>[] = [];
-  let currentItem: Record<string, string> | null = null;
-
-  for (const rawLine of lines) {
-    const trimmed = rawLine.trim();
-
-    if (trimmed.endsWith(":") && !trimmed.startsWith("- ")) {
-      continue;
-    }
-
-    if (trimmed.startsWith("- ")) {
-      if (currentItem) {
-        items.push(currentItem);
+      if (pairs.some((pair) => pair === null)) {
+        output.value = "Unsupported YAML format. Use a simple object or a simple list of objects.";
+        return;
       }
 
-      currentItem = {};
-      const remainder = trimmed.slice(2).trim();
+      output.value = [
+        "key,value",
+        ...pairs.map((pair) => `${toCsvCell(pair?.[0] || "")},${toCsvCell(pair?.[1] || "")}`)
+      ].join("\n");
+      return;
+    }
 
-      if (remainder) {
-        const pair = splitKeyValue(remainder);
+    const records: Record<string, string>[] = [];
+    let current: Record<string, string> | null = null;
 
-        if (!pair) {
-          output.value = "Unsupported YAML format. Use a simple list of objects.";
-          return;
+    for (const line of lines) {
+      const trimmed = line.trim();
+
+      if (trimmed.startsWith("- ")) {
+        if (current) {
+          records.push(current);
         }
 
-        currentItem[pair.key] = pair.value;
+        current = {};
+        const rest = trimmed.slice(2).trim();
+
+        if (rest.length > 0) {
+          const match = rest.match(/^([^:]+):\s*(.*)$/);
+          if (!match) {
+            output.value = "Unsupported YAML format. Use a simple list of objects.";
+            return;
+          }
+
+          current[match[1].trim()] = match[2].trim();
+        }
+
+        continue;
       }
 
-      continue;
+      if (!current) {
+        output.value = "Unsupported YAML format. Use a simple list of objects.";
+        return;
+      }
+
+      const match = trimmed.match(/^([^:]+):\s*(.*)$/);
+      if (!match) {
+        output.value = "Unsupported YAML format. Use a simple list of objects.";
+        return;
+      }
+
+      current[match[1].trim()] = match[2].trim();
     }
 
-    if (!currentItem) {
+    if (current) {
+      records.push(current);
+    }
+
+    if (records.length === 0) {
       output.value = "Unsupported YAML format. Use a simple list of objects.";
       return;
     }
 
-    const pair = splitKeyValue(trimmed);
+    const headers = Array.from(
+      new Set(records.flatMap((record: Record<string, string>) => Object.keys(record)))
+    );
 
-    if (!pair) {
-      output.value = "Unsupported YAML format. Use a simple list of objects.";
-      return;
-    }
+    const rows = [
+      headers.map((header: string) => toCsvCell(header)).join(","),
+      ...records.map((record: Record<string, string>) =>
+        headers.map((header: string) => toCsvCell(record[header] ?? "")).join(",")
+      )
+    ];
 
-    currentItem[pair.key] = pair.value;
+    output.value = rows.join("\n");
+  } catch {
+    output.value = "Unsupported YAML format. Use a simple object or a simple list of objects.";
   }
 
-  if (currentItem) {
-    items.push(currentItem);
-  }
-
-  if (items.length === 0) {
-    output.value = "No YAML list items found.";
-    return;
-  }
-
-  const headers: string[] = [];
-
-  items.forEach((item: Record<string, string>) => {
-    Object.keys(item).forEach((key: string) => {
-      if (!headers.includes(key)) {
-        headers.push(key);
-      }
-    });
-  });
-
-  const escapeCsvCell = (value: string): string => {
-    if (/[",\n]/.test(value) || /^\s|\s$/.test(value)) {
-      return `"${value.replace(/"/g, '""')}"`;
-    }
-
-    return value;
-  };
-
-  const csvRows = [
-    headers.map(escapeCsvCell).join(","),
-    ...items.map((item: Record<string, string>) =>
-      headers.map((header: string) => escapeCsvCell(item[header] ?? "")).join(",")
-    )
-  ];
-
-  output.value = csvRows.join("\n");
   return;
 }
-
 if (slug === "toml-to-json") {
   const text = input.value.replace(/\r\n/g, "\n").trim();
 
@@ -17918,6 +17925,2693 @@ if (slug === "regex-generator-simple") {
   );
   return;
 }
+if (slug === "html-prettify") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter HTML.";
+    return;
+  }
+
+  try {
+    const raw = text
+      .replace(/>\s+</g, "><")
+      .replace(/\r\n/g, "\n")
+      .trim();
+
+    const tokens = raw
+      .replace(/(>)(<)(\/*)/g, "$1\n$2$3")
+      .split("\n")
+      .map((line: string) => line.trim())
+      .filter((line: string) => line.length > 0);
+
+    let indent = 0;
+    const lines: string[] = [];
+
+    for (const token of tokens) {
+      const isClosing = /^<\//.test(token);
+      const isOpening = /^<[^!/][^>]*[^/]>/i.test(token);
+      const isSelfClosing = /^<[^>]+\/>$/.test(token) || /^<!/.test(token);
+
+      if (isClosing) {
+        indent = Math.max(indent - 1, 0);
+      }
+
+      lines.push(`${"  ".repeat(indent)}${token}`);
+
+      if (isOpening && !isSelfClosing && !isClosing && !/<[^>]+>.*<\/[^>]+>$/.test(token)) {
+        indent += 1;
+      }
+    }
+
+    output.value = lines.join("\n");
+  } catch {
+    output.value = "Unable to prettify HTML.";
+  }
+
+  return;
+}
+
+if (slug === "html-minify") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter HTML.";
+    return;
+  }
+
+  output.value = text
+    .replace(/>\s+</g, "><")
+    .replace(/\s{2,}/g, " ")
+    .replace(/\n+/g, "")
+    .trim();
+
+  return;
+}
+
+if (slug === "json-escape") {
+  const text = input.value;
+
+  if (!text) {
+    output.value = "Enter text.";
+    return;
+  }
+
+  output.value = JSON.stringify(text).slice(1, -1);
+  return;
+}
+
+if (slug === "json-unescape") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter escaped JSON string content.";
+    return;
+  }
+
+  try {
+    output.value = JSON.parse(`"${text.replace(/\\/g, "\\\\").replace(/"/g, '\\"')}"`)
+      .replace(/\\\\n/g, "\\n");
+  } catch {
+    try {
+      output.value = JSON.parse(`"${text}"`);
+    } catch {
+      output.value = "Invalid escaped JSON string.";
+    }
+  }
+
+  return;
+}
+
+if (slug === "javascript-prettify") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter JavaScript.";
+    return;
+  }
+
+  const normalizeOperators = (value: string): string => {
+    return value
+      .replace(/\s*=\s*/g, " = ")
+      .replace(/\s*\+\s*/g, " + ")
+      .replace(/\s*-\s*/g, " - ")
+      .replace(/\s*\*\s*/g, " * ")
+      .replace(/\s*\/\s*/g, " / ")
+      .replace(/\s*,\s*/g, ", ")
+      .replace(/\(\s*/g, "(")
+      .replace(/\s*\)/g, ")")
+      .replace(/\{\s*/g, " {")
+      .replace(/\s*\[/g, "[")
+      .replace(/\[\s*/g, "[")
+      .replace(/\s*\]/g, "]")
+      .replace(/\s{2,}/g, " ")
+      .trim();
+  };
+
+  try {
+    let formatted = text
+      .replace(/;\s*/g, ";\n")
+      .replace(/\{\s*/g, "{\n")
+      .replace(/\}\s*/g, "\n}\n")
+      .replace(/,\s*(?=[A-Za-z_$])/g, ",\n")
+      .replace(/\n{2,}/g, "\n");
+
+    const rawLines = formatted
+      .split("\n")
+      .map((line: string) => normalizeOperators(line))
+      .filter((line: string) => line.length > 0);
+
+    let indent = 0;
+    const result: string[] = [];
+
+    for (const line of rawLines) {
+      if (/^\}/.test(line)) {
+        indent = Math.max(indent - 1, 0);
+      }
+
+      result.push(`${"  ".repeat(indent)}${line}`);
+
+      const opens = (line.match(/\{/g) || []).length;
+      const closes = (line.match(/\}/g) || []).length;
+
+      if (opens > closes) {
+        indent += opens - closes;
+      } else if (closes > opens && !/^\}/.test(line)) {
+        indent = Math.max(indent - (closes - opens), 0);
+      }
+    }
+
+    output.value = result.join("\n");
+  } catch {
+    output.value = "Unable to prettify JavaScript.";
+  }
+
+  return;
+}
+if (slug === "javascript-minify") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter JavaScript to minify.";
+    return;
+  }
+
+  const minified = text
+    .replace(/\/\/[^\n\r]*/g, "")
+    .replace(/\s+/g, " ")
+    .replace(/\s*([{}();,:=+\-*/<>])\s*/g, "$1")
+    .trim();
+
+  output.value = minified;
+  return;
+}
+
+if (slug === "javascript-validate") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter JavaScript to validate.";
+    return;
+  }
+
+  try {
+    // eslint-disable-next-line no-new-func
+    new Function(text);
+    output.value = "Valid JavaScript.";
+  } catch {
+    output.value = "Invalid JavaScript.";
+  }
+
+  return;
+}
+
+if (slug === "css-prettify") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter CSS to format.";
+    return;
+  }
+
+  try {
+    const formatted = text
+      .replace(/\s*{\s*/g, " {\n")
+      .replace(/;\s*/g, ";\n")
+      .replace(/\s*}\s*/g, "\n}\n")
+      .split("\n")
+      .map((line: string) => line.trim())
+      .filter((line: string) => line.length > 0);
+
+    let indent = 0;
+    const result: string[] = [];
+
+    for (const line of formatted) {
+      if (line.startsWith("}")) {
+        indent = Math.max(indent - 1, 0);
+      }
+
+      result.push(`${"  ".repeat(indent)}${line}`);
+
+      if (line.endsWith("{")) {
+        indent += 1;
+      }
+    }
+
+    output.value = result.join("\n").replace(/\n{3,}/g, "\n\n");
+  } catch {
+    output.value = "Unable to prettify CSS.";
+  }
+
+  return;
+}
+
+if (slug === "css-minify") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter CSS to minify.";
+    return;
+  }
+
+  output.value = text
+    .replace(/\/\*[\s\S]*?\*\//g, "")
+    .replace(/\s+/g, " ")
+    .replace(/\s*([{}:;,>])\s*/g, "$1")
+    .replace(/;}/g, "}")
+    .trim();
+
+  return;
+}
+
+if (slug === "html-to-markdown") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter HTML to convert to Markdown.";
+    return;
+  }
+
+  let markdown = text
+    .replace(/<h1[^>]*>(.*?)<\/h1>/gis, "# $1\n\n")
+    .replace(/<h2[^>]*>(.*?)<\/h2>/gis, "## $1\n\n")
+    .replace(/<h3[^>]*>(.*?)<\/h3>/gis, "### $1\n\n")
+    .replace(/<strong[^>]*>(.*?)<\/strong>/gis, "**$1**")
+    .replace(/<b[^>]*>(.*?)<\/b>/gis, "**$1**")
+    .replace(/<em[^>]*>(.*?)<\/em>/gis, "*$1*")
+    .replace(/<i[^>]*>(.*?)<\/i>/gis, "*$1*")
+    .replace(/<code[^>]*>(.*?)<\/code>/gis, "`$1`")
+    .replace(/<a[^>]*href=["']([^"']+)["'][^>]*>(.*?)<\/a>/gis, "[$2]($1)")
+    .replace(/<li[^>]*>(.*?)<\/li>/gis, "- $1\n")
+    .replace(/<ul[^>]*>|<\/ul>/gis, "")
+    .replace(/<ol[^>]*>|<\/ol>/gis, "")
+    .replace(/<p[^>]*>(.*?)<\/p>/gis, "$1\n\n")
+    .replace(/<br\s*\/?>/gis, "\n")
+    .replace(/<[^>]+>/g, "")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+
+  output.value = markdown;
+  return;
+}
+
+if (slug === "html-to-jade") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter HTML to convert to Jade.";
+    return;
+  }
+
+  try {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(text, "text/html");
+
+    const walk = (node: Node, indent = 0): string[] => {
+      const pad = "  ".repeat(indent);
+
+      if (node.nodeType === Node.TEXT_NODE) {
+        const value = (node.textContent || "").trim();
+        return value ? [`${pad}${value}`] : [];
+      }
+
+      if (node.nodeType !== Node.ELEMENT_NODE) {
+        return [];
+      }
+
+      const el = node as HTMLElement;
+      const tag = el.tagName.toLowerCase();
+      const children = Array.from(el.childNodes);
+      const textOnly =
+        children.length === 1 &&
+        children[0].nodeType === Node.TEXT_NODE &&
+        (children[0].textContent || "").trim();
+
+      if (textOnly) {
+        return [`${pad}${tag} ${(children[0].textContent || "").trim()}`];
+      }
+
+      const lines = [`${pad}${tag}`];
+      children.forEach((child: Node) => {
+        lines.push(...walk(child, indent + 1));
+      });
+      return lines;
+    };
+
+    const bodyChildren = Array.from(doc.body.childNodes);
+    const result: string[] = [];
+
+    bodyChildren.forEach((child: Node) => {
+      result.push(...walk(child, 0));
+    });
+
+    output.value = result.join("\n").trim() || "Unable to convert HTML.";
+  } catch {
+    output.value = "Unable to convert HTML.";
+  }
+
+  return;
+}
+if (slug === "jade-to-html") {
+  const text = input.value.replace(/\r\n/g, "\n").trim();
+
+  if (!text) {
+    output.value = "Enter Jade to convert to HTML.";
+    return;
+  }
+
+  const lines = text
+    .split("\n")
+    .map((line: string) => line.replace(/\t/g, "  "))
+    .filter((line: string) => line.trim() !== "");
+
+  const stack: string[] = [];
+  let html = "";
+  let previousIndent = 0;
+
+  for (const rawLine of lines) {
+    const indent = rawLine.match(/^ */)?.[0].length || 0;
+    const level = Math.floor(indent / 2);
+    const trimmed = rawLine.trim();
+
+    while (stack.length > level) {
+      const tagToClose = stack.pop();
+      if (tagToClose) {
+        html += `</${tagToClose}>`;
+      }
+    }
+
+    const match = trimmed.match(/^([a-zA-Z][\w-]*)(?:\((.*?)\))?(?:\s+([\s\S]+))?$/);
+
+    if (!match) {
+      html += trimmed;
+      previousIndent = level;
+      continue;
+    }
+
+    const [, tag, attrsRaw = "", textContent = ""] = match;
+
+    let attrs = "";
+    if (attrsRaw.trim()) {
+      attrs = " " + attrsRaw.replace(/,\s*/g, " ");
+    }
+
+    if (textContent.trim()) {
+      html += `<${tag}${attrs}>${textContent.trim()}</${tag}>`;
+    } else {
+      html += `<${tag}${attrs}>`;
+      stack.push(tag);
+    }
+
+    previousIndent = level;
+  }
+
+  while (stack.length > 0) {
+    const tagToClose = stack.pop();
+    if (tagToClose) {
+      html += `</${tagToClose}>`;
+    }
+  }
+
+  output.value = html;
+  return;
+}
+
+if (slug === "bbcode-to-html") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter BBCode to convert to HTML.";
+    return;
+  }
+
+  let html = text
+    .replace(/\[b\]([\s\S]*?)\[\/b\]/gi, "<strong>$1</strong>")
+    .replace(/\[i\]([\s\S]*?)\[\/i\]/gi, "<em>$1</em>")
+    .replace(/\[u\]([\s\S]*?)\[\/u\]/gi, "<u>$1</u>")
+    .replace(/\[s\]([\s\S]*?)\[\/s\]/gi, "<s>$1</s>")
+    .replace(/\[code\]([\s\S]*?)\[\/code\]/gi, "<pre><code>$1</code></pre>")
+    .replace(/\[quote\]([\s\S]*?)\[\/quote\]/gi, "<blockquote>$1</blockquote>")
+    .replace(/\[img\]([\s\S]*?)\[\/img\]/gi, '<img src="$1" alt="">')
+    .replace(/\[url=([^\]]+)\]([\s\S]*?)\[\/url\]/gi, '<a href="$1">$2</a>')
+    .replace(/\[url\]([\s\S]*?)\[\/url\]/gi, '<a href="$1">$1</a>')
+    .replace(/\[h1\]([\s\S]*?)\[\/h1\]/gi, "<h1>$1</h1>")
+    .replace(/\[h2\]([\s\S]*?)\[\/h2\]/gi, "<h2>$1</h2>")
+    .replace(/\[h3\]([\s\S]*?)\[\/h3\]/gi, "<h3>$1</h3>")
+    .replace(/\[list\]([\s\S]*?)\[\/list\]/gi, (_m: string, items: string) => {
+      const listItems = items
+        .split(/\[\*\]/)
+        .map((item: string) => item.trim())
+        .filter((item: string) => item.length > 0)
+        .map((item: string) => `<li>${item}</li>`)
+        .join("");
+      return `<ul>${listItems}</ul>`;
+    })
+    .replace(/\r?\n/g, "<br>");
+
+  output.value = html;
+  return;
+}
+
+if (slug === "bbcode-to-jade") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter BBCode to convert to Jade.";
+    return;
+  }
+
+  let result = text
+    .replace(/\[b\]([\s\S]*?)\[\/b\]/gi, "strong $1")
+    .replace(/\[i\]([\s\S]*?)\[\/i\]/gi, "em $1")
+    .replace(/\[u\]([\s\S]*?)\[\/u\]/gi, "u $1")
+    .replace(/\[quote\]([\s\S]*?)\[\/quote\]/gi, "blockquote $1")
+    .replace(/\[code\]([\s\S]*?)\[\/code\]/gi, "pre\n  code $1")
+    .replace(/\[url=([^\]]+)\]([\s\S]*?)\[\/url\]/gi, 'a(href="$1") $2')
+    .replace(/\[url\]([\s\S]*?)\[\/url\]/gi, 'a(href="$1") $1')
+    .replace(/\[img\]([\s\S]*?)\[\/img\]/gi, 'img(src="$1")')
+    .replace(/\[h1\]([\s\S]*?)\[\/h1\]/gi, "h1 $1")
+    .replace(/\[h2\]([\s\S]*?)\[\/h2\]/gi, "h2 $1")
+    .replace(/\[h3\]([\s\S]*?)\[\/h3\]/gi, "h3 $1")
+    .replace(/\[list\]([\s\S]*?)\[\/list\]/gi, (_m: string, items: string) => {
+      const listItems = items
+        .split(/\[\*\]/)
+        .map((item: string) => item.trim())
+        .filter((item: string) => item.length > 0)
+        .map((item: string) => `  li ${item}`)
+        .join("\n");
+      return `ul\n${listItems}`;
+    });
+
+  output.value = result;
+  return;
+}
+
+if (slug === "extract-text-from-bbcode") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter BBCode to extract text.";
+    return;
+  }
+
+  const result = text
+    .replace(/\[url=([^\]]+)\]([\s\S]*?)\[\/url\]/gi, "$2")
+    .replace(/\[url\]([\s\S]*?)\[\/url\]/gi, "$1")
+    .replace(/\[img\]([\s\S]*?)\[\/img\]/gi, "")
+    .replace(/\[(\/?)(b|i|u|s|quote|code|h1|h2|h3|list|\*)\]/gi, "")
+    .replace(/\r?\n{2,}/g, "\n")
+    .trim();
+
+  output.value = result;
+  return;
+}
+
+if (slug === "extract-text-from-html") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter HTML to extract text.";
+    return;
+  }
+
+  try {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(text, "text/html");
+    const result = (doc.body.textContent || "").replace(/\s+/g, " ").trim();
+    output.value = result;
+  } catch {
+    output.value = "Unable to extract text from HTML.";
+  }
+
+  return;
+}
+if (slug === "extract-text-from-xml") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter XML to extract text.";
+    return;
+  }
+
+  try {
+    const parser = new DOMParser();
+    const xml = parser.parseFromString(text, "application/xml");
+    const parserError = xml.querySelector("parsererror");
+
+    if (parserError) {
+      output.value = "Invalid XML.";
+      return;
+    }
+
+    const raw = xml.documentElement.textContent || "";
+    const normalized = raw
+      .replace(/\s+/g, " ")
+      .trim();
+
+    // если textContent слепил соседние узлы, берём текст через замену тегов пробелами
+    const fallback = text
+      .replace(/<[^>]+>/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+
+    output.value = fallback || normalized || "";
+  } catch {
+    output.value = "Invalid XML.";
+  }
+
+  return;
+}
+
+
+if (slug === "extract-text-from-json") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter JSON to extract text.";
+    return;
+  }
+
+  try {
+    const parsed = JSON.parse(text);
+    const values: string[] = [];
+
+    const collect = (value: unknown): void => {
+      if (value === null || value === undefined) return;
+
+      if (typeof value === "string" || typeof value === "number" || typeof value === "boolean") {
+        values.push(String(value));
+        return;
+      }
+
+      if (Array.isArray(value)) {
+        value.forEach((item: unknown) => collect(item));
+        return;
+      }
+
+      if (typeof value === "object") {
+        Object.values(value as Record<string, unknown>).forEach((item: unknown) => collect(item));
+      }
+    };
+
+    collect(parsed);
+    output.value = values.join("\n");
+  } catch {
+    output.value = "Invalid JSON.";
+  }
+
+  return;
+}
+
+if (slug === "idn-encode") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter a domain to encode.";
+    return;
+  }
+
+  try {
+    const hasProtocol = /^[a-z]+:\/\//i.test(text);
+    const url = new URL(hasProtocol ? text : `https://${text}`);
+    output.value = url.hostname;
+  } catch {
+    output.value = "Invalid domain.";
+  }
+
+  return;
+}
+
+if (slug === "idn-decode") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter a punycode domain to decode.";
+    return;
+  }
+
+  try {
+    const hasProtocol = /^[a-z]+:\/\//i.test(text);
+    const url = new URL(hasProtocol ? text : `https://${text}`);
+    output.value = decodeURIComponent(url.hostname);
+  } catch {
+    output.value = "Invalid domain.";
+  }
+
+  return;
+}
+if (slug === "xml-to-csv" || slug === "xml-to-tsv") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = slug === "xml-to-csv"
+      ? "Enter XML to convert to CSV."
+      : "Enter XML to convert to TSV.";
+    return;
+  }
+
+  try {
+    const parser = new DOMParser();
+    const xml = parser.parseFromString(text, "application/xml");
+    const parserError = xml.querySelector("parsererror");
+
+    if (parserError) {
+      output.value = "Invalid XML.";
+      return;
+    }
+
+    const root = xml.documentElement;
+    const rows = Array.from(root.children);
+
+    if (rows.length === 0) {
+      output.value = "XML must contain repeated record elements.";
+      return;
+    }
+
+    const headers = Array.from(
+      new Set(
+        rows.flatMap((row: Element) =>
+          Array.from(row.children).map((child: Element) => child.tagName)
+        )
+      )
+    );
+
+    if (headers.length === 0) {
+      output.value = "XML records must contain child fields.";
+      return;
+    }
+
+    const delimiter = slug === "xml-to-csv" ? "," : "\t";
+
+    const escapeCsv = (value: string): string => {
+      if (slug !== "xml-to-csv") return value;
+      if (/[",\n]/.test(value)) {
+        return `"${value.replace(/"/g, '""')}"`;
+      }
+      return value;
+    };
+
+    const lines = [
+      headers.join(delimiter),
+      ...rows.map((row: Element) => {
+        const values = headers.map((header: string) => {
+          const node = row.querySelector(`:scope > ${header}`);
+          const value = node?.textContent?.trim() || "";
+          return escapeCsv(value);
+        });
+        return values.join(delimiter);
+      })
+    ];
+
+    output.value = lines.join("\n");
+  } catch {
+    output.value = slug === "xml-to-csv"
+      ? "Unable to convert XML to CSV."
+      : "Unable to convert XML to TSV.";
+  }
+
+  return;
+}
+
+if (slug === "csv-to-xml") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter CSV to convert to XML.";
+    return;
+  }
+
+  const parseCsvLine = (line: string): string[] => {
+    const result: string[] = [];
+    let current = "";
+    let inQuotes = false;
+
+    for (let i = 0; i < line.length; i++) {
+      const char = line[i];
+      const next = line[i + 1];
+
+      if (char === '"' && inQuotes && next === '"') {
+        current += '"';
+        i++;
+      } else if (char === '"') {
+        inQuotes = !inQuotes;
+      } else if (char === "," && !inQuotes) {
+        result.push(current);
+        current = "";
+      } else {
+        current += char;
+      }
+    }
+
+    result.push(current);
+    return result;
+  };
+
+  const escapeXml = (value: string): string =>
+    value
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&apos;");
+
+  const sanitizeTag = (value: string): string => {
+    const cleaned = value.trim().replace(/[^a-zA-Z0-9_-]+/g, "-");
+    return /^[a-zA-Z_]/.test(cleaned) ? cleaned : `field-${cleaned || "value"}`;
+  };
+
+  const lines = text.split(/\r?\n/).filter((line: string) => line.trim().length > 0);
+
+  if (lines.length < 2) {
+    output.value = "CSV must include a header row and at least one data row.";
+    return;
+  }
+
+  const headers = parseCsvLine(lines[0]).map((header: string) => sanitizeTag(header));
+
+  const rows = lines.slice(1).map((line: string) => parseCsvLine(line));
+
+  const xml = rows
+    .map((row: string[]) => {
+      const fields = headers
+        .map((header: string, index: number) => `<${header}>${escapeXml(row[index] ?? "")}</${header}>`)
+        .join("");
+      return `<row>${fields}</row>`;
+    })
+    .join("");
+
+  output.value = `<rows>${xml}</rows>`;
+  return;
+}
+
+if (slug === "xml-to-yaml") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter XML to convert to YAML.";
+    return;
+  }
+
+  const elementToObject = (element: Element): unknown => {
+    const childElements = Array.from(element.children);
+    const textNodes = Array.from(element.childNodes)
+      .filter((node: ChildNode) => node.nodeType === Node.TEXT_NODE)
+      .map((node: ChildNode) => node.textContent?.trim() || "")
+      .filter((value: string) => value.length > 0);
+
+    if (childElements.length === 0) {
+      return textNodes.join(" ");
+    }
+
+    const result: Record<string, unknown> = {};
+
+    for (const child of childElements) {
+      const key = child.tagName;
+      const value = elementToObject(child);
+
+      if (Object.prototype.hasOwnProperty.call(result, key)) {
+        const current = result[key];
+        result[key] = Array.isArray(current) ? [...current, value] : [current, value];
+      } else {
+        result[key] = value;
+      }
+    }
+
+    return result;
+  };
+
+  const toYaml = (value: unknown, indent = 0, keyName = ""): string => {
+    const space = "  ".repeat(indent);
+
+    if (Array.isArray(value)) {
+      return value
+        .map((item: unknown) => {
+          if (typeof item === "object" && item !== null) {
+            const nested = toYaml(item, indent + 1);
+            return `${space}-\n${nested}`;
+          }
+          return `${space}- ${String(item)}`;
+        })
+        .join("\n");
+    }
+
+    if (typeof value === "object" && value !== null) {
+      return Object.entries(value as Record<string, unknown>)
+        .map(([key, val]) => {
+          if (typeof val === "object" && val !== null) {
+            return `${space}${key}:\n${toYaml(val, indent + 1, key)}`;
+          }
+          return `${space}${key}: ${String(val)}`;
+        })
+        .join("\n");
+    }
+
+    if (keyName) {
+      return `${space}${keyName}: ${String(value)}`;
+    }
+
+    return `${space}${String(value)}`;
+  };
+
+  try {
+    const parser = new DOMParser();
+    const xml = parser.parseFromString(text, "application/xml");
+    const parserError = xml.querySelector("parsererror");
+
+    if (parserError) {
+      output.value = "Invalid XML.";
+      return;
+    }
+
+    const root = xml.documentElement;
+    const result = { [root.tagName]: elementToObject(root) };
+    output.value = toYaml(result);
+  } catch {
+    output.value = "Unable to convert XML to YAML.";
+  }
+
+  return;
+}
+
+if (slug === "yaml-to-xml") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter simple YAML to convert to XML.";
+    return;
+  }
+
+  try {
+    const lines = text.replace(/\r\n/g, "\n").split("\n").filter((line: string) => line.trim());
+
+    const countIndent = (line: string): number => (line.match(/^ */)?.[0].length || 0);
+
+    const parseScalar = (value: string): unknown => {
+      if (/^-?\d+(?:\.\d+)?$/.test(value)) return Number(value);
+      if (value === "true") return true;
+      if (value === "false") return false;
+      if (value === "null") return null;
+      return value;
+    };
+
+    const parseBlock = (startIndex: number, baseIndent: number): { value: unknown; nextIndex: number } => {
+      let i = startIndex;
+      let isArray = false;
+      let result: Record<string, unknown> | unknown[] = {};
+
+      while (i < lines.length) {
+        const line = lines[i];
+        const indent = countIndent(line);
+        const trimmed = line.trim();
+
+        if (indent < baseIndent) break;
+        if (indent > baseIndent && !trimmed.startsWith("- ")) break;
+
+        if (trimmed.startsWith("- ")) {
+          if (!isArray) {
+            isArray = true;
+            result = [];
+          }
+
+          const itemText = trimmed.slice(2).trim();
+
+          if (itemText.includes(":")) {
+            const colonIndex = itemText.indexOf(":");
+            const key = itemText.slice(0, colonIndex).trim();
+            const rest = itemText.slice(colonIndex + 1).trim();
+            const obj: Record<string, unknown> = {};
+
+            if (rest) {
+              obj[key] = parseScalar(rest);
+              (result as unknown[]).push(obj);
+              i++;
+              continue;
+            }
+
+            const nested = parseBlock(i + 1, baseIndent + 2);
+            obj[key] = nested.value;
+            (result as unknown[]).push(obj);
+            i = nested.nextIndex;
+            continue;
+          }
+
+          (result as unknown[]).push(parseScalar(itemText));
+          i++;
+          continue;
+        }
+
+        const colonIndex = trimmed.indexOf(":");
+
+        if (colonIndex === -1) {
+          throw new Error("Invalid YAML line");
+        }
+
+        const key = trimmed.slice(0, colonIndex).trim();
+        const rest = trimmed.slice(colonIndex + 1).trim();
+
+        if (rest) {
+          (result as Record<string, unknown>)[key] = parseScalar(rest);
+          i++;
+          continue;
+        }
+
+        const nextLine = lines[i + 1];
+        if (!nextLine) {
+          (result as Record<string, unknown>)[key] = "";
+          i++;
+          continue;
+        }
+
+        const nested = parseBlock(i + 1, baseIndent + 2);
+        (result as Record<string, unknown>)[key] = nested.value;
+        i = nested.nextIndex;
+      }
+
+      return { value: result, nextIndex: i };
+    };
+
+    const parsed = parseBlock(0, countIndent(lines[0])).value;
+
+    const escapeXml = (value: string): string =>
+      value
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&apos;");
+
+    const buildXml = (key: string, value: unknown): string => {
+      if (Array.isArray(value)) {
+        const childTag = key.endsWith("s") ? key.slice(0, -1) || "item" : "item";
+        return `<${key}>${value.map((item: unknown) => buildXml(childTag, item)).join("")}</${key}>`;
+      }
+
+      if (value !== null && typeof value === "object") {
+        const inner = Object.entries(value as Record<string, unknown>)
+          .map(([childKey, childValue]) => buildXml(childKey, childValue))
+          .join("");
+        return `<${key}>${inner}</${key}>`;
+      }
+
+      return `<${key}>${escapeXml(String(value ?? ""))}</${key}>`;
+    };
+
+    if (parsed !== null && typeof parsed === "object" && !Array.isArray(parsed)) {
+      const entries = Object.entries(parsed as Record<string, unknown>);
+      output.value = entries.length === 1
+        ? buildXml(entries[0][0], entries[0][1])
+        : `<root>${entries.map(([key, value]) => buildXml(key, value)).join("")}</root>`;
+    } else {
+      output.value = buildXml("root", parsed);
+    }
+  } catch {
+    output.value = "Unable to convert YAML. Use simple YAML with clean indentation, key-value pairs, and standard lists.";
+  }
+
+  return;
+}
+
+if (slug === "yaml-to-tsv") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter simple YAML to convert to TSV.";
+    return;
+  }
+
+  try {
+    const lines = text.replace(/\r\n/g, "\n").split("\n").filter((line: string) => line.trim());
+
+    if (lines.every((line: string) => !line.trim().startsWith("- "))) {
+      const pairs = lines.map((line: string) => {
+        const match = line.match(/^([^:]+):\s*(.*)$/);
+        return match ? [match[1].trim(), match[2].trim()] : null;
+      });
+
+      if (pairs.some((pair) => pair === null)) {
+        throw new Error("Invalid YAML");
+      }
+
+      output.value = ["key\tvalue", ...pairs.map((pair) => `${pair?.[0]}\t${pair?.[1]}`)].join("\n");
+      return;
+    }
+
+    const records: Record<string, string>[] = [];
+    let current: Record<string, string> | null = null;
+
+    for (const line of lines) {
+      const trimmed = line.trim();
+
+      if (trimmed.startsWith("- ")) {
+        if (current) records.push(current);
+        current = {};
+
+        const rest = trimmed.slice(2).trim();
+        if (rest.includes(":")) {
+          const colonIndex = rest.indexOf(":");
+          current[rest.slice(0, colonIndex).trim()] = rest.slice(colonIndex + 1).trim();
+        }
+      } else if (current && trimmed.includes(":")) {
+        const colonIndex = trimmed.indexOf(":");
+        current[trimmed.slice(0, colonIndex).trim()] = trimmed.slice(colonIndex + 1).trim();
+      }
+    }
+
+    if (current) records.push(current);
+    if (records.length === 0) {
+      throw new Error("No records");
+    }
+
+    const headers = Array.from(new Set(records.flatMap((record: Record<string, string>) => Object.keys(record))));
+    const rows = [headers.join("\t"), ...records.map((record: Record<string, string>) => headers.map((header: string) => record[header] ?? "").join("\t"))];
+    output.value = rows.join("\n");
+  } catch {
+    output.value = "Unable to convert YAML. Use simple key-value YAML or a flat list of objects.";
+  }
+
+  return;
+}
+
+if (slug === "tsv-to-yaml") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter TSV to convert to YAML.";
+    return;
+  }
+
+  const lines = text.split(/\r?\n/).filter((line: string) => line.trim().length > 0);
+
+  if (lines.length < 2) {
+    output.value = "TSV must include a header row and at least one data row.";
+    return;
+  }
+
+  const headers = lines[0].split("\t").map((value: string) => value.trim());
+  const rows = lines.slice(1).map((line: string) => line.split("\t"));
+
+  const yaml = rows
+    .map((row: string[]) => {
+      const fields = headers
+        .map((header: string, index: number) => `  ${header}: ${row[index] ?? ""}`)
+        .join("\n");
+      return `-\n${fields}`;
+    })
+    .join("\n");
+
+  output.value = yaml;
+  return;
+}
+if (slug === "tsv-to-xml") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter TSV to convert to XML.";
+    return;
+  }
+
+  const sanitizeTag = (value: string): string => {
+    const cleaned = value.trim().replace(/[^a-zA-Z0-9_-]+/g, "-");
+    return /^[a-zA-Z_]/.test(cleaned) ? cleaned : `field-${cleaned || "value"}`;
+  };
+
+  const escapeXml = (value: string): string =>
+    value
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&apos;");
+
+  const lines = text.split(/\r?\n/).filter((line: string) => line.trim().length > 0);
+
+  if (lines.length < 2) {
+    output.value = "TSV must include a header row and at least one data row.";
+    return;
+  }
+
+  const headers = lines[0].split("\t").map((value: string) => sanitizeTag(value));
+  const rows = lines.slice(1).map((line: string) => line.split("\t"));
+
+  for (let i = 0; i < rows.length; i++) {
+    if (rows[i].length !== headers.length) {
+      output.value = `Row ${i + 2}: expected ${headers.length} columns, found ${rows[i].length}.`;
+      return;
+    }
+  }
+
+  const xml = rows
+    .map((row: string[]) => {
+      const fields = headers
+        .map((header: string, index: number) => `<${header}>${escapeXml(row[index] ?? "")}</${header}>`)
+        .join("");
+      return `<item>${fields}</item>`;
+    })
+    .join("");
+
+  output.value = `<items>${xml}</items>`;
+  return;
+}
+
+if (slug === "json-to-tsv") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = 'Enter a JSON array of objects.\nExample:\n[{"name":"John","role":"admin"},{"name":"Anna","role":"editor"}]';
+    return;
+  }
+
+  try {
+    const data = JSON.parse(text);
+
+    if (!Array.isArray(data) || data.length === 0 || typeof data[0] !== "object" || data[0] === null) {
+      output.value = "Please enter a JSON array of objects.";
+      return;
+    }
+
+    const keys = Array.from(
+      new Set(
+        data.flatMap((item: Record<string, unknown>) => Object.keys(item))
+      )
+    );
+
+    const rows = data.map((item: Record<string, unknown>) =>
+      keys.map((key: string) => {
+        const value = item[key];
+        return value == null ? "" : String(value).replace(/\t/g, " ").replace(/\r?\n/g, " ");
+      }).join("\t")
+    );
+
+    output.value = [keys.join("\t"), ...rows].join("\n");
+  } catch {
+    output.value = "Invalid JSON. Please paste a valid JSON array of objects.";
+  }
+
+  return;
+}
+
+if (slug === "tsv-to-json") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter TSV with a header row.\nExample:\nname\trole\nJohn\tadmin\nAnna\teditor";
+    return;
+  }
+
+  const lines = text.split(/\r?\n/).filter((line: string) => line.trim().length > 0);
+
+  if (lines.length < 2) {
+    output.value = "TSV must include a header row and at least one data row.";
+    return;
+  }
+
+  const headers = lines[0].split("\t").map((value: string) => value.trim());
+  const dataRows = lines.slice(1).map((line: string) => line.split("\t"));
+
+  for (let i = 0; i < dataRows.length; i++) {
+    if (dataRows[i].length !== headers.length) {
+      output.value = `Row ${i + 2}: expected ${headers.length} columns, found ${dataRows[i].length}.`;
+      return;
+    }
+  }
+
+  const result = dataRows.map((row: string[]) => {
+    const item: Record<string, string> = {};
+    headers.forEach((header: string, index: number) => {
+      item[header] = row[index] ?? "";
+    });
+    return item;
+  });
+
+  output.value = JSON.stringify(result, null, 2);
+  return;
+}
+
+if (slug === "yaml-to-csv") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter simple YAML to convert to CSV.";
+    return;
+  }
+
+  try {
+    const lines = text.replace(/\r\n/g, "\n").split("\n").filter((line: string) => line.trim());
+
+    const toCsvCell = (value: string): string => {
+      if (/[",\n]/.test(value)) {
+        return `"${value.replace(/"/g, '""')}"`;
+      }
+      return value;
+    };
+
+    if (lines.every((line: string) => !line.trim().startsWith("- "))) {
+      const pairs = lines.map((line: string) => {
+        const match = line.match(/^([^:]+):\s*(.*)$/);
+        return match ? [match[1].trim(), match[2].trim()] : null;
+      });
+
+      if (pairs.some((pair) => pair === null)) {
+        throw new Error("Invalid YAML");
+      }
+
+      output.value = ["key,value", ...pairs.map((pair) => `${toCsvCell(pair?.[0] || "")},${toCsvCell(pair?.[1] || "")}`)].join("\n");
+      return;
+    }
+
+    const records: Record<string, string>[] = [];
+    let current: Record<string, string> | null = null;
+
+    for (const line of lines) {
+      const trimmed = line.trim();
+
+      if (trimmed.startsWith("- ")) {
+        if (current) records.push(current);
+        current = {};
+
+        const rest = trimmed.slice(2).trim();
+        if (rest.includes(":")) {
+          const colonIndex = rest.indexOf(":");
+          current[rest.slice(0, colonIndex).trim()] = rest.slice(colonIndex + 1).trim();
+        }
+      } else if (current && trimmed.includes(":")) {
+        const colonIndex = trimmed.indexOf(":");
+        current[trimmed.slice(0, colonIndex).trim()] = trimmed.slice(colonIndex + 1).trim();
+      }
+    }
+
+    if (current) records.push(current);
+    if (records.length === 0) {
+      throw new Error("No records");
+    }
+
+    const headers = Array.from(new Set(records.flatMap((record: Record<string, string>) => Object.keys(record))));
+    const rows = [
+      headers.map((header: string) => toCsvCell(header)).join(","),
+      ...records.map((record: Record<string, string>) =>
+        headers.map((header: string) => toCsvCell(record[header] ?? "")).join(",")
+      )
+    ];
+
+    output.value = rows.join("\n");
+  } catch {
+    output.value = "Unable to convert YAML. Use simple key-value YAML or a flat list of objects.";
+  }
+
+  return;
+}
+if (slug === "tsv-to-text") {
+  const text = input.value.replace(/\r\n/g, "\n");
+
+  if (!text.trim()) {
+    output.value = "Enter TSV.";
+    return;
+  }
+
+  output.value = text
+    .split("\n")
+    .map((line: string) => line.replace(/\t/g, " ").trimEnd())
+    .join("\n");
+
+  return;
+}
+
+if (slug === "text-to-tsv") {
+  const text = input.value.replace(/\r\n/g, "\n").trim();
+
+  if (!text) {
+    output.value = "Enter one value per line.";
+    return;
+  }
+
+  const lines = text.split("\n");
+  output.value = ["value", ...lines].join("\n");
+  return;
+}
+
+if (slug === "csv-to-text") {
+  const text = input.value.replace(/\r\n/g, "\n").trim();
+
+  if (!text) {
+    output.value = "Enter CSV.";
+    return;
+  }
+
+  const parseCsvLine = (line: string): string[] => {
+    const result: string[] = [];
+    let current = "";
+    let inQuotes = false;
+
+    for (let i = 0; i < line.length; i++) {
+      const char = line[i];
+      const next = line[i + 1];
+
+      if (char === '"' && inQuotes && next === '"') {
+        current += '"';
+        i++;
+      } else if (char === '"') {
+        inQuotes = !inQuotes;
+      } else if (char === "," && !inQuotes) {
+        result.push(current);
+        current = "";
+      } else {
+        current += char;
+      }
+    }
+
+    result.push(current);
+    return result;
+  };
+
+  const lines = text.split("\n").filter((line: string) => line.trim() !== "");
+  output.value = lines
+    .map((line: string) => parseCsvLine(line).join(" "))
+    .join("\n");
+
+  return;
+}
+
+if (slug === "text-to-csv") {
+  const text = input.value.replace(/\r\n/g, "\n").trim();
+
+  if (!text) {
+    output.value = "Enter one value per line.";
+    return;
+  }
+
+  const escapeCsv = (value: string): string => {
+    if (/[",\n]/.test(value)) {
+      return `"${value.replace(/"/g, '""')}"`;
+    }
+    return value;
+  };
+
+  const lines = text.split("\n");
+  output.value = ["value", ...lines.map((line: string) => escapeCsv(line))].join("\n");
+  return;
+}
+
+if (slug === "transpose-csv" || slug === "csv-columns-to-rows" || slug === "csv-rows-to-columns") {
+  const text = input.value.replace(/\r\n/g, "\n").trim();
+
+  if (!text) {
+    output.value = "Enter CSV.";
+    return;
+  }
+
+  const parseCsvLine = (line: string): string[] => {
+    const result: string[] = [];
+    let current = "";
+    let inQuotes = false;
+
+    for (let i = 0; i < line.length; i++) {
+      const char = line[i];
+      const next = line[i + 1];
+
+      if (char === '"' && inQuotes && next === '"') {
+        current += '"';
+        i++;
+      } else if (char === '"') {
+        inQuotes = !inQuotes;
+      } else if (char === "," && !inQuotes) {
+        result.push(current);
+        current = "";
+      } else {
+        current += char;
+      }
+    }
+
+    result.push(current);
+    return result;
+  };
+
+  const escapeCsvCell = (value: string): string => {
+    if (/[",\n]/.test(value) || /^\s|\s$/.test(value)) {
+      return `"${value.replace(/"/g, '""')}"`;
+    }
+    return value;
+  };
+
+  const rows = text.split("\n").filter((line: string) => line.trim() !== "").map(parseCsvLine);
+
+  const maxCols = Math.max(...rows.map((row: string[]) => row.length));
+  const transposed: string[][] = [];
+
+  for (let col = 0; col < maxCols; col++) {
+    transposed.push(rows.map((row: string[]) => row[col] ?? ""));
+  }
+
+  output.value = transposed
+    .map((row: string[]) => row.map(escapeCsvCell).join(","))
+    .join("\n");
+
+  return;
+}
+
+if (slug === "delete-column-from-csv") {
+  const raw = input.value.trim();
+
+  if (!raw) {
+    output.value = "Enter column name or 1-based column number on the first line, then a blank line, then the CSV data.";
+    return;
+  }
+
+  const parts = raw.split(/\r?\n\r?\n/);
+  const selector = (parts[0] || "").trim();
+  const body = parts.slice(1).join("\n\n").trim();
+
+  if (!selector || !body) {
+    output.value = "Enter column name or 1-based column number on the first line, then a blank line, then the CSV data.";
+    return;
+  }
+
+  const parseCsvLine = (line: string): string[] => {
+    const result: string[] = [];
+    let current = "";
+    let inQuotes = false;
+
+    for (let i = 0; i < line.length; i++) {
+      const char = line[i];
+      const next = line[i + 1];
+
+      if (char === '"' && inQuotes && next === '"') {
+        current += '"';
+        i++;
+      } else if (char === '"') {
+        inQuotes = !inQuotes;
+      } else if (char === "," && !inQuotes) {
+        result.push(current);
+        current = "";
+      } else {
+        current += char;
+      }
+    }
+
+    result.push(current);
+    return result;
+  };
+
+  const escapeCsvCell = (value: string): string => {
+    if (/[",\n]/.test(value) || /^\s|\s$/.test(value)) {
+      return `"${value.replace(/"/g, '""')}"`;
+    }
+    return value;
+  };
+
+  const lines = body.split(/\r?\n/).filter((line: string) => line.trim().length > 0);
+
+  if (lines.length < 2) {
+    output.value = "CSV must include a header row and at least one data row.";
+    return;
+  }
+
+  const rows = lines.map(parseCsvLine);
+  const headers = rows[0].map((value: string) => value.trim());
+
+  let columnIndex = -1;
+
+  if (/^\d+$/.test(selector)) {
+    columnIndex = Number(selector) - 1;
+  } else {
+    columnIndex = headers.findIndex((header: string) => header === selector);
+  }
+
+  if (columnIndex < 0 || columnIndex >= headers.length) {
+    output.value = "Column not found.";
+    return;
+  }
+
+  const updated = rows.map((row: string[]) =>
+    row.filter((_value: string, index: number) => index !== columnIndex)
+  );
+
+  output.value = updated
+    .map((row: string[]) => row.map(escapeCsvCell).join(","))
+    .join("\n");
+
+  return;
+}
+const parseCsvLineShared = (line: string): string[] => {
+  const result: string[] = [];
+  let current = "";
+  let inQuotes = false;
+
+  for (let i = 0; i < line.length; i++) {
+    const char = line[i];
+    const next = line[i + 1];
+
+    if (char === '"' && inQuotes && next === '"') {
+      current += '"';
+      i++;
+    } else if (char === '"') {
+      inQuotes = !inQuotes;
+    } else if (char === "," && !inQuotes) {
+      result.push(current);
+      current = "";
+    } else {
+      current += char;
+    }
+  }
+
+  result.push(current);
+  return result;
+};
+
+const escapeCsvCellShared = (value: string): string => {
+  if (/[",\n]/.test(value) || /^\s|\s$/.test(value)) {
+    return `"${value.replace(/"/g, '""')}"`;
+  }
+  return value;
+};
+
+if (slug === "prepend-csv-column" || slug === "append-csv-column") {
+  const raw = input.value.trim();
+
+  if (!raw) {
+    output.value = "Enter new header on the first line, one value per row after that, then a blank line, then the CSV.";
+    return;
+  }
+
+  const parts = raw.split(/\r?\n\r?\n/);
+  const configLines = (parts[0] || "").split(/\r?\n/).filter((line: string) => line.length > 0);
+  const body = parts.slice(1).join("\n\n").trim();
+
+  if (configLines.length < 2 || !body) {
+    output.value = "Enter new header on the first line, one value per row after that, then a blank line, then the CSV.";
+    return;
+  }
+
+  const newHeader = configLines[0];
+  const newValues = configLines.slice(1);
+  const rows = body.split(/\r?\n/).filter((line: string) => line.trim() !== "").map(parseCsvLineShared);
+
+  if (rows.length < 2) {
+    output.value = "CSV must include a header row and at least one data row.";
+    return;
+  }
+
+  if (newValues.length !== rows.length - 1) {
+    output.value = `Expected ${rows.length - 1} new values, found ${newValues.length}.`;
+    return;
+  }
+
+  const updated = rows.map((row: string[], index: number) => {
+    if (index === 0) {
+      return slug === "prepend-csv-column" ? [newHeader, ...row] : [...row, newHeader];
+    }
+    const value = newValues[index - 1] ?? "";
+    return slug === "prepend-csv-column" ? [value, ...row] : [...row, value];
+  });
+
+  output.value = updated.map((row: string[]) => row.map(escapeCsvCellShared).join(",")).join("\n");
+  return;
+}
+
+if (slug === "insert-csv-column") {
+  const raw = input.value.trim();
+
+  if (!raw) {
+    output.value = "Enter 1-based position on line one, new header on line two, one value per row after that, then a blank line, then the CSV.";
+    return;
+  }
+
+  const parts = raw.split(/\r?\n\r?\n/);
+  const configLines = (parts[0] || "").split(/\r?\n/).filter((line: string) => line.length > 0);
+  const body = parts.slice(1).join("\n\n").trim();
+
+  if (configLines.length < 3 || !body) {
+    output.value = "Enter 1-based position on line one, new header on line two, one value per row after that, then a blank line, then the CSV.";
+    return;
+  }
+
+  const position = Number(configLines[0]);
+  const newHeader = configLines[1];
+  const newValues = configLines.slice(2);
+  const rows = body.split(/\r?\n/).filter((line: string) => line.trim() !== "").map(parseCsvLineShared);
+
+  if (!Number.isInteger(position) || position < 1 || position > rows[0].length + 1) {
+    output.value = `Position must be between 1 and ${rows[0].length + 1}.`;
+    return;
+  }
+
+  if (newValues.length !== rows.length - 1) {
+    output.value = `Expected ${rows.length - 1} new values, found ${newValues.length}.`;
+    return;
+  }
+
+  const index = position - 1;
+  const updated = rows.map((row: string[], rowIndex: number) => {
+    const value = rowIndex === 0 ? newHeader : (newValues[rowIndex - 1] ?? "");
+    return [...row.slice(0, index), value, ...row.slice(index)];
+  });
+
+  output.value = updated.map((row: string[]) => row.map(escapeCsvCellShared).join(",")).join("\n");
+  return;
+}
+
+if (slug === "replace-csv-column") {
+  const raw = input.value.trim();
+
+  if (!raw) {
+    output.value = "Enter column selector on line one, new header on line two, one replacement value per row after that, then a blank line, then the CSV.";
+    return;
+  }
+
+  const parts = raw.split(/\r?\n\r?\n/);
+  const configLines = (parts[0] || "").split(/\r?\n/).filter((line: string) => line.length > 0);
+  const body = parts.slice(1).join("\n\n").trim();
+
+  if (configLines.length < 3 || !body) {
+    output.value = "Enter column selector on line one, new header on line two, one replacement value per row after that, then a blank line, then the CSV.";
+    return;
+  }
+
+  const selector = configLines[0];
+  const newHeader = configLines[1];
+  const newValues = configLines.slice(2);
+  const rows = body.split(/\r?\n/).filter((line: string) => line.trim() !== "").map(parseCsvLineShared);
+
+  if (rows.length < 2) {
+    output.value = "CSV must include a header row and at least one data row.";
+    return;
+  }
+
+  const headers = rows[0].map((value: string) => value.trim());
+  let columnIndex = /^\d+$/.test(selector) ? Number(selector) - 1 : headers.findIndex((header: string) => header === selector);
+
+  if (columnIndex < 0 || columnIndex >= headers.length) {
+    output.value = "Column not found.";
+    return;
+  }
+
+  if (newValues.length !== rows.length - 1) {
+    output.value = `Expected ${rows.length - 1} replacement values, found ${newValues.length}.`;
+    return;
+  }
+
+  const updated = rows.map((row: string[], rowIndex: number) => {
+    const next = [...row];
+    next[columnIndex] = rowIndex === 0 ? newHeader : (newValues[rowIndex - 1] ?? "");
+    return next;
+  });
+
+  output.value = updated.map((row: string[]) => row.map(escapeCsvCellShared).join(",")).join("\n");
+  return;
+}
+
+if (slug === "swap-csv-columns") {
+  const raw = input.value.trim();
+
+  if (!raw) {
+    output.value = "Enter first selector on line one, second selector on line two, then a blank line, then the CSV.";
+    return;
+  }
+
+  const parts = raw.split(/\r?\n\r?\n/);
+  const selectors = (parts[0] || "").split(/\r?\n/).filter((line: string) => line.length > 0);
+  const body = parts.slice(1).join("\n\n").trim();
+
+  if (selectors.length < 2 || !body) {
+    output.value = "Enter first selector on line one, second selector on line two, then a blank line, then the CSV.";
+    return;
+  }
+
+  const rows = body.split(/\r?\n/).filter((line: string) => line.trim() !== "").map(parseCsvLineShared);
+  const headers = rows[0].map((value: string) => value.trim());
+
+  const resolveIndex = (selector: string): number =>
+    /^\d+$/.test(selector) ? Number(selector) - 1 : headers.findIndex((header: string) => header === selector);
+
+  const firstIndex = resolveIndex(selectors[0]);
+  const secondIndex = resolveIndex(selectors[1]);
+
+  if (firstIndex < 0 || secondIndex < 0 || firstIndex >= headers.length || secondIndex >= headers.length) {
+    output.value = "One or both columns were not found.";
+    return;
+  }
+
+  if (firstIndex === secondIndex) {
+    output.value = "Choose two different columns.";
+    return;
+  }
+
+  const updated = rows.map((row: string[]) => {
+    const next = [...row];
+    [next[firstIndex], next[secondIndex]] = [next[secondIndex] ?? "", next[firstIndex] ?? ""];
+    return next;
+  });
+
+  output.value = updated.map((row: string[]) => row.map(escapeCsvCellShared).join(",")).join("\n");
+  return;
+}
+
+if (slug === "change-csv-delimiter") {
+  const raw = input.value;
+
+  if (!raw.trim()) {
+    output.value = "Enter new delimiter on the first line, then a blank line, then the CSV.";
+    return;
+  }
+
+  const parts = raw.split(/\r?\n\r?\n/);
+  let delimiter = (parts[0] || "").replace(/\r?\n/g, "");
+  const body = parts.slice(1).join("\n\n").trim();
+
+  if (!delimiter || !body) {
+    output.value = "Enter new delimiter on the first line, then a blank line, then the CSV.";
+    return;
+  }
+
+  if (delimiter === "\\t") {
+    delimiter = "\t";
+  }
+
+  if (delimiter.length !== 1) {
+    output.value = "Use exactly one delimiter character, such as ; or | or \\t.";
+    return;
+  }
+
+  const rows = body.split(/\r?\n/).filter((line: string) => line.trim() !== "").map(parseCsvLineShared);
+
+  output.value = rows
+    .map((row: string[]) =>
+      row.map((value: string) => {
+        if (value.includes(delimiter) || value.includes('"') || value.includes("\n")) {
+          return `"${value.replace(/"/g, '""')}"`;
+        }
+        return value;
+      }).join(delimiter)
+    )
+    .join("\n");
+
+  return;
+}
+
+if (slug === "transpose-tsv" || slug === "tsv-columns-to-rows" || slug === "tsv-rows-to-columns") {
+  const text = input.value.replace(/\r\n/g, "\n").trim();
+
+  if (!text) {
+    output.value = "Enter TSV.";
+    return;
+  }
+
+  const rows = text.split("\n").filter((line: string) => line.trim() !== "").map((line: string) => line.split("\t"));
+  const maxCols = Math.max(...rows.map((row: string[]) => row.length));
+  const transposed: string[][] = [];
+
+  for (let col = 0; col < maxCols; col++) {
+    transposed.push(rows.map((row: string[]) => row[col] ?? ""));
+  }
+
+  output.value = transposed.map((row: string[]) => row.join("\t")).join("\n");
+  return;
+}
+
+if (slug === "tsv-column-extractor") {
+  const raw = input.value.trim();
+
+  if (!raw) {
+    output.value = "Enter column name or 1-based column number on the first line, then a blank line, then the TSV data.";
+    return;
+  }
+
+  const parts = raw.split(/\r?\n\r?\n/);
+  const selector = (parts[0] || "").trim();
+  const body = parts.slice(1).join("\n\n").trim();
+
+  if (!selector || !body) {
+    output.value = "Enter column name or 1-based column number on the first line, then a blank line, then the TSV data.";
+    return;
+  }
+
+  const lines = body.split(/\r?\n/).filter((line: string) => line.trim().length > 0);
+  const rows = lines.map((line: string) => line.split("\t"));
+  const headers = rows[0].map((value: string) => value.trim());
+
+  let columnIndex = -1;
+  if (/^\d+$/.test(selector)) {
+    columnIndex = Number(selector) - 1;
+  } else {
+    columnIndex = headers.findIndex((header: string) => header === selector);
+  }
+
+  if (columnIndex < 0 || columnIndex >= headers.length) {
+    output.value = "Column not found.";
+    return;
+  }
+
+  output.value = rows.slice(1).map((row: string[]) => row[columnIndex] ?? "").join("\n");
+  return;
+}
+if (
+  slug === "delete-column-from-tsv" ||
+  slug === "prepend-tsv-column" ||
+  slug === "append-tsv-column" ||
+  slug === "insert-tsv-column" ||
+  slug === "replace-tsv-column" ||
+  slug === "swap-tsv-columns" ||
+  slug === "change-tsv-delimiter" ||
+  slug === "extract-arbitrary-delimited-column" ||
+  slug === "delete-arbitrary-delimited-column" ||
+  slug === "replace-arbitrary-delimited-column"
+) {
+  const raw = input.value.replace(/\r\n/g, "\n").trim();
+
+  if (!raw) {
+    output.value = "Enter input.";
+    return;
+  }
+
+  const splitBlocks = raw.split(/\n\n/);
+  const joinLines = (text: string): string[] =>
+    text.split("\n").filter((line: string) => line.length > 0);
+
+  const toDelimited = (rows: string[][], delimiter: string): string =>
+    rows.map((row: string[]) => row.join(delimiter)).join("\n");
+
+  const resolveColumnIndex = (selector: string, headers: string[]): number => {
+    if (/^\d+$/.test(selector)) {
+      return Number(selector) - 1;
+    }
+    return headers.findIndex((header: string) => header === selector);
+  };
+
+  if (slug === "delete-column-from-tsv") {
+    const selector = (splitBlocks[0] || "").trim();
+    const body = splitBlocks.slice(1).join("\n\n").trim();
+
+    if (!selector || !body) {
+      output.value = "Enter column name or 1-based column number on the first line, then a blank line, then the TSV data.";
+      return;
+    }
+
+    const rows = body.split("\n").map((line: string) => line.split("\t"));
+    const headers = rows[0].map((value: string) => value.trim());
+    const index = resolveColumnIndex(selector, headers);
+
+    if (index < 0 || index >= headers.length) {
+      output.value = "Column not found.";
+      return;
+    }
+
+    output.value = toDelimited(
+      rows.map((row: string[]) => row.filter((_v: string, i: number) => i !== index)),
+      "\t"
+    );
+    return;
+  }
+
+  if (slug === "prepend-tsv-column" || slug === "append-tsv-column") {
+    const config = joinLines(splitBlocks[0] || "");
+    const body = splitBlocks.slice(1).join("\n\n").trim();
+
+    if (config.length < 2 || !body) {
+      output.value = "Enter new header on the first line, one value per row after that, then a blank line, then the TSV.";
+      return;
+    }
+
+    const newHeader = config[0];
+    const newValues = config.slice(1);
+    const rows = body.split("\n").map((line: string) => line.split("\t"));
+
+    if (newValues.length !== rows.length - 1) {
+      output.value = `Expected ${rows.length - 1} new values, found ${newValues.length}.`;
+      return;
+    }
+
+    const updated = rows.map((row: string[], index: number) => {
+      if (index === 0) {
+        return slug === "prepend-tsv-column" ? [newHeader, ...row] : [...row, newHeader];
+      }
+      const value = newValues[index - 1] ?? "";
+      return slug === "prepend-tsv-column" ? [value, ...row] : [...row, value];
+    });
+
+    output.value = toDelimited(updated, "\t");
+    return;
+  }
+
+  if (slug === "insert-tsv-column") {
+    const config = joinLines(splitBlocks[0] || "");
+    const body = splitBlocks.slice(1).join("\n\n").trim();
+
+    if (config.length < 3 || !body) {
+      output.value = "Enter 1-based position on line one, new header on line two, one value per row after that, then a blank line, then the TSV.";
+      return;
+    }
+
+    const position = Number(config[0]);
+    const newHeader = config[1];
+    const newValues = config.slice(2);
+    const rows = body.split("\n").map((line: string) => line.split("\t"));
+
+    if (!Number.isInteger(position) || position < 1 || position > rows[0].length + 1) {
+      output.value = `Position must be between 1 and ${rows[0].length + 1}.`;
+      return;
+    }
+
+    if (newValues.length !== rows.length - 1) {
+      output.value = `Expected ${rows.length - 1} new values, found ${newValues.length}.`;
+      return;
+    }
+
+    const index = position - 1;
+    const updated = rows.map((row: string[], rowIndex: number) => {
+      const value = rowIndex === 0 ? newHeader : (newValues[rowIndex - 1] ?? "");
+      return [...row.slice(0, index), value, ...row.slice(index)];
+    });
+
+    output.value = toDelimited(updated, "\t");
+    return;
+  }
+
+  if (slug === "replace-tsv-column") {
+    const config = joinLines(splitBlocks[0] || "");
+    const body = splitBlocks.slice(1).join("\n\n").trim();
+
+    if (config.length < 3 || !body) {
+      output.value = "Enter column selector on line one, new header on line two, one replacement value per row after that, then a blank line, then the TSV.";
+      return;
+    }
+
+    const selector = config[0];
+    const newHeader = config[1];
+    const newValues = config.slice(2);
+    const rows = body.split("\n").map((line: string) => line.split("\t"));
+    const headers = rows[0].map((value: string) => value.trim());
+    const index = resolveColumnIndex(selector, headers);
+
+    if (index < 0 || index >= headers.length) {
+      output.value = "Column not found.";
+      return;
+    }
+
+    if (newValues.length !== rows.length - 1) {
+      output.value = `Expected ${rows.length - 1} replacement values, found ${newValues.length}.`;
+      return;
+    }
+
+    const updated = rows.map((row: string[], rowIndex: number) => {
+      const next = [...row];
+      next[index] = rowIndex === 0 ? newHeader : (newValues[rowIndex - 1] ?? "");
+      return next;
+    });
+
+    output.value = toDelimited(updated, "\t");
+    return;
+  }
+
+  if (slug === "swap-tsv-columns") {
+    const config = joinLines(splitBlocks[0] || "");
+    const body = splitBlocks.slice(1).join("\n\n").trim();
+
+    if (config.length < 2 || !body) {
+      output.value = "Enter first selector on line one, second selector on line two, then a blank line, then the TSV.";
+      return;
+    }
+
+    const rows = body.split("\n").map((line: string) => line.split("\t"));
+    const headers = rows[0].map((value: string) => value.trim());
+
+    const firstIndex = resolveColumnIndex(config[0], headers);
+    const secondIndex = resolveColumnIndex(config[1], headers);
+
+    if (firstIndex < 0 || secondIndex < 0 || firstIndex >= headers.length || secondIndex >= headers.length) {
+      output.value = "One or both columns were not found.";
+      return;
+    }
+
+    if (firstIndex === secondIndex) {
+      output.value = "Choose two different columns.";
+      return;
+    }
+
+    const updated = rows.map((row: string[]) => {
+      const next = [...row];
+      [next[firstIndex], next[secondIndex]] = [next[secondIndex] ?? "", next[firstIndex] ?? ""];
+      return next;
+    });
+
+    output.value = toDelimited(updated, "\t");
+    return;
+  }
+
+  if (slug === "change-tsv-delimiter") {
+    let delimiter = (splitBlocks[0] || "").trim();
+    const body = splitBlocks.slice(1).join("\n\n").trim();
+
+    if (!delimiter || !body) {
+      output.value = "Enter new delimiter on the first line, then a blank line, then the TSV.";
+      return;
+    }
+
+    if (delimiter === "\\t") {
+      delimiter = "\t";
+    }
+
+    if (delimiter.length !== 1) {
+      output.value = "Use exactly one delimiter character, such as , or ; or |.";
+      return;
+    }
+
+    const rows = body.split("\n").map((line: string) => line.split("\t"));
+    output.value = toDelimited(rows, delimiter);
+    return;
+  }
+
+  if (
+    slug === "extract-arbitrary-delimited-column" ||
+    slug === "delete-arbitrary-delimited-column" ||
+    slug === "replace-arbitrary-delimited-column"
+  ) {
+    const config = joinLines(splitBlocks[0] || "");
+    const body = splitBlocks.slice(1).join("\n\n").trim();
+
+    if (!body || config.length < 2) {
+      output.value = "Enter delimiter and selector first, then a blank line, then the data.";
+      return;
+    }
+
+    let delimiter = config[0];
+    if (delimiter === "\\t") {
+      delimiter = "\t";
+    }
+
+    if (delimiter.length !== 1) {
+      output.value = "Use exactly one delimiter character.";
+      return;
+    }
+
+    const selector = config[1];
+    const rows = body.split("\n").map((line: string) => line.split(delimiter));
+    const headers = rows[0].map((value: string) => value.trim());
+    const index = resolveColumnIndex(selector, headers);
+
+    if (index < 0 || index >= headers.length) {
+      output.value = "Column not found.";
+      return;
+    }
+
+    if (slug === "extract-arbitrary-delimited-column") {
+      output.value = rows.slice(1).map((row: string[]) => row[index] ?? "").join("\n");
+      return;
+    }
+
+    if (slug === "delete-arbitrary-delimited-column") {
+      output.value = toDelimited(
+        rows.map((row: string[]) => row.filter((_v: string, i: number) => i !== index)),
+        delimiter
+      );
+      return;
+    }
+
+    if (slug === "replace-arbitrary-delimited-column") {
+      if (config.length < 4) {
+        output.value = "Enter delimiter on line one, selector on line two, new header on line three, replacement values after that, then a blank line, then the data.";
+        return;
+      }
+
+      const newHeader = config[2];
+      const newValues = config.slice(3);
+
+      if (newValues.length !== rows.length - 1) {
+        output.value = `Expected ${rows.length - 1} replacement values, found ${newValues.length}.`;
+        return;
+      }
+
+      const updated = rows.map((row: string[], rowIndex: number) => {
+        const next = [...row];
+        next[index] = rowIndex === 0 ? newHeader : (newValues[rowIndex - 1] ?? "");
+        return next;
+      });
+
+      output.value = toDelimited(updated, delimiter);
+      return;
+    }
+  }
+}
+if (
+  slug === "swap-arbitrary-delimited-columns" ||
+  slug === "change-arbitrary-delimiter" ||
+  slug === "transpose-arbitrary-delimited-text" ||
+  slug === "arbitrary-delimited-columns-to-rows" ||
+  slug === "arbitrary-delimited-rows-to-columns"
+) {
+  const raw = input.value.replace(/\r\n/g, "\n").trim();
+
+  if (!raw) {
+    output.value = "Enter input.";
+    return;
+  }
+
+  const splitBlocks = raw.split(/\n\n/);
+  const joinLines = (text: string): string[] =>
+    text.split("\n").filter((line: string) => line.length > 0);
+
+  const toDelimited = (rows: string[][], delimiter: string): string =>
+    rows.map((row: string[]) => row.join(delimiter)).join("\n");
+
+  const resolveColumnIndex = (selector: string, headers: string[]): number => {
+    if (/^\d+$/.test(selector)) {
+      return Number(selector) - 1;
+    }
+    return headers.findIndex((header: string) => header === selector);
+  };
+
+  if (slug === "change-arbitrary-delimiter") {
+    const config = joinLines(splitBlocks[0] || "");
+    const body = splitBlocks.slice(1).join("\n\n").trim();
+
+    if (config.length < 2 || !body) {
+      output.value = "Enter current delimiter on line one, new delimiter on line two, then a blank line, then the data.";
+      return;
+    }
+
+    let currentDelimiter = config[0];
+    let newDelimiter = config[1];
+
+    if (currentDelimiter === "\\t") currentDelimiter = "\t";
+    if (newDelimiter === "\\t") newDelimiter = "\t";
+
+    if (currentDelimiter.length !== 1 || newDelimiter.length !== 1) {
+      output.value = "Use exactly one character for the current delimiter and one for the new delimiter.";
+      return;
+    }
+
+    const rows = body.split("\n").map((line: string) => line.split(currentDelimiter));
+    output.value = toDelimited(rows, newDelimiter);
+    return;
+  }
+
+  if (slug === "swap-arbitrary-delimited-columns") {
+    const config = joinLines(splitBlocks[0] || "");
+    const body = splitBlocks.slice(1).join("\n\n").trim();
+
+    if (config.length < 3 || !body) {
+      output.value = "Enter delimiter on line one, first selector on line two, second selector on line three, then a blank line, then the data.";
+      return;
+    }
+
+    let delimiter = config[0];
+    if (delimiter === "\\t") delimiter = "\t";
+
+    if (delimiter.length !== 1) {
+      output.value = "Use exactly one delimiter character.";
+      return;
+    }
+
+    const firstSelector = config[1];
+    const secondSelector = config[2];
+    const rows = body.split("\n").map((line: string) => line.split(delimiter));
+    const headers = rows[0].map((value: string) => value.trim());
+
+    const firstIndex = resolveColumnIndex(firstSelector, headers);
+    const secondIndex = resolveColumnIndex(secondSelector, headers);
+
+    if (firstIndex < 0 || secondIndex < 0 || firstIndex >= headers.length || secondIndex >= headers.length) {
+      output.value = "One or both columns were not found.";
+      return;
+    }
+
+    if (firstIndex === secondIndex) {
+      output.value = "Choose two different columns.";
+      return;
+    }
+
+    const updated = rows.map((row: string[]) => {
+      const next = [...row];
+      [next[firstIndex], next[secondIndex]] = [next[secondIndex] ?? "", next[firstIndex] ?? ""];
+      return next;
+    });
+
+    output.value = toDelimited(updated, delimiter);
+    return;
+  }
+
+  if (
+    slug === "transpose-arbitrary-delimited-text" ||
+    slug === "arbitrary-delimited-columns-to-rows" ||
+    slug === "arbitrary-delimited-rows-to-columns"
+  ) {
+    const config = joinLines(splitBlocks[0] || "");
+    const body = splitBlocks.slice(1).join("\n\n").trim();
+
+    if (config.length < 1 || !body) {
+      output.value = "Enter delimiter on the first line, then a blank line, then the delimited text.";
+      return;
+    }
+
+    let delimiter = config[0];
+    if (delimiter === "\\t") delimiter = "\t";
+
+    if (delimiter.length !== 1) {
+      output.value = "Use exactly one delimiter character.";
+      return;
+    }
+
+    const rows = body.split("\n").map((line: string) => line.split(delimiter));
+    const maxCols = Math.max(...rows.map((row: string[]) => row.length));
+    const transposed: string[][] = [];
+
+    for (let col = 0; col < maxCols; col++) {
+      transposed.push(rows.map((row: string[]) => row[col] ?? ""));
+    }
+
+    output.value = toDelimited(transposed, delimiter);
+    return;
+  }
+}
+if (slug === "ip-to-binary") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter an IPv4 address like: 192.168.1.10";
+    return;
+  }
+
+  const octets = text.split(".").map((part: string) => Number(part));
+
+  if (
+    octets.length !== 4 ||
+    octets.some((part: number) => !Number.isInteger(part) || part < 0 || part > 255)
+  ) {
+    output.value = "Invalid IPv4 address.";
+    return;
+  }
+
+  output.value = octets.map((part: number) => part.toString(2).padStart(8, "0")).join(".");
+  return;
+}
+
+if (slug === "binary-to-ip") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter binary IPv4 like: 11000000.10101000.00000001.00001010";
+    return;
+  }
+
+  const parts = text.split(".");
+
+  if (
+    parts.length !== 4 ||
+    parts.some((part: string) => !/^[01]{8}$/.test(part))
+  ) {
+    output.value = "Use exactly four 8-bit binary groups separated by dots.";
+    return;
+  }
+
+  output.value = parts.map((part: string) => String(parseInt(part, 2))).join(".");
+  return;
+}
+
+if (slug === "ip-to-octal") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter an IPv4 address like: 192.168.1.10";
+    return;
+  }
+
+  const octets = text.split(".").map((part: string) => Number(part));
+
+  if (
+    octets.length !== 4 ||
+    octets.some((part: number) => !Number.isInteger(part) || part < 0 || part > 255)
+  ) {
+    output.value = "Invalid IPv4 address.";
+    return;
+  }
+
+  output.value = octets.map((part: number) => part.toString(8).padStart(3, "0")).join(".");
+  return;
+}
+
+if (slug === "octal-to-ip") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter octal IPv4 like: 300.250.001.012";
+    return;
+  }
+
+  const parts = text.split(".");
+
+  if (
+    parts.length !== 4 ||
+    parts.some((part: string) => !/^[0-7]{1,3}$/.test(part))
+  ) {
+    output.value = "Use exactly four octal groups separated by dots.";
+    return;
+  }
+
+  const values = parts.map((part: string) => parseInt(part, 8));
+
+  if (values.some((value: number) => value < 0 || value > 255)) {
+    output.value = "Octal groups must map to IPv4 octets between 0 and 255.";
+    return;
+  }
+
+  output.value = values.join(".");
+  return;
+}
+
+if (slug === "ip-to-decimal") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter an IPv4 address like: 192.168.1.10";
+    return;
+  }
+
+  const octets = text.split(".").map((part: string) => Number(part));
+
+  if (
+    octets.length !== 4 ||
+    octets.some((part: number) => !Number.isInteger(part) || part < 0 || part > 255)
+  ) {
+    output.value = "Invalid IPv4 address.";
+    return;
+  }
+
+  const value =
+    (((octets[0] << 24) >>> 0) +
+      ((octets[1] << 16) >>> 0) +
+      ((octets[2] << 8) >>> 0) +
+      (octets[3] >>> 0)) >>> 0;
+
+  output.value = String(value);
+  return;
+}
+
+if (slug === "decimal-to-ip") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter a decimal IPv4 value like: 3232235786";
+    return;
+  }
+
+  const value = Number(text);
+
+  if (!Number.isInteger(value) || value < 0 || value > 4294967295) {
+    output.value = "Enter an integer between 0 and 4294967295.";
+    return;
+  }
+
+  output.value = [
+    (value >>> 24) & 255,
+    (value >>> 16) & 255,
+    (value >>> 8) & 255,
+    value & 255
+  ].join(".");
+
+  return;
+}
+if (slug === "ip-to-hex") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter an IPv4 address like: 192.168.1.10";
+    return;
+  }
+
+  const octets = text.split(".").map((part: string) => Number(part));
+
+  if (
+    octets.length !== 4 ||
+    octets.some((part: number) => !Number.isInteger(part) || part < 0 || part > 255)
+  ) {
+    output.value = "Invalid IPv4 address.";
+    return;
+  }
+
+  output.value = octets
+    .map((part: number) => part.toString(16).toUpperCase().padStart(2, "0"))
+    .join(".");
+  return;
+}
+
+if (slug === "hex-to-ip") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter hexadecimal IPv4 like: C0.A8.01.0A";
+    return;
+  }
+
+  const parts = text.split(".");
+
+  if (
+    parts.length !== 4 ||
+    parts.some((part: string) => !/^[0-9a-fA-F]{1,2}$/.test(part))
+  ) {
+    output.value = "Use exactly four hex groups separated by dots.";
+    return;
+  }
+
+  const values = parts.map((part: string) => parseInt(part, 16));
+
+  if (values.some((value: number) => value < 0 || value > 255)) {
+    output.value = "Hex groups must map to IPv4 octets between 0 and 255.";
+    return;
+  }
+
+  output.value = values.join(".");
+  return;
+}
+
+if (slug === "seconds-to-hms") {
+  const value = Number(input.value.trim());
+
+  if (!Number.isInteger(value) || value < 0) {
+    output.value = "Enter a non-negative whole number of seconds like: 3661";
+    return;
+  }
+
+  const hours = Math.floor(value / 3600);
+  const minutes = Math.floor((value % 3600) / 60);
+  const seconds = value % 60;
+
+  output.value = `${hours}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+  return;
+}
+
+if (slug === "hms-to-seconds") {
+  const text = input.value.trim();
+  const match = text.match(/^(\d+):([0-5]?\d):([0-5]?\d)$/);
+
+  if (!match) {
+    output.value = "Enter time in H:M:S format like: 1:01:01";
+    return;
+  }
+
+  const hours = Number(match[1]);
+  const minutes = Number(match[2]);
+  const seconds = Number(match[3]);
+
+  output.value = String(hours * 3600 + minutes * 60 + seconds);
+  return;
+}
+
+if (slug === "seconds-to-human-time") {
+  const value = Number(input.value.trim());
+
+  if (!Number.isInteger(value) || value < 0) {
+    output.value = "Enter a non-negative whole number of seconds like: 3661";
+    return;
+  }
+
+  const hours = Math.floor(value / 3600);
+  const minutes = Math.floor((value % 3600) / 60);
+  const seconds = value % 60;
+
+  const parts: string[] = [];
+
+  if (hours > 0) {
+    parts.push(`${hours} hour${hours === 1 ? "" : "s"}`);
+  }
+
+  if (minutes > 0) {
+    parts.push(`${minutes} minute${minutes === 1 ? "" : "s"}`);
+  }
+
+  if (seconds > 0 || parts.length === 0) {
+    parts.push(`${seconds} second${seconds === 1 ? "" : "s"}`);
+  }
+
+  output.value = parts.join(" ");
+  return;
+}
+
+if (slug === "scientific-to-decimal") {
+  const text = input.value.trim();
+
+  if (!text || !/^[+-]?(?:\d+\.?\d*|\.\d+)[eE][+-]?\d+$/.test(text)) {
+    output.value = "Enter scientific notation like: 1.23e5 or 4.5e-3";
+    return;
+  }
+
+  const value = Number(text);
+
+  if (!Number.isFinite(value)) {
+    output.value = "Invalid scientific notation.";
+    return;
+  }
+
+  output.value = value.toLocaleString("en-US", {
+    useGrouping: false,
+    maximumSignificantDigits: 21
+  });
+  return;
+}
+
+if (slug === "decimal-to-scientific") {
+  const text = input.value.trim();
+  const value = Number(text);
+
+  if (!text || !Number.isFinite(value)) {
+    output.value = "Enter a valid decimal number like: 123000 or 0.0045";
+    return;
+  }
+
+  output.value = value.toExponential().replace("e", "e");
+  return;
+}
+if (slug === "hex-to-utf8") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter hex bytes like: 48656c6c6f";
+    return;
+  }
+
+  const cleaned = text.replace(/0x/gi, "").replace(/[\s,]+/g, "");
+
+  if (!/^[0-9a-fA-F]+$/.test(cleaned)) {
+    output.value = "Enter valid hexadecimal bytes using only 0-9 and A-F.";
+    return;
+  }
+
+  if (cleaned.length % 2 !== 0) {
+    output.value = "Enter a complete hex string with an even number of characters.";
+    return;
+  }
+
+  try {
+    const bytes: number[] = [];
+    for (let i = 0; i < cleaned.length; i += 2) {
+      bytes.push(parseInt(cleaned.slice(i, i + 2), 16));
+    }
+
+    const decoder = new TextDecoder("utf-8", { fatal: true });
+    output.value = decoder.decode(new Uint8Array(bytes));
+  } catch {
+    output.value = "Invalid UTF-8 hex input.";
+  }
+
+  return;
+}
+
+if (slug === "text-to-octal") {
+  const text = input.value;
+
+  if (!text) {
+    output.value = "Enter text to convert.";
+    return;
+  }
+
+  output.value = text
+    .split("")
+    .map((char: string) => char.charCodeAt(0).toString(8))
+    .join(" ");
+
+  return;
+}
+
+if (slug === "octal-to-text") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter octal values like: 110 151";
+    return;
+  }
+
+  try {
+    const parts = text.split(/[\s,]+/).filter((part: string) => part.length > 0);
+
+    output.value = parts
+      .map((part: string) => {
+        if (!/^[0-7]+$/.test(part)) {
+          throw new Error("Invalid octal");
+        }
+
+        const value = parseInt(part, 8);
+
+        if (!Number.isFinite(value) || value < 0 || value > 65535) {
+          throw new Error("Invalid octal range");
+        }
+
+        return String.fromCharCode(value);
+      })
+      .join("");
+  } catch {
+    output.value = "Invalid octal input.";
+  }
+
+  return;
+}
+
+if (slug === "text-to-decimal") {
+  const text = input.value;
+
+  if (!text) {
+    output.value = "Enter text to convert.";
+    return;
+  }
+
+  output.value = text
+    .split("")
+    .map((char: string) => String(char.charCodeAt(0)))
+    .join(" ");
+
+  return;
+}
+
+if (slug === "decimal-to-text") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter decimal values like: 72 105 33";
+    return;
+  }
+
+  try {
+    const parts = text.split(/[\s,]+/).filter((part: string) => part.length > 0);
+
+    output.value = parts
+      .map((part: string) => {
+        if (!/^\d+$/.test(part)) {
+          throw new Error("Invalid decimal");
+        }
+
+        const value = Number(part);
+
+        if (!Number.isInteger(value) || value < 0 || value > 65535) {
+          throw new Error("Invalid decimal range");
+        }
+
+        return String.fromCharCode(value);
+      })
+      .join("");
+  } catch {
+    output.value = "Invalid decimal input.";
+  }
+
+  return;
+}
+
+
       output.value = "This tool logic is not connected yet.";
     });
 

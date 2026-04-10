@@ -1,0 +1,381 @@
+URL Encode
+URL Decode
+URL Parse
+HTML Escape
+HTML Unescape
+Base64 Encode
+Base64 Decode
+HTML Prettify
+HTML Minify
+JSON Prettify
+JSON Minify
+JSON Escape
+JSON Validate
+JavaScript Prettify
+JavaScript Minify
+JavaScript Validate
+CSS Prettify
+CSS Minify
+XML Prettify
+XML Minify
+Convert Hex Color to RGB
+Convert RGB Color to Hex
+Convert HTML to Markdown
+Convert Markdown to HTML
+Convert HTML to Jade
+Convert Jade to HTML
+Convert BBCode to HTML
+Convert BBCode to Jade
+Extract Text from BBCode
+Extract Text from HTML
+Extract Text from XML
+Extract Text from JSON
+Convert Text to HTML Entities
+Strip HTML
+IDN Encode
+IDN Decode
+Convert XML to JSON
+Convert JSON to XML
+Convert XML to CSV
+Convert CSV to XML
+Convert XML to YAML
+Convert YAML to XML
+Convert YAML to TSV
+Convert TSV to YAML
+Convert XML to TSV
+Convert TSV to XML
+Convert JSON to CSV
+Convert CSV to JSON
+Convert JSON to YAML
+Convert YAML to JSON
+Convert JSON to TSV
+Convert TSV to JSON
+Convert YAML to CSV
+Convert CSV to YAML
+Convert CSV to TSV
+Convert TSV to CSV
+Convert TSV to Text
+Convert Text to TSV
+Convert CSV to Text
+Convert Text to CSV
+Transpose CSV
+Convert CSV Columns to Rows
+Convert CSV Rows to Columns
+Extract a Column from CSV
+Delete a Column from CSV
+Prepend a CSV Column
+Append a CSV Column
+Insert a CSV Column
+Replace a CSV Column
+Swap Columns in CSV Files
+Change CSV Delimiter
+Transpose TSV
+Convert TSV Columns to Rows
+Convert TSV Rows to Columns
+Extract a Column from TSV
+Delete a Column from TSV
+Prepend a TSV Column
+Append a TSV Column
+Insert a TSV Column
+Replace a TSV Column
+Swap Columns in TSV Files
+Change TSV Delimiter
+Extract Arbitrary Delimited Column
+Delete Arbitrary Delimited Column
+Replace Arbitrary Delimited Column
+Swap Arbitrary Delimited Columns
+Change Arbitrary Column Delimiter
+Transpose Arbitrary Delimited Text
+Convert Arbitrary Delimited Text Columns to Rows
+Convert Arbitrary Delimited Text Rows to Columns
+Convert BBCode to Text
+Convert UNIX Time to UTC
+Convert UTC Time to UNIX
+Convert IP to Binary
+Convert Binary to IP
+Convert IP to Octal
+Convert Octal to IP
+Convert IP to Decimal
+Convert Decimal to IP
+Convert IP to Hex
+Convert Hex to IP
+Convert Seconds to H:M:S
+Convert H:M:S to Seconds
+Convert Seconds to Human Time
+Convert Roman to Decimal
+Convert Decimal to Roman
+Convert Scientific to Decimal
+Convert Decimal to Scientific
+Convert UTF8 to Hex
+Convert Hex to UTF8
+Convert Text to ASCII
+Convert ASCII to Text
+Convert Text to Binary
+Convert Binary to Text
+Convert Text to Octal
+Convert Octal to Text
+Convert Text to Decimal
+Convert Decimal to Text
+Convert Text to Hex
+Convert Hex to Text
+Convert Text to Lowercase
+Convert Text to Uppercase
+Convert Text to Randomcase
+Convert Text to Titlecase
+Convert JSON to Text
+Convert HTML to Text
+Convert XML to Text
+Convert Text to Base32
+Convert Base32 to Text
+Convert Text to Base58
+Convert Base58 to Text
+Convert Text to Base64
+Convert Base64 to Text
+Convert Text to Ascii85
+Convert Ascii85 to Text
+Convert Text to UTF8
+Convert UTF8 to Text
+Convert Spaces to Tabs
+Convert Tabs to Spaces
+Convert Spaces to Newlines
+Convert Newlines to Spaces
+Uuencode Text
+Uudecode Text
+Convert Text to Punycode
+Convert Punycode to Text
+Convert CMYK Color to RGB
+Convert RGB Color to CMYK
+Convert CMYK Color to Hex
+Convert Hex Color to CMYK
+Convert Image to Base64
+Convert JPG to PNG
+Convert PNG to JPG
+Convert GIF to PNG
+Convert GIF to JPG
+Convert BMP to PNG
+Convert BMP to JPG
+ROT13 Encode/Decode
+ROT47 Encode/Decode
+XOR Encrypt
+XOR Decrypt
+AES Encrypt
+AES Decrypt
+RC4 Encrypt
+RC4 Decrypt
+DES Encrypt
+DES Decrypt
+3DES Encrypt
+3DES Decrypt
+Rabbit Encrypt
+Rabbit Decrypt
+UTF8 Encode
+UTF8 Decode
+UTF16 Encode
+UTF16 Decode
+Uuencode
+Uudecode
+Calculate MD2 Hash
+Calculate MD4 Hash
+Calculate MD5 Hash
+Calculate MD6 Hash
+Calculate RipeMD-128 Hash
+Calculate RipeMD-160 Hash
+Calculate RipeMD-256 Hash
+Calculate RipeMD-320 Hash
+Calculate SHA1 Hash
+Calculate SHA2 Hash
+Calculate SHA-224 Hash
+Calculate SHA-256 Hash
+Calculate SHA-384 Hash
+Calculate SHA-512 Hash
+Calculate SHA3 Hash
+Calculate CRC16 Hash
+Calculate CRC32 Hash
+Calculate Adler32 Hash
+Calculate Whirlpool Hash
+Calculate NTLM Hash
+Calculate All Hashes at Once
+Create MySQL Password
+Create MariaDB Password
+Create PostgreSQL Password
+Create Bcrypt Password
+Verify Bcrypt Password
+Create Scrypt Password
+Verify Scrypt Password
+Create Random Password
+Create Random UUID/GUID
+ROT13 Strings
+ROT47 Strings
+Lowercase Text
+Uppercase Text
+Randomcase Text
+Titlecase Text
+Invert Text Case
+Capitalize Words in Text
+Repeat Text
+Replace Text
+Reverse Text
+Rotate Text
+Circularly Rotate Text Left
+Circularly Rotate Text Right
+Transform Text
+Truncate Text
+Trim Text
+Center Text
+Right-Align Text
+Left-Pad Text
+Right-Pad Text
+Justify Text
+Format Text Columns
+Find Number of Letters
+Find Number of Words
+Find Number of Lines
+Find Number of Paragraphs
+Sort Text
+Sort Numbers
+Sort Words
+Sort Text by Length
+Sort IP Addresses
+Word Wrap
+Split into Words
+Find Letter Frequency
+Find Word Frequency
+Find Phrase Frequency
+Number Text Lines
+Prefix Text Lines
+Prefix and Suffix Text Lines
+Suffix Text Lines
+Find Longest Text Line
+Find Shortest Text Line
+Delete Duplicated Lines
+Delete Empty Lines
+Shuffle Text Lines
+Join Text Lines
+Split Strings
+Reverse Text Lines
+Filter Text Lines
+Generate Text from Regexps
+Extract Regexp Matches
+Replace Regexp Matches
+Extract All Emails
+Extract All URLs
+Extract All Numbers
+Text Statistics/Info Tool
+Find Text Length
+Base32 Encode Text
+Base32 Decode Text
+Base58 Encode Text
+Base58 Decode Text
+Base64 Encode Text
+Base64 Decode Text
+Ascii85 Encode Text
+Ascii85 Decode Text
+UTF-8 Encode Text
+UTF-8 Decode Text
+UTF-16 Encode Text
+UTF-16 Decode Text
+Punycode Encode Text
+Punycode Decode Text
+Strip HTML Tags
+Remove Text Character Accents
+Remove Duplicate Spaces
+Remove All Whitespaces
+Remove Text Punctuation
+Add Thousands Separators
+Add Backslashes
+Strip Backslashes
+Merge Text Lists
+Zip Text Lists
+Intersect Text Lists
+Difference of Text Lists
+Printf/Sprintf Text
+Grep Text
+Head Text
+Tail Text
+Extract Line Range
+Morse Encode
+Morse Decode
+Random JSON Generator
+Random XML Generator
+Random YAML Generator
+Random CSV Generator
+Random TSV Generator
+Random Decimal Fraction Generator
+Random Binary Generator
+Random Octal Generator
+Random Decimal Generator
+Random Hex Generator
+Random Byte Generator
+Random IP Generator
+Random MAC Generator
+Random UUID Generator
+Random GUID Generator
+Random Date Generator
+Random Time Generator
+Random Text from RegEx
+Shuffle Letters
+Pick a Random Item
+More tools soon! (resize, crop, etc.)
+More time/date tools soon!
+Convert Binary to Octal
+Convert Binary to Decimal
+Convert Binary to Hex
+Convert Octal to Binary
+Convert Octal to Decimal
+Convert Octal to Hex
+Convert Decimal to Binary
+Convert Decimal to Octal
+Convert Decimal to Hex
+Convert Hex to Binary
+Convert Hex to Octal
+Convert Hex to Decimal
+Convert Decimal to BCD
+Convert BCD to Decimal
+Convert Octal to BCD
+Convert BCD to Octal
+Convert Hexadecimal to BCD
+Convert BCD to Hexadecimal
+Convert Binary to Gray Code
+Convert Gray Code to Binary
+Convert Octal to Gray Code
+Convert Gray Code to Octal
+Convert Decimal to Gray Code
+Convert Gray Code to Decimal
+Convert Hexadecimal to Gray Code
+Convert Gray Code to Hexadecimal
+Calculate Binary Sum
+Calculate Binary Product
+Calculate Binary Bitwise AND
+Calculate Binary Bitwise NAND
+Calculate Binary Bitwise OR
+Calculate Binary Bitwise NOR
+Calculate Binary Bitwise XOR
+Calculate Binary Bitwise XNOR
+Calculate Binary Bitwise NOT
+Invert a Binary String
+Reverse a Binary String
+Circularly Shift a Binary Number
+Rotate a Binary String Left
+Rotate a Binary String Right
+Convert Any Number Base
+Convert Numbers to Words
+Convert Words to Numbers
+Convert Decimal to Scientific Notation
+Convert Scientific to Decimal Notation
+Prime Number Generator
+Fibonacci Number Generator
+Pi Digit Generator
+Euler Digit Generator
+Round Numbers Up
+Round Numbers Down
+Random Fraction Generator
+What's my IP?
+Convert Miles to Km
+Convert Km to Miles
+Convert Celsius to Fahrenheit
+Convert Fahrenheit to Celsius
+Convert Degrees to Radians
+Convert Radians to Degrees
+Convert Pounds to Kilograms
+Convert Kilograms to Pounds
+More tools soon! (browser info, etc.)
