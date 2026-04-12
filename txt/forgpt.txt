@@ -1,0 +1,506 @@
+URL Encode
+URL Decode
+URL Parse
+HTML Escape
+HTML Unescape
+Base64 Encode
+Base64 Decode
+HTML Prettify
+HTML Minify
+JSON Prettify
+JSON Minify
+JSON Escape
+JSON Validate
+JavaScript Prettify
+JavaScript Minify
+JavaScript Validate
+CSS Prettify
+CSS Minify
+XML Prettify
+XML Minify
+Convert Hex Color to RGB
+Convert RGB Color to Hex
+Convert HTML to Markdown
+Convert Markdown to HTML
+Convert HTML to Jade
+Convert Jade to HTML
+Convert BBCode to HTML
+Convert BBCode to Jade
+Extract Text from BBCode
+Extract Text from HTML
+Extract Text from XML
+Extract Text from JSON
+Convert Text to HTML Entities
+Strip HTML
+IDN Encode
+IDN Decode
+Convert XML to JSON
+Convert JSON to XML
+Convert XML to CSV
+Convert CSV to XML
+Convert XML to YAML
+Convert YAML to XML
+Convert YAML to TSV
+Convert TSV to YAML
+Convert XML to TSV
+Convert TSV to XML
+Convert JSON to CSV
+Convert CSV to JSON
+Convert JSON to YAML
+Convert YAML to JSON
+Convert JSON to TSV
+Convert TSV to JSON
+Convert YAML to CSV
+Convert CSV to YAML
+Convert CSV to TSV
+Convert TSV to CSV
+Convert TSV to Text
+Convert Text to TSV
+Convert CSV to Text
+Convert Text to CSV
+Transpose CSV
+Convert CSV Columns to Rows
+Convert CSV Rows to Columns
+Extract a Column from CSV
+Delete a Column from CSV
+Prepend a CSV Column
+Append a CSV Column
+Insert a CSV Column
+Replace a CSV Column
+Swap Columns in CSV Files
+Change CSV Delimiter
+Transpose TSV
+Convert TSV Columns to Rows
+Convert TSV Rows to Columns
+Extract a Column from TSV
+Delete a Column from TSV
+Prepend a TSV Column
+Append a TSV Column
+Insert a TSV Column
+Replace a TSV Column
+Swap Columns in TSV Files
+Change TSV Delimiter
+Extract Arbitrary Delimited Column
+Delete Arbitrary Delimited Column
+Replace Arbitrary Delimited Column
+Swap Arbitrary Delimited Columns
+Change Arbitrary Column Delimiter
+Transpose Arbitrary Delimited Text
+Convert Arbitrary Delimited Text Columns to Rows
+Convert Arbitrary Delimited Text Rows to Columns
+Convert BBCode to Text
+Convert UNIX Time to UTC
+Convert UTC Time to UNIX
+Convert IP to Binary
+Convert Binary to IP
+Convert IP to Octal
+Convert Octal to IP
+Convert IP to Decimal
+Convert Decimal to IP
+Convert IP to Hex
+Convert Hex to IP
+Convert Seconds to H:M:S
+Convert H:M:S to Seconds
+Convert Seconds to Human Time
+Convert Roman to Decimal
+Convert Decimal to Roman
+Convert Scientific to Decimal
+Convert Decimal to Scientific
+Convert UTF8 to Hex
+Convert Hex to UTF8
+Convert Text to ASCII
+Convert ASCII to Text
+Convert Text to Binary
+Convert Binary to Text
+Convert Text to Octal
+Convert Octal to Text
+Convert Text to Decimal
+Convert Decimal to Text
+Convert Text to Hex
+Convert Hex to Text
+Convert Text to Lowercase
+Convert Text to Uppercase
+Convert Text to Randomcase
+Convert Text to Titlecase
+Convert JSON to Text
+Convert HTML to Text
+Convert XML to Text
+Convert Text to Base32
+Convert Base32 to Text
+Convert Text to Base58
+Convert Base58 to Text
+Convert Text to Base64
+Convert Base64 to Text
+Convert Text to Ascii85
+Convert Ascii85 to Text
+Convert Text to UTF8
+Convert UTF8 to Text
+Convert Spaces to Tabs
+Convert Tabs to Spaces
+Convert Spaces to Newlines
+Convert Newlines to Spaces
+Uuencode Text
+Uudecode Text
+Convert Text to Punycode
+Convert Punycode to Text
+Convert CMYK Color to RGB
+Convert RGB Color to CMYK
+Convert CMYK Color to Hex
+Convert Hex Color to CMYK
+ROT13 Encode/Decode
+ROT47 Encode/Decode
+XOR Encrypt
+XOR Decrypt
+AES Encrypt
+AES Decrypt
+RC4 Encrypt
+RC4 Decrypt
+DES Encrypt
+DES Decrypt
+=== developer-tools ===
+JSON Formatter
+JSON Validator
+JSON Minifier
+Base64 Encoder
+URL Encoder
+URL Decoder
+HTML Encoder
+HTML Decoder
+MD5 Hash Generator
+SHA256 Hash Generator
+UUID Generator
+Random String Generator
+URL Parser
+JWT Decoder
+HTML Stripper
+Base64 URL Encoder
+Base64 URL Decoder
+URL Parameter Extractor
+Query String Parser
+HTML Entities Encoder
+HTML Entities Decoder
+ROT13 Encoder
+Text to Binary Converter
+Binary to Text Converter
+Text to Hex Converter
+Regex Tester
+Base32 Converter
+Base32 Encode
+Base32 Decode
+Base58 Encode
+Base58 Decode
+JSON Unescape
+XML to JSON
+JSON to XML
+YAML Formatter
+YAML Validator
+SQL Formatter
+SQL Minifier
+SQL Beautifier
+SQL to JSON
+CSV Formatter
+CSV Validator
+CSV to YAML
+YAML to CSV
+TOML to JSON
+JSON to TOML
+JWT Expiry Checker
+URL Slug Decoder
+URL Path Extractor
+URL Decoder for Query Params
+Query String Builder
+HTTP Header Parser
+User Agent Parser
+JWT Parser
+URL Normalizer
+SHA1 Hash Generator
+SHA512 Hash Generator
+Bcrypt Hash Generator
+HMAC Generator
+Hex Encoder
+Hex Decoder
+Base16 Encode
+Base16 Decode
+Base85 Encode
+Base85 Decode
+Base64 Decoder
+URL-safe Base64 Decoder
+Regex Generator
+Regex Escape
+Regex Match Extractor
+API Request Body Formatter
+JSON Diff Checker
+Open Graph Checker
+Website Header Checker
+Website Redirect Checker
+Robots.txt Checker
+Sitemap Checker
+Canonical Tag Checker
+Meta Tag Analyzer
+HTTP to HTTPS Checker
+WWW Redirect Checker
+Random Password Generator
+
+=== network-tools ===
+IP Lookup
+DNS Lookup
+Ping Test
+Port Checker
+IPv4 Validator
+IPv6 Validator
+Domain Extractor
+Hostname Extractor
+Duplicate URL Remover
+URL List Cleaner
+Integer to IP
+MAC Address Lookup
+MAC Address Generator
+Website Security Scanner
+SSL Checker
+HTTP Header Checker
+Reverse DNS Lookup
+WHOIS Lookup
+MX Record Lookup
+NS Record Lookup
+TXT Lookup
+CNAME Lookup
+SOA Lookup
+SRV Lookup
+DNS Propagation Checker
+SSL Certificate Checker
+SSL Expiry Checker
+TLS Version Checker
+HSTS Checker
+Response Time Checker
+Website Status Checker
+Hostname to IP Lookup
+IP Range Calculator
+My IP Address
+Network Mask Calculator
+Broadcast Address Calculator
+Usable Hosts Calculator
+Port Range Checker
+Email Header Analyzer
+Domain Age Checker
+SPF Record Checker
+DKIM Record Checker
+DMARC Record Checker
+
+=== text-tools ===
+Word Counter
+Character Counter
+Remove Extra Spaces
+Text Case Converter
+Text Reverser
+Lowercase Converter
+Uppercase Converter
+Line Counter
+Duplicate Line Remover
+Text Trimmer
+Slug Generator
+Title Case Converter
+Sentence Case Converter
+Comma to Newline Converter
+Newline to Comma Converter
+Text Sorter
+Unique Lines Tool
+Empty Line Remover
+Remove Duplicate Words
+Sort Lines Descending
+Line Number Adder
+Reverse Lines
+Tabs to Spaces Converter
+Email Extractor
+Sentence Counter
+Remove Line Breaks
+Text Splitter
+Text Joiner
+Reading Time Calculator
+Text Repeater
+Find and Replace Text
+Lorem Ipsum Generator
+Text Diff Checker
+Alternating Case Converter
+Camel Case Converter
+Pascal Case Converter
+Snake Case Converter
+Kebab Case Converter
+Constant Case Converter
+Dot Case Converter
+Path Case Converter
+Remove Punctuation
+Remove Numbers from Text
+Remove Letters from Text
+Remove Special Characters
+Keep Only Numbers
+Keep Only Letters
+Keep Only Alphanumeric
+Paragraph Counter
+Extract Hashtags
+Extract Mentions
+Character Frequency Counter
+Word Frequency Counter
+Longest Line Finder
+Keyword Density Checker
+Random Word Generator
+Username Generator
+Palindrome Checker
+Anagram Checker
+Whitespace Normalizer
+Markdown Cleaner
+Bullet List Cleaner
+Reverse Word Order
+First Line Extractor
+Last Line Extractor
+Prefix Lines
+Suffix Lines
+Wrap Text
+Unwrap Text
+CSV Column Extractor
+TSV to CSV
+CSV to TSV
+
+=== converters ===
+Timestamp Converter
+Bytes to MB Converter
+Bytes to KB Converter
+KB to MB Converter
+HEX to RGB
+RGB to HEX
+RGB to HSL
+HSL to RGB
+Binary to Decimal
+Decimal to Binary
+Decimal to Hex
+Hex to Decimal
+PX to REM
+REM to PX
+MB to Bytes
+Mbps to MB/s
+MB/s to Mbps
+KG to LBS
+LBS to KG
+JSON to CSV
+CSV to JSON
+Text to ASCII
+ASCII to Text
+Text to Unicode
+Unicode to Text
+Roman Numeral Converter
+Number to Words
+Markdown to HTML
+Timestamp to Date
+Date to Timestamp
+PX to EM
+EM to PX
+CM to Inches
+Inches to CM
+MM to Inches
+Inches to MM
+Length Converter
+Weight Converter
+Temperature Converter
+Speed Converter
+Volume Converter
+Area Converter
+Pressure Converter
+Energy Converter
+Power Converter
+Time Converter
+Meters to Feet
+Feet to Meters
+Celsius to Fahrenheit
+Liters to Gallons
+Gallons to Liters
+KMH to MPH
+Watts to Horsepower
+Horsepower to Watts
+Grams to Ounces
+Ounces to Grams
+Fahrenheit to Celsius
+MPH to KMH
+
+=== calculators ===
+Percentage Calculator
+Age Calculator
+Discount Calculator
+Average Calculator
+Ratio Calculator
+Percentage Change Calculator
+VAT Calculator
+ROI Calculator
+BMI Calculator
+Date Difference Calculator
+Compound Interest Calculator
+Loan Calculator
+Time Duration Calculator
+Random Number Generator
+GPA Calculator
+Grade Calculator
+Margin Calculator
+Markup Calculator
+Profit Calculator
+Commission Calculator
+Sales Tax Calculator
+Tip Calculator
+Break-even Calculator
+Inflation Calculator
+Currency Percentage Calculator
+CAGR Calculator
+Savings Calculator
+Mortgage Calculator
+EMI Calculator
+APR Calculator
+Hourly to Salary Calculator
+Salary to Hourly Calculator
+ТОП 50 инструментов (без мусора)
+🧩 URL / Web (очень лёгкие + быстрые)
+URL Parameter Remover
+URL Parameter Sorter
+URL Domain Extractor
+URL Protocol Extractor
+URL Hash Extractor
+URL Query String Cleaner
+Remove UTM Parameters
+URL Canonicalizer
+👉 это золото (микро-интенты)
+🌐 HTTP / Network (очень сильный SEO)
+HTTP Status Code Checker
+HTTP Response Viewer
+HTTP Header Extractor
+HTTP Header Generator
+HTTP Request Builder
+HTTPS Redirect Checker
+Check if URL is HTTPS
+Security Headers Analyzer
+CORS Header Checker
+👉 это уже ближе к SaaS
+🔐 Security / Dev (высокий спрос)
+JWT Expiration Checker
+JWT Header Viewer
+JWT Signature Checker (basic)
+Password Entropy Calculator
+Hash Compare Tool
+Basic Auth Header Generator
+API Key Generator
+Random Token Generator
+Secure Password Generator
+📦 JSON / Data (очень хороший трафик)
+JSON Key Extractor
+JSON Path Finder
+JSON Sort Keys
+JSON Flatten
+JSON Unflatten
+JSON to Table
+JSON to Form Data
+JSON Escape / Unescape
+JSON Size Calculator
+🧮 Dev Helpers (очень легко сделать)
+Cron Expression Generator
+Cron Expression Reader
+Unix Timestamp Validator
+UUID Validator
+Color Converter (HEX ↔ RGB ↔ HSL)
+CSS Minifier
+CSS Beautifier
+Regex Generator (simple)

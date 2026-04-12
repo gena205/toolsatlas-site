@@ -55,9 +55,52 @@ function formatCategoryLabel(category: string): string {
     .join(" ");
 }
 ---
+<ToolLayout
+  title={
+    tool.slug === "json-validator"
+      ? "JSON Validator Online – Check JSON Syntax & Catch Errors | ToolsAtlas"
+      : tool.slug === "json-minifier"
+        ? "JSON Minifier Online – Minify JSON & Remove Whitespace | ToolsAtlas"
+        : tool.slug === "json-escape"
+          ? "JSON Escape Online – Escape Quotes, Slashes & Newlines | ToolsAtlas"
+          : tool.slug === "json-unescape"
+            ? "JSON Unescape Online – Decode Escaped JSON Strings | ToolsAtlas"
+            : tool.slug === "json-diff-checker"
+              ? "JSON Diff Checker Online – Compare Two JSON Values by Path | ToolsAtlas"
+              : tool.slug === "json-to-csv"
+                ? "JSON to CSV Online – Convert JSON Arrays to CSV | ToolsAtlas"
+                : tool.slug === "csv-to-json"
+                  ? "CSV to JSON Online – Convert CSV Rows to JSON Objects | ToolsAtlas"
+                  : tool.slug === "base64-encode"
+                    ? "Base64 Encode Online – Convert Text to Base64 | ToolsAtlas"
+                    : tool.slug === "base64-decode"
+                      ? "Base64 Decode Online – Decode Base64 to Text | ToolsAtlas"
+                      : `${tool.name} Online Free Tool – Fast & Easy | ToolsAtlas`
+  }
+  description={
+    tool.slug === "json-validator"
+      ? "Validate JSON online and catch syntax errors fast. Check API payloads, config files, webhook bodies, and copied JSON for trailing commas, missing quotes, broken brackets, and incomplete objects."
+      : tool.slug === "json-minifier"
+        ? "Minify JSON online and remove spaces, indentation, and line breaks instantly. Compress valid JSON for APIs, storage, configs, test payloads, and compact transport."
+        : tool.slug === "json-escape"
+          ? "Escape text for JSON strings online. Convert quotes, backslashes, tabs, and line breaks into JSON-safe escaped string content for APIs, logs, configs, code, and debugging."
+          : tool.slug === "json-unescape"
+            ? "Unescape JSON strings online. Decode escaped quotes, backslashes, tabs, and newlines into readable text for APIs, logs, configs, code, and debugging."
+            : tool.slug === "json-diff-checker"
+              ? "Compare two JSON values online and see added, removed, changed, and type-changed paths clearly. Useful for APIs, configs, fixtures, debugging, and version comparison."
+              : tool.slug === "json-to-csv"
+                ? "Convert JSON arrays of objects to CSV online for Excel, Google Sheets, reports, exports, and spreadsheet workflows. Turn structured JSON into clean tabular CSV instantly."
+                : tool.slug === "csv-to-json"
+                  ? "Convert CSV to JSON online and turn header-based rows into structured JSON objects instantly. Useful for imports, spreadsheets, APIs, app data, and quick data transformation."
+                  : tool.slug === "base64-encode"
+                    ? "Encode text to Base64 online for APIs, headers, configs, JSON fields, fixtures, and debugging. Convert plain text, Unicode, and multiline input to Base64 instantly."
+                    : tool.slug === "base64-decode"
+                      ? "Decode Base64 online and turn encoded strings back into readable text instantly. Useful for APIs, headers, logs, tokens, JSON fragments, test payloads, and debugging."
+                      : `${tool.description} Free online tool. No installation required. Fast and easy to use.`
+  }
+>
 
-<ToolLayout title={`${tool.name} Online Free Tool – Fast & Easy | ToolsAtlas`} description={`${tool.description} Free online tool. No installation required. Fast and easy to use.`}>
-  <section class="card tool-hero">
+<section class="card tool-hero">
     <p class="category-pill">{formatCategoryLabel(tool.category)}</p>
     <h1>{tool.name}</h1>
     <p class="lead">{tool.intro}</p>
@@ -126,6 +169,745 @@ function formatCategoryLabel(category: string): string {
     <p>{tool.description}</p>
     <p>Use {tool.name.toLowerCase()} when you need a fast browser-based result without extra setup. It works well for quick checks, one-off tasks, and routine formatting or calculation work.</p>
   </section>
+
+  {tool.slug === "base64-decode" && (
+  <section class="card">
+    <h2>What Base64 Decoder is good for</h2>
+    <ul>
+      <li>Reading encoded strings from APIs, logs, configs, and test data</li>
+      <li>Checking whether a Base64 value contains JSON, text, URLs, or credentials-like content</li>
+      <li>Verifying that encoded output round-trips back to the expected original text</li>
+      <li>Inspecting Unicode and multiline data after decoding</li>
+      <li>Decoding copied Base64 quickly without writing code</li>
+    </ul>
+  </section>
+)}
+
+{tool.slug === "base64-decode" && (
+  <section class="card">
+    <h2>Privacy and browser-side use</h2>
+    <p>
+      If this tool runs fully in the browser, your input stays on the client side instead of being uploaded to a server.
+      That makes it useful for quick decoding of copied API values, headers, config strings, payload fragments, and test data when you want a fast local result.
+    </p>
+  </section>
+)}
+
+  {tool.slug === "base64-encode" && (
+  <section class="card">
+    <h2>Common mistakes when using Base64 Encoder</h2>
+    <ul>
+      <li>Using Base64 when URL encoding is actually needed</li>
+      <li>Assuming Base64 is encryption instead of text encoding</li>
+      <li>Encoding already encoded text by mistake</li>
+      <li>Copying hidden spaces or line breaks into the source text</li>
+      <li>Using standard Base64 when the target system expects Base64 URL format</li>
+    </ul>
+  </section>
+)}
+
+{tool.slug === "base64-encode" && (
+  <section class="card">
+    <h2>What Base64 Encoder is good for</h2>
+    <ul>
+      <li>Turning plain text into transport-friendly Base64 output</li>
+      <li>Preparing values for headers, configs, and API payloads</li>
+      <li>Encoding JSON fragments or credentials-like text for testing</li>
+      <li>Checking how Unicode and multiline strings behave after encoding</li>
+      <li>Creating Base64 values quickly without writing code</li>
+    </ul>
+  </section>
+)}
+
+{tool.slug === "base64-encode" && (
+  <section class="card">
+    <h2>Privacy and browser-side use</h2>
+    <p>
+      If this tool runs fully in the browser, your input stays on the client side instead of being uploaded to a server.
+      That makes it useful for quick encoding of copied text, API values, config strings, and test payloads when you want a fast local result.
+    </p>
+  </section>
+)}
+
+  {tool.slug === "csv-to-json" && (
+  <section class="card">
+    <h2>When to use CSV to JSON</h2>
+    <ul>
+      <li>When spreadsheet rows need to become JSON objects for an app or API</li>
+      <li>When CSV exports must be transformed into machine-friendly structured data</li>
+      <li>When imports, fixtures, or test data are easier to work with as JSON</li>
+      <li>When non-technical tabular data needs to move into developer workflows</li>
+      <li>When quick browser-side conversion is faster than writing parsing code</li>
+    </ul>
+  </section>
+)}
+
+{tool.slug === "csv-to-json" && (
+  <section class="card">
+    <h2>CSV to JSON vs related tools</h2>
+
+    <h3>CSV to JSON vs JSON to CSV</h3>
+    <p>
+      CSV to JSON converts header-based CSV rows into structured JSON objects.
+      JSON to CSV does the reverse and turns array-style JSON into tabular output.
+      If your source is a spreadsheet or CSV export, CSV to JSON is the right tool.
+    </p>
+
+    <h3>CSV to JSON vs CSV Formatter</h3>
+    <p>
+      CSV to JSON is for conversion into structured JSON output.
+      CSV Formatter is for cleaning and normalizing CSV formatting before or after review.
+      If the CSV looks messy first, format it before converting.
+    </p>
+  </section>
+)}
+
+{tool.slug === "csv-to-json" && (
+  <section class="card">
+    <h2>Helpful next steps</h2>
+    <p>
+      If the CSV may be malformed, use
+      <a href="/tools/csv-validator/"> CSV Validator</a>.
+      If you want to clean the CSV before conversion, open
+      <a href="/tools/csv-formatter/"> CSV Formatter</a>.
+      If you need the reverse conversion later, use
+      <a href="/tools/json-to-csv/"> JSON to CSV</a>.
+    </p>
+  </section>
+)}
+
+{tool.slug === "csv-to-json" && (
+  <section class="card">
+    <h2>Common mistakes when using CSV to JSON</h2>
+    <ul>
+      <li>Pasting CSV without a header row</li>
+      <li>Expecting numeric values to become numbers automatically instead of strings</li>
+      <li>Ignoring quoted fields with commas and assuming the split is wrong</li>
+      <li>Trying to convert malformed CSV before validating it</li>
+      <li>Assuming inconsistent row length always produces the structure you expect</li>
+    </ul>
+  </section>
+)}
+
+{tool.slug === "csv-to-json" && (
+  <section class="card">
+    <h2>What CSV to JSON does with your data</h2>
+    <ul>
+      <li>Uses the first CSV row as JSON object keys</li>
+      <li>Turns each following row into one JSON object</li>
+      <li>Keeps quoted field content together when commas appear inside values</li>
+      <li>Outputs a JSON array of row objects</li>
+      <li>Leaves missing row values as empty strings when needed</li>
+    </ul>
+  </section>
+)}
+
+{tool.slug === "csv-to-json" && (
+  <section class="card">
+    <h2>Privacy and browser-side use</h2>
+    <p>
+      If this tool runs fully in the browser, your CSV input stays on the client side instead of being uploaded to a server.
+      That makes it useful for quick conversion of spreadsheet exports, app data, fixtures, and copied tabular content when you want a fast local result.
+    </p>
+  </section>
+)}
+
+  {tool.slug === "json-to-csv" && (
+  <section class="card">
+    <h2>When to use JSON to CSV</h2>
+    <ul>
+      <li>When API data needs to be opened in Excel or Google Sheets</li>
+      <li>When a JSON array of objects must become tabular export data</li>
+      <li>When reports, audits, or handoffs are easier to read as CSV rows and columns</li>
+      <li>When non-technical users need spreadsheet-friendly output instead of raw JSON</li>
+      <li>When quick browser-side conversion is faster than writing a script</li>
+    </ul>
+  </section>
+)}
+
+{tool.slug === "json-to-csv" && (
+  <section class="card">
+    <h2>JSON to CSV vs related tools</h2>
+
+    <h3>JSON to CSV vs CSV to JSON</h3>
+    <p>
+      JSON to CSV converts structured JSON into spreadsheet-style rows and columns.
+      CSV to JSON does the reverse and rebuilds array-style JSON from a header row and CSV data.
+      If you are exporting API or app data into tabular format, JSON to CSV is the right tool.
+    </p>
+
+    <h3>JSON to CSV vs JSON Formatter</h3>
+    <p>
+      JSON to CSV is for conversion into tabular output.
+      JSON Formatter is for readability and inspection of the original JSON structure.
+      If you first need to clean or inspect the payload, format it before converting.
+    </p>
+  </section>
+)}
+
+{tool.slug === "json-to-csv" && (
+  <section class="card">
+    <h2>Helpful next steps</h2>
+    <p>
+      If your input JSON may be broken, use
+      <a href="/tools/json-validator/"> JSON Validator</a>.
+      If you want to inspect or clean the payload before converting, open
+      <a href="/tools/json-formatter/"> JSON Formatter</a>.
+      If you need the reverse conversion later, use
+      <a href="/tools/csv-to-json/"> CSV to JSON</a>.
+    </p>
+  </section>
+)}
+
+{tool.slug === "json-to-csv" && (
+  <section class="card">
+    <h2>Common mistakes when using JSON to CSV</h2>
+    <ul>
+      <li>Pasting a single JSON object instead of an array of objects</li>
+      <li>Expecting deeply nested JSON to flatten into perfect spreadsheet columns automatically</li>
+      <li>Comparing CSV output against raw JSON formatting instead of tabular structure</li>
+      <li>Trying to convert invalid JSON before validating it</li>
+      <li>Assuming missing keys in some rows mean the conversion failed</li>
+    </ul>
+  </section>
+)}
+
+{tool.slug === "json-to-csv" && (
+  <section class="card">
+    <h2>What JSON to CSV does with your data</h2>
+    <ul>
+      <li>Reads the input as a JSON array of objects</li>
+      <li>Collects all keys across the rows to build CSV headers</li>
+      <li>Creates one CSV row per JSON object</li>
+      <li>Escapes commas, quotes, and line breaks when needed</li>
+      <li>Leaves empty CSV fields where some objects do not have a matching key</li>
+    </ul>
+  </section>
+)}
+
+{tool.slug === "json-to-csv" && (
+  <section class="card">
+    <h2>Privacy and browser-side use</h2>
+    <p>
+      If this tool runs fully in the browser, your JSON input stays on the client side instead of being uploaded to a server.
+      That makes it useful for quick conversion of API payloads, exports, reports, and copied app data when you want a fast local result.
+    </p>
+  </section>
+)}
+
+  {tool.slug === "json-diff-checker" && (
+  <section class="card">
+    <h2>When to use JSON Diff Checker</h2>
+    <ul>
+      <li>When comparing two API responses before and after a code change</li>
+      <li>When checking config differences between environments or versions</li>
+      <li>When reviewing fixture updates, payload changes, or regression cases</li>
+      <li>When plain text diff is too noisy because key order changed</li>
+      <li>When you need structure-aware JSON comparison by path instead of line-by-line text diff</li>
+    </ul>
+  </section>
+)}
+
+{tool.slug === "json-diff-checker" && (
+  <section class="card">
+    <h2>JSON Diff Checker vs related tools</h2>
+
+    <h3>JSON Diff Checker vs Text Diff Checker</h3>
+    <p>
+      JSON Diff Checker compares JSON structure by keys, paths, and value types.
+      Text Diff Checker compares raw text line by line.
+      If your input is real JSON and you want semantic comparison, JSON Diff Checker is the better tool.
+    </p>
+
+    <h3>JSON Diff Checker vs JSON Formatter</h3>
+    <p>
+      JSON Diff Checker is for comparing two JSON values.
+      JSON Formatter is for making one JSON value easier to read.
+      If you first need to clean the input before comparing, format both sides and then run the diff.
+    </p>
+  </section>
+)}
+
+{tool.slug === "json-diff-checker" && (
+  <section class="card">
+    <h2>Helpful next steps</h2>
+    <p>
+      If one side looks invalid before comparison, use
+      <a href="/tools/json-validator/"> JSON Validator</a>.
+      If you want to inspect or clean either side first, open
+      <a href="/tools/json-formatter/"> JSON Formatter</a>.
+      If your comparison problem is not JSON-specific and you only need raw line differences, use
+      <a href="/tools/text-diff-checker/"> Text Diff Checker</a>.
+    </p>
+  </section>
+)}
+
+{tool.slug === "json-diff-checker" && (
+  <section class="card">
+    <h2>Common mistakes when using JSON Diff Checker</h2>
+    <ul>
+      <li>Comparing incomplete left or right JSON and trusting the result</li>
+      <li>Using text diff expectations on a structure-aware comparison tool</li>
+      <li>Assuming different key order always means different data</li>
+      <li>Trying to diff invalid JSON before validating both sides</li>
+      <li>Comparing escaped JSON strings instead of real parsed JSON values</li>
+    </ul>
+  </section>
+)}
+
+{tool.slug === "json-diff-checker" && (
+  <section class="card">
+    <h2>What JSON Diff Checker shows</h2>
+    <ul>
+      <li>Added paths that exist only on the right side</li>
+      <li>Removed paths that exist only on the left side</li>
+      <li>Changed values at the same JSON path</li>
+      <li>Type changes such as string to number or object to array</li>
+      <li>Nested differences inside objects and arrays</li>
+    </ul>
+  </section>
+)}
+
+{tool.slug === "json-diff-checker" && (
+  <section class="card">
+    <h2>Privacy and browser-side use</h2>
+    <p>
+      If this tool runs fully in the browser, both JSON inputs stay on the client side instead of being uploaded to a server.
+      That makes it useful for comparing copied API payloads, config files, fixtures, and test data when you want a fast local result.
+    </p>
+  </section>
+)}
+
+  {tool.slug === "json-unescape" && (
+  <section class="card">
+    <h2>When to use JSON Unescape</h2>
+    <ul>
+      <li>When an API response, log line, or config value contains escaped JSON string content</li>
+      <li>When text includes sequences like \n, \t, \\" or doubled backslashes and you need to read it normally</li>
+      <li>When debugging copied payload fragments from logs, browser tools, or backend output</li>
+      <li>When checking whether escaped text hides quotes, line breaks, or tabs that affect the real value</li>
+      <li>When you want readable string content before validating or formatting the surrounding JSON</li>
+    </ul>
+  </section>
+)}
+
+{tool.slug === "json-unescape" && (
+  <section class="card">
+    <h2>JSON Unescape vs related tools</h2>
+
+    <h3>JSON Unescape vs JSON Escape</h3>
+    <p>
+      JSON Unescape turns escaped string content back into readable text.
+      JSON Escape does the reverse and prepares plain text for safe use inside a JSON string.
+      If your input already contains backslashes and escaped quotes, start with JSON Unescape.
+    </p>
+
+    <h3>JSON Unescape vs JSON Formatter</h3>
+    <p>
+      JSON Unescape is for one escaped string value or escaped text content.
+      JSON Formatter is for full JSON objects and arrays.
+      If the problem is only escaped string content, use JSON Unescape first.
+      If you need to inspect the full JSON structure, use JSON Formatter.
+    </p>
+  </section>
+)}
+
+{tool.slug === "json-unescape" && (
+  <section class="card">
+    <h2>Helpful next steps</h2>
+    <p>
+      If you need to escape the readable result again, use
+      <a href="/tools/json-escape/"> JSON Escape</a>.
+      If the unescaped output is part of a larger JSON payload, check it with
+      <a href="/tools/json-validator/"> JSON Validator</a>.
+      If you want to inspect the full structure after fixing the string content, open
+      <a href="/tools/json-formatter/"> JSON Formatter</a>.
+    </p>
+  </section>
+)}
+
+{tool.slug === "json-unescape" && (
+  <section class="card">
+    <h2>Common mistakes when using JSON Unescape</h2>
+    <ul>
+      <li>Trying to unescape a full JSON object when only one string value needs decoding</li>
+      <li>Running the same value through JSON Unescape more than once</li>
+      <li>Using JSON Unescape for URL encoding or HTML entities instead of JSON string escaping</li>
+      <li>Assuming readable output is always valid full JSON instead of just decoded text</li>
+      <li>Confusing escaped backslashes in file paths or regex patterns with broken JSON</li>
+    </ul>
+  </section>
+)}
+
+{tool.slug === "json-unescape" && (
+  <section class="card">
+    <h2>Escaped sequences handled by JSON Unescape</h2>
+    <ul>
+      <li><code>\"</code> becomes a normal double quote</li>
+      <li><code>\\</code> becomes a single backslash</li>
+      <li><code>\n</code> becomes a real new line</li>
+      <li><code>\t</code> becomes a real tab</li>
+      <li><code>\r</code> becomes a carriage return</li>
+      <li>Other standard JSON escape sequences are restored when present</li>
+    </ul>
+  </section>
+)}
+
+{tool.slug === "json-unescape" && (
+  <section class="card">
+    <h2>Privacy and browser-side use</h2>
+    <p>
+      If this tool runs fully in the browser, your input stays on the client side instead of being uploaded to a server.
+      That makes it useful for decoding copied string fragments from logs, payloads, configs, and code examples when you want a fast local result.
+    </p>
+  </section>
+)}
+
+  {tool.slug === "json-escape" && (
+  <section class="card">
+    <h2>When to use JSON Escape</h2>
+    <ul>
+      <li>When plain text must be turned into JSON-safe string content</li>
+      <li>When quotes, backslashes, tabs, or line breaks break a copied payload</li>
+      <li>When preparing example strings for docs, tutorials, or code snippets</li>
+      <li>When embedding raw text inside JSON request bodies or config values</li>
+      <li>When debugging escaped string content from logs, APIs, or app output</li>
+    </ul>
+  </section>
+)}
+
+{tool.slug === "json-escape" && (
+  <section class="card">
+    <h2>JSON Escape vs related tools</h2>
+
+    <h3>JSON Escape vs JSON Unescape</h3>
+    <p>
+      JSON Escape converts plain text into escaped JSON string content.
+      JSON Unescape does the reverse and turns escaped sequences back into readable text.
+      If your input is raw text, use JSON Escape first.
+      If your input already contains backslashes and escaped quotes, use JSON Unescape.
+    </p>
+
+    <h3>JSON Escape vs JSON Formatter</h3>
+    <p>
+      JSON Escape works on string content.
+      JSON Formatter works on full JSON structure and makes valid JSON easier to read.
+      If you need to make one text value safe inside JSON, use JSON Escape.
+      If you need to clean or inspect a full JSON object, use JSON Formatter.
+    </p>
+  </section>
+)}
+
+{tool.slug === "json-escape" && (
+  <section class="card">
+    <h2>Helpful next steps</h2>
+    <p>
+      If you need to reverse the escaped output, use
+      <a href="/tools/json-unescape/"> JSON Unescape</a>.
+      If you want to validate a full JSON payload after inserting the escaped string, open
+      <a href="/tools/json-validator/"> JSON Validator</a>.
+      If you want to inspect or clean the final JSON structure, continue with
+      <a href="/tools/json-formatter/"> JSON Formatter</a>.
+    </p>
+  </section>
+)}
+
+{tool.slug === "json-escape" && (
+  <section class="card">
+    <h2>Common mistakes when using JSON Escape</h2>
+    <ul>
+      <li>Escaping a full JSON object when only one string value needed escaping</li>
+      <li>Assuming escaped output is meant to stay human-readable</li>
+      <li>Running the same text through JSON Escape twice by mistake</li>
+      <li>Using JSON Escape when URL encoding or HTML encoding was actually needed</li>
+      <li>Forgetting that line breaks and tabs become escaped sequences instead of visible formatting</li>
+    </ul>
+  </section>
+)}
+
+{tool.slug === "json-escape" && (
+  <section class="card">
+    <h2>Privacy and browser-side use</h2>
+    <p>
+      If this tool runs fully in the browser, your input stays on the client side instead of being uploaded to a server.
+      That makes it useful for escaping copied payload fragments, config values, code examples, and log text when you want a fast local result.
+    </p>
+  </section>
+)}
+
+{tool.slug === "json-escape" && (
+  <section class="card">
+    <h2>Characters escaped by JSON Escape</h2>
+    <ul>
+      <li>Double quotes become <code>\"</code></li>
+      <li>Backslashes become <code>\\</code></li>
+      <li>New lines become <code>\n</code></li>
+      <li>Tabs become <code>\t</code></li>
+      <li>Carriage returns become <code>\r</code></li>
+      <li>Form feeds and backspaces are escaped when present</li>
+    </ul>
+  </section>
+)}
+
+  {tool.slug === "json-minifier" && (
+  <section class="card">
+    <h2>When to use JSON Minifier</h2>
+    <ul>
+      <li>When you need compact JSON for APIs, requests, or storage</li>
+      <li>When formatted JSON is too large or too noisy for embedding in scripts or configs</li>
+      <li>When you want to remove indentation and line breaks after debugging a payload</li>
+      <li>When preparing test fixtures, compact examples, or one-line JSON samples</li>
+      <li>When a system expects valid JSON but you want the smallest readable transport form</li>
+    </ul>
+  </section>
+)}
+
+{tool.slug === "json-minifier" && (
+  <section class="card">
+    <h2>JSON Minifier vs related tools</h2>
+
+    <h3>JSON Minifier vs JSON Formatter</h3>
+    <p>
+      JSON Minifier removes whitespace and turns valid JSON into compact one-line output.
+      JSON Formatter does the reverse and makes JSON easier to read with indentation and line breaks.
+      If you need smaller output, use the minifier.
+      If you need readability, use the formatter.
+    </p>
+
+    <h3>JSON Minifier vs JSON Validator</h3>
+    <p>
+      JSON Minifier is for compact output.
+      JSON Validator is for checking whether the syntax is correct.
+      If the payload is invalid, validate and fix it first before trying to minify it.
+    </p>
+  </section>
+)}
+
+{tool.slug === "json-minifier" && (
+  <section class="card">
+    <h2>Helpful next steps</h2>
+    <p>
+      If your JSON needs to be checked before compression, use
+      <a href="/tools/json-validator/"> JSON Validator</a>.
+      If you want to inspect the structure before minifying, open
+      <a href="/tools/json-formatter/"> JSON Formatter</a>.
+      If your next step is converting structured data into rows and columns, continue with
+      <a href="/tools/json-to-csv/"> JSON to CSV</a>.
+    </p>
+  </section>
+)}
+
+{tool.slug === "json-minifier" && (
+  <section class="card">
+    <h2>Common mistakes when using JSON Minifier</h2>
+    <ul>
+      <li>Trying to minify invalid JSON before fixing syntax errors</li>
+      <li>Assuming minification changes the data instead of only removing whitespace</li>
+      <li>Pasting incomplete JSON copied from logs or docs</li>
+      <li>Using the minifier when readability is actually the main goal</li>
+      <li>Confusing compact JSON with encoded or compressed data formats like Base64</li>
+    </ul>
+  </section>
+)}
+
+{tool.slug === "json-minifier" && (
+  <section class="card">
+    <h2>Privacy and browser-side use</h2>
+    <p>
+      If this tool runs fully in the browser, your JSON stays on the client side instead of being uploaded to a server.
+      That makes it useful for quick compaction of API payloads, config data, logs, and test fixtures when you want a fast local result.
+    </p>
+  </section>
+)}
+
+  {tool.slug === "json-validator" && (
+  <section class="card">
+    <h2>When to use JSON Validator</h2>
+    <ul>
+      <li>When an API request or response may contain broken JSON</li>
+      <li>When you copied a payload from logs, docs, dev tools, or a webhook and need to confirm it is valid</li>
+      <li>When checking config files before deployment or handoff</li>
+      <li>When validating JSON before formatting, minifying, or converting it</li>
+      <li>When you want a fast valid-or-invalid answer without reading the whole structure manually</li>
+    </ul>
+  </section>
+)}
+
+{tool.slug === "json-validator" && (
+  <section class="card">
+    <h2>JSON Validator vs related tools</h2>
+
+    <h3>JSON Validator vs JSON Formatter</h3>
+    <p>
+      JSON Validator is best when your main goal is to check whether JSON is valid or invalid.
+      JSON Formatter is better when you want readable structured output after the syntax is already correct.
+      If you need a quick pass or fail answer first, start with the validator.
+      If you need to inspect the structure visually, move to the formatter next.
+    </p>
+
+    <h3>JSON Validator vs JSON Minifier</h3>
+    <p>
+      JSON Validator checks syntax correctness.
+      JSON Minifier removes whitespace from JSON that is already valid.
+      If the payload is broken, minifying will not help until the syntax problems are fixed.
+    </p>
+  </section>
+)}
+
+{tool.slug === "json-validator" && (
+  <section class="card">
+    <h2>Helpful next steps</h2>
+    <p>
+      If your JSON is valid and you want to inspect it more clearly, open
+      <a href="/tools/json-formatter/"> JSON Formatter</a>.
+      If the payload is valid and you need compact output for transport or storage, use
+      <a href="/tools/json-minifier/"> JSON Minifier</a>.
+      If your next step is turning JSON into tabular data, continue with
+      <a href="/tools/json-to-csv/"> JSON to CSV</a>.
+    </p>
+  </section>
+)}
+
+{tool.slug === "json-validator" && (
+  <section class="card">
+    <h2>Common mistakes when using JSON Validator</h2>
+    <ul>
+      <li>Assuming valid JSON automatically means the data matches the expected schema</li>
+      <li>Pasting only part of a payload and treating the result as final</li>
+      <li>Using single quotes or unquoted keys and expecting JSON to parse like JavaScript</li>
+      <li>Trying to minify or convert JSON before fixing basic syntax problems</li>
+      <li>Confusing formatting problems with actual structural errors</li>
+    </ul>
+  </section>
+)}
+
+{tool.slug === "json-validator" && (
+  <section class="card">
+    <h2>Privacy and browser-side use</h2>
+    <p>
+      If this tool runs fully in the browser, your input stays on the client side instead of being uploaded to a server.
+      That makes JSON validation useful for quick checks on API payloads, configs, logs, and copied snippets when you want a fast local result.
+    </p>
+  </section>
+)}
+
+  {tool.slug === "json-validator" && (
+  <section class="card">
+    <h2>JSON Validator vs related tools</h2>
+
+    <h3>JSON Validator vs JSON Formatter</h3>
+    <p>
+      JSON Validator is best when your main goal is to check whether JSON is valid or invalid.
+      JSON Formatter is better when you want readable structured output after the syntax is already correct.
+      If you need a quick pass/fail answer first, start with the validator.
+      If you need to inspect the structure visually, move to the formatter next.
+    </p>
+
+    <h3>JSON Validator vs JSON Minifier</h3>
+    <p>
+      JSON Validator checks syntax correctness.
+      JSON Minifier removes whitespace from JSON that is already valid.
+      If the payload is broken, minifying will not help until the syntax problems are fixed.
+    </p>
+  </section>
+)}
+
+{tool.slug === "json-validator" && (
+  <section class="card">
+    <h2>Helpful next steps</h2>
+    <p>
+      If your JSON is valid and you want to inspect it more clearly, open
+      <a href="/tools/json-formatter/"> JSON Formatter</a>.
+      If the payload is valid and you need compact output for transport or storage, use
+      <a href="/tools/json-minifier/"> JSON Minifier</a>.
+      If your next step is turning JSON into tabular data, continue with
+      <a href="/tools/json-to-csv/"> JSON to CSV</a>.
+    </p>
+  </section>
+)}
+
+{tool.slug === "json-validator" && (
+  <section class="card">
+    <h2>Privacy and browser-side use</h2>
+    <p>
+      If this tool runs fully in the browser, your input stays on the client side instead of being uploaded to a server.
+      That makes JSON validation useful for quick checks on API payloads, configs, logs, and copied snippets when you want a fast local result.
+    </p>
+  </section>
+)}
+
+ {tool.slug === "json-formatter" && (
+  <section class="card">
+    <h2>When to use JSON Formatter</h2>
+    <ul>
+      <li>When an API response is minified and hard to read</li>
+      <li>When you need to inspect nested JSON objects and arrays during debugging</li>
+      <li>When checking webhook payloads before building or fixing an integration</li>
+      <li>When reading JSON logs copied from an app, browser console, or monitoring tool</li>
+      <li>When cleaning exported JSON before converting it to CSV or another format</li>
+    </ul>
+  </section>
+)}
+
+{tool.slug === "json-formatter" && (
+  <section class="card">
+    <h2>JSON Formatter vs related tools</h2>
+
+    <h3>JSON Formatter vs JSON Validator</h3>
+    <p>
+      JSON Formatter is best when you want readable pretty output.
+      JSON Validator is better when your main question is simply whether the JSON syntax is valid.
+      If you need both readability and a syntax check, JSON Formatter is the better first step.
+    </p>
+
+    <h3>JSON Formatter vs JSON Minifier</h3>
+    <p>
+      JSON Formatter adds indentation and line breaks so JSON is easier to inspect.
+      JSON Minifier removes whitespace so the payload becomes compact.
+      Use Formatter when you want readability, and Minifier when you want smaller output.
+    </p>
+  </section>
+)}
+
+{tool.slug === "json-formatter" && (
+  <section class="card">
+    <h2>Helpful next steps</h2>
+    <p>
+      If your formatted JSON is still invalid, open
+      <a href="/tools/json-validator/"> JSON Validator</a>.
+      If you want a compact one-line version after inspection, use
+      <a href="/tools/json-minifier/"> JSON Minifier</a>.
+      If you want to move the data into rows and columns, try
+      <a href="/tools/json-to-csv/"> JSON to CSV</a>.
+      If the payload contains escaped characters, you may also want
+      <a href="/tools/json-unescape/"> JSON Unescape</a>.
+    </p>
+  </section>
+)}
+
+{tool.slug === "json-formatter" && (
+  <section class="card">
+    <h2>Common mistakes when formatting JSON</h2>
+    <ul>
+      <li>Pasting incomplete JSON copied from logs or browser tools</li>
+      <li>Using single quotes instead of valid JSON double quotes</li>
+      <li>Leaving trailing commas in objects or arrays</li>
+      <li>Confusing JavaScript object syntax with strict JSON syntax</li>
+      <li>Trying to format escaped JSON text before unescaping it first</li>
+    </ul>
+  </section>
+)}
+
+{tool.slug === "json-formatter" && (
+  <section class="card">
+    <h2>Privacy and browser-side use</h2>
+    <p>
+      For JSON tools, privacy matters. If your formatter runs fully in the browser,
+      the pasted JSON stays on the client side instead of being uploaded to a server.
+      This is especially useful when working with logs, configs, payloads, and private API data.
+    </p>
+  </section>
+)}
 
   {tool.slug === "text-diff-checker" && (
   <section class="card">
@@ -1281,10 +2063,10 @@ function formatCategoryLabel(category: string): string {
     <h2>When to use JSON Validator</h2>
     <ul>
       <li>When an API request keeps failing and you want to rule out broken JSON first</li>
-      <li>When you copied a payload from logs, docs, or browser dev tools and are not sure it is complete</li>
-      <li>When editing a JSON config file before deployment</li>
-      <li>When testing webhook bodies from payment, email, or automation services</li>
-      <li>When a formatter, parser, or import tool rejects your input and you need to find the basic syntax issue</li>
+      <li>When you copied a payload from logs, docs, browser dev tools, or a webhook and need to confirm it is valid</li>
+      <li>When checking config files before deployment or handoff</li>
+      <li>When validating JSON before formatting, minifying, converting, or mapping it elsewhere</li>
+      <li>When you need a fast valid-or-invalid answer without reading the whole structure manually</li>
     </ul>
   </section>
 )}
@@ -1797,6 +2579,8 @@ function formatCategoryLabel(category: string): string {
   color: var(--muted);
 }
 </style>
+
+
 
 <script>
   document.addEventListener("DOMContentLoaded", () => {
@@ -20607,6 +21391,1082 @@ if (slug === "decimal-to-text") {
   } catch {
     output.value = "Invalid decimal input.";
   }
+
+  return;
+}
+if (slug === "text-to-randomcase") {
+  const text = input.value;
+
+  if (!text.trim()) {
+    output.value = "";
+    return;
+  }
+
+  output.value = text
+    .split("")
+    .map((char: string) => {
+      if (!/[a-zа-яё]/i.test(char)) {
+        return char;
+      }
+
+      return Math.random() < 0.5 ? char.toLowerCase() : char.toUpperCase();
+    })
+    .join("");
+
+  return;
+}
+
+if (slug === "text-to-titlecase") {
+  const text = input.value;
+
+  if (!text.trim()) {
+    output.value = "";
+    return;
+  }
+
+  output.value = text
+    .toLowerCase()
+    .replace(/\b([^\s])/g, (match: string) => match.toUpperCase());
+
+  return;
+}
+
+if (slug === "json-to-text") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter valid JSON.";
+    return;
+  }
+
+  try {
+    const data = JSON.parse(text);
+    const lines: string[] = [];
+
+    const walk = (value: unknown, path: string): void => {
+      if (Array.isArray(value)) {
+        if (value.length === 0) {
+          lines.push(`${path}: []`);
+          return;
+        }
+
+        value.forEach((item: unknown, index: number) => {
+          walk(item, path ? `${path}[${index}]` : `[${index}]`);
+        });
+        return;
+      }
+
+      if (typeof value === "object" && value !== null) {
+        const entries = Object.entries(value as Record<string, unknown>);
+
+        if (entries.length === 0) {
+          lines.push(`${path}: {}`);
+          return;
+        }
+
+        entries.forEach(([key, val]: [string, unknown]) => {
+          const nextPath = path ? `${path}.${key}` : key;
+          walk(val, nextPath);
+        });
+        return;
+      }
+
+      lines.push(`${path}: ${String(value)}`);
+    };
+
+    walk(data, "");
+    output.value = lines.join("\n");
+  } catch {
+    output.value = "Invalid JSON.";
+  }
+
+  return;
+}
+
+if (slug === "html-to-text") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter HTML to convert to text.";
+    return;
+  }
+
+  try {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(text, "text/html");
+
+    const blocks = Array.from(doc.body.querySelectorAll("p, div, section, article, h1, h2, h3, h4, h5, h6, li, br"))
+      .map((node: Element) => {
+        if (node.tagName.toLowerCase() === "br") {
+          return "\n";
+        }
+        return node.textContent?.trim() || "";
+      })
+      .filter((part: string) => part.length > 0);
+
+    const fallback = (doc.body.textContent || "").replace(/\s+\n/g, "\n").replace(/\n\s+/g, "\n").replace(/[ \t]+/g, " ").trim();
+
+    output.value = blocks.length > 0 ? blocks.join("\n") : fallback;
+  } catch {
+    output.value = "Invalid HTML input.";
+  }
+
+  return;
+}
+
+if (slug === "xml-to-text") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter XML to convert to text.";
+    return;
+  }
+
+  try {
+    const parser = new DOMParser();
+    const xml = parser.parseFromString(text, "application/xml");
+    const parserError = xml.querySelector("parsererror");
+
+    if (parserError) {
+      output.value = "Invalid XML.";
+      return;
+    }
+
+    const values: string[] = [];
+
+    const walk = (node: Node): void => {
+      if (node.nodeType === Node.TEXT_NODE) {
+        const value = node.textContent?.trim() || "";
+        if (value) {
+          values.push(value);
+        }
+      }
+
+      node.childNodes.forEach((child: Node) => walk(child));
+    };
+
+    walk(xml.documentElement);
+
+    output.value = values.join("\n").trim() || "No readable text found.";
+  } catch {
+    output.value = "Invalid XML.";
+  }
+
+  return;
+}
+if (slug === "spaces-to-tabs") {
+  const text = input.value;
+
+  if (!text) {
+    output.value = "";
+    return;
+  }
+
+  output.value = text
+    .split(/\r?\n/)
+    .map((line: string) => line.replace(/ {2,}/g, (spaces: string) => "\t".repeat(Math.floor(spaces.length / 2))))
+    .join("\n");
+
+  return;
+}
+
+if (slug === "spaces-to-newlines") {
+  const text = input.value;
+
+  if (!text.trim()) {
+    output.value = "";
+    return;
+  }
+
+  output.value = text.trim().replace(/ +/g, "\n");
+  return;
+}
+
+if (slug === "newlines-to-spaces") {
+  const text = input.value;
+
+  if (!text.trim()) {
+    output.value = "";
+    return;
+  }
+
+  output.value = text.replace(/\r?\n+/g, " ").replace(/ {2,}/g, " ").trim();
+  return;
+}
+
+if (slug === "uuencode-text") {
+  const text = input.value;
+
+  if (!text) {
+    output.value = "Enter text to uuencode.";
+    return;
+  }
+
+  try {
+    const bytes = Array.from(new TextEncoder().encode(text));
+    const lines: string[] = [];
+
+    for (let i = 0; i < bytes.length; i += 45) {
+      const chunk = bytes.slice(i, i + 45);
+      let line = String.fromCharCode(((chunk.length & 63) || 32));
+
+      for (let j = 0; j < chunk.length; j += 3) {
+        const a = chunk[j] ?? 0;
+        const b = chunk[j + 1] ?? 0;
+        const c = chunk[j + 2] ?? 0;
+
+        const c1 = (a >> 2) & 0x3f;
+        const c2 = ((a << 4) | (b >> 4)) & 0x3f;
+        const c3 = ((b << 2) | (c >> 6)) & 0x3f;
+        const c4 = c & 0x3f;
+
+        [c1, c2, c3, c4].forEach((value: number) => {
+          line += String.fromCharCode(value === 0 ? 96 : value + 32);
+        });
+      }
+
+      lines.push(line);
+    }
+
+    output.value = `begin 644 text\n${lines.join("\n")}\n \nend`;
+  } catch {
+    output.value = "Unable to uuencode text.";
+  }
+
+  return;
+}
+
+if (slug === "uudecode-text") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter uuencoded text.";
+    return;
+  }
+
+  try {
+    const lines = text.split(/\r?\n/);
+    const startIndex = lines.findIndex((line: string) => /^begin [0-7]{3} /.test(line));
+    const endIndex = lines.findIndex((line: string) => line.trim() === "end");
+
+    const body =
+      startIndex !== -1 && endIndex !== -1 && endIndex > startIndex
+        ? lines.slice(startIndex + 1, endIndex)
+        : lines;
+
+    const bytes: number[] = [];
+
+    for (const rawLine of body) {
+      const line = rawLine.replace(/\r/g, "");
+      if (!line) continue;
+
+      const lengthChar = line.charCodeAt(0);
+      const length = ((lengthChar - 32) & 63);
+
+      if (length === 0) continue;
+
+      let produced = 0;
+
+      for (let i = 1; i + 3 < line.length && produced < length; i += 4) {
+        const decodeChar = (ch: string): number => ((ch.charCodeAt(0) - 32) & 63);
+
+        const c1 = decodeChar(line[i]);
+        const c2 = decodeChar(line[i + 1]);
+        const c3 = decodeChar(line[i + 2]);
+        const c4 = decodeChar(line[i + 3]);
+
+        const b1 = (c1 << 2) | (c2 >> 4);
+        const b2 = ((c2 & 15) << 4) | (c3 >> 2);
+        const b3 = ((c3 & 3) << 6) | c4;
+
+        if (produced < length) {
+          bytes.push(b1);
+          produced++;
+        }
+        if (produced < length) {
+          bytes.push(b2);
+          produced++;
+        }
+        if (produced < length) {
+          bytes.push(b3);
+          produced++;
+        }
+      }
+    }
+
+    output.value = new TextDecoder().decode(new Uint8Array(bytes));
+  } catch {
+    output.value = "Invalid uuencoded input.";
+  }
+
+  return;
+}
+
+if (slug === "cmyk-to-rgb") {
+  const numbers = input.value.match(/-?\d+(?:[.,]\d+)?/g)?.map((v: string) => Number(v.replace(",", "."))) || [];
+  const [c, m, y, k] = numbers;
+
+  const valid = [c, m, y, k].every((v: number) => Number.isFinite(v) && v >= 0 && v <= 100);
+
+  if (!valid || numbers.length < 4) {
+    output.value = "Enter CMYK values like: 0 66 80 0";
+    return;
+  }
+
+  const cn = c / 100;
+  const mn = m / 100;
+  const yn = y / 100;
+  const kn = k / 100;
+
+  const r = Math.round(255 * (1 - cn) * (1 - kn));
+  const g = Math.round(255 * (1 - mn) * (1 - kn));
+  const b = Math.round(255 * (1 - yn) * (1 - kn));
+
+  output.value = `rgb(${r}, ${g}, ${b})`;
+  return;
+}
+
+if (slug === "rgb-to-cmyk") {
+  const numbers = input.value.match(/\d+/g)?.map((v: string) => Number(v)) || [];
+  const [r, g, b] = numbers;
+
+  const valid =
+    Number.isInteger(r) && Number.isInteger(g) && Number.isInteger(b) &&
+    r >= 0 && r <= 255 &&
+    g >= 0 && g <= 255 &&
+    b >= 0 && b <= 255;
+
+  if (!valid) {
+    output.value = "Enter RGB values like: 255 87 51";
+    return;
+  }
+
+  if (r === 0 && g === 0 && b === 0) {
+    output.value = "cmyk(0%, 0%, 0%, 100%)";
+    return;
+  }
+
+  const rn = r / 255;
+  const gn = g / 255;
+  const bn = b / 255;
+
+  const k = 1 - Math.max(rn, gn, bn);
+  const c = (1 - rn - k) / (1 - k);
+  const m = (1 - gn - k) / (1 - k);
+  const y = (1 - bn - k) / (1 - k);
+
+  output.value = `cmyk(${Math.round(c * 100)}%, ${Math.round(m * 100)}%, ${Math.round(y * 100)}%, ${Math.round(k * 100)}%)`;
+  return;
+}
+
+if (slug === "cmyk-to-hex") {
+  const numbers = input.value.match(/-?\d+(?:[.,]\d+)?/g)?.map((v: string) => Number(v.replace(",", "."))) || [];
+  const [c, m, y, k] = numbers;
+
+  const valid = [c, m, y, k].every((v: number) => Number.isFinite(v) && v >= 0 && v <= 100);
+
+  if (!valid || numbers.length < 4) {
+    output.value = "Enter CMYK values like: 0 66 80 0";
+    return;
+  }
+
+  const cn = c / 100;
+  const mn = m / 100;
+  const yn = y / 100;
+  const kn = k / 100;
+
+  const r = Math.round(255 * (1 - cn) * (1 - kn));
+  const g = Math.round(255 * (1 - mn) * (1 - kn));
+  const b = Math.round(255 * (1 - yn) * (1 - kn));
+
+  const toHex = (value: number): string => value.toString(16).padStart(2, "0").toUpperCase();
+  output.value = `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+  return;
+}
+
+if (slug === "hex-to-cmyk") {
+  const raw = input.value.trim().replace(/^#/, "");
+
+  if (!raw) {
+    output.value = "Enter a HEX color like #FF5733 or FFF.";
+    return;
+  }
+
+  let hex = raw;
+
+  if (/^[0-9a-fA-F]{3}$/.test(hex)) {
+    hex = hex.split("").map((ch: string) => ch + ch).join("");
+  }
+
+  if (!/^[0-9a-fA-F]{6}$/.test(hex)) {
+    output.value = "Invalid HEX color.";
+    return;
+  }
+
+  const r = parseInt(hex.slice(0, 2), 16);
+  const g = parseInt(hex.slice(2, 4), 16);
+  const b = parseInt(hex.slice(4, 6), 16);
+
+  if (r === 0 && g === 0 && b === 0) {
+    output.value = "cmyk(0%, 0%, 0%, 100%)";
+    return;
+  }
+
+  const rn = r / 255;
+  const gn = g / 255;
+  const bn = b / 255;
+
+  const k = 1 - Math.max(rn, gn, bn);
+  const c = (1 - rn - k) / (1 - k);
+  const m = (1 - gn - k) / (1 - k);
+  const y = (1 - bn - k) / (1 - k);
+
+  output.value = `cmyk(${Math.round(c * 100)}%, ${Math.round(m * 100)}%, ${Math.round(y * 100)}%, ${Math.round(k * 100)}%)`;
+  return;
+}
+
+const punycodeDecodeLabel = (input: string): string => {
+  const base = 36;
+  const tMin = 1;
+  const tMax = 26;
+  const skew = 38;
+  const damp = 700;
+  const initialBias = 72;
+  const initialN = 128;
+  const delimiter = "-";
+
+  const decodeDigit = (codePoint: number): number => {
+    if (codePoint >= 48 && codePoint <= 57) return codePoint - 22;
+    if (codePoint >= 65 && codePoint <= 90) return codePoint - 65;
+    if (codePoint >= 97 && codePoint <= 122) return codePoint - 97;
+    return base;
+  };
+
+  const adapt = (delta: number, numPoints: number, firstTime: boolean): number => {
+    delta = firstTime ? Math.floor(delta / damp) : Math.floor(delta / 2);
+    delta += Math.floor(delta / numPoints);
+
+    let k = 0;
+    while (delta > Math.floor(((base - tMin) * tMax) / 2)) {
+      delta = Math.floor(delta / (base - tMin));
+      k += base;
+    }
+
+    return k + Math.floor(((base - tMin + 1) * delta) / (delta + skew));
+  };
+
+  const outputCodePoints: number[] = [];
+  const inputLower = input.toLowerCase();
+  const lastDelimiter = inputLower.lastIndexOf(delimiter);
+
+  if (lastDelimiter > -1) {
+    for (let i = 0; i < lastDelimiter; i++) {
+      outputCodePoints.push(inputLower.charCodeAt(i));
+    }
+  }
+
+  let n = initialN;
+  let i = 0;
+  let bias = initialBias;
+  let index = lastDelimiter > -1 ? lastDelimiter + 1 : 0;
+
+  while (index < inputLower.length) {
+    const oldI = i;
+    let w = 1;
+
+    for (let k = base; ; k += base) {
+      if (index >= inputLower.length) {
+        throw new Error("Bad input");
+      }
+
+      const digit = decodeDigit(inputLower.charCodeAt(index++));
+      if (digit >= base) {
+        throw new Error("Bad input");
+      }
+
+      i += digit * w;
+
+      let t: number;
+      if (k <= bias) {
+        t = tMin;
+      } else if (k >= bias + tMax) {
+        t = tMax;
+      } else {
+        t = k - bias;
+      }
+
+      if (digit < t) {
+        break;
+      }
+
+      w *= (base - t);
+    }
+
+    const outLength = outputCodePoints.length + 1;
+    bias = adapt(i - oldI, outLength, oldI === 0);
+    n += Math.floor(i / outLength);
+    i %= outLength;
+
+    outputCodePoints.splice(i, 0, n);
+    i++;
+  }
+
+  return String.fromCodePoint(...outputCodePoints);
+};
+
+
+if (slug === "text-to-punycode") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter text or a domain label to convert to Punycode.";
+    return;
+  }
+
+  try {
+    const normalized = text
+      .replace(/^https?:\/\//i, "")
+      .replace(/\/.*$/, "")
+      .trim();
+
+    if (!normalized) {
+      output.value = "Enter valid text or a domain label.";
+      return;
+    }
+
+    const encoded = new URL(`https://${normalized}`).hostname;
+    output.value = encoded;
+  } catch {
+    output.value = "Unable to convert text to Punycode.";
+  }
+
+  return;
+}
+
+if (slug === "punycode-to-text") {
+  const text = input.value.trim();
+
+  if (!text) {
+    output.value = "Enter a Punycode value like xn--mnchen-3ya.";
+    return;
+  }
+
+  try {
+    output.value = text
+      .split(".")
+      .map((label: string) => {
+        if (/^xn--/i.test(label)) {
+          return punycodeDecodeLabel(label.slice(4));
+        }
+        return label;
+      })
+      .join(".");
+  } catch {
+    output.value = "Invalid Punycode input.";
+  }
+
+  return;
+}
+const applyRot13 = (text: string): string =>
+  text.replace(/[A-Za-z]/g, (char: string) => {
+    const base = char <= "Z" ? 65 : 97;
+    return String.fromCharCode(((char.charCodeAt(0) - base + 13) % 26) + base);
+  });
+
+const applyRot47 = (text: string): string =>
+  text.replace(/[!-~]/g, (char: string) =>
+    String.fromCharCode(33 + ((char.charCodeAt(0) - 33 + 47) % 94))
+  );
+
+const splitKeyAndBody = (text: string): { key: string; body: string } => {
+  const normalized = text.replace(/\r\n/g, "\n");
+  const firstNewline = normalized.indexOf("\n");
+
+  if (firstNewline === -1) {
+    return { key: "", body: "" };
+  }
+
+  return {
+    key: normalized.slice(0, firstNewline),
+    body: normalized.slice(firstNewline + 1)
+  };
+};
+
+const xorWithKeyToHex = (body: string, key: string): string => {
+  const bodyBytes = new TextEncoder().encode(body);
+  const keyBytes = new TextEncoder().encode(key);
+
+  const result = Array.from(bodyBytes).map((byte: number, index: number) => {
+    const value = byte ^ keyBytes[index % keyBytes.length];
+    return value.toString(16).padStart(2, "0").toUpperCase();
+  });
+
+  return result.join("");
+};
+
+const xorHexToText = (hex: string, key: string): string => {
+  const cleanHex = hex.replace(/\s+/g, "");
+
+  if (!/^[0-9a-fA-F]+$/.test(cleanHex) || cleanHex.length % 2 !== 0) {
+    throw new Error("Invalid hex");
+  }
+
+  const cipherBytes: number[] = [];
+  for (let i = 0; i < cleanHex.length; i += 2) {
+    cipherBytes.push(parseInt(cleanHex.slice(i, i + 2), 16));
+  }
+
+  const keyBytes = new TextEncoder().encode(key);
+  const plainBytes = cipherBytes.map((byte: number, index: number) => byte ^ keyBytes[index % keyBytes.length]);
+
+  return new TextDecoder().decode(new Uint8Array(plainBytes));
+};
+
+if (slug === "rot13-encode") {
+  const text = input.value;
+
+  if (!text.trim()) {
+    output.value = "";
+    return;
+  }
+
+  output.value = applyRot13(text);
+  return;
+}
+
+if (slug === "rot13-decode") {
+  const text = input.value;
+
+  if (!text.trim()) {
+    output.value = "";
+    return;
+  }
+
+  output.value = applyRot13(text);
+  return;
+}
+
+if (slug === "rot47-encode") {
+  const text = input.value;
+
+  if (!text.trim()) {
+    output.value = "";
+    return;
+  }
+
+  output.value = applyRot47(text);
+  return;
+}
+
+if (slug === "rot47-decode") {
+  const text = input.value;
+
+  if (!text.trim()) {
+    output.value = "";
+    return;
+  }
+
+  output.value = applyRot47(text);
+  return;
+}
+
+if (slug === "xor-encrypt") {
+  const source = input.value;
+
+  if (!source.trim()) {
+    output.value = "Enter the key on the first line and the plaintext below it.";
+    return;
+  }
+
+  const { key, body } = splitKeyAndBody(source);
+
+  if (!key) {
+    output.value = "Enter the key on the first line and the plaintext below it.";
+    return;
+  }
+
+  if (!body) {
+    output.value = "Enter plaintext below the key.";
+    return;
+  }
+
+  output.value = xorWithKeyToHex(body, key);
+  return;
+}
+
+if (slug === "xor-decrypt") {
+  const source = input.value;
+
+  if (!source.trim()) {
+    output.value = "Enter the key on the first line and the hexadecimal ciphertext below it.";
+    return;
+  }
+
+  const { key, body } = splitKeyAndBody(source);
+
+  if (!key) {
+    output.value = "Enter the key on the first line and the hexadecimal ciphertext below it.";
+    return;
+  }
+
+  if (!body.trim()) {
+    output.value = "Enter hexadecimal ciphertext below the key.";
+    return;
+  }
+
+  try {
+    output.value = xorHexToText(body, key);
+  } catch {
+    output.value = "Invalid XOR ciphertext. Enter hexadecimal text with an even number of characters.";
+  }
+
+  return;
+}
+const loadCryptoJs = async (): Promise<any> => {
+  const mod = await import("crypto-js");
+  return mod.default ?? mod;
+};
+
+if (slug === "3des-encrypt") {
+  const source = input.value;
+
+  if (!source.trim()) {
+    output.value = "Enter the passphrase on the first line and the plaintext below it.";
+    return;
+  }
+
+  const { key, body } = splitKeyAndBody(source);
+
+  if (!key) {
+    output.value = "Enter the passphrase on the first line and the plaintext below it.";
+    return;
+  }
+
+  if (!body) {
+    output.value = "Enter plaintext below the passphrase.";
+    return;
+  }
+
+  output.value = "Encrypting...";
+
+  loadCryptoJs()
+    .then((CryptoJS: any) => {
+      const result = CryptoJS.TripleDES.encrypt(body, key).toString();
+      output.value = result || "Unable to encrypt text.";
+    })
+    .catch(() => {
+      output.value = "3DES requires the crypto-js package. Run: npm install crypto-js";
+    });
+
+  return;
+}
+
+if (slug === "3des-decrypt") {
+  const source = input.value;
+
+  if (!source.trim()) {
+    output.value = "Enter the passphrase on the first line and the Base64 ciphertext below it.";
+    return;
+  }
+
+  const { key, body } = splitKeyAndBody(source);
+
+  if (!key) {
+    output.value = "Enter the passphrase on the first line and the Base64 ciphertext below it.";
+    return;
+  }
+
+  if (!body.trim()) {
+    output.value = "Enter Base64 ciphertext below the passphrase.";
+    return;
+  }
+
+  output.value = "Decrypting...";
+
+  loadCryptoJs()
+    .then((CryptoJS: any) => {
+      const bytes = CryptoJS.TripleDES.decrypt(body.trim(), key);
+      const result = bytes.toString(CryptoJS.enc.Utf8);
+      output.value = result || "Unable to decrypt text. Check the passphrase and ciphertext.";
+    })
+    .catch(() => {
+      output.value = "3DES requires the crypto-js package. Run: npm install crypto-js";
+    });
+
+  return;
+}
+
+if (slug === "rabbit-encrypt") {
+  const source = input.value;
+
+  if (!source.trim()) {
+    output.value = "Enter the passphrase on the first line and the plaintext below it.";
+    return;
+  }
+
+  const { key, body } = splitKeyAndBody(source);
+
+  if (!key) {
+    output.value = "Enter the passphrase on the first line and the plaintext below it.";
+    return;
+  }
+
+  if (!body) {
+    output.value = "Enter plaintext below the passphrase.";
+    return;
+  }
+
+  output.value = "Encrypting...";
+
+  loadCryptoJs()
+    .then((CryptoJS: any) => {
+      const result = CryptoJS.Rabbit.encrypt(body, key).toString();
+      output.value = result || "Unable to encrypt text.";
+    })
+    .catch(() => {
+      output.value = "Rabbit encryption requires the crypto-js package. Run: npm install crypto-js";
+    });
+
+  return;
+}
+
+if (slug === "rabbit-decrypt") {
+  const source = input.value;
+
+  if (!source.trim()) {
+    output.value = "Enter the passphrase on the first line and the Base64 ciphertext below it.";
+    return;
+  }
+
+  const { key, body } = splitKeyAndBody(source);
+
+  if (!key) {
+    output.value = "Enter the passphrase on the first line and the Base64 ciphertext below it.";
+    return;
+  }
+
+  if (!body.trim()) {
+    output.value = "Enter Base64 ciphertext below the passphrase.";
+    return;
+  }
+
+  output.value = "Decrypting...";
+
+  loadCryptoJs()
+    .then((CryptoJS: any) => {
+      const bytes = CryptoJS.Rabbit.decrypt(body.trim(), key);
+      const result = bytes.toString(CryptoJS.enc.Utf8);
+      output.value = result || "Unable to decrypt text. Check the passphrase and ciphertext.";
+    })
+    .catch(() => {
+      output.value = "Rabbit decryption requires the crypto-js package. Run: npm install crypto-js";
+    });
+
+  return;
+}
+if (slug === "aes-encrypt") {
+  const source = input.value;
+
+  if (!source.trim()) {
+    output.value = "Enter the passphrase on the first line and the plaintext below it.";
+    return;
+  }
+
+  const { key, body } = splitKeyAndBody(source);
+
+  if (!key) {
+    output.value = "Enter the passphrase on the first line and the plaintext below it.";
+    return;
+  }
+
+  if (!body) {
+    output.value = "Enter plaintext below the passphrase.";
+    return;
+  }
+
+  output.value = "Encrypting...";
+
+  loadCryptoJs()
+    .then((CryptoJS: any) => {
+      const result = CryptoJS.AES.encrypt(body, key).toString();
+      output.value = result || "Unable to encrypt text.";
+    })
+    .catch(() => {
+      output.value = "AES requires the crypto-js package. Run: npm install crypto-js";
+    });
+
+  return;
+}
+
+if (slug === "aes-decrypt") {
+  const source = input.value;
+
+  if (!source.trim()) {
+    output.value = "Enter the passphrase on the first line and the Base64 ciphertext below it.";
+    return;
+  }
+
+  const { key, body } = splitKeyAndBody(source);
+
+  if (!key) {
+    output.value = "Enter the passphrase on the first line and the Base64 ciphertext below it.";
+    return;
+  }
+
+  if (!body.trim()) {
+    output.value = "Enter Base64 ciphertext below the passphrase.";
+    return;
+  }
+
+  output.value = "Decrypting...";
+
+  loadCryptoJs()
+    .then((CryptoJS: any) => {
+      const bytes = CryptoJS.AES.decrypt(body.trim(), key);
+      const result = bytes.toString(CryptoJS.enc.Utf8);
+      output.value = result || "Unable to decrypt text. Check the passphrase and ciphertext.";
+    })
+    .catch(() => {
+      output.value = "AES requires the crypto-js package. Run: npm install crypto-js";
+    });
+
+  return;
+}
+
+if (slug === "rc4-encrypt") {
+  const source = input.value;
+
+  if (!source.trim()) {
+    output.value = "Enter the passphrase on the first line and the plaintext below it.";
+    return;
+  }
+
+  const { key, body } = splitKeyAndBody(source);
+
+  if (!key) {
+    output.value = "Enter the passphrase on the first line and the plaintext below it.";
+    return;
+  }
+
+  if (!body) {
+    output.value = "Enter plaintext below the passphrase.";
+    return;
+  }
+
+  output.value = "Encrypting...";
+
+  loadCryptoJs()
+    .then((CryptoJS: any) => {
+      const result = CryptoJS.RC4.encrypt(body, key).toString();
+      output.value = result || "Unable to encrypt text.";
+    })
+    .catch(() => {
+      output.value = "RC4 requires the crypto-js package. Run: npm install crypto-js";
+    });
+
+  return;
+}
+
+if (slug === "rc4-decrypt") {
+  const source = input.value;
+
+  if (!source.trim()) {
+    output.value = "Enter the passphrase on the first line and the Base64 ciphertext below it.";
+    return;
+  }
+
+  const { key, body } = splitKeyAndBody(source);
+
+  if (!key) {
+    output.value = "Enter the passphrase on the first line and the Base64 ciphertext below it.";
+    return;
+  }
+
+  if (!body.trim()) {
+    output.value = "Enter Base64 ciphertext below the passphrase.";
+    return;
+  }
+
+  output.value = "Decrypting...";
+
+  loadCryptoJs()
+    .then((CryptoJS: any) => {
+      const bytes = CryptoJS.RC4.decrypt(body.trim(), key);
+      const result = bytes.toString(CryptoJS.enc.Utf8);
+      output.value = result || "Unable to decrypt text. Check the passphrase and ciphertext.";
+    })
+    .catch(() => {
+      output.value = "RC4 requires the crypto-js package. Run: npm install crypto-js";
+    });
+
+  return;
+}
+
+if (slug === "des-encrypt") {
+  const source = input.value;
+
+  if (!source.trim()) {
+    output.value = "Enter the passphrase on the first line and the plaintext below it.";
+    return;
+  }
+
+  const { key, body } = splitKeyAndBody(source);
+
+  if (!key) {
+    output.value = "Enter the passphrase on the first line and the plaintext below it.";
+    return;
+  }
+
+  if (!body) {
+    output.value = "Enter plaintext below the passphrase.";
+    return;
+  }
+
+  output.value = "Encrypting...";
+
+  loadCryptoJs()
+    .then((CryptoJS: any) => {
+      const result = CryptoJS.DES.encrypt(body, key).toString();
+      output.value = result || "Unable to encrypt text.";
+    })
+    .catch(() => {
+      output.value = "DES requires the crypto-js package. Run: npm install crypto-js";
+    });
+
+  return;
+}
+
+if (slug === "des-decrypt") {
+  const source = input.value;
+
+  if (!source.trim()) {
+    output.value = "Enter the passphrase on the first line and the Base64 ciphertext below it.";
+    return;
+  }
+
+  const { key, body } = splitKeyAndBody(source);
+
+  if (!key) {
+    output.value = "Enter the passphrase on the first line and the Base64 ciphertext below it.";
+    return;
+  }
+
+  if (!body.trim()) {
+    output.value = "Enter Base64 ciphertext below the passphrase.";
+    return;
+  }
+
+  output.value = "Decrypting...";
+
+  loadCryptoJs()
+    .then((CryptoJS: any) => {
+      const bytes = CryptoJS.DES.decrypt(body.trim(), key);
+      const result = bytes.toString(CryptoJS.enc.Utf8);
+      output.value = result || "Unable to decrypt text. Check the passphrase and ciphertext.";
+    })
+    .catch(() => {
+      output.value = "DES requires the crypto-js package. Run: npm install crypto-js";
+    });
 
   return;
 }

@@ -1,40 +1,43 @@
 [
-  {
+{
   "id": "json-formatter",
   "name": "JSON Formatter",
   "slug": "json-formatter",
   "category": "developer-tools",
-  "intro": "Format, beautify, and validate JSON instantly for APIs, logs, configs, and debugging.",
-  "description": "Use this free JSON Formatter to format JSON online, beautify minified payloads, and make complex objects easier to read. It is useful for API responses, JSON logs, configuration files, webhooks, and frontend or backend debugging. Paste raw JSON to pretty print it, review nested structures, and catch invalid syntax before using the data elsewhere.",
+  "intro": "Format JSON online, beautify minified payloads, and validate JSON instantly for APIs, logs, configs, and debugging.",
+  "description": "Use this free JSON Formatter to format JSON online, beautify minified JSON, and pretty print complex objects instantly. It is useful for API responses, webhook payloads, application logs, configuration files, exported JSON data, and frontend or backend debugging. Paste raw or compact JSON to make it readable, inspect nested objects and arrays, and catch invalid syntax before using the data in your app, script, request, or documentation.",
   "keywords": [
     "json formatter",
-    "json beautifier",
     "format json online",
+    "json beautifier",
     "pretty print json",
     "json pretty printer",
     "beautify json",
-    "json formatter online"
+    "json formatter online",
+    "json format tool",
+    "json viewer online",
+    "validate and format json"
   ],
   "whyUse": [
-    "Turn minified JSON into clean readable structured output",
-    "Inspect nested objects and arrays faster during debugging",
-    "Catch invalid JSON before sending data to an API or app",
-    "Review copied webhook payloads, logs, and config files more easily",
-    "Work in the browser without opening an editor or writing code"
+    "Turn minified JSON into readable structured output instantly",
+    "Inspect nested objects and arrays faster during API and app debugging",
+    "Catch invalid JSON before copying payloads into requests, configs, or code",
+    "Review webhook bodies, logs, exports, and config files more easily",
+    "Format JSON directly in the browser without opening an editor or writing code"
   ],
   "howToUse": [
     "Paste valid or raw JSON into the input box",
-    "Click Run Tool to format the payload",
+    "Click Run Tool to format and beautify the payload",
     "Review the formatted output with indentation and line breaks",
-    "If the input is invalid, fix the reported JSON issues and run it again",
-    "Copy the formatted result for debugging, documentation, or reuse"
+    "If the input is invalid, fix the JSON syntax and run the tool again",
+    "Copy the formatted result for debugging, validation, sharing, or reuse"
   ],
   "examples": [
     {
       "title": "Format a simple minified JSON object",
       "input": "{\"name\":\"John\",\"age\":30}",
       "output": "{\n  \"name\": \"John\",\n  \"age\": 30\n}",
-      "explanation": "Useful when you copy compact JSON from an API or a script and want to read it quickly."
+      "explanation": "Useful when you copy compact JSON from an API response or script and want to read it quickly."
     },
     {
       "title": "Beautify a nested API response",
@@ -46,25 +49,37 @@
       "title": "Format JSON with arrays of objects",
       "input": "{\"items\":[{\"id\":1,\"name\":\"Pen\"},{\"id\":2,\"name\":\"Book\"}]}",
       "output": "{\n  \"items\": [\n    {\n      \"id\": 1,\n      \"name\": \"Pen\"\n    },\n    {\n      \"id\": 2,\n      \"name\": \"Book\"\n    }\n  ]\n}",
-      "explanation": "Helps when you need to review lists of products, records, or search results."
+      "explanation": "Helpful when reviewing returned lists of products, records, tickets, or search results."
     },
     {
       "title": "Format JSON log data",
       "input": "{\"event\":\"login\",\"success\":true,\"ip\":\"192.168.1.10\",\"meta\":{\"browser\":\"Chrome\",\"device\":\"Desktop\"}}",
       "output": "{\n  \"event\": \"login\",\n  \"success\": true,\n  \"ip\": \"192.168.1.10\",\n  \"meta\": {\n    \"browser\": \"Chrome\",\n    \"device\": \"Desktop\"\n  }\n}",
-      "explanation": "Useful for reading JSON logs copied from monitoring tools, apps, or browser consoles."
+      "explanation": "Useful for reading JSON logs copied from monitoring tools, browser consoles, or server output."
     },
     {
       "title": "Format a webhook payload",
       "input": "{\"type\":\"payment.succeeded\",\"data\":{\"id\":\"pay_123\",\"amount\":4999,\"currency\":\"USD\"}}",
       "output": "{\n  \"type\": \"payment.succeeded\",\n  \"data\": {\n    \"id\": \"pay_123\",\n    \"amount\": 4999,\n    \"currency\": \"USD\"\n  }\n}",
-      "explanation": "Helpful when testing third-party webhooks and checking field names or event structure."
+      "explanation": "Helpful when testing third-party webhooks and checking field names, event types, and payload structure."
     },
     {
       "title": "Format a configuration object",
       "input": "{\"env\":\"production\",\"features\":{\"cache\":true,\"debug\":false},\"ports\":[3000,3001]}",
       "output": "{\n  \"env\": \"production\",\n  \"features\": {\n    \"cache\": true,\n    \"debug\": false\n  },\n  \"ports\": [\n    3000,\n    3001\n  ]\n}",
-      "explanation": "Good for reading app settings, feature flags, and config exports."
+      "explanation": "Useful when reading app settings, feature flags, or exported configuration blocks."
+    },
+    {
+      "title": "Format a deeply nested JSON structure",
+      "input": "{\"company\":{\"name\":\"Acme\",\"departments\":[{\"name\":\"Engineering\",\"teams\":[{\"name\":\"Platform\",\"members\":12}]}]}}",
+      "output": "{\n  \"company\": {\n    \"name\": \"Acme\",\n    \"departments\": [\n      {\n        \"name\": \"Engineering\",\n        \"teams\": [\n          {\n            \"name\": \"Platform\",\n            \"members\": 12\n          }\n        ]\n      }\n    ]\n  }\n}",
+      "explanation": "Useful when nested data becomes difficult to read in one-line JSON output."
+    },
+    {
+      "title": "Format exported application data",
+      "input": "{\"users\":[{\"id\":1,\"email\":\"a@example.com\"},{\"id\":2,\"email\":\"b@example.com\"}],\"total\":2}",
+      "output": "{\n  \"users\": [\n    {\n      \"id\": 1,\n      \"email\": \"a@example.com\"\n    },\n    {\n      \"id\": 2,\n      \"email\": \"b@example.com\"\n    }\n  ],\n  \"total\": 2\n}",
+      "explanation": "Useful for checking exported data before converting it to another format."
     },
     {
       "title": "Detect invalid JSON with a trailing comma",
@@ -77,7 +92,19 @@
       "input": "{name:\"John\"}",
       "output": "Invalid JSON",
       "explanation": "JSON keys must use double quotes, unlike some JavaScript object literals."
-    }
+    },
+    {
+  "title": "Format a deeply nested JSON structure",
+  "input": "{\"company\":{\"name\":\"Acme\",\"departments\":[{\"name\":\"Engineering\",\"teams\":[{\"name\":\"Platform\",\"members\":12}]}]}}",
+  "output": "{\n  \"company\": {\n    \"name\": \"Acme\",\n    \"departments\": [\n      {\n        \"name\": \"Engineering\",\n        \"teams\": [\n          {\n            \"name\": \"Platform\",\n            \"members\": 12\n          }\n        ]\n      }\n    ]\n  }\n}",
+  "explanation": "Useful when nested data becomes difficult to read in one-line JSON output."
+},
+{
+  "title": "Format exported application data",
+  "input": "{\"users\":[{\"id\":1,\"email\":\"a@example.com\"},{\"id\":2,\"email\":\"b@example.com\"}],\"total\":2}",
+  "output": "{\n  \"users\": [\n    {\n      \"id\": 1,\n      \"email\": \"a@example.com\"\n    },\n    {\n      \"id\": 2,\n      \"email\": \"b@example.com\"\n    }\n  ],\n  \"total\": 2\n}",
+  "explanation": "Useful for checking exported data before converting it to another format."
+}
   ],
   "commonErrors": [
     {
@@ -102,11 +129,11 @@
     }
   ],
   "useCases": [
-    "Debugging REST API and GraphQL responses",
-    "Reading webhook payloads from Stripe, GitHub, or internal services",
-    "Checking application logs stored in JSON format",
-    "Cleaning configuration files before sharing them with a team",
-    "Reviewing exported JSON before converting it with related tools"
+    "Formatting JSON API responses during frontend and backend debugging",
+    "Beautifying webhook payloads before inspecting event fields",
+    "Reading JSON logs from apps, scripts, or monitoring systems",
+    "Cleaning exported JSON before converting it to CSV or another format",
+    "Reviewing configuration objects before deployment or sharing"
   ],
   "faq": [
     {
@@ -118,16 +145,20 @@
       "a": "Yes. JSON formatter and JSON beautifier usually mean the same thing: making JSON easier to read."
     },
     {
+      "q": "Can I format JSON online without installing anything?",
+      "a": "Yes. A browser-based JSON formatter lets you paste JSON and beautify it instantly without extra software."
+    },
+    {
       "q": "Does this JSON formatter also validate JSON?",
       "a": "Yes. If the input is not valid JSON, the tool returns an error instead of formatted output."
     },
     {
       "q": "What is the difference between JSON Formatter and JSON Validator?",
-      "a": "JSON Formatter focuses on readability, while JSON Validator focuses on checking whether the syntax is valid. This page does both, but the validator page is better if you only need a validity check."
+      "a": "JSON Formatter focuses on readability, while JSON Validator focuses on checking whether the syntax is valid. This page does both, but the validator page is better if you only need a fast validity check."
     },
     {
       "q": "What is the difference between JSON Formatter and JSON Minifier?",
-      "a": "JSON Formatter adds whitespace and indentation for readability, while JSON Minifier removes whitespace to make the payload smaller."
+      "a": "JSON Formatter adds whitespace and indentation for readability, while JSON Minifier removes whitespace to make valid JSON smaller and more compact."
     },
     {
       "q": "Why is my JSON invalid?",
@@ -142,19 +173,32 @@
       "a": "Yes. It is especially useful for inspecting API responses, webhook payloads, and JSON logs."
     },
     {
+      "q": "Can I use JSON Formatter for config files?",
+      "a": "Yes. It is useful for reading and checking JSON configuration objects before using them in apps or deployment workflows."
+    },
+    {
       "q": "Is my data uploaded to a server?",
-      "a": "If your implementation runs in the browser only, the JSON stays on the client side. That makes it suitable for quick local formatting tasks."
+      "a": "If your implementation runs in the browser only, the JSON stays on the client side, which is useful for quick local formatting tasks."
     },
     {
       "q": "When should I use the JSON Validator page instead?",
       "a": "Use the JSON Validator page when your main goal is to confirm syntax quickly without focusing on pretty output."
-    }
+    },
+    {
+  "q": "Can I format JSON online without installing anything?",
+  "a": "Yes. A browser-based JSON formatter lets you paste JSON and beautify it instantly without extra software."
+},
+{
+  "q": "Can I use JSON Formatter for config files?",
+  "a": "Yes. It is useful for reading and checking JSON configuration objects before using them in apps or deployment workflows."
+}
   ],
   "related": [
     "json-validator",
     "json-minifier",
-    "json-to-csv",
-    "csv-to-json"
+    "json-escape",
+    "json-unescape",
+    "json-to-csv"
   ]
 },
  {
@@ -163,15 +207,15 @@
   "slug": "json-validator",
   "category": "developer-tools",
   "intro": "Validate JSON instantly and catch syntax errors before they break your app, API, or config.",
-  "description": "Use this free JSON Validator to check whether your JSON is valid and structurally correct. It helps you catch syntax mistakes in API payloads, config files, webhook bodies, exported data, and copied JSON snippets before they cause errors in your code, tools, or integrations. Paste raw JSON to verify it quickly and identify common formatting mistakes such as trailing commas, missing quotes, broken brackets, or incomplete objects.",
-  "keywords": [
-    "json validator",
-    "validate json",
-    "json checker",
-    "json validation tool",
-    "check json online",
-    "is my json valid",
-    "json syntax checker"
+"description": "Use this free JSON Validator to validate JSON online and check whether a payload is syntactically correct before it reaches your app, API, or config. It helps catch invalid JSON in request bodies, webhook payloads, config files, copied logs, exported data, and browser-copied snippets. Paste raw JSON to check it quickly and spot common problems such as trailing commas, missing double quotes, broken brackets, single quotes, or incomplete objects.",  "keywords": [
+  "json validator",
+  "validate json",
+  "json validator online",
+  "check json online",
+  "json checker",
+  "json syntax checker",
+  "is my json valid",
+  "json validation tool"
   ],
   "whyUse": [
     "Catch JSON syntax errors before sending data to an API or application",
@@ -42243,6 +42287,3213 @@
     "ascii-to-text",
     "binary-to-text",
     "hex-to-utf8"
+  ]
+}
+,
+{
+  "id": "text-to-randomcase",
+  "name": "Text to Randomcase",
+  "slug": "text-to-randomcase",
+  "category": "text-tools",
+  "intro": "Convert normal text into random mixed capitalization instantly.",
+  "description": "Use this Text to Randomcase converter to change normal text into randomly mixed uppercase and lowercase letters. It is useful for meme-style text, playful formatting, attention-grabbing drafts, social posts, and testing how text looks with irregular capitalization. Paste any text and get a randomized case version instantly in the browser.",
+  "keywords": [
+    "text to randomcase",
+    "random case converter",
+    "random capitalization",
+    "convert text to random case",
+    "meme text generator"
+  ],
+  "whyUse": [
+    "Create random mixed-case text instantly",
+    "Useful for meme text, joke text, and playful formatting",
+    "Helps test how text looks with irregular capitalization",
+    "Works well for social posts and experimental content styling",
+    "Runs in the browser without manual editing"
+  ],
+  "howToUse": [
+    "Paste the text into the input box",
+    "Click Run Tool to randomize capitalization",
+    "Review the mixed-case output",
+    "Run it again if you want a different random pattern",
+    "Copy the version you like best"
+  ],
+  "examples": [
+    {
+      "title": "Convert a short phrase",
+      "input": "hello world",
+      "output": "HeLlO WoRlD",
+      "explanation": "Useful when you want a playful randomcase version of normal text."
+    },
+    {
+      "title": "Convert a sentence",
+      "input": "this is a meme example",
+      "output": "ThIs iS A MeMe eXaMpLe",
+      "explanation": "Shows how normal text can be turned into a random mixed-case pattern."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The user expects the same output every time",
+      "fix": "Randomcase output changes on each run unless the logic is made deterministic."
+    },
+    {
+      "issue": "The user wants title case instead of random case",
+      "fix": "Use Text to Titlecase when the goal is standard heading capitalization."
+    },
+    {
+      "issue": "Spacing is mistaken for capitalization logic",
+      "fix": "This tool changes letter case, not spacing or punctuation."
+    },
+    {
+      "issue": "The user expects grammar correction",
+      "fix": "This tool only changes capitalization style."
+    },
+    {
+      "issue": "A more readable format is needed",
+      "fix": "Use lowercase, uppercase, or titlecase tools for cleaner output."
+    }
+  ],
+  "useCases": [
+    "Creating meme-style text",
+    "Making playful social content",
+    "Testing irregular capitalization styles",
+    "Creating joke text for chats or posts",
+    "Exploring alternative visual text styles"
+  ],
+  "faq": [
+    {
+      "q": "What does Text to Randomcase do?",
+      "a": "It changes the capitalization of letters into a random uppercase and lowercase pattern."
+    },
+    {
+      "q": "Will the result be the same every time?",
+      "a": "No. Randomcase usually produces a different result on each run."
+    },
+    {
+      "q": "Does it change the words themselves?",
+      "a": "No. It only changes letter capitalization."
+    },
+    {
+      "q": "When is randomcase useful?",
+      "a": "It is useful for meme text, jokes, playful formatting, and informal creative content."
+    },
+    {
+      "q": "What is the difference between Randomcase and Titlecase?",
+      "a": "Randomcase uses irregular capitalization, while Titlecase capitalizes the first letter of each word in a cleaner standard style."
+    }
+  ],
+  "related": [
+    "text-case-converter",
+    "lowercase-converter",
+    "uppercase-converter",
+    "text-to-titlecase"
+  ]
+},
+{
+  "id": "text-to-titlecase",
+  "name": "Text to Titlecase",
+  "slug": "text-to-titlecase",
+  "category": "text-tools",
+  "intro": "Convert text into title case for headings, labels, and cleaner presentation.",
+  "description": "Use this Text to Titlecase converter to capitalize the first letter of each word quickly. It is useful for headings, article titles, product names, CMS content, labels, and general text cleanup when you want a cleaner and more readable capitalized style. Paste text and convert it instantly in the browser.",
+  "keywords": [
+    "text to titlecase",
+    "title case converter",
+    "convert text to title case",
+    "capitalize every word",
+    "titlecase tool"
+  ],
+  "whyUse": [
+    "Convert plain text into title case instantly",
+    "Useful for headings, labels, and content cleanup",
+    "Helps standardize inconsistent capitalization",
+    "Works well for CMS entries, product titles, and drafts",
+    "Saves time compared with manual editing"
+  ],
+  "howToUse": [
+    "Paste the text into the input box",
+    "Click Run Tool to convert it to title case",
+    "Review the updated capitalization",
+    "Check whether small connecting words need manual adjustment if your style guide requires it",
+    "Copy the final result"
+  ],
+  "examples": [
+    {
+      "title": "Convert a lowercase heading",
+      "input": "how to use this tool",
+      "output": "How To Use This Tool",
+      "explanation": "Useful for turning plain text into a heading-like style."
+    },
+    {
+      "title": "Convert mixed text",
+      "input": "tHis is a messy TITLE",
+      "output": "This Is A Messy Title",
+      "explanation": "Useful when cleaning copied or inconsistent capitalization."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The user expects sentence case instead of title case",
+      "fix": "Title case capitalizes each word, while sentence case usually capitalizes only the first word and proper nouns."
+    },
+    {
+      "issue": "Style-guide exceptions are expected automatically",
+      "fix": "Some editorial styles treat words like and, of, or the differently, so manual review may still be needed."
+    },
+    {
+      "issue": "The input contains extra spaces",
+      "fix": "Clean spacing first if you want neater output."
+    },
+    {
+      "issue": "The user wants all caps instead",
+      "fix": "Use Uppercase Converter if every letter should be capitalized."
+    },
+    {
+      "issue": "The user wants playful irregular capitalization",
+      "fix": "Use Text to Randomcase instead."
+    }
+  ],
+  "useCases": [
+    "Formatting headings and article titles",
+    "Cleaning CMS and blog post titles",
+    "Standardizing product names or labels",
+    "Improving readability of copied text",
+    "Preparing cleaner presentation text"
+  ],
+  "faq": [
+    {
+      "q": "What does Text to Titlecase do?",
+      "a": "It capitalizes the first letter of each word."
+    },
+    {
+      "q": "Is title case the same as uppercase?",
+      "a": "No. Title case capitalizes the first letter of each word, while uppercase capitalizes every letter."
+    },
+    {
+      "q": "Can I use this for headings?",
+      "a": "Yes. That is one of the most common use cases."
+    },
+    {
+      "q": "Will it fix grammar too?",
+      "a": "No. It changes capitalization style, not grammar or wording."
+    },
+    {
+      "q": "What is the difference between Titlecase and Lowercase?",
+      "a": "Titlecase capitalizes each word, while lowercase makes all letters small."
+    }
+  ],
+  "related": [
+    "text-case-converter",
+    "lowercase-converter",
+    "uppercase-converter",
+    "text-to-randomcase"
+  ]
+},
+{
+  "id": "json-to-text",
+  "name": "JSON to Text",
+  "slug": "json-to-text",
+  "category": "converters",
+  "intro": "Convert JSON data into readable plain text instantly.",
+  "description": "Use this JSON to Text converter to turn JSON objects, arrays, and values into readable plain text output. It is useful for extracting human-readable content from structured data, preparing notes from API responses, simplifying exports, and converting JSON into a plain text format that is easier to scan, copy, or reuse outside developer tools.",
+  "keywords": [
+    "json to text",
+    "convert json to text",
+    "json text converter",
+    "json to plain text",
+    "extract text from json"
+  ],
+  "whyUse": [
+    "Turn structured JSON into readable plain text quickly",
+    "Useful for API responses, exports, and copied payloads",
+    "Helps simplify data for notes, reviews, or plain-text workflows",
+    "Makes nested JSON easier to scan outside code tools",
+    "Runs directly in the browser without extra scripts"
+  ],
+  "howToUse": [
+    "Paste valid JSON into the input box",
+    "Click Run Tool to convert it",
+    "Review the plain-text output",
+    "Copy the result for notes, documents, or cleanup",
+    "Use a JSON formatter first if the source data is messy or hard to inspect"
+  ],
+  "examples": [
+    {
+      "title": "Convert a simple object",
+      "input": "{\"name\":\"John\",\"role\":\"admin\"}",
+      "output": "name: John\nrole: admin",
+      "explanation": "Useful when turning a small JSON object into readable lines."
+    },
+    {
+      "title": "Convert a nested object",
+      "input": "{\"user\":{\"id\":7,\"name\":\"Anna\"},\"active\":true}",
+      "output": "user.id: 7\nuser.name: Anna\nactive: true",
+      "explanation": "Useful when flattening nested JSON into readable plain text."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The input is not valid JSON",
+      "fix": "Validate or format the JSON first before converting it to text."
+    },
+    {
+      "issue": "The user expects a table instead of plain text",
+      "fix": "Use JSON to Table if the goal is tabular output rather than plain text lines."
+    },
+    {
+      "issue": "Nested objects are expected to stay visually structured",
+      "fix": "Remember that this tool converts structured data into plain text lines."
+    },
+    {
+      "issue": "The user wants only values and not keys",
+      "fix": "Use a text extractor or a custom parser if you only need values."
+    },
+    {
+      "issue": "Large arrays become too long in text form",
+      "fix": "Filter or format the JSON first before converting it."
+    }
+  ],
+  "useCases": [
+    "Simplifying API responses into readable notes",
+    "Turning JSON exports into plain text summaries",
+    "Extracting readable lines from structured data",
+    "Preparing text for documents or chat messages",
+    "Reviewing nested JSON outside code-focused tools"
+  ],
+  "faq": [
+    {
+      "q": "What does JSON to Text do?",
+      "a": "It converts structured JSON data into readable plain text lines."
+    },
+    {
+      "q": "Can it handle nested JSON?",
+      "a": "Yes. Nested keys can be flattened into readable text paths."
+    },
+    {
+      "q": "Is this the same as JSON Formatter?",
+      "a": "No. JSON Formatter keeps JSON structure but improves readability, while JSON to Text converts the data into plain-text output."
+    },
+    {
+      "q": "When is JSON to Text useful?",
+      "a": "It is useful when you want readable plain text instead of braces, quotes, and JSON syntax."
+    },
+    {
+      "q": "What is the difference between JSON to Text and JSON to Table?",
+      "a": "JSON to Text produces readable lines, while JSON to Table is better when you want structured rows and columns."
+    }
+  ],
+  "related": [
+    "json-formatter",
+    "json-validator",
+    "json-flatten",
+    "json-to-table"
+  ]
+},
+{
+  "id": "html-to-text",
+  "name": "HTML to Text",
+  "slug": "html-to-text",
+  "category": "converters",
+  "intro": "Convert HTML markup into readable plain text instantly.",
+  "description": "Use this HTML to Text converter to remove HTML markup and extract readable text content. It is useful for cleaning copied website content, reviewing HTML output without tags, simplifying snippets for notes, and turning markup into plain text for reuse in documents, chats, forms, or other non-HTML workflows.",
+  "keywords": [
+    "html to text",
+    "convert html to text",
+    "strip html to text",
+    "html plain text converter",
+    "extract text from html"
+  ],
+  "whyUse": [
+    "Turn HTML markup into readable plain text quickly",
+    "Useful for copied webpage fragments and generated markup",
+    "Helps remove tags before reusing content elsewhere",
+    "Makes HTML output easier to review without rendering",
+    "Runs in the browser without extra cleanup tools"
+  ],
+  "howToUse": [
+    "Paste HTML into the input box",
+    "Click Run Tool to remove tags and extract text",
+    "Review the plain-text result",
+    "Copy the cleaned text into your document, chat, or note",
+    "Use HTML decoder separately if your content also contains encoded entities"
+  ],
+  "examples": [
+    {
+      "title": "Convert a simple paragraph",
+      "input": "<p>Hello <strong>world</strong></p>",
+      "output": "Hello world",
+      "explanation": "Useful for stripping simple markup and keeping only readable text."
+    },
+    {
+      "title": "Convert a heading and paragraph",
+      "input": "<h1>Title</h1><p>First line</p>",
+      "output": "Title\nFirst line",
+      "explanation": "Useful when extracting readable content from small HTML blocks."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The user expects HTML entities to decode automatically",
+      "fix": "Use HTML Decoder if the content contains entities like &amp; or &lt; and you need readable characters too."
+    },
+    {
+      "issue": "The input contains script or style content that should be handled differently",
+      "fix": "Review the output because plain tag stripping may still need extra cleanup."
+    },
+    {
+      "issue": "The user wants rendered page layout rather than plain text",
+      "fix": "This tool extracts text, not visual page structure."
+    },
+    {
+      "issue": "Line breaks are expected in exactly the same layout as the HTML source",
+      "fix": "Plain-text extraction may simplify structure compared with rendered HTML."
+    },
+    {
+      "issue": "The user needs safe escaped HTML instead of plain text",
+      "fix": "Use HTML Encoder if the goal is escaping markup rather than extracting text."
+    }
+  ],
+  "useCases": [
+    "Cleaning copied website snippets",
+    "Extracting readable content from markup",
+    "Simplifying generated HTML before reuse",
+    "Preparing plain text from HTML emails or templates",
+    "Reviewing content without tags or rendering"
+  ],
+  "faq": [
+    {
+      "q": "What does HTML to Text do?",
+      "a": "It removes HTML tags and returns readable plain text."
+    },
+    {
+      "q": "Is this the same as HTML Decoder?",
+      "a": "No. HTML Decoder converts entities into characters, while HTML to Text removes markup tags."
+    },
+    {
+      "q": "Can I use this for copied website content?",
+      "a": "Yes. That is one of the most common use cases."
+    },
+    {
+      "q": "Will it preserve formatting exactly?",
+      "a": "Not always. It focuses on readable text extraction, not exact visual layout reproduction."
+    },
+    {
+      "q": "What is the difference between HTML to Text and HTML Stripper?",
+      "a": "They are very close by intent. Both focus on removing markup and keeping readable text."
+    }
+  ],
+  "related": [
+    "html-decoder",
+    "html-encode",
+    "xml-to-text",
+    "json-to-text"
+  ]
+},
+{
+  "id": "xml-to-text",
+  "name": "XML to Text",
+  "slug": "xml-to-text",
+  "category": "converters",
+  "intro": "Convert XML markup into readable plain text instantly.",
+  "description": "Use this XML to Text converter to extract readable text from XML markup. It is useful for cleaning XML snippets, reviewing content without tags, simplifying exports, and turning structured XML into plain text that is easier to scan, copy, or reuse outside markup-based workflows.",
+  "keywords": [
+    "xml to text",
+    "convert xml to text",
+    "xml plain text converter",
+    "extract text from xml",
+    "strip xml tags"
+  ],
+  "whyUse": [
+    "Turn XML markup into readable text quickly",
+    "Useful for copied XML snippets and exports",
+    "Helps remove tags before reusing content in plain-text workflows",
+    "Makes XML content easier to review without markup noise",
+    "Works directly in the browser without extra tools"
+  ],
+  "howToUse": [
+    "Paste XML into the input box",
+    "Click Run Tool to extract readable text",
+    "Review the plain-text result",
+    "Copy the output for notes, cleanup, or reuse",
+    "Validate the XML first if you suspect broken markup"
+  ],
+  "examples": [
+    {
+      "title": "Convert a simple XML note",
+      "input": "<note><title>Hello</title><body>World</body></note>",
+      "output": "Hello\nWorld",
+      "explanation": "Useful for extracting readable content from a simple XML block."
+    },
+    {
+      "title": "Convert nested XML content",
+      "input": "<user><name>Anna</name><role>Admin</role></user>",
+      "output": "Anna\nAdmin",
+      "explanation": "Useful when XML content should be read as plain text without tags."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The XML is invalid or broken",
+      "fix": "Validate or format the XML first before converting it to text."
+    },
+    {
+      "issue": "The user expects attributes to appear as full readable lines",
+      "fix": "This tool focuses mainly on readable node text content."
+    },
+    {
+      "issue": "The user expects exact original XML structure to remain visible",
+      "fix": "This tool removes markup and keeps readable text, not XML structure."
+    },
+    {
+      "issue": "The input is actually HTML instead of XML",
+      "fix": "Use HTML to Text when the source is HTML markup rather than XML."
+    },
+    {
+      "issue": "Whitespace and formatting are expected to match rendered output exactly",
+      "fix": "Plain-text extraction may simplify the original markup layout."
+    }
+  ],
+  "useCases": [
+    "Cleaning XML exports into plain text",
+    "Extracting readable content from XML snippets",
+    "Reviewing XML without tag noise",
+    "Preparing plain text from XML for notes or chat",
+    "Simplifying structured XML content before reuse"
+  ],
+  "faq": [
+    {
+      "q": "What does XML to Text do?",
+      "a": "It removes XML tags and extracts readable text content."
+    },
+    {
+      "q": "Can I use it for XML exports?",
+      "a": "Yes. It is useful for simplifying exported XML into readable plain text."
+    },
+    {
+      "q": "Will it validate my XML too?",
+      "a": "No. This tool focuses on text extraction. Use XML Validator if you need to check validity first."
+    },
+    {
+      "q": "What is the difference between XML to Text and XML Formatter?",
+      "a": "XML Formatter keeps XML markup but makes it easier to read, while XML to Text removes markup and keeps only readable text."
+    },
+    {
+      "q": "When is XML to Text useful?",
+      "a": "It is useful when tags are getting in the way and you only need the readable content."
+    }
+  ],
+  "related": [
+    "xml-formatter",
+    "xml-validator",
+    "html-to-text",
+    "json-to-text"
+  ]
+}
+,
+{
+  "id": "spaces-to-tabs",
+  "name": "Spaces to Tabs Converter",
+  "slug": "spaces-to-tabs",
+  "category": "text-tools",
+  "intro": "Replace groups of spaces with tab characters for cleaner indentation and compact formatting.",
+  "description": "Use this Spaces to Tabs converter to replace repeated spaces with tab characters in text or code. It is useful for indentation cleanup, pasted code blocks, alignment normalization, editor preparation, and any workflow where space-based indentation should be converted into tabs. Paste your text, convert it instantly, and copy the tab-based result for reuse.",
+  "keywords": [
+    "spaces to tabs",
+    "replace spaces with tabs",
+    "space to tab converter",
+    "indentation converter",
+    "text spacing tool"
+  ],
+  "whyUse": [
+    "Convert repeated spaces into tab characters quickly",
+    "Useful for indentation cleanup in code and structured text",
+    "Helps normalize pasted content before reusing it in editors",
+    "Makes some tab-based workflows more compact",
+    "Works directly in the browser without manual reformatting"
+  ],
+  "howToUse": [
+    "Paste the text or code into the input box",
+    "Click Run Tool to replace groups of spaces with tabs",
+    "Review the updated output carefully because alignment may change between editors",
+    "Copy the converted text into your editor, file, or document",
+    "Use Tabs to Spaces if you need to reverse the result later"
+  ],
+  "examples": [
+    {
+      "title": "Convert simple indentation",
+      "input": "line one\n    line two",
+      "output": "line one\n\tline two",
+      "explanation": "Four leading spaces become one tab character."
+    },
+    {
+      "title": "Convert repeated internal spacing",
+      "input": "name    value",
+      "output": "name\tvalue",
+      "explanation": "Useful when repeated spaces are being used like manual columns."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The user expects every single space to become a tab",
+      "fix": "Only repeated spaces should be converted, or normal text spacing will break badly."
+    },
+    {
+      "issue": "The output looks misaligned in another editor",
+      "fix": "Remember that tabs can render differently depending on tab width settings."
+    },
+    {
+      "issue": "The source text mixes tabs and spaces already",
+      "fix": "Review the result carefully because mixed indentation may still need cleanup."
+    },
+    {
+      "issue": "The user wants predictable alignment everywhere",
+      "fix": "Use Tabs to Spaces instead if exact visual consistency across editors matters more."
+    },
+    {
+      "issue": "Regular sentence spacing gets converted by mistake",
+      "fix": "Use this tool mainly for indentation or repeated spacing, not for normal prose."
+    }
+  ],
+  "useCases": [
+    "Converting space-based indentation into tabs",
+    "Cleaning pasted code or config blocks",
+    "Normalizing editor-specific formatting workflows",
+    "Shrinking repeated space-based alignment into tab characters",
+    "Preparing text for tab-oriented tools or environments"
+  ],
+  "faq": [
+    {
+      "q": "What does Spaces to Tabs do?",
+      "a": "It replaces groups of spaces with tab characters."
+    },
+    {
+      "q": "Is this useful for code indentation?",
+      "a": "Yes. It is useful when you want tab-based indentation instead of repeated spaces."
+    },
+    {
+      "q": "Will one single space become a tab?",
+      "a": "It should not. Usually only repeated spaces meant for indentation or alignment should be converted."
+    },
+    {
+      "q": "Why does the alignment look different after conversion?",
+      "a": "Tabs may display differently depending on editor settings and tab width."
+    },
+    {
+      "q": "What is the reverse of Spaces to Tabs?",
+      "a": "The reverse tool is Tabs to Spaces."
+    }
+  ],
+  "related": [
+    "tabs-to-spaces",
+    "remove-extra-spaces",
+    "text-trimmer",
+    "empty-line-remover"
+  ]
+}
+
+,
+{
+  "id": "spaces-to-newlines",
+  "name": "Spaces to Newlines",
+  "slug": "spaces-to-newlines",
+  "category": "text-tools",
+  "intro": "Convert space-separated text into one item per line instantly.",
+  "description": "Use this Spaces to Newlines converter to replace spaces between words or values with line breaks. It is useful for turning space-separated lists into vertical lists, cleaning copied text, preparing imports, restructuring note fragments, and converting inline text into line-based data that is easier to scan and process.",
+  "keywords": [
+    "spaces to newlines",
+    "convert spaces to line breaks",
+    "space to newline converter",
+    "text to lines",
+    "split text by spaces"
+  ],
+  "whyUse": [
+    "Turn inline space-separated text into a vertical list quickly",
+    "Useful for keywords, tags, IDs, and simple copied lists",
+    "Helps prepare line-based input for other tools",
+    "Makes multi-item text easier to scan and edit",
+    "Runs in the browser without manual replacement"
+  ],
+  "howToUse": [
+    "Paste the text into the input box",
+    "Click Run Tool to replace spaces with line breaks",
+    "Review the output as a line-by-line list",
+    "Clean empty or unwanted lines if needed",
+    "Copy the converted result for reuse"
+  ],
+  "examples": [
+    {
+      "title": "Convert words into separate lines",
+      "input": "apple banana orange",
+      "output": "apple\nbanana\norange",
+      "explanation": "Useful when turning a simple inline list into line-based text."
+    },
+    {
+      "title": "Convert tags into a vertical list",
+      "input": "seo content tools online",
+      "output": "seo\ncontent\ntools\nonline",
+      "explanation": "Useful when preparing keyword or tag lists."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The user expects punctuation-based splitting too",
+      "fix": "This tool focuses on spaces. Clean commas or other separators first if needed."
+    },
+    {
+      "issue": "Multiple spaces create blank or unexpected output patterns",
+      "fix": "Normalize repeated spaces first if you want cleaner line splitting."
+    },
+    {
+      "issue": "The input already contains important line breaks",
+      "fix": "Review the result because existing structure may change."
+    },
+    {
+      "issue": "The user wants the reverse action",
+      "fix": "Use Newlines to Spaces to join line-based text back into one line."
+    },
+    {
+      "issue": "Tabs are mixed with spaces",
+      "fix": "Normalize tabs first if the source text uses mixed whitespace."
+    }
+  ],
+  "useCases": [
+    "Turning inline lists into vertical lists",
+    "Preparing line-based input for text tools",
+    "Splitting copied keywords or tags",
+    "Cleaning compact notes into readable lines",
+    "Restructuring space-separated values before import"
+  ],
+  "faq": [
+    {
+      "q": "What does Spaces to Newlines do?",
+      "a": "It replaces spaces in the input with line breaks."
+    },
+    {
+      "q": "When is Spaces to Newlines useful?",
+      "a": "It is useful when you want one word or value per line instead of one long inline string."
+    },
+    {
+      "q": "Does it work for keywords or tags?",
+      "a": "Yes. That is one of the most common use cases."
+    },
+    {
+      "q": "Will repeated spaces affect the result?",
+      "a": "Yes. Repeated spaces may change how the text is split."
+    },
+    {
+      "q": "What is the reverse of Spaces to Newlines?",
+      "a": "The reverse tool is Newlines to Spaces."
+    }
+  ],
+  "related": [
+    "newlines-to-spaces",
+    "remove-extra-spaces",
+    "empty-line-remover",
+    "text-splitter"
+  ]
+},
+{
+  "id": "newlines-to-spaces",
+  "name": "Newlines to Spaces",
+  "slug": "newlines-to-spaces",
+  "category": "text-tools",
+  "intro": "Convert multi-line text into one space-separated line instantly.",
+  "description": "Use this Newlines to Spaces converter to replace line breaks with spaces and turn multi-line text into one inline string. It is useful for cleaning copied lists, joining notes, flattening paragraphs, preparing text for single-line fields, and converting structured line-based input into a compact text format.",
+  "keywords": [
+    "newlines to spaces",
+    "convert line breaks to spaces",
+    "newline to space converter",
+    "join lines into one line",
+    "flatten text lines"
+  ],
+  "whyUse": [
+    "Join multi-line text into one compact line quickly",
+    "Useful for forms, single-line fields, and copied lists",
+    "Helps flatten notes, exports, and line-based text",
+    "Makes pasted content easier to reuse in compact formats",
+    "Works directly in the browser with instant output"
+  ],
+  "howToUse": [
+    "Paste the multi-line text into the input box",
+    "Click Run Tool to replace line breaks with spaces",
+    "Review the flattened one-line output",
+    "Clean repeated spaces if needed",
+    "Copy the result into the next tool or field"
+  ],
+  "examples": [
+    {
+      "title": "Join a simple list",
+      "input": "apple\nbanana\norange",
+      "output": "apple banana orange",
+      "explanation": "Useful when you need one inline list instead of separate lines."
+    },
+    {
+      "title": "Flatten short notes",
+      "input": "first line\nsecond line\nthird line",
+      "output": "first line second line third line",
+      "explanation": "Useful for turning line-based text into a compact sentence-like form."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The user expects punctuation between joined lines",
+      "fix": "This tool joins lines with spaces, not commas or sentence punctuation."
+    },
+    {
+      "issue": "The input contains blank lines",
+      "fix": "Remove empty lines first if you want a tighter final result."
+    },
+    {
+      "issue": "The result contains repeated spaces",
+      "fix": "Use Remove Extra Spaces afterward if needed."
+    },
+    {
+      "issue": "The user wants the original line structure preserved",
+      "fix": "This tool is specifically for flattening line-based text into one line."
+    },
+    {
+      "issue": "The user wants the reverse action",
+      "fix": "Use Spaces to Newlines to split inline text into separate lines."
+    }
+  ],
+  "useCases": [
+    "Joining lists into one line",
+    "Preparing text for single-line input fields",
+    "Flattening copied notes or exports",
+    "Converting paragraphs with line breaks into compact text",
+    "Cleaning multi-line input for reuse elsewhere"
+  ],
+  "faq": [
+    {
+      "q": "What does Newlines to Spaces do?",
+      "a": "It replaces line breaks with spaces and joins the text into one line."
+    },
+    {
+      "q": "When is Newlines to Spaces useful?",
+      "a": "It is useful when text must fit into a single-line field or compact format."
+    },
+    {
+      "q": "Does it remove empty lines automatically?",
+      "a": "Not always cleanly, so you may still want to remove empty lines first."
+    },
+    {
+      "q": "Will it keep punctuation between lines?",
+      "a": "No. It inserts spaces, not commas or custom separators."
+    },
+    {
+      "q": "What is the reverse of Newlines to Spaces?",
+      "a": "The reverse tool is Spaces to Newlines."
+    }
+  ],
+  "related": [
+    "spaces-to-newlines",
+    "remove-extra-spaces",
+    "empty-line-remover",
+    "text-joiner"
+  ]
+},
+{
+  "id": "uuencode-text",
+  "name": "Uuencode Text",
+  "slug": "uuencode-text",
+  "category": "converters",
+  "intro": "Encode plain text into uuencoded format instantly.",
+  "description": "Use this Uuencode Text tool to convert readable text into uuencoded output. It is useful for studying legacy encoding formats, working with old text workflows, preparing test samples, and understanding how uuencoding transforms plain input into an ASCII-safe encoded representation.",
+  "keywords": [
+    "uuencode text",
+    "text to uuencode",
+    "uuencode converter",
+    "uuencode online",
+    "legacy text encoding"
+  ],
+  "whyUse": [
+    "Convert text into classic uuencoded output quickly",
+    "Useful for legacy encoding study and compatibility testing",
+    "Helps create sample uuencoded content for demos and debugging",
+    "Useful when reviewing older text-processing formats",
+    "Runs directly in the browser without extra tools"
+  ],
+  "howToUse": [
+    "Paste plain text into the input box",
+    "Click Run Tool to uuencode the content",
+    "Review the encoded output",
+    "Copy the result for testing or reference",
+    "Use Uudecode Text to reverse the output later"
+  ],
+  "examples": [
+    {
+      "title": "Encode a short word",
+      "input": "Hello",
+      "output": "begin 644 text\n%2&5L;&\\`\n \nend",
+      "explanation": "Shows a typical uuencoded text block format."
+    },
+    {
+      "title": "Encode a short phrase",
+      "input": "hello world",
+      "output": "begin 644 text\n+:&5L;&\\@=V]R;&0`\n \nend",
+      "explanation": "Useful for understanding how readable text becomes uuencoded ASCII-safe output."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The user expects modern Base64-style output",
+      "fix": "Use Base64 tools if the target workflow expects Base64 instead of uuencoding."
+    },
+    {
+      "issue": "The encoded block is edited manually and breaks decoding",
+      "fix": "Keep the uuencoded structure intact, including header and end lines if used."
+    },
+    {
+      "issue": "The user expects encryption rather than encoding",
+      "fix": "Uuencode is an encoding format, not protection or encryption."
+    },
+    {
+      "issue": "The output is pasted into a system that does not support uuencoding",
+      "fix": "Confirm that the target workflow actually expects uuencoded text."
+    },
+    {
+      "issue": "The user wants the reverse action",
+      "fix": "Use Uudecode Text to decode uuencoded input back into readable text."
+    }
+  ],
+  "useCases": [
+    "Learning legacy encoding formats",
+    "Creating uuencoded test samples",
+    "Reviewing older text and transport formats",
+    "Comparing uuencode with Base64 and other encodings",
+    "Generating sample legacy-compatible encoded content"
+  ],
+  "faq": [
+    {
+      "q": "What does Uuencode Text do?",
+      "a": "It converts plain text into uuencoded output."
+    },
+    {
+      "q": "Is uuencode the same as Base64?",
+      "a": "No. Both are encodings, but they use different formats and conventions."
+    },
+    {
+      "q": "When is uuencode useful today?",
+      "a": "It is mostly useful for legacy workflows, compatibility checks, and learning older encoding formats."
+    },
+    {
+      "q": "Does uuencode encrypt the text?",
+      "a": "No. It only changes the representation of the data."
+    },
+    {
+      "q": "What is the reverse of Uuencode Text?",
+      "a": "The reverse tool is Uudecode Text."
+    }
+  ],
+  "related": [
+    "uudecode-text",
+    "base64-encode",
+    "base32-encode",
+    "text-to-hex"
+  ]
+},
+{
+  "id": "uudecode-text",
+  "name": "Uudecode Text",
+  "slug": "uudecode-text",
+  "category": "converters",
+  "intro": "Decode uuencoded text back into readable plain text instantly.",
+  "description": "Use this Uudecode Text tool to convert uuencoded content back into readable text. It is useful for working with legacy encoded data, studying older transport formats, reversing uuencoded samples, and understanding what a uuencoded text block actually contains.",
+  "keywords": [
+    "uudecode text",
+    "uuencoded text decoder",
+    "uudecode online",
+    "decode uuencode",
+    "legacy text decoder"
+  ],
+  "whyUse": [
+    "Decode uuencoded text into readable output quickly",
+    "Useful for legacy data and compatibility testing",
+    "Helps inspect old encoded content and study uuencoding",
+    "Good for reversing sample uuencoded blocks during debugging",
+    "Runs in the browser without extra scripts"
+  ],
+  "howToUse": [
+    "Paste the uuencoded text into the input box",
+    "Click Run Tool to decode the content",
+    "Review the readable output",
+    "Copy the result for reuse or analysis",
+    "Use Uuencode Text if you need to create encoded samples again"
+  ],
+  "examples": [
+    {
+      "title": "Decode a simple uuencoded block",
+      "input": "begin 644 text\n%2&5L;&\\`\n \nend",
+      "output": "Hello",
+      "explanation": "Useful for turning a uuencoded text block back into readable text."
+    },
+    {
+      "title": "Decode a short phrase",
+      "input": "begin 644 text\n+:&5L;&\\@=V]R;&0`\n \nend",
+      "output": "hello world",
+      "explanation": "Useful when checking what a uuencoded legacy sample actually contains."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The input is Base64 or another encoding instead of uuencode",
+      "fix": "Use the correct decoder for the actual input format."
+    },
+    {
+      "issue": "The uuencoded block is incomplete",
+      "fix": "Make sure the full encoded content was copied, including header or end structure if present."
+    },
+    {
+      "issue": "Manual edits introduced broken lines",
+      "fix": "Keep the original encoded lines intact before decoding."
+    },
+    {
+      "issue": "The user expects binary file recovery from plain text logic",
+      "fix": "This version is best used for text-oriented decoding examples."
+    },
+    {
+      "issue": "The user wants the reverse action",
+      "fix": "Use Uuencode Text to create uuencoded output from readable text."
+    }
+  ],
+  "useCases": [
+    "Decoding legacy uuencoded text",
+    "Inspecting older encoded message samples",
+    "Learning how uuencoded content maps back to readable text",
+    "Compatibility testing with legacy formats",
+    "Reversing uuencoded examples during study or debugging"
+  ],
+  "faq": [
+    {
+      "q": "What does Uudecode Text do?",
+      "a": "It converts uuencoded content back into readable text."
+    },
+    {
+      "q": "Can it decode any old encoded block?",
+      "a": "Only if the input is actually valid uuencoded text."
+    },
+    {
+      "q": "Why does the decoder fail?",
+      "a": "The most common reasons are incomplete input, broken lines, or the wrong encoding format."
+    },
+    {
+      "q": "Is uudecode the same as Base64 decode?",
+      "a": "No. Uudecode is specifically for uuencoded data, which uses a different format."
+    },
+    {
+      "q": "What is the reverse of Uudecode Text?",
+      "a": "The reverse tool is Uuencode Text."
+    }
+  ],
+  "related": [
+    "uuencode-text",
+    "base64-decode",
+    "base32-decode",
+    "hex-to-utf8"
+  ]
+},
+{
+  "id": "text-to-punycode",
+  "name": "Text to Punycode",
+  "slug": "text-to-punycode",
+  "category": "converters",
+  "intro": "Convert Unicode text or internationalized domains into Punycode instantly.",
+  "description": "Use this Text to Punycode converter to transform Unicode text into Punycode form. It is useful for internationalized domain names, IDN testing, DNS-related workflows, browser compatibility checks, and understanding how non-ASCII text is represented in ASCII-safe Punycode format.",
+  "keywords": [
+    "text to punycode",
+    "unicode to punycode",
+    "punycode converter",
+    "idn punycode encoder",
+    "convert text to punycode"
+  ],
+  "whyUse": [
+    "Convert Unicode text into ASCII-safe Punycode quickly",
+    "Useful for internationalized domains and IDN testing",
+    "Helps inspect how non-English hostnames are represented",
+    "Useful in browser, DNS, and compatibility workflows",
+    "Runs directly in the browser with instant output"
+  ],
+  "howToUse": [
+    "Paste Unicode text or a domain label into the input box",
+    "Click Run Tool to convert it to Punycode",
+    "Review the encoded result",
+    "Copy the output into your test, domain, or technical workflow",
+    "Use Punycode to Text to reverse it later"
+  ],
+  "examples": [
+  {
+    "title": "Convert a German domain label",
+    "input": "münchen",
+    "output": "xn--mnchen-3ya",
+    "explanation": "Useful for understanding how Unicode domain labels become ASCII-safe Punycode."
+  },
+  {
+    "title": "Convert an internationalized word",
+    "input": "mañana",
+    "output": "xn--maana-pta",
+    "explanation": "Useful for browser and DNS-related IDN checks."
+  }
+],
+  "commonErrors": [
+    {
+      "issue": "The user expects full URL encoding rather than Punycode",
+      "fix": "Use URL Encoder for URLs and query values. Punycode is mainly for internationalized domain labels."
+    },
+    {
+      "issue": "The input is already Punycode",
+      "fix": "Use Punycode to Text if the value already starts with xn--."
+    },
+    {
+      "issue": "The user expects full-domain normalization automatically",
+      "fix": "Review whether you are converting one label or a full hostname."
+    },
+    {
+      "issue": "The input contains spaces or non-domain text",
+      "fix": "Punycode is most useful for domain labels and Unicode hostnames."
+    },
+    {
+      "issue": "The user expects encryption or obfuscation",
+      "fix": "Punycode is just a representation format, not security."
+    }
+  ],
+  "useCases": [
+    "Encoding internationalized domain names",
+    "Testing IDN behavior in browsers and DNS workflows",
+    "Comparing Unicode and ASCII-safe hostname formats",
+    "Preparing domain labels for technical checks",
+    "Learning how Punycode represents non-ASCII text"
+  ],
+  "faq": [
+    {
+      "q": "What does Text to Punycode do?",
+      "a": "It converts Unicode text into ASCII-safe Punycode form."
+    },
+    {
+      "q": "When is Punycode useful?",
+      "a": "It is useful for internationalized domain names and IDN-related technical workflows."
+    },
+    {
+      "q": "Is Punycode the same as URL encoding?",
+      "a": "No. Punycode is for internationalized domain labels, while URL encoding is for unsafe characters inside URLs."
+    },
+    {
+      "q": "Why does the result start with xn--?",
+      "a": "That is the standard prefix used for Punycode domain labels."
+    },
+    {
+      "q": "What is the reverse of Text to Punycode?",
+      "a": "The reverse tool is Punycode to Text."
+    }
+  ],
+  "related": [
+    "punycode-to-text",
+    "url-encode",
+    "url-decode",
+    "dns-lookup"
+  ]
+},
+{
+  "id": "punycode-to-text",
+  "name": "Punycode to Text",
+  "slug": "punycode-to-text",
+  "category": "converters",
+  "intro": "Convert Punycode back into readable Unicode text instantly.",
+  "description": "Use this Punycode to Text converter to decode Punycode values back into readable Unicode text. It is useful for internationalized domain names, browser and DNS troubleshooting, IDN review, and understanding what an xn-- domain label represents in human-readable form.",
+  "keywords": [
+    "punycode to text",
+    "punycode decoder",
+    "decode punycode",
+    "idn punycode decode",
+    "xn-- decoder"
+  ],
+  "whyUse": [
+    "Decode xn-- Punycode values into readable Unicode text quickly",
+    "Useful for IDN and internationalized domain reviews",
+    "Helps inspect what a Punycode label actually means",
+    "Useful in browser, DNS, and compatibility troubleshooting",
+    "Runs in the browser without extra tools"
+  ],
+  "howToUse": [
+    "Paste the Punycode value into the input box",
+    "Click Run Tool to decode it",
+    "Review the Unicode text result",
+    "Copy the readable form for notes or analysis",
+    "Use Text to Punycode if you need to convert it back"
+  ],
+  "examples": [
+  {
+    "title": "Decode a German domain label",
+    "input": "xn--mnchen-3ya",
+    "output": "münchen",
+    "explanation": "Useful when checking the readable form behind a Punycode label."
+  },
+  {
+    "title": "Decode an internationalized word",
+    "input": "xn--maana-pta",
+    "output": "mañana",
+    "explanation": "Useful for understanding internationalized text during testing."
+  }
+],
+  "commonErrors": [
+    {
+      "issue": "The input is ordinary text instead of Punycode",
+      "fix": "Use Text to Punycode if the input is already Unicode text."
+    },
+    {
+      "issue": "The label is incomplete or malformed",
+      "fix": "Make sure the full xn-- value was copied correctly."
+    },
+    {
+      "issue": "The user expects full URL decoding",
+      "fix": "Use URL Decoder for percent-encoded URL values. Punycode is for IDN labels."
+    },
+    {
+      "issue": "The input includes non-Punycode domain parts mixed incorrectly",
+      "fix": "Check whether you are decoding one label or a full hostname."
+    },
+    {
+      "issue": "The user expects security validation from a decoded domain",
+      "fix": "This tool only converts representation, not trust or safety."
+    }
+  ],
+  "useCases": [
+    "Inspecting xn-- domain labels",
+    "Reviewing internationalized domains during troubleshooting",
+    "Checking browser and DNS IDN behavior",
+    "Converting Punycode to readable Unicode text",
+    "Learning how IDNs map between ASCII and Unicode"
+  ],
+  "faq": [
+    {
+      "q": "What does Punycode to Text do?",
+      "a": "It converts Punycode values back into readable Unicode text."
+    },
+    {
+      "q": "When is this useful?",
+      "a": "It is useful when you need to see the real readable form behind an xn-- domain label."
+    },
+    {
+      "q": "Is Punycode the same as URL encoding?",
+      "a": "No. Punycode is for internationalized domain labels, while URL encoding is for URLs and parameter values."
+    },
+    {
+      "q": "Why does the input usually start with xn--?",
+      "a": "That prefix identifies an ASCII label encoded using the Punycode standard."
+    },
+    {
+      "q": "What is the reverse of Punycode to Text?",
+      "a": "The reverse tool is Text to Punycode."
+    }
+  ],
+  "related": [
+    "text-to-punycode",
+    "url-decode",
+    "url-encode",
+    "dns-lookup"
+  ]
+},
+{
+  "id": "cmyk-to-rgb",
+  "name": "CMYK to RGB",
+  "slug": "cmyk-to-rgb",
+  "category": "converters",
+  "intro": "Convert CMYK color values into RGB format for screen and web use.",
+  "description": "Use this CMYK to RGB converter to turn cyan, magenta, yellow, and black values into RGB color values. It is useful for design handoff, print-to-screen color translation, UI work, web styling, and understanding how print-oriented CMYK colors map into screen-friendly RGB output.",
+  "keywords": [
+    "cmyk to rgb",
+    "convert cmyk to rgb",
+    "print to rgb color converter",
+    "cmyk rgb converter",
+    "color format converter"
+  ],
+  "whyUse": [
+    "Convert print-oriented CMYK colors into screen-friendly RGB values",
+    "Useful for web design and design handoff workflows",
+    "Helps translate colors between print and digital formats",
+    "Useful for quick UI, CSS, and style preparation",
+    "Runs in the browser with instant color conversion"
+  ],
+  "howToUse": [
+    "Enter four CMYK values in the input box",
+    "Click Run Tool to convert them",
+    "Review the RGB result",
+    "Copy the output into CSS, design specs, or notes",
+    "Use RGB to CMYK to reverse the conversion if needed"
+  ],
+  "examples": [
+    {
+      "title": "Convert rich red-like CMYK values",
+      "input": "0 66 80 0",
+      "output": "rgb(255, 87, 51)",
+      "explanation": "Useful for translating a print-style color into RGB."
+    },
+    {
+      "title": "Convert pure black",
+      "input": "0 0 0 100",
+      "output": "rgb(0, 0, 0)",
+      "explanation": "Shows how full black maps into RGB."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The user enters percentages outside 0 to 100",
+      "fix": "Use valid CMYK percentage values between 0 and 100."
+    },
+    {
+      "issue": "The user expects a perfect print-to-screen match",
+      "fix": "CMYK and RGB are different color models, so visual matching can still vary."
+    },
+    {
+      "issue": "Only three values are entered",
+      "fix": "CMYK needs four values: cyan, magenta, yellow, and black."
+    },
+    {
+      "issue": "The user wants hex output instead of RGB",
+      "fix": "Use CMYK to Hex if the final target is a hex color code."
+    },
+    {
+      "issue": "The input format includes labels that are parsed badly",
+      "fix": "Enter clean numeric values like 0 66 80 0."
+    }
+  ],
+  "useCases": [
+    "Converting print colors for web design",
+    "Preparing RGB values from CMYK specs",
+    "Checking digital equivalents of print-oriented colors",
+    "Helping designers move between print and screen workflows",
+    "Creating RGB values for CSS or interface work"
+  ],
+  "faq": [
+    {
+      "q": "What does CMYK to RGB do?",
+      "a": "It converts cyan, magenta, yellow, and black values into RGB color values."
+    },
+    {
+      "q": "Why convert CMYK to RGB?",
+      "a": "RGB is more useful for screens, web interfaces, and digital workflows."
+    },
+    {
+      "q": "Can I expect the exact same color visually?",
+      "a": "Not always, because CMYK and RGB represent color differently."
+    },
+    {
+      "q": "How should I enter the values?",
+      "a": "Enter four percentage values such as 0 66 80 0."
+    },
+    {
+      "q": "What is the reverse of CMYK to RGB?",
+      "a": "The reverse tool is RGB to CMYK."
+    }
+  ],
+  "related": [
+    "rgb-to-cmyk",
+    "cmyk-to-hex",
+    "hex-to-cmyk",
+    "rgb-to-hex"
+  ]
+},
+{
+  "id": "rgb-to-cmyk",
+  "name": "RGB to CMYK",
+  "slug": "rgb-to-cmyk",
+  "category": "converters",
+  "intro": "Convert RGB color values into CMYK format for print-oriented workflows.",
+  "description": "Use this RGB to CMYK converter to turn red, green, and blue channel values into CMYK percentages. It is useful for design handoff, print preparation, color translation, and understanding how digital RGB colors map into print-oriented CMYK output.",
+  "keywords": [
+    "rgb to cmyk",
+    "convert rgb to cmyk",
+    "rgb cmyk converter",
+    "screen to print color converter",
+    "color conversion tool"
+  ],
+  "whyUse": [
+    "Convert digital RGB colors into print-oriented CMYK values",
+    "Useful for design handoff and print preparation",
+    "Helps translate web colors into print workflows",
+    "Useful for comparing digital and print color representations",
+    "Runs directly in the browser without design software"
+  ],
+  "howToUse": [
+    "Enter three RGB values into the input box",
+    "Click Run Tool to convert them",
+    "Review the CMYK percentages",
+    "Copy the output for print or design workflows",
+    "Use CMYK to RGB if you need the reverse conversion"
+  ],
+  "examples": [
+    {
+      "title": "Convert a warm RGB color",
+      "input": "255 87 51",
+      "output": "cmyk(0%, 66%, 80%, 0%)",
+      "explanation": "Useful for translating a web color into a print-style CMYK approximation."
+    },
+    {
+      "title": "Convert white",
+      "input": "255 255 255",
+      "output": "cmyk(0%, 0%, 0%, 0%)",
+      "explanation": "Shows how pure white maps into CMYK."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The RGB values are outside the 0 to 255 range",
+      "fix": "Use integer RGB values between 0 and 255."
+    },
+    {
+      "issue": "The user expects an exact print result from screen values",
+      "fix": "RGB and CMYK are different models, so conversion gives an approximation."
+    },
+    {
+      "issue": "The user enters a hex code instead of RGB numbers",
+      "fix": "Use Hex to CMYK if the source color is in hex format."
+    },
+    {
+      "issue": "Only one or two numbers are entered",
+      "fix": "RGB conversion needs three values: red, green, and blue."
+    },
+    {
+      "issue": "Decimals or punctuation make the input invalid",
+      "fix": "Enter clean numeric RGB values like 255 87 51."
+    }
+  ],
+  "useCases": [
+    "Preparing print-friendly values from screen colors",
+    "Converting CSS colors into CMYK approximations",
+    "Helping designers bridge digital and print workflows",
+    "Reviewing how UI colors translate toward print",
+    "Generating CMYK values without using design software"
+  ],
+  "faq": [
+    {
+      "q": "What does RGB to CMYK do?",
+      "a": "It converts red, green, and blue color channels into CMYK percentage values."
+    },
+    {
+      "q": "Why convert RGB to CMYK?",
+      "a": "CMYK is more useful in print-oriented workflows and design handoff."
+    },
+    {
+      "q": "Can I expect a perfect print match?",
+      "a": "Not always, because RGB and CMYK represent color differently."
+    },
+    {
+      "q": "How do I enter RGB values?",
+      "a": "Enter three numbers such as 255 87 51."
+    },
+    {
+      "q": "What is the reverse of RGB to CMYK?",
+      "a": "The reverse tool is CMYK to RGB."
+    }
+  ],
+  "related": [
+    "cmyk-to-rgb",
+    "hex-to-cmyk",
+    "cmyk-to-hex",
+    "hex-to-rgb"
+  ]
+},
+{
+  "id": "cmyk-to-hex",
+  "name": "CMYK to Hex",
+  "slug": "cmyk-to-hex",
+  "category": "converters",
+  "intro": "Convert CMYK color values into HEX format for web and CSS use.",
+  "description": "Use this CMYK to Hex converter to turn CMYK percentages into a hex color code. It is useful for translating print-oriented colors into web-friendly values, preparing CSS colors, design handoff, and converting CMYK references into a hex format that is easier to use in front-end workflows.",
+  "keywords": [
+    "cmyk to hex",
+    "convert cmyk to hex",
+    "cmyk hex converter",
+    "print to hex color converter",
+    "hex color from cmyk"
+  ],
+  "whyUse": [
+    "Convert CMYK colors directly into web-friendly hex values",
+    "Useful for CSS, design handoff, and digital color specs",
+    "Helps bridge print references and front-end workflows",
+    "Saves time when a hex code is needed from CMYK input",
+    "Runs in the browser with instant output"
+  ],
+  "howToUse": [
+    "Enter four CMYK values into the input box",
+    "Click Run Tool to convert them",
+    "Review the hex color result",
+    "Copy the output into CSS or design documentation",
+    "Use Hex to CMYK to reverse the conversion if needed"
+  ],
+  "examples": [
+    {
+      "title": "Convert a warm CMYK color",
+      "input": "0 66 80 0",
+      "output": "#FF5733",
+      "explanation": "Useful for converting a print-oriented color into a hex code for web use."
+    },
+    {
+      "title": "Convert full black",
+      "input": "0 0 0 100",
+      "output": "#000000",
+      "explanation": "Shows the direct web-ready hex result of pure CMYK black."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The user enters CMYK values outside 0 to 100",
+      "fix": "Use valid percentage values for all four channels."
+    },
+    {
+      "issue": "The user expects exact print-to-screen identity",
+      "fix": "The conversion is useful, but print and screen models still differ visually."
+    },
+    {
+      "issue": "The input is actually RGB or hex",
+      "fix": "Use the matching converter for the actual source format."
+    },
+    {
+      "issue": "The user wants RGB values instead",
+      "fix": "Use CMYK to RGB if the target format should be rgb(...)."
+    },
+    {
+      "issue": "Formatting characters make parsing fail",
+      "fix": "Enter clean numeric values like 0 66 80 0."
+    }
+  ],
+  "useCases": [
+    "Creating CSS hex colors from CMYK specs",
+    "Bridging print references into front-end workflows",
+    "Preparing digital color values from print-oriented inputs",
+    "Design handoff between print and web teams",
+    "Converting CMYK color notes into hex codes"
+  ],
+  "faq": [
+    {
+      "q": "What does CMYK to Hex do?",
+      "a": "It converts CMYK percentages into a hex color code."
+    },
+    {
+      "q": "Why use hex output?",
+      "a": "Hex is very common in CSS, UI work, and digital design specs."
+    },
+    {
+      "q": "Can I use the result directly in CSS?",
+      "a": "Yes. The output hex code can be used directly in CSS."
+    },
+    {
+      "q": "Will the converted color always match print exactly?",
+      "a": "Not perfectly, because print and screen color models differ."
+    },
+    {
+      "q": "What is the reverse of CMYK to Hex?",
+      "a": "The reverse tool is Hex to CMYK."
+    }
+  ],
+  "related": [
+    "hex-to-cmyk",
+    "cmyk-to-rgb",
+    "rgb-to-cmyk",
+    "rgb-to-hex"
+  ]
+},
+{
+  "id": "hex-to-cmyk",
+  "name": "Hex to CMYK",
+  "slug": "hex-to-cmyk",
+  "category": "converters",
+  "intro": "Convert HEX color codes into CMYK values for print-oriented workflows.",
+  "description": "Use this Hex to CMYK converter to turn hex color values into CMYK percentages. It is useful for design handoff, print preparation, color translation between web and print workflows, and understanding how hex-based digital colors map into CMYK approximations.",
+  "keywords": [
+    "hex to cmyk",
+    "convert hex to cmyk",
+    "hex cmyk converter",
+    "web to print color converter",
+    "color converter hex cmyk"
+  ],
+  "whyUse": [
+    "Convert web-friendly hex colors into CMYK percentages quickly",
+    "Useful for print preparation and design handoff",
+    "Helps translate front-end colors into print-oriented workflows",
+    "Good for comparing digital and print color representations",
+    "Runs in the browser without extra software"
+  ],
+  "howToUse": [
+    "Paste the hex color value into the input box",
+    "Click Run Tool to convert it",
+    "Review the CMYK result",
+    "Copy the values for print or design use",
+    "Use CMYK to Hex to reverse the conversion if needed"
+  ],
+  "examples": [
+    {
+      "title": "Convert a warm web color",
+      "input": "#FF5733",
+      "output": "cmyk(0%, 66%, 80%, 0%)",
+      "explanation": "Useful for translating a digital hex color into a print-style CMYK approximation."
+    },
+    {
+      "title": "Convert white",
+      "input": "#FFFFFF",
+      "output": "cmyk(0%, 0%, 0%, 0%)",
+      "explanation": "Shows how pure white maps into CMYK percentages."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The hex value is invalid or the wrong length",
+      "fix": "Use a valid 3-digit or 6-digit hex color."
+    },
+    {
+      "issue": "The user expects an exact print match from a screen color",
+      "fix": "Hex and CMYK are different color models, so the result is an approximation."
+    },
+    {
+      "issue": "The source color is RGB rather than hex",
+      "fix": "Use RGB to CMYK if your source is already in RGB numbers."
+    },
+    {
+      "issue": "The user expects transparency support",
+      "fix": "This tool focuses on standard opaque color conversion."
+    },
+    {
+      "issue": "The wrong hex code was pasted",
+      "fix": "Double-check the source color value before converting."
+    }
+  ],
+  "useCases": [
+    "Preparing print-friendly values from hex colors",
+    "Converting CSS colors into CMYK approximations",
+    "Helping designers move from web colors to print references",
+    "Reviewing how digital colors map into print workflows",
+    "Generating CMYK values from front-end color specs"
+  ],
+  "faq": [
+    {
+      "q": "What does Hex to CMYK do?",
+      "a": "It converts a hex color code into CMYK percentage values."
+    },
+    {
+      "q": "Why convert hex to CMYK?",
+      "a": "It is useful when a web or UI color needs to be translated into a print-oriented format."
+    },
+    {
+      "q": "Can I enter short hex values like #FFF?",
+      "a": "Yes, if your logic supports 3-digit hex expansion before conversion."
+    },
+    {
+      "q": "Will the result match print exactly?",
+      "a": "Not perfectly, because screen and print color models differ."
+    },
+    {
+      "q": "What is the reverse of Hex to CMYK?",
+      "a": "The reverse tool is CMYK to Hex."
+    }
+  ],
+  "related": [
+    "cmyk-to-hex",
+    "rgb-to-cmyk",
+    "cmyk-to-rgb",
+    "hex-to-rgb"
+  ]
+}
+,
+{
+  "id": "rot13-encode",
+  "name": "ROT13 Encode",
+  "slug": "rot13-encode",
+  "category": "developer-tools",
+  "intro": "Encode plain text with the ROT13 substitution cipher instantly.",
+  "description": "Use this ROT13 encoder to shift each Latin letter by 13 positions and produce ROT13-encoded text instantly. It is useful for puzzles, CTF basics, simple obfuscation demos, classroom examples, and understanding classical substitution ciphers. Paste text into the tool and get the transformed output directly in the browser.",
+  "keywords": [
+    "rot13 encode",
+    "rot13 encoder",
+    "text to rot13",
+    "rot13 cipher",
+    "encode rot13 online"
+  ],
+  "whyUse": [
+    "Encode text with the classic ROT13 cipher instantly",
+    "Useful for puzzles, training tasks, and simple obfuscation examples",
+    "Helps explain classical substitution ciphers in a simple way",
+    "Useful for CTF basics and classroom demos",
+    "Runs directly in the browser without any setup"
+  ],
+  "howToUse": [
+    "Paste plain text into the input box",
+    "Click Run Tool to apply ROT13 encoding",
+    "Review the transformed output",
+    "Copy the result for a puzzle, demo, or note",
+    "Use ROT13 Decode to reverse it later"
+  ],
+  "examples": [
+    {
+      "title": "Encode a simple word",
+      "input": "hello",
+      "output": "uryyb",
+      "explanation": "Shows the basic ROT13 shift on lowercase Latin letters."
+    },
+    {
+      "title": "Encode a short phrase",
+      "input": "Attack at dawn",
+      "output": "Nggnpx ng qnja",
+      "explanation": "Useful for seeing how spaces stay unchanged while letters rotate."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The user expects encryption instead of letter substitution",
+      "fix": "Remember that ROT13 is only a simple substitution cipher, not real encryption."
+    },
+    {
+      "issue": "Non-Latin characters are expected to rotate too",
+      "fix": "ROT13 only affects A-Z and a-z letters."
+    },
+    {
+      "issue": "The user wants the reverse action",
+      "fix": "Use ROT13 Decode, even though ROT13 is symmetrical."
+    },
+    {
+      "issue": "Punctuation is expected to change",
+      "fix": "Only letters change. Spaces, punctuation, and digits stay the same."
+    },
+    {
+      "issue": "The user expects a secret-safe result",
+      "fix": "Use a real encryption tool like AES for actual secrecy."
+    }
+  ],
+  "useCases": [
+    "Encoding text for simple puzzles",
+    "Learning classical substitution ciphers",
+    "Creating CTF warm-up examples",
+    "Demonstrating reversible letter rotation",
+    "Obfuscating spoiler text in a lightweight way"
+  ],
+  "faq": [
+    {
+      "q": "What does ROT13 Encode do?",
+      "a": "It rotates each Latin letter by 13 positions."
+    },
+    {
+      "q": "Is ROT13 real encryption?",
+      "a": "No. It is a simple substitution cipher and is not secure."
+    },
+    {
+      "q": "Does ROT13 change numbers or punctuation?",
+      "a": "No. It changes only A-Z and a-z letters."
+    },
+    {
+      "q": "Can ROT13 encoded text be reversed?",
+      "a": "Yes. ROT13 is fully reversible."
+    },
+    {
+      "q": "What is the reverse of ROT13 Encode?",
+      "a": "The reverse tool is ROT13 Decode."
+    }
+  ],
+  "related": [
+    "rot13-decode",
+    "rot47-encode",
+    "xor-encrypt",
+    "base64-encode"
+  ]
+},
+{
+  "id": "rot13-decode",
+  "name": "ROT13 Decode",
+  "slug": "rot13-decode",
+  "category": "developer-tools",
+  "intro": "Decode ROT13 text back into readable plain text instantly.",
+  "description": "Use this ROT13 decoder to reverse ROT13-encoded text and turn it back into readable output. It is useful for puzzles, spoiler text, CTF basics, classroom examples, and simple classical cipher demonstrations. Paste ROT13 text into the tool and decode it instantly in the browser.",
+  "keywords": [
+    "rot13 decode",
+    "rot13 decoder",
+    "decode rot13",
+    "rot13 text decoder",
+    "rot13 online"
+  ],
+  "whyUse": [
+    "Decode ROT13 text back into readable form instantly",
+    "Useful for puzzles, games, and training examples",
+    "Helps inspect classical cipher samples quickly",
+    "Useful for CTF basics and challenge writeups",
+    "Works in the browser without extra tools"
+  ],
+  "howToUse": [
+    "Paste ROT13 text into the input box",
+    "Click Run Tool to decode it",
+    "Review the readable output",
+    "Copy the decoded result",
+    "Use ROT13 Encode if you want to transform it back again"
+  ],
+  "examples": [
+    {
+      "title": "Decode a simple word",
+      "input": "uryyb",
+      "output": "hello",
+      "explanation": "Shows the reversal of a common ROT13 example."
+    },
+    {
+      "title": "Decode a phrase",
+      "input": "Nggnpx ng qnja",
+      "output": "Attack at dawn",
+      "explanation": "Useful for reversing ROT13 text used in examples or puzzles."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The input is not actually ROT13 text",
+      "fix": "Confirm that the source text was encoded with ROT13 first."
+    },
+    {
+      "issue": "The user expects symbols or digits to change",
+      "fix": "ROT13 only affects Latin letters."
+    },
+    {
+      "issue": "The user expects stronger cryptanalysis behavior",
+      "fix": "This tool only reverses ROT13 substitution."
+    },
+    {
+      "issue": "Non-Latin characters are expected to decode differently",
+      "fix": "Characters outside A-Z and a-z are left unchanged."
+    },
+    {
+      "issue": "The user wants a different cipher type",
+      "fix": "Use ROT47 or XOR tools if the source uses another transformation."
+    }
+  ],
+  "useCases": [
+    "Decoding simple puzzle text",
+    "Reading spoiler text protected with ROT13",
+    "Reversing CTF warm-up strings",
+    "Studying classical ciphers",
+    "Inspecting ROT13 challenge examples"
+  ],
+  "faq": [
+    {
+      "q": "What does ROT13 Decode do?",
+      "a": "It reverses ROT13 text back into readable plain text."
+    },
+    {
+      "q": "Is ROT13 Decode different from ROT13 Encode?",
+      "a": "ROT13 is symmetrical, but separate pages are still useful for clear intent and SEO."
+    },
+    {
+      "q": "Can I decode any text with ROT13 Decode?",
+      "a": "Yes, but only text that was transformed with ROT13 will become meaningful."
+    },
+    {
+      "q": "Does it change punctuation or numbers?",
+      "a": "No. Only A-Z and a-z letters are rotated."
+    },
+    {
+      "q": "What is the reverse of ROT13 Decode?",
+      "a": "The reverse tool is ROT13 Encode."
+    }
+  ],
+  "related": [
+    "rot13-encode",
+    "rot47-decode",
+    "xor-decrypt",
+    "base64-decode"
+  ]
+},
+{
+  "id": "rot47-encode",
+  "name": "ROT47 Encode",
+  "slug": "rot47-encode",
+  "category": "developer-tools",
+  "intro": "Encode text with the ROT47 cipher instantly.",
+  "description": "Use this ROT47 encoder to rotate printable ASCII characters and create ROT47-encoded output instantly. It is useful for puzzles, CTF practice, lightweight obfuscation demos, and learning how broader printable-character rotation differs from ROT13. Paste text into the tool and get ROT47 output directly in the browser.",
+  "keywords": [
+    "rot47 encode",
+    "rot47 encoder",
+    "text to rot47",
+    "rot47 cipher",
+    "encode rot47 online"
+  ],
+  "whyUse": [
+    "Encode printable ASCII text with ROT47 quickly",
+    "Useful for puzzle creation and CTF training",
+    "Helps demonstrate a wider rotation range than ROT13",
+    "Useful for reversible text obfuscation examples",
+    "Runs in the browser without setup"
+  ],
+  "howToUse": [
+    "Paste text into the input box",
+    "Click Run Tool to apply ROT47",
+    "Review the transformed output",
+    "Copy the result for a puzzle or demo",
+    "Use ROT47 Decode to reverse it later"
+  ],
+  "examples": [
+    {
+      "title": "Encode a simple word",
+      "input": "hello",
+      "output": "96==@",
+      "explanation": "Shows how printable ASCII letters change under ROT47."
+    },
+    {
+      "title": "Encode a phrase with punctuation",
+      "input": "Hello, 123!",
+      "output": "w6==@[ `abP",
+      "explanation": "Useful for seeing how digits and punctuation also change in ROT47."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The user expects Unicode support for all characters",
+      "fix": "ROT47 is mainly designed around printable ASCII characters."
+    },
+    {
+      "issue": "The user expects real encryption",
+      "fix": "ROT47 is only a reversible character rotation, not secure encryption."
+    },
+    {
+      "issue": "The input contains non-printable control characters",
+      "fix": "ROT47 works best on normal printable text."
+    },
+    {
+      "issue": "The user wants the reverse action",
+      "fix": "Use ROT47 Decode, even though the transform is symmetrical."
+    },
+    {
+      "issue": "The user expects only letters to change",
+      "fix": "ROT47 affects many printable ASCII symbols, not just letters."
+    }
+  ],
+  "useCases": [
+    "Creating text puzzles",
+    "Practicing simple CTF transformations",
+    "Demonstrating printable ASCII rotation",
+    "Obfuscating challenge text in a reversible way",
+    "Comparing ROT47 with ROT13"
+  ],
+  "faq": [
+    {
+      "q": "What does ROT47 Encode do?",
+      "a": "It rotates printable ASCII characters by 47 positions."
+    },
+    {
+      "q": "How is ROT47 different from ROT13?",
+      "a": "ROT47 works on a broader printable ASCII range, while ROT13 only rotates letters."
+    },
+    {
+      "q": "Is ROT47 secure?",
+      "a": "No. It is a simple reversible transformation, not secure encryption."
+    },
+    {
+      "q": "Does ROT47 affect numbers and symbols?",
+      "a": "Yes. Printable ASCII digits and symbols can change too."
+    },
+    {
+      "q": "What is the reverse of ROT47 Encode?",
+      "a": "The reverse tool is ROT47 Decode."
+    }
+  ],
+  "related": [
+    "rot47-decode",
+    "rot13-encode",
+    "xor-encrypt",
+    "base64-encode"
+  ]
+},
+{
+  "id": "rot47-decode",
+  "name": "ROT47 Decode",
+  "slug": "rot47-decode",
+  "category": "developer-tools",
+  "intro": "Decode ROT47 text back into readable plain text instantly.",
+  "description": "Use this ROT47 decoder to reverse ROT47-transformed text and turn it back into readable output. It is useful for puzzles, challenge writeups, CTF practice, and learning how printable ASCII rotation works across letters, digits, and symbols. Paste ROT47 text into the tool and decode it instantly.",
+  "keywords": [
+    "rot47 decode",
+    "rot47 decoder",
+    "decode rot47",
+    "rot47 text decoder",
+    "rot47 online"
+  ],
+  "whyUse": [
+    "Decode ROT47 text back into readable form quickly",
+    "Useful for puzzles and CTF challenge solving",
+    "Helps inspect printable ASCII rotation examples",
+    "Useful for reversing lightweight obfuscation samples",
+    "Works directly in the browser"
+  ],
+  "howToUse": [
+    "Paste ROT47 text into the input box",
+    "Click Run Tool to decode it",
+    "Review the readable output",
+    "Copy the decoded result",
+    "Use ROT47 Encode to transform it again if needed"
+  ],
+  "examples": [
+    {
+      "title": "Decode a simple word",
+      "input": "96==@",
+      "output": "hello",
+      "explanation": "Useful for reversing common ROT47 examples."
+    },
+    {
+      "title": "Decode a phrase with punctuation",
+      "input": "w6==@[ `abP",
+      "output": "Hello, 123!",
+      "explanation": "Shows how letters, digits, and symbols return to readable form."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The input is not actually ROT47 text",
+      "fix": "Check whether the source used ROT47 and not ROT13 or another format."
+    },
+    {
+      "issue": "The user expects Unicode-heavy text to decode cleanly",
+      "fix": "ROT47 is mainly for printable ASCII text."
+    },
+    {
+      "issue": "The user expects only letters to change",
+      "fix": "ROT47 affects many printable ASCII symbols too."
+    },
+    {
+      "issue": "The user wants stronger decryption behavior",
+      "fix": "This tool only reverses ROT47 character rotation."
+    },
+    {
+      "issue": "The result still looks unreadable",
+      "fix": "Confirm the input format and make sure the source really used ROT47."
+    }
+  ],
+  "useCases": [
+    "Solving text puzzles",
+    "Decoding CTF warm-up content",
+    "Reading printable ASCII rotation samples",
+    "Reversing lightweight obfuscation",
+    "Studying ROT47 behavior"
+  ],
+  "faq": [
+    {
+      "q": "What does ROT47 Decode do?",
+      "a": "It reverses ROT47 text back into readable plain text."
+    },
+    {
+      "q": "Is ROT47 Decode different from ROT47 Encode?",
+      "a": "ROT47 is symmetrical, but separate pages are still useful for clear intent."
+    },
+    {
+      "q": "Does ROT47 affect punctuation too?",
+      "a": "Yes. Many printable ASCII symbols are rotated."
+    },
+    {
+      "q": "Can I use this for any scrambled text?",
+      "a": "Only if the input was actually transformed with ROT47."
+    },
+    {
+      "q": "What is the reverse of ROT47 Decode?",
+      "a": "The reverse tool is ROT47 Encode."
+    }
+  ],
+  "related": [
+    "rot47-encode",
+    "rot13-decode",
+    "xor-decrypt",
+    "base64-decode"
+  ]
+},
+{
+  "id": "xor-encrypt",
+  "name": "XOR Encrypt",
+  "slug": "xor-encrypt",
+  "category": "developer-tools",
+  "intro": "Encrypt text with an XOR key instantly for learning, testing, and basic reversible obfuscation.",
+  "description": "Use this XOR Encrypt tool to combine text with a key using the XOR operation and produce a hexadecimal output. It is useful for learning basic cryptography concepts, CTF practice, reversible obfuscation demos, byte-level debugging, and understanding how key-based XOR transforms plain input. Paste text and a key to generate XOR-encrypted output instantly.",
+  "keywords": [
+    "xor encrypt",
+    "xor encryption",
+    "xor cipher",
+    "xor text encrypt",
+    "xor online tool"
+  ],
+  "whyUse": [
+    "Encrypt text with a repeating XOR key quickly",
+    "Useful for CTF practice and cryptography basics",
+    "Helps demonstrate reversible key-based transformations",
+    "Useful for byte-level debugging and toy examples",
+    "Runs directly in the browser with instant output"
+  ],
+  "howToUse": [
+    "Enter the key on the first line, then the text below it",
+    "Click Run Tool to XOR the text with the key",
+    "Review the hexadecimal output",
+    "Copy the result for testing or challenge work",
+    "Use XOR Decrypt with the same key to reverse it"
+  ],
+  "examples": [
+    {
+      "title": "Encrypt a short word",
+      "input": "key\nhello",
+      "output": "030015070A",
+      "explanation": "The first line is the key, and the lines below are the plaintext."
+    },
+    {
+      "title": "Encrypt a phrase",
+      "input": "abc\nAttack",
+      "output": "20161700010A",
+      "explanation": "Useful for seeing how a short repeating key affects multiple characters."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The user forgets to include a key",
+      "fix": "Put the key on the first line and the plaintext below it."
+    },
+    {
+      "issue": "The user expects secure modern encryption",
+      "fix": "XOR with a repeating key is educational, not secure for real protection."
+    },
+    {
+      "issue": "The wrong key is used for decryption later",
+      "fix": "You must use exactly the same key to reverse the result."
+    },
+    {
+      "issue": "The user expects text output instead of hex",
+      "fix": "This tool returns hexadecimal so the XOR result stays readable and copy-safe."
+    },
+    {
+      "issue": "The input format is reversed",
+      "fix": "Always place the key first, then the source text on the following lines."
+    }
+  ],
+  "useCases": [
+    "Learning XOR basics",
+    "Creating CTF examples",
+    "Testing reversible key-based obfuscation",
+    "Inspecting byte-level transformations",
+    "Practicing simple classical crypto tasks"
+  ],
+  "faq": [
+    {
+      "q": "What does XOR Encrypt do?",
+      "a": "It combines the text with a key using XOR and returns a hexadecimal result."
+    },
+    {
+      "q": "How do I enter the key?",
+      "a": "Put the key on the first line and the plaintext below it."
+    },
+    {
+      "q": "Is XOR secure encryption?",
+      "a": "Not in this simple repeating-key form. It is mainly useful for learning and testing."
+    },
+    {
+      "q": "Why is the output shown as hex?",
+      "a": "Hex keeps the XOR result readable and easy to copy."
+    },
+    {
+      "q": "What is the reverse of XOR Encrypt?",
+      "a": "The reverse tool is XOR Decrypt using the same key."
+    }
+  ],
+  "related": [
+    "xor-decrypt",
+    "rot13-encode",
+    "base64-encode",
+    "hex-to-utf8"
+  ]
+},
+{
+  "id": "xor-decrypt",
+  "name": "XOR Decrypt",
+  "slug": "xor-decrypt",
+  "category": "developer-tools",
+  "intro": "Decrypt XOR-encrypted hexadecimal text with the same key instantly.",
+  "description": "Use this XOR Decrypt tool to reverse XOR-encrypted hexadecimal text using the same key that was used for encryption. It is useful for CTF practice, cryptography basics, byte-level debugging, reversible obfuscation demos, and understanding how XOR transforms can be undone when the key is known.",
+  "keywords": [
+    "xor decrypt",
+    "xor decryption",
+    "xor decoder",
+    "xor hex decrypt",
+    "xor online decrypt"
+  ],
+  "whyUse": [
+    "Decrypt XOR-encrypted hex with the original key quickly",
+    "Useful for CTFs and basic crypto exercises",
+    "Helps explain how XOR is reversed with the same key",
+    "Useful for debugging encoded samples and toy ciphers",
+    "Runs directly in the browser"
+  ],
+  "howToUse": [
+    "Enter the key on the first line and the hexadecimal ciphertext below it",
+    "Click Run Tool to decrypt the value",
+    "Review the readable plaintext output",
+    "Copy the result for analysis or notes",
+    "Use XOR Encrypt to create matching test samples"
+  ],
+  "examples": [
+    {
+      "title": "Decrypt a short word",
+      "input": "key\n030015070A",
+      "output": "hello",
+      "explanation": "The same key used for encryption is required to recover the plaintext."
+    },
+    {
+      "title": "Decrypt a phrase",
+      "input": "abc\n20161700010A",
+      "output": "Attack",
+      "explanation": "Useful for reversing a repeating-key XOR sample."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The wrong key is used",
+      "fix": "Use exactly the same key that was used to encrypt the text."
+    },
+    {
+      "issue": "The ciphertext is not valid hex",
+      "fix": "Enter only hexadecimal characters with an even total length."
+    },
+    {
+      "issue": "The user pastes plaintext instead of XOR hex",
+      "fix": "This tool expects hexadecimal ciphertext, not ordinary text."
+    },
+    {
+      "issue": "The input format is reversed",
+      "fix": "Put the key first and the hex ciphertext below it."
+    },
+    {
+      "issue": "The user expects modern secure cryptanalysis",
+      "fix": "This tool only reverses simple XOR when the key is already known."
+    }
+  ],
+  "useCases": [
+    "Reversing XOR challenge samples",
+    "Learning how XOR decryption works",
+    "Inspecting repeating-key XOR outputs",
+    "Debugging toy crypto examples",
+    "Practicing basic CTF decryption tasks"
+  ],
+  "faq": [
+    {
+      "q": "What does XOR Decrypt do?",
+      "a": "It reverses XOR-encrypted hex using the provided key."
+    },
+    {
+      "q": "What format should the ciphertext use?",
+      "a": "Use hexadecimal characters with an even total length."
+    },
+    {
+      "q": "Do I need the same key used for encryption?",
+      "a": "Yes. XOR decryption requires the exact same key."
+    },
+    {
+      "q": "Why does the output look wrong?",
+      "a": "The most common reasons are the wrong key or invalid ciphertext format."
+    },
+    {
+      "q": "What is the reverse of XOR Decrypt?",
+      "a": "The reverse tool is XOR Encrypt."
+    }
+  ],
+  "related": [
+    "xor-encrypt",
+    "rot47-decode",
+    "hex-to-utf8",
+    "base64-decode"
+  ]
+}
+,
+{
+  "id": "3des-encrypt",
+  "name": "3DES Encrypt",
+  "slug": "3des-encrypt",
+  "category": "developer-tools",
+  "intro": "Encrypt text with Triple DES instantly using a passphrase-based browser tool.",
+  "description": "Use this 3DES Encrypt tool to encrypt plain text with Triple DES and return a Base64 ciphertext. It is useful for legacy compatibility testing, reversible crypto demos, browser-side experiments, and understanding how passphrase-based encryption transforms readable text into encrypted output.",
+  "keywords": [
+    "3des encrypt",
+    "triple des encrypt",
+    "3des encryption",
+    "encrypt text with 3des",
+    "3des online tool"
+  ],
+  "whyUse": [
+    "Encrypt text with Triple DES quickly in the browser",
+    "Useful for legacy crypto compatibility testing",
+    "Helps create reversible encrypted samples for demos",
+    "Useful for developer experiments and test cases",
+    "Returns copy-friendly ciphertext output"
+  ],
+  "howToUse": [
+    "Enter the passphrase on the first line",
+    "Paste the plaintext below it",
+    "Click Run Tool to encrypt the text",
+    "Review the Base64 ciphertext output",
+    "Use 3DES Decrypt with the same passphrase to reverse it"
+  ],
+  "examples": [
+    {
+      "title": "Encrypt a short text",
+      "input": "secret123\nhello world",
+      "output": "Base64 encrypted text",
+      "explanation": "The first line is the passphrase and the lines below are the plaintext."
+    },
+    {
+      "title": "Encrypt a JSON sample",
+      "input": "demo-key\n{\"name\":\"John\",\"role\":\"admin\"}",
+      "output": "Base64 encrypted text",
+      "explanation": "Useful for testing how structured text looks after 3DES encryption."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The user forgets to add a passphrase",
+      "fix": "Put the passphrase on the first line and the plaintext below it."
+    },
+    {
+      "issue": "The wrong passphrase is used later during decryption",
+      "fix": "You must use the exact same passphrase to decrypt the ciphertext."
+    },
+    {
+      "issue": "The user expects modern recommended encryption",
+      "fix": "3DES is mainly useful for legacy compatibility, not new secure system design."
+    },
+    {
+      "issue": "The input format is reversed",
+      "fix": "Always put the passphrase first and the plaintext below it."
+    },
+    {
+      "issue": "The user expects hex output instead of Base64",
+      "fix": "This tool returns Base64 ciphertext for easier copy and reuse."
+    }
+  ],
+  "useCases": [
+    "Testing legacy encryption compatibility",
+    "Creating reversible encrypted demo samples",
+    "Encrypting short text for experiments",
+    "Studying Triple DES behavior in browser tools",
+    "Preparing encrypted strings for development tests"
+  ],
+  "faq": [
+    {
+      "q": "What does 3DES Encrypt do?",
+      "a": "It encrypts plain text with Triple DES and returns a Base64 ciphertext."
+    },
+    {
+      "q": "How do I enter the passphrase?",
+      "a": "Put the passphrase on the first line and the plaintext below it."
+    },
+    {
+      "q": "Is 3DES recommended for new projects?",
+      "a": "It is mostly useful for legacy compatibility and testing rather than new system design."
+    },
+    {
+      "q": "What output format does this tool return?",
+      "a": "It returns Base64 ciphertext."
+    },
+    {
+      "q": "What is the reverse of 3DES Encrypt?",
+      "a": "The reverse tool is 3DES Decrypt."
+    }
+  ],
+  "related": [
+    "3des-decrypt",
+    "aes-encrypt",
+    "rabbit-encrypt",
+    "base64-encode"
+  ]
+},
+{
+  "id": "3des-decrypt",
+  "name": "3DES Decrypt",
+  "slug": "3des-decrypt",
+  "category": "developer-tools",
+  "intro": "Decrypt Triple DES ciphertext instantly with the same passphrase.",
+  "description": "Use this 3DES Decrypt tool to reverse Triple DES encrypted Base64 text using the original passphrase. It is useful for legacy compatibility testing, crypto demos, reversible browser-side workflows, and checking whether encrypted samples can be decoded back into readable text.",
+  "keywords": [
+    "3des decrypt",
+    "triple des decrypt",
+    "3des decryption",
+    "decrypt 3des text",
+    "3des decrypt online"
+  ],
+  "whyUse": [
+    "Decrypt Triple DES ciphertext back into readable text quickly",
+    "Useful for legacy crypto testing and demos",
+    "Helps confirm passphrase-based encryption round-trips correctly",
+    "Useful for debugging encrypted sample values",
+    "Works directly in the browser"
+  ],
+  "howToUse": [
+    "Enter the passphrase on the first line",
+    "Paste the Base64 ciphertext below it",
+    "Click Run Tool to decrypt the value",
+    "Review the plaintext output",
+    "Use the exact same passphrase that was used for encryption"
+  ],
+  "examples": [
+    {
+      "title": "Decrypt a sample ciphertext",
+      "input": "secret123\nBase64 encrypted text",
+      "output": "hello world",
+      "explanation": "Useful for reversing a 3DES-encrypted sample."
+    },
+    {
+      "title": "Decrypt a structured sample",
+      "input": "demo-key\nBase64 encrypted text",
+      "output": "{\"name\":\"John\",\"role\":\"admin\"}",
+      "explanation": "Useful for checking that encrypted structured text returns correctly."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The wrong passphrase is used",
+      "fix": "Use the exact same passphrase that was used during encryption."
+    },
+    {
+      "issue": "The ciphertext is not valid Base64 or not actually 3DES output",
+      "fix": "Paste a valid Base64 ciphertext produced by the matching 3DES encrypt workflow."
+    },
+    {
+      "issue": "The input format is reversed",
+      "fix": "Put the passphrase first and the ciphertext below it."
+    },
+    {
+      "issue": "The user expects decryption of AES or another cipher",
+      "fix": "Use the matching decrypt tool for the actual cipher."
+    },
+    {
+      "issue": "The output is empty or broken",
+      "fix": "This usually means the passphrase or ciphertext format is wrong."
+    }
+  ],
+  "useCases": [
+    "Reversing Triple DES encrypted samples",
+    "Testing legacy crypto compatibility",
+    "Checking passphrase-based encryption workflows",
+    "Debugging encrypted text values",
+    "Verifying browser-side reversible encryption demos"
+  ],
+  "faq": [
+    {
+      "q": "What does 3DES Decrypt do?",
+      "a": "It decrypts Triple DES Base64 ciphertext back into readable text."
+    },
+    {
+      "q": "What format should the ciphertext use?",
+      "a": "Use the Base64 ciphertext produced by the matching 3DES encrypt flow."
+    },
+    {
+      "q": "Do I need the same passphrase?",
+      "a": "Yes. The exact same passphrase is required."
+    },
+    {
+      "q": "Why is the output empty or invalid?",
+      "a": "The most common reasons are the wrong passphrase or invalid ciphertext format."
+    },
+    {
+      "q": "What is the reverse of 3DES Decrypt?",
+      "a": "The reverse tool is 3DES Encrypt."
+    }
+  ],
+  "related": [
+    "3des-encrypt",
+    "aes-decrypt",
+    "rabbit-decrypt",
+    "base64-decode"
+  ]
+},
+{
+  "id": "rabbit-encrypt",
+  "name": "Rabbit Encrypt",
+  "slug": "rabbit-encrypt",
+  "category": "developer-tools",
+  "intro": "Encrypt text with the Rabbit stream cipher instantly using a passphrase.",
+  "description": "Use this Rabbit Encrypt tool to encrypt plain text with the Rabbit stream cipher and return Base64 ciphertext. It is useful for browser-side crypto demos, legacy CryptoJS-compatible workflows, reversible testing, and understanding how passphrase-based stream ciphers transform readable input into encrypted output.",
+  "keywords": [
+    "rabbit encrypt",
+    "rabbit cipher encrypt",
+    "rabbit encryption",
+    "encrypt text with rabbit",
+    "rabbit online tool"
+  ],
+  "whyUse": [
+    "Encrypt text with Rabbit quickly in the browser",
+    "Useful for reversible stream-cipher demos and tests",
+    "Helps create encrypted samples for CryptoJS-compatible workflows",
+    "Useful for development experiments and challenge examples",
+    "Returns Base64 ciphertext that is easy to copy"
+  ],
+  "howToUse": [
+    "Enter the passphrase on the first line",
+    "Paste the plaintext below it",
+    "Click Run Tool to encrypt the text",
+    "Review the Base64 ciphertext output",
+    "Use Rabbit Decrypt with the same passphrase to reverse it"
+  ],
+  "examples": [
+    {
+      "title": "Encrypt a short message",
+      "input": "rabbit-key\nhello world",
+      "output": "Base64 encrypted text",
+      "explanation": "Useful for creating a simple encrypted Rabbit sample."
+    },
+    {
+      "title": "Encrypt a config-like value",
+      "input": "demo-pass\napi_key=12345",
+      "output": "Base64 encrypted text",
+      "explanation": "Useful when testing passphrase-based stream encryption on short strings."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The user forgets to include a passphrase",
+      "fix": "Put the passphrase on the first line and the plaintext below it."
+    },
+    {
+      "issue": "The wrong passphrase is used during decryption",
+      "fix": "Rabbit decryption requires the exact same passphrase."
+    },
+    {
+      "issue": "The user expects modern audited encryption guidance",
+      "fix": "This tool is better suited for compatibility, demos, and experiments."
+    },
+    {
+      "issue": "The input format is reversed",
+      "fix": "Passphrase first, plaintext below."
+    },
+    {
+      "issue": "The user expects hex instead of Base64",
+      "fix": "This tool returns Base64 ciphertext for easy copy and reuse."
+    }
+  ],
+  "useCases": [
+    "Testing Rabbit cipher output in the browser",
+    "Creating reversible encrypted demo samples",
+    "Working with CryptoJS-compatible encrypted strings",
+    "Studying stream-cipher behavior in simple workflows",
+    "Preparing encrypted values for development experiments"
+  ],
+  "faq": [
+    {
+      "q": "What does Rabbit Encrypt do?",
+      "a": "It encrypts text with the Rabbit stream cipher and returns Base64 ciphertext."
+    },
+    {
+      "q": "How do I enter the passphrase?",
+      "a": "Put the passphrase on the first line and the plaintext below it."
+    },
+    {
+      "q": "What format does the tool return?",
+      "a": "It returns Base64 ciphertext."
+    },
+    {
+      "q": "Is Rabbit the same as AES?",
+      "a": "No. Rabbit is a stream cipher, while AES is a block cipher."
+    },
+    {
+      "q": "What is the reverse of Rabbit Encrypt?",
+      "a": "The reverse tool is Rabbit Decrypt."
+    }
+  ],
+  "related": [
+    "rabbit-decrypt",
+    "3des-encrypt",
+    "aes-encrypt",
+    "base64-encode"
+  ]
+},
+{
+  "id": "rabbit-decrypt",
+  "name": "Rabbit Decrypt",
+  "slug": "rabbit-decrypt",
+  "category": "developer-tools",
+  "intro": "Decrypt Rabbit ciphertext instantly with the same passphrase.",
+  "description": "Use this Rabbit Decrypt tool to reverse Rabbit-encrypted Base64 text using the original passphrase. It is useful for browser-side crypto demos, compatibility testing, reversible stream-cipher workflows, and checking whether encrypted samples return to readable plain text correctly.",
+  "keywords": [
+    "rabbit decrypt",
+    "rabbit cipher decrypt",
+    "rabbit decryption",
+    "decrypt rabbit text",
+    "rabbit decrypt online"
+  ],
+  "whyUse": [
+    "Decrypt Rabbit Base64 ciphertext back into readable text quickly",
+    "Useful for reversible stream-cipher demos and tests",
+    "Helps verify passphrase-based encryption round-trips correctly",
+    "Useful for debugging encrypted sample values",
+    "Works directly in the browser"
+  ],
+  "howToUse": [
+    "Enter the passphrase on the first line",
+    "Paste the Base64 ciphertext below it",
+    "Click Run Tool to decrypt the value",
+    "Review the plaintext output",
+    "Use the exact same passphrase that was used for encryption"
+  ],
+  "examples": [
+    {
+      "title": "Decrypt a short Rabbit sample",
+      "input": "rabbit-key\nBase64 encrypted text",
+      "output": "hello world",
+      "explanation": "Useful for reversing a Rabbit-encrypted sample."
+    },
+    {
+      "title": "Decrypt a config-like value",
+      "input": "demo-pass\nBase64 encrypted text",
+      "output": "api_key=12345",
+      "explanation": "Useful for checking reversible passphrase-based stream encryption."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The wrong passphrase is used",
+      "fix": "Use exactly the same passphrase that was used for encryption."
+    },
+    {
+      "issue": "The ciphertext is not valid Base64 or not actually Rabbit output",
+      "fix": "Paste Base64 ciphertext produced by the matching Rabbit encrypt flow."
+    },
+    {
+      "issue": "The input format is reversed",
+      "fix": "Put the passphrase first and the ciphertext below it."
+    },
+    {
+      "issue": "The user expects decryption of another cipher type",
+      "fix": "Use the matching decrypt tool for the actual cipher."
+    },
+    {
+      "issue": "The plaintext output is empty or invalid",
+      "fix": "This usually means the passphrase or ciphertext format is wrong."
+    }
+  ],
+  "useCases": [
+    "Reversing Rabbit-encrypted samples",
+    "Testing CryptoJS-compatible workflows",
+    "Checking stream-cipher round-trip behavior",
+    "Debugging encrypted demo values",
+    "Verifying reversible browser-side encryption samples"
+  ],
+  "faq": [
+    {
+      "q": "What does Rabbit Decrypt do?",
+      "a": "It decrypts Rabbit Base64 ciphertext back into readable text."
+    },
+    {
+      "q": "Do I need the same passphrase?",
+      "a": "Yes. Rabbit decryption requires the exact same passphrase."
+    },
+    {
+      "q": "What format should the ciphertext use?",
+      "a": "Use Base64 ciphertext produced by the matching Rabbit encrypt flow."
+    },
+    {
+      "q": "Why is the output broken or empty?",
+      "a": "The most common reasons are the wrong passphrase or invalid ciphertext."
+    },
+    {
+      "q": "What is the reverse of Rabbit Decrypt?",
+      "a": "The reverse tool is Rabbit Encrypt."
+    }
+  ],
+  "related": [
+    "rabbit-encrypt",
+    "3des-decrypt",
+    "aes-decrypt",
+    "base64-decode"
+  ]
+}
+,
+{
+  "id": "aes-encrypt",
+  "name": "AES Encrypt",
+  "slug": "aes-encrypt",
+  "category": "developer-tools",
+  "intro": "Encrypt text with AES instantly using a passphrase-based browser tool.",
+  "description": "Use this AES Encrypt tool to encrypt plain text with AES and return Base64 ciphertext. It is useful for demos, browser-side encryption tests, reversible development workflows, and understanding how passphrase-based AES transforms readable input into encrypted output.",
+  "keywords": [
+    "aes encrypt",
+    "aes encryption",
+    "encrypt text with aes",
+    "aes online tool",
+    "aes text encrypt"
+  ],
+  "whyUse": [
+    "Encrypt text with AES quickly in the browser",
+    "Useful for demos, testing, and reversible workflows",
+    "Helps create encrypted samples for development tasks",
+    "Works well for passphrase-based text encryption experiments",
+    "Returns easy-to-copy Base64 ciphertext"
+  ],
+  "howToUse": [
+    "Enter the passphrase on the first line",
+    "Paste the plaintext below it",
+    "Click Run Tool to encrypt the text",
+    "Review the Base64 ciphertext output",
+    "Use AES Decrypt with the same passphrase to reverse it"
+  ],
+  "examples": [
+    {
+      "title": "Encrypt a short text",
+      "input": "secret123\nhello world",
+      "output": "Base64 encrypted text",
+      "explanation": "The first line is the passphrase and the lines below are the plaintext."
+    },
+    {
+      "title": "Encrypt a JSON string",
+      "input": "demo-key\n{\"name\":\"John\",\"role\":\"admin\"}",
+      "output": "Base64 encrypted text",
+      "explanation": "Useful for testing how structured text looks after AES encryption."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The user forgets to add a passphrase",
+      "fix": "Put the passphrase on the first line and the plaintext below it."
+    },
+    {
+      "issue": "The wrong passphrase is used later during decryption",
+      "fix": "You must use the exact same passphrase to decrypt the ciphertext."
+    },
+    {
+      "issue": "The input format is reversed",
+      "fix": "Always put the passphrase first and the plaintext below it."
+    },
+    {
+      "issue": "The user expects hex output instead of Base64",
+      "fix": "This tool returns Base64 ciphertext for easier copy and reuse."
+    },
+    {
+      "issue": "The user expects key-file or IV controls",
+      "fix": "This page is a simple passphrase-based AES tool, not an advanced crypto console."
+    }
+  ],
+  "useCases": [
+    "Encrypting short text for demos",
+    "Testing reversible browser-side AES workflows",
+    "Creating encrypted development samples",
+    "Checking passphrase-based encryption round-trips",
+    "Studying AES behavior in simple text workflows"
+  ],
+  "faq": [
+    {
+      "q": "What does AES Encrypt do?",
+      "a": "It encrypts plain text with AES and returns Base64 ciphertext."
+    },
+    {
+      "q": "How do I enter the passphrase?",
+      "a": "Put the passphrase on the first line and the plaintext below it."
+    },
+    {
+      "q": "What output format does this tool return?",
+      "a": "It returns Base64 ciphertext."
+    },
+    {
+      "q": "Can I decrypt the output later?",
+      "a": "Yes, with the same passphrase using AES Decrypt."
+    },
+    {
+      "q": "What is the reverse of AES Encrypt?",
+      "a": "The reverse tool is AES Decrypt."
+    }
+  ],
+  "related": [
+    "aes-decrypt",
+    "3des-encrypt",
+    "rabbit-encrypt",
+    "base64-encode"
+  ]
+},
+{
+  "id": "aes-decrypt",
+  "name": "AES Decrypt",
+  "slug": "aes-decrypt",
+  "category": "developer-tools",
+  "intro": "Decrypt AES ciphertext instantly with the same passphrase.",
+  "description": "Use this AES Decrypt tool to reverse AES-encrypted Base64 text using the original passphrase. It is useful for browser-side decryption tests, reversible development workflows, encrypted sample validation, and confirming that AES-encrypted values can be decoded back into readable text correctly.",
+  "keywords": [
+    "aes decrypt",
+    "aes decryption",
+    "decrypt aes text",
+    "aes decrypt online",
+    "aes text decrypt"
+  ],
+  "whyUse": [
+    "Decrypt AES ciphertext back into readable text quickly",
+    "Useful for testing passphrase-based encryption workflows",
+    "Helps verify AES round-trip behavior",
+    "Useful for debugging encrypted samples",
+    "Runs directly in the browser"
+  ],
+  "howToUse": [
+    "Enter the passphrase on the first line",
+    "Paste the Base64 ciphertext below it",
+    "Click Run Tool to decrypt the value",
+    "Review the plaintext output",
+    "Use the exact same passphrase that was used for encryption"
+  ],
+  "examples": [
+    {
+      "title": "Decrypt a short AES sample",
+      "input": "secret123\nBase64 encrypted text",
+      "output": "hello world",
+      "explanation": "Useful for reversing an AES-encrypted sample."
+    },
+    {
+      "title": "Decrypt structured text",
+      "input": "demo-key\nBase64 encrypted text",
+      "output": "{\"name\":\"John\",\"role\":\"admin\"}",
+      "explanation": "Useful for checking that encrypted structured text returns correctly."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The wrong passphrase is used",
+      "fix": "Use the exact same passphrase that was used during encryption."
+    },
+    {
+      "issue": "The ciphertext is not valid Base64 or not actually AES output",
+      "fix": "Paste valid Base64 ciphertext produced by the matching AES encrypt workflow."
+    },
+    {
+      "issue": "The input format is reversed",
+      "fix": "Put the passphrase first and the ciphertext below it."
+    },
+    {
+      "issue": "The output is empty or broken",
+      "fix": "This usually means the passphrase or ciphertext format is wrong."
+    },
+    {
+      "issue": "The user expects another cipher to work here",
+      "fix": "Use the matching decrypt tool for the actual cipher."
+    }
+  ],
+  "useCases": [
+    "Reversing AES-encrypted samples",
+    "Testing passphrase-based browser workflows",
+    "Checking encrypted development values",
+    "Validating AES round-trips",
+    "Debugging encrypted demo data"
+  ],
+  "faq": [
+    {
+      "q": "What does AES Decrypt do?",
+      "a": "It decrypts AES Base64 ciphertext back into readable text."
+    },
+    {
+      "q": "Do I need the same passphrase?",
+      "a": "Yes. The exact same passphrase is required."
+    },
+    {
+      "q": "What format should the ciphertext use?",
+      "a": "Use the Base64 ciphertext produced by the matching AES encrypt flow."
+    },
+    {
+      "q": "Why is the output empty or invalid?",
+      "a": "The most common reasons are the wrong passphrase or invalid ciphertext format."
+    },
+    {
+      "q": "What is the reverse of AES Decrypt?",
+      "a": "The reverse tool is AES Encrypt."
+    }
+  ],
+  "related": [
+    "aes-encrypt",
+    "3des-decrypt",
+    "rabbit-decrypt",
+    "base64-decode"
+  ]
+},
+{
+  "id": "rc4-encrypt",
+  "name": "RC4 Encrypt",
+  "slug": "rc4-encrypt",
+  "category": "developer-tools",
+  "intro": "Encrypt text with RC4 instantly using a passphrase-based browser tool.",
+  "description": "Use this RC4 Encrypt tool to encrypt plain text with RC4 and return Base64 ciphertext. It is useful for legacy compatibility testing, reversible crypto demos, browser-side experiments, and understanding how passphrase-based RC4 transforms readable input into encrypted output.",
+  "keywords": [
+    "rc4 encrypt",
+    "rc4 encryption",
+    "encrypt text with rc4",
+    "rc4 online tool",
+    "rc4 text encrypt"
+  ],
+  "whyUse": [
+    "Encrypt text with RC4 quickly in the browser",
+    "Useful for legacy compatibility and reversible demos",
+    "Helps create encrypted samples for testing",
+    "Useful for learning older cipher workflows",
+    "Returns Base64 ciphertext for easy copy and reuse"
+  ],
+  "howToUse": [
+    "Enter the passphrase on the first line",
+    "Paste the plaintext below it",
+    "Click Run Tool to encrypt the text",
+    "Review the Base64 ciphertext output",
+    "Use RC4 Decrypt with the same passphrase to reverse it"
+  ],
+  "examples": [
+    {
+      "title": "Encrypt a short message",
+      "input": "legacy-key\nhello world",
+      "output": "Base64 encrypted text",
+      "explanation": "Useful for creating a simple RC4-encrypted sample."
+    },
+    {
+      "title": "Encrypt a compact config value",
+      "input": "demo-pass\napi_key=12345",
+      "output": "Base64 encrypted text",
+      "explanation": "Useful when testing passphrase-based RC4 output on short strings."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The user forgets to include a passphrase",
+      "fix": "Put the passphrase on the first line and the plaintext below it."
+    },
+    {
+      "issue": "The wrong passphrase is used during decryption",
+      "fix": "RC4 decryption requires the exact same passphrase."
+    },
+    {
+      "issue": "The input format is reversed",
+      "fix": "Passphrase first, plaintext below."
+    },
+    {
+      "issue": "The user expects modern recommended encryption guidance",
+      "fix": "RC4 is mainly useful for legacy compatibility, demos, and experiments."
+    },
+    {
+      "issue": "The user expects hex instead of Base64",
+      "fix": "This tool returns Base64 ciphertext."
+    }
+  ],
+  "useCases": [
+    "Testing RC4-compatible workflows",
+    "Creating reversible encrypted demo samples",
+    "Studying older stream-cipher behavior",
+    "Preparing encrypted values for development experiments",
+    "Learning legacy crypto transformations"
+  ],
+  "faq": [
+    {
+      "q": "What does RC4 Encrypt do?",
+      "a": "It encrypts text with RC4 and returns Base64 ciphertext."
+    },
+    {
+      "q": "How do I enter the passphrase?",
+      "a": "Put the passphrase on the first line and the plaintext below it."
+    },
+    {
+      "q": "What format does the tool return?",
+      "a": "It returns Base64 ciphertext."
+    },
+    {
+      "q": "Is RC4 mainly for new secure systems?",
+      "a": "It is mostly useful for legacy compatibility and testing."
+    },
+    {
+      "q": "What is the reverse of RC4 Encrypt?",
+      "a": "The reverse tool is RC4 Decrypt."
+    }
+  ],
+  "related": [
+    "rc4-decrypt",
+    "rabbit-encrypt",
+    "aes-encrypt",
+    "base64-encode"
+  ]
+},
+{
+  "id": "rc4-decrypt",
+  "name": "RC4 Decrypt",
+  "slug": "rc4-decrypt",
+  "category": "developer-tools",
+  "intro": "Decrypt RC4 ciphertext instantly with the same passphrase.",
+  "description": "Use this RC4 Decrypt tool to reverse RC4-encrypted Base64 text using the original passphrase. It is useful for legacy compatibility testing, reversible development workflows, encrypted sample validation, and checking whether RC4-encrypted values can be decoded back into readable text correctly.",
+  "keywords": [
+    "rc4 decrypt",
+    "rc4 decryption",
+    "decrypt rc4 text",
+    "rc4 decrypt online",
+    "rc4 text decrypt"
+  ],
+  "whyUse": [
+    "Decrypt RC4 ciphertext back into readable text quickly",
+    "Useful for legacy workflow testing",
+    "Helps verify passphrase-based RC4 round-trips",
+    "Useful for debugging encrypted samples",
+    "Runs directly in the browser"
+  ],
+  "howToUse": [
+    "Enter the passphrase on the first line",
+    "Paste the Base64 ciphertext below it",
+    "Click Run Tool to decrypt the value",
+    "Review the plaintext output",
+    "Use the exact same passphrase that was used for encryption"
+  ],
+  "examples": [
+    {
+      "title": "Decrypt a short RC4 sample",
+      "input": "legacy-key\nBase64 encrypted text",
+      "output": "hello world",
+      "explanation": "Useful for reversing an RC4-encrypted sample."
+    },
+    {
+      "title": "Decrypt a config value",
+      "input": "demo-pass\nBase64 encrypted text",
+      "output": "api_key=12345",
+      "explanation": "Useful for checking reversible RC4 output on short strings."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The wrong passphrase is used",
+      "fix": "Use exactly the same passphrase that was used during encryption."
+    },
+    {
+      "issue": "The ciphertext is not valid Base64 or not actually RC4 output",
+      "fix": "Paste Base64 ciphertext produced by the matching RC4 encrypt flow."
+    },
+    {
+      "issue": "The input format is reversed",
+      "fix": "Put the passphrase first and the ciphertext below it."
+    },
+    {
+      "issue": "The output is empty or broken",
+      "fix": "This usually means the passphrase or ciphertext format is wrong."
+    },
+    {
+      "issue": "The user expects another cipher to decrypt here",
+      "fix": "Use the matching decrypt tool for the actual cipher."
+    }
+  ],
+  "useCases": [
+    "Reversing RC4-encrypted samples",
+    "Testing legacy-compatible workflows",
+    "Checking passphrase-based RC4 round-trips",
+    "Debugging encrypted development values",
+    "Validating older cipher demos"
+  ],
+  "faq": [
+    {
+      "q": "What does RC4 Decrypt do?",
+      "a": "It decrypts RC4 Base64 ciphertext back into readable text."
+    },
+    {
+      "q": "Do I need the same passphrase?",
+      "a": "Yes. The exact same passphrase is required."
+    },
+    {
+      "q": "What format should the ciphertext use?",
+      "a": "Use Base64 ciphertext produced by the matching RC4 encrypt flow."
+    },
+    {
+      "q": "Why is the output empty or invalid?",
+      "a": "The most common reasons are the wrong passphrase or invalid ciphertext format."
+    },
+    {
+      "q": "What is the reverse of RC4 Decrypt?",
+      "a": "The reverse tool is RC4 Encrypt."
+    }
+  ],
+  "related": [
+    "rc4-encrypt",
+    "rabbit-decrypt",
+    "aes-decrypt",
+    "base64-decode"
+  ]
+},
+{
+  "id": "des-encrypt",
+  "name": "DES Encrypt",
+  "slug": "des-encrypt",
+  "category": "developer-tools",
+  "intro": "Encrypt text with DES instantly using a passphrase-based browser tool.",
+  "description": "Use this DES Encrypt tool to encrypt plain text with DES and return Base64 ciphertext. It is useful for legacy compatibility testing, reversible crypto demos, browser-side experiments, and understanding how passphrase-based DES transforms readable input into encrypted output.",
+  "keywords": [
+    "des encrypt",
+    "des encryption",
+    "encrypt text with des",
+    "des online tool",
+    "des text encrypt"
+  ],
+  "whyUse": [
+    "Encrypt text with DES quickly in the browser",
+    "Useful for legacy compatibility and reversible demos",
+    "Helps create encrypted samples for testing",
+    "Useful for studying older block-cipher workflows",
+    "Returns Base64 ciphertext for easy copy and reuse"
+  ],
+  "howToUse": [
+    "Enter the passphrase on the first line",
+    "Paste the plaintext below it",
+    "Click Run Tool to encrypt the text",
+    "Review the Base64 ciphertext output",
+    "Use DES Decrypt with the same passphrase to reverse it"
+  ],
+  "examples": [
+    {
+      "title": "Encrypt a short message",
+      "input": "legacy-key\nhello world",
+      "output": "Base64 encrypted text",
+      "explanation": "Useful for creating a simple DES-encrypted sample."
+    },
+    {
+      "title": "Encrypt a compact config value",
+      "input": "demo-pass\napi_key=12345",
+      "output": "Base64 encrypted text",
+      "explanation": "Useful when testing passphrase-based DES output on short strings."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The user forgets to include a passphrase",
+      "fix": "Put the passphrase on the first line and the plaintext below it."
+    },
+    {
+      "issue": "The wrong passphrase is used during decryption",
+      "fix": "DES decryption requires the exact same passphrase."
+    },
+    {
+      "issue": "The input format is reversed",
+      "fix": "Passphrase first, plaintext below."
+    },
+    {
+      "issue": "The user expects modern recommended encryption guidance",
+      "fix": "DES is mainly useful for legacy compatibility, demos, and experiments."
+    },
+    {
+      "issue": "The user expects hex instead of Base64",
+      "fix": "This tool returns Base64 ciphertext."
+    }
+  ],
+  "useCases": [
+    "Testing DES-compatible workflows",
+    "Creating reversible encrypted demo samples",
+    "Studying older block-cipher behavior",
+    "Preparing encrypted values for development experiments",
+    "Learning legacy crypto transformations"
+  ],
+  "faq": [
+    {
+      "q": "What does DES Encrypt do?",
+      "a": "It encrypts text with DES and returns Base64 ciphertext."
+    },
+    {
+      "q": "How do I enter the passphrase?",
+      "a": "Put the passphrase on the first line and the plaintext below it."
+    },
+    {
+      "q": "What format does the tool return?",
+      "a": "It returns Base64 ciphertext."
+    },
+    {
+      "q": "Is DES mainly for new secure systems?",
+      "a": "It is mostly useful for legacy compatibility and testing."
+    },
+    {
+      "q": "What is the reverse of DES Encrypt?",
+      "a": "The reverse tool is DES Decrypt."
+    }
+  ],
+  "related": [
+    "des-decrypt",
+    "3des-encrypt",
+    "aes-encrypt",
+    "base64-encode"
+  ]
+},
+{
+  "id": "des-decrypt",
+  "name": "DES Decrypt",
+  "slug": "des-decrypt",
+  "category": "developer-tools",
+  "intro": "Decrypt DES ciphertext instantly with the same passphrase.",
+  "description": "Use this DES Decrypt tool to reverse DES-encrypted Base64 text using the original passphrase. It is useful for legacy compatibility testing, reversible development workflows, encrypted sample validation, and checking whether DES-encrypted values can be decoded back into readable text correctly.",
+  "keywords": [
+    "des decrypt",
+    "des decryption",
+    "decrypt des text",
+    "des decrypt online",
+    "des text decrypt"
+  ],
+  "whyUse": [
+    "Decrypt DES ciphertext back into readable text quickly",
+    "Useful for legacy workflow testing",
+    "Helps verify passphrase-based DES round-trips",
+    "Useful for debugging encrypted samples",
+    "Runs directly in the browser"
+  ],
+  "howToUse": [
+    "Enter the passphrase on the first line",
+    "Paste the Base64 ciphertext below it",
+    "Click Run Tool to decrypt the value",
+    "Review the plaintext output",
+    "Use the exact same passphrase that was used for encryption"
+  ],
+  "examples": [
+    {
+      "title": "Decrypt a short DES sample",
+      "input": "legacy-key\nBase64 encrypted text",
+      "output": "hello world",
+      "explanation": "Useful for reversing a DES-encrypted sample."
+    },
+    {
+      "title": "Decrypt a config value",
+      "input": "demo-pass\nBase64 encrypted text",
+      "output": "api_key=12345",
+      "explanation": "Useful for checking reversible DES output on short strings."
+    }
+  ],
+  "commonErrors": [
+    {
+      "issue": "The wrong passphrase is used",
+      "fix": "Use exactly the same passphrase that was used during encryption."
+    },
+    {
+      "issue": "The ciphertext is not valid Base64 or not actually DES output",
+      "fix": "Paste Base64 ciphertext produced by the matching DES encrypt flow."
+    },
+    {
+      "issue": "The input format is reversed",
+      "fix": "Put the passphrase first and the ciphertext below it."
+    },
+    {
+      "issue": "The output is empty or broken",
+      "fix": "This usually means the passphrase or ciphertext format is wrong."
+    },
+    {
+      "issue": "The user expects another cipher to decrypt here",
+      "fix": "Use the matching decrypt tool for the actual cipher."
+    }
+  ],
+  "useCases": [
+    "Reversing DES-encrypted samples",
+    "Testing legacy-compatible workflows",
+    "Checking passphrase-based DES round-trips",
+    "Debugging encrypted development values",
+    "Validating older cipher demos"
+  ],
+  "faq": [
+    {
+      "q": "What does DES Decrypt do?",
+      "a": "It decrypts DES Base64 ciphertext back into readable text."
+    },
+    {
+      "q": "Do I need the same passphrase?",
+      "a": "Yes. The exact same passphrase is required."
+    },
+    {
+      "q": "What format should the ciphertext use?",
+      "a": "Use Base64 ciphertext produced by the matching DES encrypt flow."
+    },
+    {
+      "q": "Why is the output empty or invalid?",
+      "a": "The most common reasons are the wrong passphrase or invalid ciphertext format."
+    },
+    {
+      "q": "What is the reverse of DES Decrypt?",
+      "a": "The reverse tool is DES Encrypt."
+    }
+  ],
+  "related": [
+    "des-encrypt",
+    "3des-decrypt",
+    "aes-decrypt",
+    "base64-decode"
   ]
 }
 

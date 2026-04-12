@@ -147,13 +147,6 @@ Convert CMYK Color to RGB
 Convert RGB Color to CMYK
 Convert CMYK Color to Hex
 Convert Hex Color to CMYK
-Convert Image to Base64
-Convert JPG to PNG
-Convert PNG to JPG
-Convert GIF to PNG
-Convert GIF to JPG
-Convert BMP to PNG
-Convert BMP to JPG
 ROT13 Encode/Decode
 ROT47 Encode/Decode
 XOR Encrypt
@@ -164,6 +157,23 @@ RC4 Encrypt
 RC4 Decrypt
 DES Encrypt
 DES Decrypt
+
+не сделали
+
+--------------------------------------------------
+-------------------------------------------------
+------------------------------------------------
+-----------------------------------------------
+--------------------------------------------------
+-------------------------------------------------
+------------------------------------------------
+-----------------------------------------------
+--------------------------------------------------
+-------------------------------------------------
+------------------------------------------------
+-----------------------------------------------
+
+
 3DES Encrypt
 3DES Decrypt
 Rabbit Encrypt
@@ -379,3 +389,11 @@ Convert Radians to Degrees
 Convert Pounds to Kilograms
 Convert Kilograms to Pounds
 More tools soon! (browser info, etc.)
+
+Convert Image to Base64
+Convert JPG to PNG
+Convert PNG to JPG
+Convert GIF to PNG
+Convert GIF to JPG
+Convert BMP to PNG
+Convert BMP to JPG
